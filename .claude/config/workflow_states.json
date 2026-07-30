@@ -1,0 +1,288 @@
+{
+  "schema_version": "1.0",
+  "description": "Lifecycle state machine for puzzle / coloring / journal / printable products. Six human gates (niche, interior, cover, compliance, listing, release) are config-driven via gate_edges; deterministic report blockers are config-driven via gate_reports. Python reads this file only.",
+  "states": [
+    "DISCOVERY",
+    "NICHE_ASSESSMENT",
+    "NICHE_APPROVAL",
+    "PLANNING",
+    "CONTENT_GENERATION",
+    "CONTENT_VERIFICATION",
+    "INTERIOR_APPROVAL",
+    "VISUAL_DEVELOPMENT",
+    "COVER_APPROVAL",
+    "LAYOUT_AND_FORMAT_BUILD",
+    "ACCESSIBILITY_VALIDATION",
+    "RIGHTS_CLEARANCE",
+    "COMPLIANCE_APPROVAL",
+    "METADATA_AND_COMMERCIAL_PACKAGE",
+    "LISTING_APPROVAL",
+    "FINAL_PROOF",
+    "PLATFORM_PACKAGING",
+    "RELEASE_AUTHORIZATION",
+    "READY_FOR_SUBMISSION",
+    "SUBMISSION",
+    "PUBLISHED",
+    "MONITORING",
+    "EDITION_MAINTENANCE",
+    "PAUSED",
+    "CANCELLED",
+    "ERROR"
+  ],
+  "initial_state": "DISCOVERY",
+  "terminal_states": [
+    "CANCELLED"
+  ],
+  "transitions": {
+    "DISCOVERY": [
+      "NICHE_ASSESSMENT",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "NICHE_ASSESSMENT": [
+      "NICHE_APPROVAL",
+      "DISCOVERY",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "NICHE_APPROVAL": [
+      "PLANNING",
+      "NICHE_ASSESSMENT",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "PLANNING": [
+      "CONTENT_GENERATION",
+      "NICHE_ASSESSMENT",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "CONTENT_GENERATION": [
+      "CONTENT_VERIFICATION",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "CONTENT_VERIFICATION": [
+      "INTERIOR_APPROVAL",
+      "CONTENT_GENERATION",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "INTERIOR_APPROVAL": [
+      "VISUAL_DEVELOPMENT",
+      "CONTENT_GENERATION",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "VISUAL_DEVELOPMENT": [
+      "COVER_APPROVAL",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "COVER_APPROVAL": [
+      "LAYOUT_AND_FORMAT_BUILD",
+      "VISUAL_DEVELOPMENT",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "LAYOUT_AND_FORMAT_BUILD": [
+      "ACCESSIBILITY_VALIDATION",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "ACCESSIBILITY_VALIDATION": [
+      "RIGHTS_CLEARANCE",
+      "LAYOUT_AND_FORMAT_BUILD",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "RIGHTS_CLEARANCE": [
+      "COMPLIANCE_APPROVAL",
+      "ACCESSIBILITY_VALIDATION",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "COMPLIANCE_APPROVAL": [
+      "METADATA_AND_COMMERCIAL_PACKAGE",
+      "RIGHTS_CLEARANCE",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "METADATA_AND_COMMERCIAL_PACKAGE": [
+      "LISTING_APPROVAL",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "LISTING_APPROVAL": [
+      "FINAL_PROOF",
+      "METADATA_AND_COMMERCIAL_PACKAGE",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "FINAL_PROOF": [
+      "PLATFORM_PACKAGING",
+      "LAYOUT_AND_FORMAT_BUILD",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "PLATFORM_PACKAGING": [
+      "RELEASE_AUTHORIZATION",
+      "FINAL_PROOF",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "RELEASE_AUTHORIZATION": [
+      "READY_FOR_SUBMISSION",
+      "PLATFORM_PACKAGING",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "READY_FOR_SUBMISSION": [
+      "SUBMISSION",
+      "RELEASE_AUTHORIZATION",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "SUBMISSION": [
+      "PUBLISHED",
+      "READY_FOR_SUBMISSION",
+      "ERROR",
+      "PAUSED"
+    ],
+    "PUBLISHED": [
+      "MONITORING",
+      "EDITION_MAINTENANCE",
+      "PAUSED"
+    ],
+    "MONITORING": [
+      "EDITION_MAINTENANCE",
+      "PAUSED"
+    ],
+    "EDITION_MAINTENANCE": [
+      "PLANNING",
+      "CONTENT_GENERATION",
+      "VISUAL_DEVELOPMENT",
+      "PAUSED",
+      "CANCELLED"
+    ],
+    "PAUSED": [
+      "DISCOVERY",
+      "NICHE_ASSESSMENT",
+      "NICHE_APPROVAL",
+      "PLANNING",
+      "CONTENT_GENERATION",
+      "CONTENT_VERIFICATION",
+      "INTERIOR_APPROVAL",
+      "VISUAL_DEVELOPMENT",
+      "COVER_APPROVAL",
+      "LAYOUT_AND_FORMAT_BUILD",
+      "ACCESSIBILITY_VALIDATION",
+      "RIGHTS_CLEARANCE",
+      "COMPLIANCE_APPROVAL",
+      "METADATA_AND_COMMERCIAL_PACKAGE",
+      "LISTING_APPROVAL",
+      "FINAL_PROOF",
+      "PLATFORM_PACKAGING",
+      "RELEASE_AUTHORIZATION",
+      "READY_FOR_SUBMISSION",
+      "SUBMISSION",
+      "PUBLISHED",
+      "MONITORING",
+      "EDITION_MAINTENANCE"
+    ],
+    "ERROR": [
+      "PAUSED",
+      "DISCOVERY",
+      "CONTENT_GENERATION",
+      "PLATFORM_PACKAGING"
+    ],
+    "CANCELLED": []
+  },
+  "gate_edges": {
+    "NICHE_APPROVAL->PLANNING": "niche",
+    "INTERIOR_APPROVAL->VISUAL_DEVELOPMENT": "interior",
+    "COVER_APPROVAL->LAYOUT_AND_FORMAT_BUILD": "cover",
+    "COMPLIANCE_APPROVAL->METADATA_AND_COMMERCIAL_PACKAGE": "compliance",
+    "LISTING_APPROVAL->FINAL_PROOF": "listing",
+    "RELEASE_AUTHORIZATION->READY_FOR_SUBMISSION": "release"
+  },
+  "gate_reports": {
+    "NICHE_ASSESSMENT->NICHE_APPROVAL": [
+      {
+        "path": "niche/assessment-latest.json",
+        "decision_in": ["PASS", "REVIEW"],
+        "message": "Niche assessment must be recorded before the niche gate"
+      }
+    ],
+    "CONTENT_VERIFICATION->INTERIOR_APPROVAL": [
+      {
+        "path": "verification/content-verification-latest.json",
+        "decision_in": ["PASS"],
+        "message": "Code content verification must PASS before the interior gate"
+      },
+      {
+        "path": "reviews/quality-gate-latest.json",
+        "decision_in": ["PASS"],
+        "message": "Quality gate must PASS before the interior gate"
+      },
+      {
+        "path": "outputs/proof/interior-proof-report.json",
+        "decision_in": ["PASS"],
+        "message": "Interior proof must PASS before the interior gate"
+      }
+    ],
+    "VISUAL_DEVELOPMENT->COVER_APPROVAL": [
+      {
+        "path": "outputs/proof/cover-proof-report.json",
+        "decision_in": ["PASS"],
+        "message": "Cover proof must PASS before the cover gate"
+      }
+    ],
+    "RIGHTS_CLEARANCE->COMPLIANCE_APPROVAL": [
+      {
+        "path": "rights/gate-latest.json",
+        "decision_in": ["PASS"],
+        "message": "Rights gate must PASS before the compliance gate"
+      },
+      {
+        "path": "accessibility/gate-latest.json",
+        "decision_in": ["PASS", "WARNING"],
+        "message": "Accessibility gate must PASS/WARNING before the compliance gate"
+      }
+    ],
+    "METADATA_AND_COMMERCIAL_PACKAGE->LISTING_APPROVAL": [
+      {
+        "path": "metadata/validation-report.json",
+        "decision_in": ["PASS", "WARNING"],
+        "message": "Metadata validation must PASS/WARNING before the listing gate"
+      }
+    ],
+    "FINAL_PROOF->PLATFORM_PACKAGING": [
+      {
+        "path": "outputs/proof/interior-proof-report.json",
+        "decision_in": ["PASS"],
+        "message": "Interior proof must PASS before packaging"
+      },
+      {
+        "path": "outputs/proof/cover-proof-report.json",
+        "decision_in": ["PASS"],
+        "message": "Cover proof must PASS before packaging"
+      }
+    ]
+  },
+  "human_gate_to_state": {
+    "niche": "NICHE_APPROVAL",
+    "interior": "INTERIOR_APPROVAL",
+    "cover": "COVER_APPROVAL",
+    "compliance": "COMPLIANCE_APPROVAL",
+    "listing": "LISTING_APPROVAL",
+    "release": "RELEASE_AUTHORIZATION"
+  },
+  "conditional_stages": {
+    "VISUAL_DEVELOPMENT": [
+      "paperback",
+      "hardcover",
+      "coloring-book"
+    ]
+  }
+}

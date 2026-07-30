@@ -1,0 +1,212 @@
+{
+  "schema_version": "1.0",
+  "description": "Deterministic state -> single-forward-action map for autonomous-between-gates orchestration. plan_next reads this. Human-gate states emit STOP_AT_GATE and point at the human-only recording skill. Nothing here grants, freezes, or authorizes.",
+  "human_gate_skills": {
+    "niche": "product-approve-niche",
+    "interior": "product-approve-interior",
+    "cover": "product-approve-cover",
+    "compliance": "product-approve-compliance",
+    "listing": "product-approve-listing",
+    "release": "product-release-authorize"
+  },
+  "states": {
+    "DISCOVERY": {
+      "forward_target": "NICHE_ASSESSMENT",
+      "recommended_agents": ["market-scout", "acquisitions-editor"],
+      "recommended_skills": ["product-brief"],
+      "recommended_workflows": [],
+      "entry_criteria": "A topic and audience have been proposed.",
+      "acceptance": "A product brief exists describing topic, audience, product family, and formats."
+    },
+    "NICHE_ASSESSMENT": {
+      "forward_target": "NICHE_APPROVAL",
+      "recommended_agents": ["market-scout", "competition-analyst", "keyword-strategist"],
+      "recommended_skills": ["product-niche-assess"],
+      "recommended_workflows": [],
+      "entry_criteria": "Product brief recorded.",
+      "acceptance": "niche/assessment-latest.json written with an opportunity assessment.",
+      "gate_report_path": "niche/assessment-latest.json"
+    },
+    "NICHE_APPROVAL": {
+      "forward_target": "PLANNING",
+      "human_gate": true,
+      "gate": "niche",
+      "human_only_skill": "product-approve-niche",
+      "recommended_skills": ["product-gate-packet"],
+      "entry_criteria": "Niche assessment complete.",
+      "acceptance": "A human records the niche approval bound to the assessment.",
+      "gate_report_path": "approvals/packets/gate-packet-niche-latest.json"
+    },
+    "PLANNING": {
+      "forward_target": "CONTENT_GENERATION",
+      "recommended_agents": ["content-architect", "puzzle-designer", "difficulty-curator"],
+      "recommended_skills": ["product-plan"],
+      "entry_criteria": "Niche approved.",
+      "acceptance": "content_plan populated with puzzle types, counts, and difficulty progression."
+    },
+    "CONTENT_GENERATION": {
+      "forward_target": "CONTENT_VERIFICATION",
+      "recommended_agents": ["puzzle-generator", "coloring-line-artist", "journal-prompt-writer", "printable-designer"],
+      "recommended_skills": ["product-generate"],
+      "recommended_workflows": ["generate_content"],
+      "entry_criteria": "Content plan approved.",
+      "acceptance": "Content batches generated deterministically and registered as artifacts."
+    },
+    "CONTENT_VERIFICATION": {
+      "forward_target": "INTERIOR_APPROVAL",
+      "recommended_agents": ["content-verifier", "solvability-checker", "quality-lead"],
+      "recommended_skills": ["product-verify", "product-quality-gate"],
+      "recommended_workflows": ["verify_content"],
+      "entry_criteria": "Content generated.",
+      "acceptance": "verification/content-verification-latest.json = PASS; quality gate PASS; interior proof PASS.",
+      "gate_report_path": "verification/content-verification-latest.json"
+    },
+    "INTERIOR_APPROVAL": {
+      "forward_target": "VISUAL_DEVELOPMENT",
+      "human_gate": true,
+      "gate": "interior",
+      "human_only_skill": "product-approve-interior",
+      "recommended_skills": ["product-gate-packet"],
+      "entry_criteria": "Content verified and interior proof passes.",
+      "acceptance": "A human records the interior approval; content batches are frozen.",
+      "gate_report_path": "approvals/packets/gate-packet-interior-latest.json"
+    },
+    "VISUAL_DEVELOPMENT": {
+      "forward_target": "COVER_APPROVAL",
+      "conditional_on_formats": ["paperback", "hardcover", "coloring-book"],
+      "recommended_agents": ["cover-designer", "art-director"],
+      "recommended_skills": ["product-build-cover"],
+      "recommended_workflows": ["build_layout"],
+      "entry_criteria": "Interior approved (page count known for spine math).",
+      "acceptance": "Cover wrap built; cover proof written.",
+      "gate_report_path": "outputs/proof/cover-proof-report.json"
+    },
+    "COVER_APPROVAL": {
+      "forward_target": "LAYOUT_AND_FORMAT_BUILD",
+      "human_gate": true,
+      "gate": "cover",
+      "human_only_skill": "product-approve-cover",
+      "recommended_skills": ["product-gate-packet"],
+      "entry_criteria": "Cover built and cover proof passes.",
+      "acceptance": "A human records the cover approval bound to the cover artifact.",
+      "gate_report_path": "approvals/packets/gate-packet-cover-latest.json"
+    },
+    "LAYOUT_AND_FORMAT_BUILD": {
+      "forward_target": "ACCESSIBILITY_VALIDATION",
+      "recommended_agents": ["layout-engineer", "prepress-specialist"],
+      "recommended_skills": ["product-build-interior", "product-build-digital"],
+      "recommended_workflows": ["build_layout"],
+      "entry_criteria": "Interior and cover approved.",
+      "acceptance": "Print-ready interior/cover PDFs and digital bundle built; proof PASS."
+    },
+    "ACCESSIBILITY_VALIDATION": {
+      "forward_target": "RIGHTS_CLEARANCE",
+      "recommended_agents": ["accessibility-auditor"],
+      "recommended_skills": ["product-accessibility-audit"],
+      "entry_criteria": "Formats built.",
+      "acceptance": "accessibility/gate-latest.json = PASS/WARNING.",
+      "gate_report_path": "accessibility/gate-latest.json"
+    },
+    "RIGHTS_CLEARANCE": {
+      "forward_target": "COMPLIANCE_APPROVAL",
+      "recommended_agents": ["rights-manager", "originality-auditor"],
+      "recommended_skills": ["product-rights-check"],
+      "entry_criteria": "All assets registered.",
+      "acceptance": "rights/gate-latest.json = PASS (all rights-bearing assets cleared or excluded).",
+      "gate_report_path": "rights/gate-latest.json"
+    },
+    "COMPLIANCE_APPROVAL": {
+      "forward_target": "METADATA_AND_COMMERCIAL_PACKAGE",
+      "human_gate": true,
+      "gate": "compliance",
+      "human_only_skill": "product-approve-compliance",
+      "recommended_skills": ["product-gate-packet"],
+      "entry_criteria": "Rights and accessibility gates pass.",
+      "acceptance": "A human records the compliance approval (rights + accessibility + AI-content disclosure).",
+      "gate_report_path": "approvals/packets/gate-packet-compliance-latest.json"
+    },
+    "METADATA_AND_COMMERCIAL_PACKAGE": {
+      "forward_target": "LISTING_APPROVAL",
+      "recommended_agents": ["metadata-specialist", "pricing-strategist", "listing-copywriter"],
+      "recommended_skills": ["product-metadata-build", "product-listing-kit"],
+      "entry_criteria": "Compliance approved.",
+      "acceptance": "metadata/book.json canonical; metadata/validation-report.json = PASS/WARNING; listing kit prepared.",
+      "gate_report_path": "metadata/validation-report.json"
+    },
+    "LISTING_APPROVAL": {
+      "forward_target": "FINAL_PROOF",
+      "human_gate": true,
+      "gate": "listing",
+      "human_only_skill": "product-approve-listing",
+      "recommended_skills": ["product-gate-packet"],
+      "entry_criteria": "Metadata and listing kit ready.",
+      "acceptance": "A human records the listing approval bound to metadata and listing copy.",
+      "gate_report_path": "approvals/packets/gate-packet-listing-latest.json"
+    },
+    "FINAL_PROOF": {
+      "forward_target": "PLATFORM_PACKAGING",
+      "recommended_agents": ["prepress-specialist", "quality-lead"],
+      "recommended_skills": ["product-build-proof"],
+      "entry_criteria": "Listing approved.",
+      "acceptance": "Interior and cover proofs PASS on the final built artifacts.",
+      "gate_report_path": "outputs/proof/interior-proof-report.json"
+    },
+    "PLATFORM_PACKAGING": {
+      "forward_target": "RELEASE_AUTHORIZATION",
+      "recommended_agents": ["packaging-engineer"],
+      "recommended_skills": ["product-package"],
+      "recommended_workflows": ["package_channels"],
+      "entry_criteria": "Final proof passes.",
+      "acceptance": "Per-channel package manifests written with preflight PASS/WARNING for every sales channel."
+    },
+    "RELEASE_AUTHORIZATION": {
+      "forward_target": "READY_FOR_SUBMISSION",
+      "human_gate": true,
+      "gate": "release",
+      "human_only_skill": "product-release-authorize",
+      "recommended_skills": ["product-gate-packet"],
+      "entry_criteria": "All channel packages pass preflight; listing approved.",
+      "acceptance": "Two humans record a release authorization bound to every current package manifest hash.",
+      "gate_report_path": "approvals/packets/gate-packet-release-latest.json"
+    },
+    "READY_FOR_SUBMISSION": {
+      "forward_target": "SUBMISSION",
+      "recommended_agents": ["release-coordinator"],
+      "recommended_skills": ["product-submit"],
+      "human_only_skill": "product-submit",
+      "entry_criteria": "Valid release authorization exists.",
+      "acceptance": "A human performs the manual platform upload under the authorization and records evidence."
+    },
+    "SUBMISSION": {
+      "forward_target": "PUBLISHED",
+      "recommended_agents": ["release-coordinator"],
+      "recommended_skills": [],
+      "entry_criteria": "Manual submission performed under authorization.",
+      "acceptance": "release/submission-*.json recorded with status=published."
+    },
+    "PUBLISHED": {
+      "forward_target": "MONITORING",
+      "autonomy_terminal": true,
+      "recommended_agents": ["performance-analyst"],
+      "recommended_skills": [],
+      "entry_criteria": "Published evidence recorded.",
+      "acceptance": "Autonomy stops; monitoring and edition maintenance are human-scheduled."
+    },
+    "MONITORING": {
+      "forward_target": "EDITION_MAINTENANCE",
+      "autonomy_terminal": true,
+      "recommended_agents": ["performance-analyst", "review-responder"],
+      "recommended_skills": [],
+      "entry_criteria": "Product live.",
+      "acceptance": "Monitoring notes recorded; a human decides on edition maintenance."
+    },
+    "EDITION_MAINTENANCE": {
+      "forward_target": "CONTENT_GENERATION",
+      "autonomy_terminal": true,
+      "recommended_agents": ["acquisitions-editor"],
+      "recommended_skills": [],
+      "entry_criteria": "A revision is warranted.",
+      "acceptance": "A human scopes a new edition and re-enters the lifecycle."
+    }
+  }
+}

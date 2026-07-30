@@ -1,0 +1,33 @@
+profile_id: ""
+# Audience band: kids-4-8 | kids-6-10 | tween-8-12 | teen-13-17 | adult-general | senior-large-print
+audience_band: adult-general
+age_min: 0
+age_max: null
+reading_context: independent
+language: en-US
+reading_level_target:
+  method: multi-measure
+  target: ""
+vocabulary_policy:
+  familiar_word_ratio_target: null
+  technical_terms: define-on-first-use
+concept_density: moderate
+# Puzzle-specific engagement parameters
+puzzle_engagement:
+  preferred_puzzle_types: []
+  session_length_minutes: null
+  frustration_tolerance: moderate   # low | moderate | high
+  help_or_hints_expected: false
+visual_policy:
+  frequency: ""
+  # For coloring products: complexity of line art expected
+  coloring_complexity: ""           # simple | moderate | detailed
+  purpose: ""
+tone: ""
+emotional_intensity: moderate
+learning_or_experience_goal: ""
+# Accessibility band-specific requirements
+accessibility_needs: []
+# kids/tween: type size, grid cell size, high contrast are enforced by design policy
+safety_constraints: []
+assumptions: []

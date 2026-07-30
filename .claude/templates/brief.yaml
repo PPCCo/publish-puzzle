@@ -1,0 +1,30 @@
+schema_version: "1.0"
+project_id: "PROJECT_ID"
+title_direction: ""
+premise: ""
+audience_profile: {}
+# product_type: puzzle-book | activity-book | coloring-book | guided-journal | workbook | planner | digital-printable
+product_type: ""
+objectives: []
+scope:
+  included: []
+  excluded: []
+structure:
+  target_page_count: null
+  puzzle_count_or_spread_count: null
+  recurring_elements: []
+  solutions_placement: "back-only"   # back-only | inline | separate-booklet
+content_direction:
+  puzzle_types: []
+  difficulty_distribution: {}        # e.g. {easy: 0.3, medium: 0.5, hard: 0.2}
+  theme_or_topic: ""
+  seed_strategy: ""                  # deterministic | random-seeded
+visual_direction:
+  line_art_style: ""                 # for coloring products
+  grid_style: ""                     # for puzzle/activity products
+  colour_policy: ""
+formats: []
+commercial_hypothesis: {}
+risks: []
+success_criteria: []
+open_decisions: []

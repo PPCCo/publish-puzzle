@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Derived Design Record",
+  "description": "The per-project craft record produced by publishing_house.design_policy.derive_design and stored under production.design in project.yaml. Distinct from the design-policy CONFIGURATION schema (design-policy.schema.json), which validates .claude/config/design_policy.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "resolved",
+    "inputs",
+    "trim_size",
+    "trim_size_candidates",
+    "colour_interior",
+    "colour_policy",
+    "reading_level_target",
+    "rationale",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "resolved": { "type": "boolean" },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audience", "book_type", "formats"],
+      "properties": {
+        "audience": { "type": "string", "minLength": 1 },
+        "book_type": { "type": "string", "minLength": 1 },
+        "formats": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "trim_size": { "type": ["string", "null"] },
+    "trim_size_candidates": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "colour_interior": { "type": "boolean" },
+    "colour_policy": {
+      "type": "object",
+      "required": ["colour_interior_default", "digital", "print_interior", "notes"],
+      "properties": {
+        "colour_interior_default": { "type": "boolean" },
+        "digital": { "type": "object" },
+        "print_interior": { "type": "object" },
+        "image_colour_rule": { "type": "string" },
+        "global_page_rule": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    },
+    "tone_register": { "type": ["string", "null"] },
+    "reading_level_target": {
+      "type": "object",
+      "required": ["band"],
+      "properties": {
+        "band": { "type": "string" },
+        "resolved": { "type": "boolean" }
+      }
+    },
+    "visual_density": { "type": ["string", "null"] },
+    "emotional_intensity_ceiling": { "type": ["string", "null"] },
+    "pedagogy_approach": { "type": ["string", "null"] },
+    "binding_hint": { "type": ["string", "null"] },
+    "paper_hint": { "type": ["string", "null"] },
+    "rationale": { "type": "object" },
+    "provenance": {
+      "type": "object",
+      "required": ["engine", "field_source"],
+      "properties": {
+        "engine": { "type": "string" },
+        "config": { "type": "string" },
+        "age_bands": { "type": "string" },
+        "colour_source": { "type": "string" },
+        "field_source": { "type": "object" },
+        "audience_profile_resolved": { "type": "boolean" },
+        "book_type_override_applied": { "type": "boolean" }
+      }
+    }
+  }
+}

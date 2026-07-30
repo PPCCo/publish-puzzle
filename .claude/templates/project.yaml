@@ -1,0 +1,51 @@
+schema_version: "1.0"
+project_id: "{{PROJECT_ID}}"
+working_title: "{{WORKING_TITLE}}"
+topic: "{{TOPIC}}"
+# book_type / product_type: puzzle-book | activity-book | coloring-book | guided-journal | workbook | planner | digital-printable
+book_type: "{{BOOK_TYPE}}"
+product_type: "{{BOOK_TYPE}}"
+genre: ""
+# audience: kids-4-8 | kids-6-10 | tween-8-12 | teen-13-17 | adult-general | senior-large-print
+audience: "{{AUDIENCE}}"
+language: "{{LANGUAGE}}"
+formats: {{FORMATS_JSON}}
+# sales_channels: kdp | etsy | gumroad | generic
+sales_channels:
+  - kdp
+  - etsy
+edition: 1
+created_at: "{{CREATED_AT}}"
+created_by: "{{CREATED_BY}}"
+objectives: []
+constraints: []
+content_plan:
+  # Populated at PLANNING stage; empty at init.
+  puzzle_types: []
+  target_content_count: null
+  # difficulty_progression: eased | uniform | progressive | custom
+  difficulty_progression: "eased"
+  # solutions_placement: back-only | inline | separate-booklet
+  solutions_placement: "back-only"
+production:
+  trim_size: "8.5x11"
+  bleed: false
+  colour_interior: false
+  colour_policy: {}
+  design: {}
+  print:
+    paper: white
+    binding: paperback
+    spine_width_in: null
+commercial:
+  currency: USD
+  ebook_price: null
+  paperback_price: null
+  hardcover_price: null
+  digital_price: null
+rights:
+  territories:
+    - WORLD
+  ai_assistance_disclosure_required: unknown
+  originals_only: true
+status_notes: ""

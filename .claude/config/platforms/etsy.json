@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "name": "Etsy",
+  "mode": "manual-upload-package",
+  "external_write_supported_by_base": false,
+  "products": [
+    "digital-pdf"
+  ],
+  "notes": "Instant-download digital printables and templates. The base framework prepares an offline listing package; no Etsy login, listing creation, or file upload is performed.",
+  "required_outputs": [
+    "etsy-listing.json",
+    "listing-checklist.md",
+    "files/printable.pdf"
+  ],
+  "constraints": {
+    "max_tags": 13,
+    "delivery": "instant-download"
+  },
+  "refresh_before_release": true,
+  "source_urls": [
+    "https://help.etsy.com/hc/en-us/articles/115015628367"
+  ]
+}

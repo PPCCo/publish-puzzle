@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "notes": "Deterministic craft defaults for puzzle / coloring / journal / printable products, resolved by audience x book_type. Experts (this config + age_bands.json) decide craft; humans do not pick these per product. Colour is single-sourced from publishing_house.project.default_colour_policy and may only be RAISED by a colour-carrying book_type.",
+  "trim_catalog": {
+    "8.5x11": "US Letter: dominant trim for puzzle/activity/coloring/workbook interiors and printables.",
+    "8x10": "Slightly smaller activity trim; good for children's coloring/activity.",
+    "6x9": "Compact trim for text-forward journals, logic collections, and travel puzzle books.",
+    "7x10": "Mid trim for guided journals and planners.",
+    "8.25x8.25": "Square trim favoured by children's coloring/activity books."
+  },
+  "defaults_by_audience": {
+    "kids-4-8": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "8.25x8.25", "8x10"],
+      "tone_register": "playful-simple",
+      "visual_density": "low",
+      "emotional_intensity_ceiling": "gentle",
+      "pedagogy_approach": "eased",
+      "binding_hint": "paperback",
+      "paper_hint": "white",
+      "rationale": "Youngest activity/coloring audience: large art, few elements per page, big type, forgiving difficulty progression."
+    },
+    "kids-6-10": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "8x10", "8.25x8.25"],
+      "tone_register": "playful",
+      "visual_density": "low-medium",
+      "emotional_intensity_ceiling": "gentle",
+      "pedagogy_approach": "eased",
+      "binding_hint": "paperback",
+      "paper_hint": "white",
+      "rationale": "Early-elementary activity audience: clear grids, moderate element counts, easy-to-medium ramp."
+    },
+    "tween-8-12": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "8x10", "6x9"],
+      "tone_register": "energetic",
+      "visual_density": "medium",
+      "emotional_intensity_ceiling": "moderate",
+      "pedagogy_approach": "progressive",
+      "binding_hint": "paperback",
+      "paper_hint": "white",
+      "rationale": "Upper-elementary/tween: denser puzzles, black-and-white grids, colour only on dedicated art pages."
+    },
+    "teen-13-17": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "6x9", "7x10"],
+      "tone_register": "neutral",
+      "visual_density": "medium",
+      "emotional_intensity_ceiling": "moderate",
+      "pedagogy_approach": "progressive",
+      "binding_hint": "paperback",
+      "paper_hint": "white",
+      "rationale": "Teen audience: standard adult grids, black-and-white interior, mixed difficulty."
+    },
+    "adult-general": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "6x9", "7x10"],
+      "tone_register": "neutral",
+      "visual_density": "medium",
+      "emotional_intensity_ceiling": "moderate",
+      "pedagogy_approach": "progressive",
+      "binding_hint": "paperback",
+      "paper_hint": "white",
+      "rationale": "General adult puzzle/journal: black-and-white interior standard; colour only where the product family requires it."
+    },
+    "senior-large-print": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "8x10"],
+      "tone_register": "calm-clear",
+      "visual_density": "low",
+      "emotional_intensity_ceiling": "gentle",
+      "pedagogy_approach": "eased",
+      "binding_hint": "paperback",
+      "paper_hint": "white",
+      "rationale": "Large-print accessibility band: large grids and type, high contrast, low density, black-and-white to preserve contrast."
+    }
+  },
+  "book_type_overrides": {
+    "puzzle-book": {
+      "visual_density": "medium",
+      "pedagogy_approach": "progressive",
+      "rationale": "Puzzle books lead with grids and solvability; difficulty progresses front-to-back, solutions grouped back-only."
+    },
+    "activity-book": {
+      "visual_density": "medium-high",
+      "rationale": "Activity books mix puzzle types and light art; higher element density per spread."
+    },
+    "coloring-book": {
+      "colour_interior": false,
+      "visual_density": "low",
+      "paper_hint": "white",
+      "rationale": "Coloring books are low-ink single-sided line art (originals only); the interior is line art the reader colours, so it stays black-and-white line work."
+    },
+    "guided-journal": {
+      "trim_size_recommended": "7x10",
+      "trim_size_candidates": ["7x10", "6x9", "8.5x11"],
+      "tone_register": "reflective",
+      "visual_density": "low",
+      "pedagogy_approach": "reflective",
+      "rationale": "Guided journals are text-and-prompt forward with generous writing space; smaller trims read as a personal journal."
+    },
+    "workbook": {
+      "visual_density": "medium",
+      "pedagogy_approach": "progressive",
+      "rationale": "Workbooks scaffold exercises with worked space and progressive difficulty."
+    },
+    "planner": {
+      "trim_size_recommended": "8.5x11",
+      "trim_size_candidates": ["8.5x11", "7x10"],
+      "tone_register": "clean-functional",
+      "visual_density": "medium",
+      "rationale": "Planners are grid/calendar forward with functional layout and consistent recurring templates."
+    },
+    "digital-printable": {
+      "visual_density": "medium",
+      "rationale": "Digital printables target home printing (US Letter/A4) at >=300 DPI; sold as instant downloads on Etsy/Gumroad."
+    }
+  }
+}

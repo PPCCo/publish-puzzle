@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "project_id": "PROJECT_ID",
+  "product_type": "digital-printable",
+  "page_size": "US-Letter",
+  "page_size_options": ["US-Letter", "A4"],
+  "width_px": 2550,
+  "height_px": 3300,
+  "dpi": 300,
+  "bleed": false,
+  "bleed_size_in": 0.0,
+  "safe_zone_margin_px": 150,
+  "colour_mode": "black-and-white",
+  "fonts_embedded": true,
+  "file_list": [
+    {
+      "page": 1,
+      "file": "interior/page-001.pdf",
+      "description": "",
+      "alt": ""
+    }
+  ],
+  "total_pages": null,
+  "cover_included": false,
+  "preflight_passed": false,
+  "preflight_report_path": null,
+  "notes": ""
+}

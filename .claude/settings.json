@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "model": "claude-opus-4-8",
+  "env": {
+    "CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "2",
+    "CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION": "200",
+    "CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS": "12",
+    "CLAUDE_CODE_MCP_ALLOWLIST_ENV": "1",
+    "PUBLISHING_EXTERNAL_WRITES": "disabled",
+    "PUBLISHING_TIMEZONE": "America/New_York"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python3 .claude/scripts/ph_cli.py *)",
+      "Bash(python .claude/scripts/ph_cli.py *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(java -jar *epubcheck*.jar *)",
+      "Bash(epubcheck *)",
+      "Bash(ffprobe *)",
+      "Bash(ffmpeg -version)",
+      "Bash(pandoc --version)",
+      "Bash(vivliostyle --version)",
+      "Bash(magick -version)",
+      "Bash(convert -version)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(curl -X POST *)",
+      "Bash(curl -X PUT *)",
+      "Bash(curl -X PATCH *)",
+      "Bash(curl -X DELETE *)",
+      "Bash(wget --post-data *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/session_start.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Write|Edit|WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/pre_tool_policy.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|Write|Edit|WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/post_tool_audit.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/subagent_event.py\" start",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/subagent_event.py\" stop",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop_audit.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

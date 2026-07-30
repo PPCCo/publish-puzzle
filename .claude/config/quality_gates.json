@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "severity_order": [
+    "blocker",
+    "major",
+    "minor",
+    "note"
+  ],
+  "dimensions": [
+    "audience_fit",
+    "clarity",
+    "originality",
+    "solvability",
+    "difficulty_accuracy",
+    "solution_correctness",
+    "structure",
+    "engagement",
+    "instructions_clarity",
+    "representation",
+    "safety",
+    "visual_communication",
+    "accessibility",
+    "rights",
+    "production_readiness",
+    "metadata_quality",
+    "commercial_integrity"
+  ],
+  "default_final_gate": {
+    "max_open_blockers": 0,
+    "max_open_majors": 0,
+    "minimum_dimension_score": 4.0,
+    "critical_dimension_minimum": 4.5,
+    "critical_dimensions": [
+      "solvability",
+      "solution_correctness",
+      "originality",
+      "rights",
+      "accessibility",
+      "audience_fit"
+    ],
+    "minimum_weighted_overall": 4.3,
+    "maximum_full_revision_cycles": 3,
+    "maximum_targeted_repairs_per_artifact": 5
+  }
+}

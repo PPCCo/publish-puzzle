@@ -1,0 +1,16 @@
+{
+  "approval_id": "apr-gate-timestamp-nonce",
+  "project_id": "PROJECT_ID",
+  "gate": "niche",
+  "approver": "",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [],
+  "scope": "",
+  "exclusions": [],
+  "notes": "",
+  "created_at": "",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

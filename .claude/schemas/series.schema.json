@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Book Series",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "series_id",
+    "series_title",
+    "premise",
+    "audience",
+    "language",
+    "created_at",
+    "books"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "series_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,79}$"
+    },
+    "series_title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "premise": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audience": {
+      "description": "The series' primary audience band. Individual books MAY set a different band (e.g. a progression from early-reader to teen).",
+      "type": "string",
+      "enum": [
+        "early-reader-6-8",
+        "middle-grade-9-12",
+        "teen-13-17",
+        "adult-general",
+        "adult-specialist"
+      ]
+    },
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$"
+    },
+    "book_type": {
+      "type": "string"
+    },
+    "progression": {
+      "description": "How the set advances across books (e.g. basic to advanced), and what each book may assume readers already covered.",
+      "type": "string"
+    },
+    "shared_canon": {
+      "description": "Continuity intent shared across the set: recurring characters, terminology, visual system, units, and naming that MUST stay consistent between books.",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "status_notes": {
+      "type": "string"
+    },
+    "books": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "position",
+          "working_title",
+          "topic",
+          "scope"
+        ],
+        "properties": {
+          "position": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "working_title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "topic": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "description": "What this book covers, and what it deliberately leaves to earlier or later books in the set.",
+            "type": "string",
+            "minLength": 1
+          },
+          "audience": {
+            "type": "string",
+            "enum": [
+              "early-reader-6-8",
+              "middle-grade-9-12",
+              "teen-13-17",
+              "adult-general",
+              "adult-specialist"
+            ]
+          },
+          "book_type": {
+            "type": "string",
+            "enum": [
+              "fiction",
+              "illustrated-fiction",
+              "nonfiction",
+              "illustrated-nonfiction",
+              "picture-book",
+              "reference",
+              "encyclopedia",
+              "atlas",
+              "textbook",
+              "activity-book"
+            ]
+          },
+          "formats": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": [
+                "epub",
+                "fixed-layout-epub",
+                "paperback",
+                "hardcover",
+                "audiobook",
+                "read-along"
+              ]
+            }
+          },
+          "assumes_prior_positions": {
+            "description": "Positions of earlier books whose material this book may assume the reader already covered.",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "project_id": {
+            "description": "Set once the book is created as its own project. Null while the slot is still only planned.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

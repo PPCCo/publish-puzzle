@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "publisher_brand": "CHANGE_ME_PUBLISHING",
+  "legal_entity": "",
+  "operating_jurisdiction": "US",
+  "timezone": "America/New_York",
+  "primary_language": "en-US",
+  "supported_locales": [
+    "en-US"
+  ],
+  "default_currency": "USD",
+  "imprints": [],
+  "contact": {
+    "editorial": "",
+    "rights": "",
+    "support": ""
+  },
+  "human_gates": {
+    "niche": 1,
+    "interior": 1,
+    "cover": 1,
+    "compliance": 1,
+    "listing": 1,
+    "release": 2
+  },
+  "physical_proof_required_for_print": true,
+  "external_writes_enabled": false,
+  "notes": "Copy to company.local.json and complete before production. human_gates sets the number of distinct approvers each gate requires; release requires two by default."
+}

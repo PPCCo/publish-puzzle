@@ -1,0 +1,35 @@
+brief_id: "clr-brief-001"
+project_id: "PROJECT_ID"
+# subject: what is depicted (scene, character, pattern, mandala, etc.)
+subject: ""
+# audience_band: kids-4-8 | kids-6-10 | tween-8-12 | teen-13-17 | adult-general | senior-large-print
+audience_band: ""
+# line_weight: thin | medium | bold | mixed
+line_weight: medium
+# complexity: simple | moderate | detailed | intricate
+complexity: moderate
+# composition notes: focal point, negative space, border style
+composition: ""
+# prohibited_elements: elements that must not appear (safety, rights, brand)
+prohibited_elements: []
+# page placement within book interior
+location: ""
+purpose: ""
+dimensions:
+  width_px: 2550     # US Letter at 300 DPI
+  height_px: 3300
+  dpi: 300
+  safe_zone_margin_px: 150
+alt_text_draft: ""
+# Originality attestation — required for all coloring line art
+originality_attestation:
+  creator: ""
+  creation_method: ""     # hand-drawn | vector | AI-assisted-original | other
+  not_traced: true
+  not_derivative_of_protected: true
+  no_living_artist_style_imitation: true
+  attested_by: ""
+  attested_at: null
+  attestation_confidence: 0.0   # 0.9+ required; below 0.9 triggers escalation
+rights_constraints: []
+status: draft

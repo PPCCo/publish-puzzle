@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "PUBLISHING_EXTERNAL_WRITES": "disabled",
+    "PUBLISHING_DEFAULT_PROJECT": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python3 .claude/scripts/ph_cli.py *)",
+      "Bash(python .claude/scripts/ph_cli.py *)",
+      "Bash(python3 -m unittest *)",
+      "Bash(python3 -m pytest *)",
+      "Bash(python3 -c *)",
+      "Bash(python3 .claude/scripts/*)",
+      "Bash(python3 projects/*)",
+      "Bash(python3 -m publishing_house *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(shasum *)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(curl -X POST *)",
+      "Bash(curl -X PUT *)",
+      "Bash(curl -X PATCH *)",
+      "Bash(curl -X DELETE *)",
+      "Bash(wget --post-data *)"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+schema_version: "1.0"
+project_id: "PROJECT_ID"
+# Approved design basis for puzzle/coloring/journal/printable products.
+# Approve this document before bulk interior production begins.
+
+# trim_size: e.g. "8.5x11" | "6x9" | "5.5x8.5" | "8x10"
+trim_size: "8.5x11"
+# grid_style: square | hexagonal | irregular | none
+grid_style: square
+# cell_sizing: e.g. "0.35in" for adult puzzle-books; "0.5in+" for senior-large-print
+cell_sizing: ""
+# type sizes (points)
+type_sizes:
+  body: 12
+  instructions: 11
+  puzzle_label: 10
+  header: 14
+  answer_key: 9
+# Colour policy (single-sourced from project.yaml colour_policy)
+colour_policy: {}
+# contrast: minimum contrast ratio for puzzle grids and text
+contrast_minimum_ratio: 4.5      # WCAG AA; 7.0 for senior-large-print
+# bleed: true only for coloring products expecting full-bleed pages
+bleed: false
+bleed_size_in: 0.125
+# margin guidelines (inches)
+margins:
+  top_in: 0.75
+  bottom_in: 0.75
+  inside_in: 0.875
+  outside_in: 0.625
+# Font families approved for this product
+typography:
+  primary_font: ""
+  secondary_font: ""
+  font_license_confirmed: false
+# Coloring-specific: line weight floor
+coloring_min_line_weight_pt: 1.5
+# Puzzle-specific: grid rules
+puzzle_grid_rules: []
+# Environment and layout rules
+environment_rules: []
+composition_rules: []
+# Accessibility rules enforced at design level
+accessibility_rules: []
+prohibited_elements: []
+production_specifications: {}

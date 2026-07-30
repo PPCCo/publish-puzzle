@@ -1,0 +1,16 @@
+{
+  "finding_id": "fnd-project-001",
+  "reviewer_role": "",
+  "artifact_id": "",
+  "artifact_hash": "sha256:REPLACE",
+  "severity": "major",
+  "dimension": "",
+  "location": "",
+  "observation": "",
+  "evidence": "",
+  "recommendation": "",
+  "acceptance_test": "",
+  "status": "open",
+  "confidence": 0.8,
+  "resolution_notes": ""
+}

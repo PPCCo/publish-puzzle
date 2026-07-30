@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "project_id": "PROJECT_ID",
+  "title": "",
+  "subtitle": null,
+  "series": null,
+  "language": "en-US",
+  "contributors": [],
+  "audience": {},
+  "description": "",
+  "short_description": "",
+  "keywords": [],
+  "subjects": [],
+  "edition": 1,
+  "publication_date": null,
+  "rights_statement": "",
+  "identifiers": [],
+  "formats": [],
+  "trim_size": "",
+  "page_count": null,
+  "accessibility": {},
+  "pricing": {},
+  "disclosures": [],
+  "product_metadata": {
+    "product_type": "",
+    "puzzle_types": [],
+    "difficulty_range": "",
+    "solutions_placement": "back-only",
+    "colour_interior": false,
+    "originals_only": true
+  }
+}

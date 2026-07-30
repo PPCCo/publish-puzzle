@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "current_state",
+    "revision_cycle",
+    "active_artifacts",
+    "blocked_reasons",
+    "updated_at"
+  ],
+  "$defs": {
+    "state": {
+      "type": "string",
+      "enum": [
+        "DISCOVERY",
+        "NICHE_ASSESSMENT",
+        "NICHE_APPROVAL",
+        "PLANNING",
+        "CONTENT_GENERATION",
+        "CONTENT_VERIFICATION",
+        "INTERIOR_APPROVAL",
+        "VISUAL_DEVELOPMENT",
+        "COVER_APPROVAL",
+        "LAYOUT_AND_FORMAT_BUILD",
+        "ACCESSIBILITY_VALIDATION",
+        "RIGHTS_CLEARANCE",
+        "COMPLIANCE_APPROVAL",
+        "METADATA_AND_COMMERCIAL_PACKAGE",
+        "LISTING_APPROVAL",
+        "FINAL_PROOF",
+        "PLATFORM_PACKAGING",
+        "RELEASE_AUTHORIZATION",
+        "READY_FOR_SUBMISSION",
+        "SUBMISSION",
+        "PUBLISHED",
+        "MONITORING",
+        "EDITION_MAINTENANCE",
+        "PAUSED",
+        "CANCELLED",
+        "ERROR"
+      ]
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{2,79}$"
+    },
+    "current_state": {
+      "$ref": "#/$defs/state"
+    },
+    "previous_state": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/state"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "revision_cycle": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "targeted_repairs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "active_artifacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      }
+    },
+    "required_reviews": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "completed_reviews": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "blocked_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "quality_gate": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "rights_gate": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "niche_assessment": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "content_verification": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "accessibility_gate": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": true
+    },
+    "invalidated_approvals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_by": {
+      "type": "string"
+    }
+  }
+}

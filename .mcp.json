@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "publishing-house": {
+      "type": "stdio",
+      "command": "${PUBLISHING_PYTHON:-python3}",
+      "args": [
+        "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp/publishing_house_server.py"
+      ],
+      "env": {
+        "PUBLISHING_REPO_ROOT": "${CLAUDE_PROJECT_DIR:-.}",
+        "PUBLISHING_EXTERNAL_WRITES": "disabled"
+      }
+    }
+  }
+}

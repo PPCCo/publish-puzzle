@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "project_id": "PROJECT_ID",
+  "answer_key_id": "ak-project-001",
+  "placement": "back-only",
+  "placement_options": ["back-only", "inline", "separate-booklet"],
+  "layout": {
+    "keys_per_page": 4,
+    "include_puzzle_thumbnail": false,
+    "thumbnail_size_px": null,
+    "label_format": "Puzzle {n} — Page {p}",
+    "font_size_pt": 9,
+    "sort_order": "puzzle-sequence"
+  },
+  "solution_format_by_type": {
+    "word-search": "highlighted-grid",
+    "crossword": "filled-grid",
+    "sudoku": "filled-grid",
+    "maze": "path-overlay",
+    "word-scramble": "word-list",
+    "cryptogram": "decoded-text",
+    "fill-in-the-blank": "word-list",
+    "other": "text-list"
+  },
+  "verification_required": true,
+  "verification_script": "",
+  "verification_result_hash": null,
+  "all_puzzles_covered": false,
+  "notes": ""
+}

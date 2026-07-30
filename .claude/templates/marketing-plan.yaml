@@ -1,0 +1,23 @@
+schema_version: "1.0"
+project_id: "PROJECT_ID"
+audiences: []
+positioning: ""
+messages: []
+# channels: kdp | etsy | gumroad | generic
+channels: []
+assets: []
+calendar: []
+budget:
+  currency: USD
+  maximum: 0
+measurement: {}
+ethics_checks: []
+approval_required: true
+# Puzzle/printable product marketing notes
+product_highlights:
+  puzzle_types: []
+  difficulty_range: ""
+  page_count: null
+  format_notes: ""              # e.g. "US Letter printable, instant download"
+  audience_callout: ""
+external_write_performed: false

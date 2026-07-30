@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "review_id": "review-001",
+  "project_id": "PROJECT_ID",
+  "reviewer_role": "",
+  "artifact_id": "",
+  "artifact_hash": "sha256:REPLACE",
+  "review_type": "",
+  "decision": "FAIL",
+  "scores": {},
+  "findings": [],
+  "summary": "",
+  "limitations": [],
+  "completed_at": ""
+}

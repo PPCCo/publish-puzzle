@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Registered Artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "artifact_id",
+    "project_id",
+    "type",
+    "stage",
+    "version",
+    "path",
+    "sha256",
+    "size_bytes",
+    "created_at",
+    "created_by",
+    "rights_status",
+    "validation_status"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^art-[a-z0-9-]+$"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "DISCOVERY",
+        "NICHE_ASSESSMENT",
+        "NICHE_APPROVAL",
+        "PLANNING",
+        "CONTENT_GENERATION",
+        "CONTENT_VERIFICATION",
+        "INTERIOR_APPROVAL",
+        "VISUAL_DEVELOPMENT",
+        "COVER_APPROVAL",
+        "LAYOUT_AND_FORMAT_BUILD",
+        "ACCESSIBILITY_VALIDATION",
+        "RIGHTS_CLEARANCE",
+        "COMPLIANCE_APPROVAL",
+        "METADATA_AND_COMMERCIAL_PACKAGE",
+        "LISTING_APPROVAL",
+        "FINAL_PROOF",
+        "PLATFORM_PACKAGING",
+        "RELEASE_AUTHORIZATION",
+        "READY_FOR_SUBMISSION",
+        "SUBMISSION",
+        "PUBLISHED",
+        "MONITORING",
+        "EDITION_MAINTENANCE",
+        "PAUSED",
+        "CANCELLED",
+        "ERROR"
+      ]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "size_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "rights_status": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "pending",
+        "cleared",
+        "restricted",
+        "not-applicable",
+        "escalated"
+      ]
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": [
+        "not-run",
+        "pass",
+        "fail",
+        "warning"
+      ]
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "frozen": {
+      "type": "boolean"
+    }
+  }
+}

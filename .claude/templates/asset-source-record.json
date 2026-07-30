@@ -1,0 +1,23 @@
+{
+  "source_id": "asrc-project-001",
+  "project_id": "PROJECT_ID",
+  "asset_description": "",
+  "asset_type": "word-list",
+  "asset_type_options": ["word-list", "font", "clip-element", "reference-image", "public-domain-illustration", "other"],
+  "provider_or_author": "",
+  "source_type": "primary",
+  "publication_date": null,
+  "retrieved_at": "",
+  "url": null,
+  "identifier": null,
+  "license_or_contract": null,
+  "commercial_use_confirmed": false,
+  "modification_allowed": null,
+  "attribution_required": null,
+  "authority": 0,
+  "summary": "",
+  "rights_notes": "",
+  "archived_evidence": null,
+  "status": "candidate",
+  "rejection_reason": null
+}

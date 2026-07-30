@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design Policy Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "trim_catalog",
+    "defaults_by_audience",
+    "book_type_overrides"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "trim_catalog": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "defaults_by_audience": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/audienceDefault"
+      }
+    },
+    "book_type_overrides": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/bookTypeOverride"
+      }
+    }
+  },
+  "$defs": {
+    "audienceDefault": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trim_size_candidates",
+        "trim_size_recommended",
+        "tone_register",
+        "visual_density",
+        "emotional_intensity_ceiling",
+        "pedagogy_approach",
+        "binding_hint",
+        "paper_hint",
+        "rationale"
+      ],
+      "properties": {
+        "trim_size_candidates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "trim_size_recommended": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tone_register": {
+          "type": "string",
+          "minLength": 1
+        },
+        "visual_density": {
+          "type": "string",
+          "minLength": 1
+        },
+        "emotional_intensity_ceiling": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pedagogy_approach": {
+          "type": "string",
+          "minLength": 1
+        },
+        "binding_hint": {
+          "type": "string",
+          "enum": ["paperback", "hardcover"]
+        },
+        "paper_hint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "bookTypeOverride": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rationale"],
+      "properties": {
+        "trim_size_recommended": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trim_size_candidates": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "tone_register": {
+          "type": "string",
+          "minLength": 1
+        },
+        "visual_density": {
+          "type": "string",
+          "minLength": 1
+        },
+        "emotional_intensity_ceiling": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pedagogy_approach": {
+          "type": "string",
+          "minLength": 1
+        },
+        "colour_interior": {
+          "type": "boolean",
+          "description": "When true, a colour-carrying book_type RAISES the interior to colour on top of the audience default. It never lowers colour below the audience default; omit it to inherit the audience colour policy."
+        },
+        "binding_hint": {
+          "type": "string",
+          "enum": ["paperback", "hardcover"]
+        },
+        "paper_hint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

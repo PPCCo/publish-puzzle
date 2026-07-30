@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "name": "Amazon Kindle Direct Publishing",
+  "mode": "manual-upload-package",
+  "external_write_supported_by_base": false,
+  "products": [
+    "paperback",
+    "hardcover"
+  ],
+  "notes": "Puzzle / activity / coloring / journal / workbook / planner interiors sold as low-content or medium-content print books. The base framework prepares a print-ready package for manual upload only.",
+  "required_outputs": [
+    "listing.json",
+    "description.md",
+    "keywords.txt",
+    "categories.json",
+    "upload-checklist.md"
+  ],
+  "refresh_before_release": true,
+  "source_urls": [
+    "https://kdp.amazon.com/en_US/help/topic/G200634390",
+    "https://kdp.amazon.com/en_US/help/topic/G201953020"
+  ]
+}

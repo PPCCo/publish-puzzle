@@ -1,0 +1,24 @@
+concept_id: "concept-001"
+working_title: ""
+one_sentence_promise: ""
+# audience_band: kids-4-8 | kids-6-10 | tween-8-12 | teen-13-17 | adult-general | senior-large-print
+audience_band: ""
+# product_type: puzzle-book | activity-book | coloring-book | guided-journal | workbook | planner | digital-printable
+product_type: []
+format: []
+differentiation: []
+# Content structure: list key puzzle types, sections, or content pillars
+structure: []
+visual_hook: ""
+puzzle_or_content_hook: ""
+# Rights and generation complexity
+rights_complexity: low              # low | moderate | high
+generation_complexity: low          # low | moderate | high (code-generation effort)
+risks: []
+score:
+  audience_value: 0
+  originality: 0
+  feasibility: 0
+  commercial_clarity: 0
+  puzzle_variety: 0
+  visual_appeal: 0

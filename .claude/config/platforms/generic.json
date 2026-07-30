@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "name": "Generic distribution package",
+  "mode": "manual-upload-package",
+  "external_write_supported_by_base": false,
+  "products": [
+    "paperback",
+    "hardcover",
+    "digital-pdf"
+  ],
+  "notes": "Channel-neutral bundle of built artifacts plus canonical metadata and a rights summary. Use when a target storefront has no dedicated adapter.",
+  "required_outputs": [
+    "metadata.json",
+    "files/",
+    "rights-summary.json"
+  ],
+  "refresh_before_release": false,
+  "source_urls": []
+}

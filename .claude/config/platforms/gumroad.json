@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "name": "Gumroad",
+  "mode": "manual-upload-package",
+  "external_write_supported_by_base": false,
+  "products": [
+    "digital-pdf"
+  ],
+  "notes": "Digital printable products sold as downloads. The base framework prepares an offline product package; no Gumroad login or product creation is performed.",
+  "required_outputs": [
+    "gumroad-product.json",
+    "listing-checklist.md",
+    "files/printable.pdf"
+  ],
+  "constraints": {
+    "max_tags": 10,
+    "delivery": "instant-download"
+  },
+  "refresh_before_release": true,
+  "source_urls": [
+    "https://help.gumroad.com/article/149-adding-products"
+  ]
+}

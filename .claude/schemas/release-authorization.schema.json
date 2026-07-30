@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Release Authorization",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "authorization_id",
+    "project_id",
+    "edition",
+    "channels",
+    "product_types",
+    "territories",
+    "artifact_hashes",
+    "package_manifest_hashes",
+    "permitted_operations",
+    "maximum_external_spend",
+    "currency",
+    "approvers",
+    "nonce",
+    "created_at",
+    "expires_at"
+  ],
+  "properties": {
+    "authorization_id": {
+      "type": "string",
+      "pattern": "^rel-[a-z0-9-]+$"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "edition": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "channels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "product_types": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "territories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "artifact_hashes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      }
+    },
+    "package_manifest_hashes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[0-9a-f]{64}$"
+      }
+    },
+    "pricing_scope": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "permitted_operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "create-private-draft",
+          "upload-proof",
+          "submit",
+          "publish",
+          "update",
+          "unpublish"
+        ]
+      }
+    },
+    "maximum_external_spend": {
+      "type": "number",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "approvers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 16
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "used_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    }
+  }
+}

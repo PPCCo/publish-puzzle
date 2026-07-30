@@ -1,0 +1,22 @@
+{
+  "attestation_id": "orig-project-001",
+  "project_id": "PROJECT_ID",
+  "asset_path": "",
+  "asset_hash": "sha256:REPLACE",
+  "asset_type": "coloring-line-art",
+  "creator": "",
+  "creation_method": "",
+  "model_or_tool": null,
+  "human_contribution": "",
+  "not_traced": true,
+  "not_derivative_of_protected_original": true,
+  "no_living_artist_style_imitation_by_name": true,
+  "reference_images_used": [],
+  "reference_images_rights_confirmed": true,
+  "attested_by": "",
+  "attested_at": null,
+  "confidence": 0.0,
+  "escalation_required": false,
+  "escalation_reason": null,
+  "notes": ""
+}

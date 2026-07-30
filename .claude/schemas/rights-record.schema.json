@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rights Ledger Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rights_id",
+    "asset_path",
+    "asset_hash",
+    "asset_type",
+    "creator_or_provider",
+    "source",
+    "acquired_at",
+    "creation_method",
+    "commercial_use",
+    "territories",
+    "formats",
+    "clearance_status"
+  ],
+  "properties": {
+    "rights_id": {
+      "type": "string",
+      "pattern": "^rgt-[a-z0-9-]+$"
+    },
+    "asset_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "asset_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "image",
+        "illustration",
+        "diagram",
+        "map",
+        "font",
+        "voice",
+        "music",
+        "sound-effect",
+        "recording",
+        "dataset",
+        "trademark-reference",
+        "other"
+      ]
+    },
+    "creator_or_provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acquired_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "creation_method": {
+      "type": "string",
+      "enum": [
+        "human-created",
+        "commissioned",
+        "licensed",
+        "public-domain",
+        "open-license",
+        "ai-assisted",
+        "ai-generated",
+        "mixed",
+        "other"
+      ]
+    },
+    "model_or_tool": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "human_contribution": {
+      "type": "string"
+    },
+    "license_or_contract": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "commercial_use": {
+      "type": "boolean"
+    },
+    "modification_allowed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "attribution": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "territories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "formats": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "term_end": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "consent_evidence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "disclosure_obligations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "clearance_status": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "pending",
+        "cleared",
+        "restricted",
+        "expired",
+        "excluded",
+        "escalated"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
