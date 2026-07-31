@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "evaluated_at": "2026-07-31T13:26:00Z",
+  "decision": "PASS",
+  "expectations": {
+    "audience": "senior-large-print",
+    "family": "puzzle-book",
+    "min_type_pt": 16.0,
+    "min_line_pt": 3.0,
+    "single_sided_required": false,
+    "alt_text_required": false,
+    "high_contrast_required": true
+  },
+  "checks": {
+    "type_size": true,
+    "high_contrast": true
+  },
+  "issues": [],
+  "warnings": [],
+  "note": "Every accessibility requirement is enforced by a check, not asserted."
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "artifact_hashes": [
+    "sha256:01452497adf0b5d7c3aa3a12bdee5ddb412fa404872d33bb10edc5f04e1ae14e",
+    "sha256:08f00aca62663310a92681a3bf31c5dde56cf9639207131f236f35651303db25",
+    "sha256:277f892bf5172f61fb11d5135df797b657ab27ba363c959e289d7308dca345cd",
+    "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+    "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+    "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
+    "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
+    "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
+    "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
+    "sha256:f729a19991b367ca26b2ed137f5e46da9d35739d7dc215bc67accfb7a547759c"
+  ],
+  "evaluated_at": "2026-07-31T13:05:12Z",
+  "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 0,
+    "note": 1
+  },
+  "scores": {
+    "solvability": 5.0,
+    "difficulty-label-accuracy": 5.0,
+    "difficulty-progression": 4.0,
+    "batch-integrity": 5.0
+  },
+  "weighted_overall": 4.75,
+  "decision": "PASS",
+  "reasons": [],
+  "source_reviews": [
+    "reviews/review-solvability-v2.json"
+  ],
+  "stale_reviews": [],
+  "invalid_reviews": []
+}

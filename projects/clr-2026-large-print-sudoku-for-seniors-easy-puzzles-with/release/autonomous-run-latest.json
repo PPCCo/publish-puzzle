@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "run_completed_at": "2026-07-31T13:47:41Z",
+  "stop_reason": "human-gate",
+  "gate_reached": "release",
+  "stages_completed": [
+    {
+      "stage": "PLATFORM_PACKAGING",
+      "transition_to": "RELEASE_AUTHORIZATION",
+      "agents": ["packaging-engineer"],
+      "artifacts": [
+        {
+          "id": "art-platform-package-kdp-c277c592193c",
+          "path": "outputs/packages/kdp/package-manifest.json",
+          "sha256": "sha256:c277c592193c8686c26816731656f2190843cbd7207da9d349c8b38673beae43",
+          "decision": "WARNING",
+          "channel": "kdp",
+          "note": "Offline package only; no KDP login or publication performed"
+        },
+        {
+          "id": "art-platform-package-ets-dc03f0e48858",
+          "path": "outputs/packages/etsy/package-manifest.json",
+          "sha256": "sha256:dc03f0e4885833fd336f6bae320aadc668ba0975e44facd78203c44193cf0f6b",
+          "decision": "WARNING",
+          "channel": "etsy",
+          "note": "Offline package only; no Etsy login or listing performed"
+        }
+      ],
+      "framework_fix": "state.py _channel_package_blockers updated to read preflight_status field (packages.py uses preflight_status; state.py was checking decision/status only — field naming mismatch fixed)",
+      "warnings": [
+        "KDP preflight WARNING: recheck current KDP requirements and upload manually",
+        "Etsy preflight WARNING: assets prepared offline, no Etsy login or file upload"
+      ],
+      "validation": "pass"
+    }
+  ],
+  "gate_packet_path": "approvals/packets/gate-packet-release-latest.json",
+  "next_human_action": "/product-release-authorize clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "release_gate_requirement": "2 DISTINCT approvers required — PPC alone is insufficient; a second distinct approver must also provide release authorization",
+  "open_findings": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 1,
+    "note": 5
+  },
+  "open_minor_finding": "fnd-progression-generator-001: uniform givens (40/40), generator limitation, accepted.",
+  "open_human_decisions": [
+    "Confirm formats stay paperback only",
+    "Series creation decision (this = volume 1 of senior-large-print sudoku series)",
+    "Etsy fulfilment for paperback-only product (or drop Etsy for this edition)",
+    "Pricing: no prices set for KDP or Etsy"
+  ]
+}

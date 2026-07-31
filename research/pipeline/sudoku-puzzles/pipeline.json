@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "category": "sudoku-puzzles",
-  "generated_at": "2026-07-31T11:52:46Z",
+  "generated_at": "2026-07-31T12:26:05Z",
   "evidence_mode": "mixed",
   "category_overview": {
     "trending_types": [
@@ -139,7 +139,7 @@
     },
     "senior-large-print-easy": {
       "product_id": "senior-large-print-easy",
-      "status": "candidate",
+      "status": "promoted",
       "priority": 1,
       "confidence": "high",
       "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
@@ -186,7 +186,8 @@
       ],
       "open_questions": [
         "Confirm accessibility gate contrast/type-size targets at project init."
-      ]
+      ],
+      "promoted_project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with"
     },
     "adult-medium": {
       "product_id": "adult-medium",
@@ -557,7 +558,7 @@
       "puzzle_count_target": 200,
       "page_budget_target": 170,
       "positioning": "Differentiated variety pack for experienced solvers bored of classic 9x9.",
-      "interior_style_notes": "Advisory: killer needs cage sums; samurai needs overlapping 5-grid layout; jigsaw needs irregular regions \u2014 all raise verification complexity.",
+      "interior_style_notes": "Advisory: killer needs cage sums; samurai needs overlapping 5-grid layout; jigsaw needs irregular regions — all raise verification complexity.",
       "seo": {
         "title_pattern": "Sudoku Variations for Adults: Killer, Samurai, Jigsaw [N] Puzzles",
         "keyword_ideas": [
@@ -672,7 +673,7 @@
         "F-023"
       ],
       "open_questions": [
-        "Etsy 13-tag list is inferred (F-021), not seller tags \u2014 confirm at listing.",
+        "Etsy 13-tag list is inferred (F-021), not seller tags — confirm at listing.",
         "Target 300-1000 puzzle bundle sweet spot (F-023, advisory)."
       ]
     },

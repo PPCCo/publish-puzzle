@@ -90,8 +90,18 @@ def _channel_package_blockers(paths: ProjectPaths) -> list[str]:
     blockers: list[str] = []
     project = load_yaml(paths.config)
     for channel in project.get("sales_channels", []):
-        manifest = paths.directory / "outputs" / "packages" / channel / "package-manifest.json"
-        if _report_decision(manifest) not in {"PASS", "WARNING"}:
+        manifest_path = paths.directory / "outputs" / "packages" / channel / "package-manifest.json"
+        if not manifest_path.exists():
+            blockers.append(f"channel package is missing or failed: {channel}")
+            continue
+        try:
+            data = load_json(manifest_path)
+            # packages.py writes preflight_status; also accept decision/status for compatibility
+            raw = data.get("preflight_status") or data.get("decision") or data.get("status") or ""
+            status = str(raw).upper()
+        except Exception:  # noqa: BLE001
+            status = "INVALID"
+        if status not in {"PASS", "WARNING"}:
             blockers.append(f"channel package is missing or failed: {channel}")
     return blockers
 

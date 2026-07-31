@@ -160,6 +160,15 @@ projects/<project-id>/
 
 ## 8. Core CLI
 
+All commands print JSON to stdout. Exit codes: `0` success, `1` gate/validation failure, `2` error.
+
+**Global options** (accepted before any subcommand):
+
+| Flag | Description |
+|---|---|
+| `--root <path>` | Override repo-root autodetection. |
+| `--compact` | Emit compact single-line JSON instead of pretty-printed. |
+
 ```bash
 # Environment and framework
 python3 .claude/scripts/ph_cli.py doctor
@@ -173,11 +182,13 @@ python3 .claude/scripts/ph_cli.py research pipeline-add "sudoku puzzles" --json 
 python3 .claude/scripts/ph_cli.py research promote "sudoku puzzles" --product-id <id> --project-id clr-YYYY-slug
 python3 .claude/scripts/ph_cli.py research show "sudoku puzzles"
 python3 .claude/scripts/ph_cli.py research show "sudoku puzzles" --product-id <id>   # resolves evidence inline
-python3 .claude/scripts/ph_cli.py research log "sudoku puzzles" --event gather --json '{"tier":"http"}'
+python3 .claude/scripts/ph_cli.py research log "sudoku puzzles" --event gather        # --json '{"tier":"http"}' optional detail
 
-# Tiered network fetcher (requires --allow-net; network-free by default)
+# Tiered network fetcher (requires --allow-net or RESEARCH_FETCH_ENABLED=1; network-free by default)
 python3 .claude/scripts/ph_cli.py fetch search "large print sudoku 2026" --allow-net
+python3 .claude/scripts/ph_cli.py fetch search "large print sudoku 2026" --allow-net --engine ddg --max 20
 python3 .claude/scripts/ph_cli.py fetch get https://www.kdpeasy.com/ --allow-net
+python3 .claude/scripts/ph_cli.py fetch get https://www.kdpeasy.com/ --allow-net --no-cache   # bypass Tier-0 cache
 python3 .claude/scripts/ph_cli.py fetch probe amazon --allow-net          # Tier 2→3 probe; returns best_tier
 
 # Connectivity manifest (offline read/write; network probing is done by fetch probe)
@@ -186,28 +197,89 @@ python3 .claude/scripts/ph_cli.py connectivity write --json <path-or-stdin>
 
 # Projects
 python3 .claude/scripts/ph_cli.py project init --topic "..." --audience senior-large-print --product-type puzzle-book --formats paperback
+python3 .claude/scripts/ph_cli.py project init --topic "..." --audience adult-general --product-type puzzle-book \
+    --formats paperback --project-id clr-YYYY-slug --language en-US --working-title "My Book" --created-by human
 python3 .claude/scripts/ph_cli.py project list
 python3 .claude/scripts/ph_cli.py project status <id>
-python3 .claude/scripts/ph_cli.py project plan <id>
+python3 .claude/scripts/ph_cli.py project validate <id>
+python3 .claude/scripts/ph_cli.py project next <id>                       # next valid transitions
+python3 .claude/scripts/ph_cli.py project plan <id>                       # deterministic recommended action
 python3 .claude/scripts/ph_cli.py project transition <id> --to PLANNING --actor human --reason "Niche approved"
 
-# Content: code generates, code verifies (independently)
-python3 .claude/scripts/ph_cli.py generate <id> --type sudoku --count 30 --difficulty mixed --seed 12345 --actor puzzle-generator
-python3 .claude/scripts/ph_cli.py verify <id> --type sudoku
+# Series (multi-volume sets; each volume is an independent project with its own gates)
+python3 .claude/scripts/ph_cli.py series init --title "..." --premise "..." --books-json <path-or-inline-json> \
+    --audience senior-large-print --series-id clr-series-YYYY-slug
+python3 .claude/scripts/ph_cli.py series init ... --no-first-book         # manifest only; add volumes later
+python3 .claude/scripts/ph_cli.py series list
+python3 .claude/scripts/ph_cli.py series status <series-id>
+python3 .claude/scripts/ph_cli.py series add-book <series-id> --position 2 --project-id clr-YYYY-slug
+python3 .claude/scripts/ph_cli.py series link <series-id> --position 2 --project-id clr-YYYY-slug  # attach existing project
+python3 .claude/scripts/ph_cli.py series context <project-id>             # read-only sibling context
+python3 .claude/scripts/ph_cli.py series milestone <series-id> --target-state PUBLISHED
 
-# Artifacts, quality, rights, gates
+# Content: code generates, code verifies (independently)
+python3 .claude/scripts/ph_cli.py generate <id> --type sudoku --count 30 --difficulty mixed --actor puzzle-generator
+python3 .claude/scripts/ph_cli.py generate <id> --type sudoku --count 30 --difficulty mixed --seed 12345 --actor puzzle-generator
+python3 .claude/scripts/ph_cli.py generate <id> --type sudoku --count 30 --difficulty mixed --seed 12345 \
+    --params-json '{"symmetry":"rotational"}' --actor puzzle-generator
+python3 .claude/scripts/ph_cli.py verify <id>                             # verify all content types
+python3 .claude/scripts/ph_cli.py verify <id> --type sudoku               # restrict to one type
+
+# Audits (deterministic; no network)
+python3 .claude/scripts/ph_cli.py audit metadata <id>
+python3 .claude/scripts/ph_cli.py audit accessibility <id>
+
+# Niche assessment
+python3 .claude/scripts/ph_cli.py niche <id>
+
+# Artifacts, quality, rights
+python3 .claude/scripts/ph_cli.py artifact list <id>
 python3 .claude/scripts/ph_cli.py artifact register <id> <path> --type content --stage CONTENT_GENERATION --actor puzzle-generator
+python3 .claude/scripts/ph_cli.py artifact register <id> <path> --type content --stage CONTENT_GENERATION --actor puzzle-generator \
+    --rights-status cleared --validation-status verified \
+    --source-artifact-id <prev-id> --provenance-json '{"seed":12345}' # --inactive to mark superseded
+python3 .claude/scripts/ph_cli.py artifact freeze <id> --artifact <artifact-id-or-hash> --actor human  # repeatable --artifact
 python3 .claude/scripts/ph_cli.py quality evaluate <id>
+python3 .claude/scripts/ph_cli.py quality evaluate <id> --stage CONTENT_VERIFICATION
 python3 .claude/scripts/ph_cli.py rights check <id>
-python3 .claude/scripts/ph_cli.py approval packet <id> --gate interior
+python3 .claude/scripts/ph_cli.py rights add <id> --record-json <path-or-inline-json>
+
+# Approvals and release authorization (human gates; six gates in sequence)
+python3 .claude/scripts/ph_cli.py approval packet <id> --gate niche       # gates: niche|interior|cover|compliance|listing|release
+python3 .claude/scripts/ph_cli.py approval list <id>
+python3 .claude/scripts/ph_cli.py approval grant <id> --gate interior --approver "Jane Smith" --approver-role publisher \
+    --artifact <hash> --scope "batch-001 verified content" [--decision APPROVED] [--exclusion ...] [--notes "..."] [--expires-at ISO8601]
+python3 .claude/scripts/ph_cli.py approval release-authorize <id> \
+    --approver "Jane Smith" --approver "Bob Jones" \     # release requires two --approver flags
+    --channel kdp --product "Large-Print Sudoku" --territory US \
+    --artifact <hash> [--operation submit] [--maximum-external-spend 0.0] [--currency USD] [--expires-at ISO8601]
+python3 .claude/scripts/ph_cli.py approval release-list <id>
+python3 .claude/scripts/ph_cli.py approval release-verify <id> --channel kdp --operation submit --hash <hash>
+
+# Events (append-only history)
+python3 .claude/scripts/ph_cli.py event tail <id>
+python3 .claude/scripts/ph_cli.py event tail <id> --limit 50
 
 # Builds and packages
-python3 .claude/scripts/ph_cli.py build interior <id>
-python3 .claude/scripts/ph_cli.py build cover <id>
+python3 .claude/scripts/ph_cli.py build interior <id>                     # --binding paperback|hardcover (default paperback)
+python3 .claude/scripts/ph_cli.py build cover <id>                        # --binding paperback|hardcover (default paperback)
 python3 .claude/scripts/ph_cli.py build digital <id>
 python3 .claude/scripts/ph_cli.py build proof <id>
-python3 .claude/scripts/ph_cli.py package <id> --channel kdp
+python3 .claude/scripts/ph_cli.py package <id> --channel kdp              # channels: kdp|etsy|gumroad|generic
 python3 .claude/scripts/ph_cli.py package <id> --channel etsy
+
+# Submission (dry-run or record human/platform activity; no live writes)
+python3 .claude/scripts/ph_cli.py submission dry-run <id> --channel kdp --actor human
+python3 .claude/scripts/ph_cli.py submission record <id> --channel kdp --evidence "Upload confirmed" \
+    --status submitted --actor human [--external-id <platform-id>]   # statuses: submitted|accepted|published|rejected|withdrawn|unknown
+
+# Marketing (offline; no external writes)
+python3 .claude/scripts/ph_cli.py marketing listing <id>                  # title, subtitle, description, keywords, categories
+python3 .claude/scripts/ph_cli.py marketing guide <id>                    # per-platform upload and launch step guides
+python3 .claude/scripts/ph_cli.py marketing kit <id>                      # guide + listing combined
+
+# Catalogue
+python3 .claude/scripts/ph_cli.py catalog rebuild
 ```
 
 ## 9. Safety boundaries

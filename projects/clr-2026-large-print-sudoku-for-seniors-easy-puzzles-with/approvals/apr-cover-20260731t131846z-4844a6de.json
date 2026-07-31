@@ -1,0 +1,24 @@
+{
+  "approval_id": "apr-cover-20260731t131846z-4844a6de",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "cover",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
+    "sha256:0c10e23ed8d8a6ad37d7169d4aaacf47bc243e6bc7d28c6ff72893358fd8d648",
+    "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f"
+  ],
+  "scope": "Cover wrap and proof approved for paperback 8.5x11: spine 0.455in, wrap 17.705x11.25in, KDP-compliant. Art direction (navy+white+gold, sudoku grid motif, large clear title) approved. Cover proof PASS.",
+  "exclusions": [
+    "Font commercial-use rights not yet recorded in rights ledger — must be cleared and recorded before compliance gate.",
+    "Cover-art originality attestation not yet recorded in rights ledger — must be recorded before compliance gate (rule 07).",
+    "AI-assistance disclosure requirement remains unknown — must be resolved before compliance gate."
+  ],
+  "notes": "Approver accepts these exclusions; compliance gate will block until all three are resolved.",
+  "created_at": "2026-07-31T13:18:46Z",
+  "expires_at": null,
+  "invalidated_at": "2026-07-31T13:42:59Z",
+  "invalidation_reason": "Superseded by sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136"
+}

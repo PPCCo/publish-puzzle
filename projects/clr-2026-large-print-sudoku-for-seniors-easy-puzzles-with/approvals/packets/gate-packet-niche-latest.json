@@ -1,0 +1,166 @@
+{
+  "schema_version": "1.0",
+  "kind": "approval-gate-packet",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "niche",
+  "generated_at": "2026-07-31T12:46:00Z",
+  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
+  "current_state": "NICHE_APPROVAL",
+  "expected_state": "NICHE_APPROVAL",
+  "state_matches_gate": true,
+  "scope": {
+    "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
+    "audience": "senior-large-print",
+    "book_type": "puzzle-book",
+    "formats": [
+      "paperback"
+    ],
+    "sales_channels": [
+      "kdp",
+      "etsy"
+    ],
+    "territory": null
+  },
+  "artifacts_under_review": [
+    {
+      "kind": "intake-note",
+      "sha256": "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
+      "type": "intake-note",
+      "path": "notes/intake.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "niche-assessment",
+      "sha256": "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
+      "type": "niche-assessment",
+      "path": "niche/assessment-latest.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "product-brief",
+      "sha256": "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
+      "type": "product-brief",
+      "path": "brief/product-brief.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    }
+  ],
+  "deterministic_evidence": [
+    {
+      "present": true,
+      "decision": "PASS",
+      "report": "niche/assessment-latest.json",
+      "is_pass": true
+    }
+  ],
+  "channel_packages": [],
+  "series_context": null,
+  "open_findings": {
+    "counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0,
+      "note": 0
+    },
+    "open_blocker_or_major": []
+  },
+  "existing_approvals": {
+    "required_distinct_approvers": 1,
+    "current_distinct_approvers": [],
+    "current_count": 0,
+    "approvers_still_needed": 1,
+    "invalidated": []
+  },
+  "risks": [],
+  "ready_for_human_review": true,
+  "decision_options": [
+    "APPROVE",
+    "REJECT",
+    "REQUEST_CHANGES"
+  ],
+  "human_action": {
+    "recording_skill": "/product-approve-niche",
+    "note": "This packet grants nothing. A human must record the decision with the human-only skill /product-approve-niche bound to the exact artifact hashes listed above. Autonomy must STOP here.",
+    "artifact_hashes_to_bind": [
+      "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
+      "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
+      "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25"
+    ]
+  },
+  "audit": {
+    "recent_events": [
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub-clr/projects/clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with/niche/assessment-latest.json",
+          "sha256": "sha256:ba67412babf0e00e9322e80b7eb9f5b520ee97ac7ff7c043d08b63099fa0a8d0",
+          "tool": "Write"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260731T124438Z-ca96f966",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-07-31T12:44:38Z"
+      },
+      {
+        "actor": "market-scout",
+        "details": {
+          "active": true,
+          "artifact_id": "art-niche-assessment-ba67412babf0",
+          "path": "niche/assessment-latest.json",
+          "sha256": "sha256:ba67412babf0e00e9322e80b7eb9f5b520ee97ac7ff7c043d08b63099fa0a8d0",
+          "type": "niche-assessment"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260731T124456Z-590bc601",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-07-31T12:44:56Z"
+      },
+      {
+        "actor": "niche-assessor",
+        "details": {
+          "decision": "PASS",
+          "score": 0.4
+        },
+        "event": "NICHE_ASSESSED",
+        "event_id": "evt-20260731T124533Z-4ada52a1",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-07-31T12:45:33Z"
+      },
+      {
+        "actor": "ph_cli-niche",
+        "details": {
+          "active": true,
+          "artifact_id": "art-niche-assessment-8aeac258334e",
+          "path": "niche/assessment-latest.json",
+          "sha256": "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
+          "type": "niche-assessment"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260731T124545Z-5355d035",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-07-31T12:45:45Z"
+      },
+      {
+        "actor": "product-run",
+        "details": {
+          "from": "NICHE_ASSESSMENT",
+          "reason": "Deterministic niche assessment (art-niche-assessment-8aeac258334e) PASS; niche gate packet ready for human review.",
+          "to": "NICHE_APPROVAL"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260731T124550Z-e047c841",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-07-31T12:45:50Z"
+      }
+    ]
+  },
+  "gate_is_required_transition": true
+}

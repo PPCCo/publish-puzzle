@@ -1,0 +1,21 @@
+{
+  "approval_id": "apr-interior-20260731t130811z-15865981",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "interior",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+    "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+    "sha256:b4028dad689372ecb1406295dfafe1922a4c3eeab535b5296e8f919f8dbcc26f",
+    "sha256:9503f0a6ff3a5f49af1d9cc9c1493bce4ac683918d93ad0709104a20b3f2de46"
+  ],
+  "scope": "Interior approved: 100 easy sudoku-9x9 puzzles, 202-page paperback interior, B&W high-contrast, solutions back-only. Code verification PASS 100/100. Quality gate PASS 4.75. Interior proof PASS. Minor finding fnd-progression-generator-001 accepted (uniform givens, generator limitation). These exact hashes are frozen for all downstream stages.",
+  "exclusions": [],
+  "notes": "Artifact hashes frozen at approval. Any revision requires new revision cycle and re-verification before re-entering interior gate.",
+  "created_at": "2026-07-31T13:08:11Z",
+  "expires_at": null,
+  "invalidated_at": "2026-07-31T13:42:58Z",
+  "invalidation_reason": "Superseded by sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f"
+}

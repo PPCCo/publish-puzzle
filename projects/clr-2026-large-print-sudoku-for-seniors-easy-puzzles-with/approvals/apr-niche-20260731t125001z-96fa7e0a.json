@@ -1,0 +1,19 @@
+{
+  "approval_id": "apr-niche-20260731t125001z-96fa7e0a",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "niche",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
+    "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25"
+  ],
+  "scope": "Niche approved: large-print easy sudoku puzzle-book for senior-large-print audience, paperback format, kdp+etsy channels. Demand signals are advisory/directional only. Open planning decisions (count, page budget, series, Etsy fulfilment, AI-disclosure) to be resolved in PLANNING.",
+  "exclusions": [],
+  "notes": "",
+  "created_at": "2026-07-31T12:50:01Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

@@ -1,0 +1,42 @@
+{
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "created_at": "2026-07-31T13:05:00Z",
+  "created_by": "content-verifier",
+  "dimension": "solvability-and-difficulty",
+  "decision": "CONDITIONAL_PASS",
+  "score": 0.86,
+  "findings": [
+    {
+      "severity": "note",
+      "location": "verification/content-verification-latest.json",
+      "description": "The independent code verifier reports decision=PASS with 100/100 items verified, zero failed items, for the sudoku batch at content/puzzles/sudoku-batch.json. Solvability and unique-solution results are taken as authoritative from that code output and were not re-derived here by grid inspection.",
+      "recommendation": "Retain the code-verification record as the binding evidence for solvability and uniqueness. No action required for these two dimensions."
+    },
+    {
+      "severity": "note",
+      "location": "content/puzzles/sudoku-batch.json (items[*].payload.given_count); project.yaml content_plan.puzzle_grid_spec.givens_range_easy",
+      "description": "Every one of the 100 puzzles carries exactly 40 givens (81-cell 9x9 grid, 41 empty cells each; verified across the full batch, not just the sample). 40 sits inside the declared easy range [36,45]. Under standard 9x9 sudoku convention, 36-45 givens with a unique solution is a well-accepted easy band, and a fixed 40 is a defensible, forgiving choice for a senior-large-print audience. The stated 'easy' label is therefore consistent with the givens count.",
+      "recommendation": "Accept the 'easy' label as consistent with the givens range and audience. No relabel is warranted on givens evidence."
+    },
+    {
+      "severity": "minor",
+      "location": "content/puzzles/sudoku-batch.json (items[0..99].payload.given_count); project.yaml content_plan.difficulty_progression=progressive, production.design.rationale.book_type_override",
+      "description": "given_count is flat at 40 for every puzzle (min=40, max=40, no variance across index 0 -> 99), so there is no within-tier progression signal from givens count. The content plan declares difficulty_progression=progressive and the design rationale states 'difficulty progresses front-to-back'. Givens count is only a coarse proxy for sudoku difficulty (solving-technique depth and constraint-propagation matter more), so a flat givens count does not prove the absence of progression, but the one observable ordering signal available here is absent. This is a single-tier easy book, so a gentle-to-flat curve is acceptable for the audience; the mismatch is between the 'progressive' declaration and the flat observable, not a solvability defect.",
+      "recommendation": "Either (a) confirm and record that a single 'easy' tier intentionally holds difficulty flat for the senior-large-print audience and that 'progressive' refers to section/format ordering rather than a puzzle-difficulty gradient, or (b) if a front-to-back gradient is intended, have the generator vary a difficulty metric (e.g., givens 45 -> 36 or a measured technique-depth metric) and re-verify. Acceptance test: within-tier difficulty ordering matches the recorded intent for 'progressive'."
+    },
+    {
+      "severity": "note",
+      "location": "content/puzzles/sudoku-batch.json (items[*].payload.grid, items[*].solution.grid)",
+      "description": "No systematic batch defects observed. All 100 puzzle grids are unique and all 100 solution grids are unique (no duplicate or identical puzzles). Every grid is fully populated with size=9 and metadata.rule=standard-9x9; empty-cell counts (41 each) are internally consistent with the declared 40 givens for all items. No missing, malformed, or all-identical grids were found.",
+      "recommendation": "No action. Batch structural integrity supports the code verifier's PASS."
+    },
+    {
+      "severity": "note",
+      "location": ".claude/config/age_bands.json (profiles.senior-large-print)",
+      "description": "The age_bands config for senior-large-print defines reading-level and visual-density targets but no numeric sudoku givens/solve-time difficulty thresholds. The difficulty-label assessment therefore rests on the design spec's givens_range_easy=[36,45] plus standard sudoku difficulty convention, rather than a config-driven numeric threshold.",
+      "recommendation": "If a formal measured-difficulty label is required by the quality gate, consider adding sudoku difficulty thresholds (givens bands and/or solve-time estimates) to config so future difficulty labels are derived deterministically rather than by convention."
+    }
+  ],
+  "summary": "The independent code verifier confirmed 100/100 puzzles solvable with unique solutions, and this review does not re-derive those results. On difficulty, all 100 puzzles have exactly 40 givens, which is within the declared easy range [36,45] and consistent with standard easy-sudoku convention and the senior-large-print audience, and no batch is duplicated, empty, or malformed. The only reservation is that givens count is flat across the batch, so there is no observable within-tier progression signal against a content plan that declares 'progressive'; this warrants confirming intent rather than blocking, hence a conditional pass.",
+  "evidence": "Read verification/content-verification-latest.json (decision=PASS, item_count=100, passed_count=100, failed_batch_count=0). Read project.yaml content_plan (difficulty_tiers=[easy], difficulty_progression=progressive, puzzle_grid_spec.givens_range_easy=[36,45]) and production.design rationale. Parsed content/puzzles/sudoku-batch.json: top-level difficulty='easy', count=100, 100 items. Computed given_count across all 100 items (min=40, max=40, distribution={40:100}); cross-checked each declared given_count against non-zero cells in the grid (0 mismatches); confirmed all givens within [36,45]. Confirmed uniqueness of puzzle and solution grids across the full batch (100/100 unique each, 0 duplicates), size=9 and rule=standard-9x9 for all items, empty-cell count 41 for all sampled items. Sampled first 10 (index 0-9) and last 10 (index 90-99) explicitly. Checked .claude/config/age_bands.json senior-large-print profile for numeric difficulty thresholds (none defined for sudoku). Uniqueness and solvability were NOT re-verified by grid inspection per instruction; those results are cited from the code verifier."
+}

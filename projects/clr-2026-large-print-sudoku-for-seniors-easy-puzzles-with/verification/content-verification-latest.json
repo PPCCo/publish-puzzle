@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "evaluated_at": "2026-07-31T13:03:52Z",
+  "decision": "PASS",
+  "batch_count": 1,
+  "item_count": 100,
+  "failed_batch_count": 0,
+  "batches": [
+    {
+      "content_type": "sudoku",
+      "family": "puzzle",
+      "verifiable": true,
+      "item_count": 100,
+      "passed_count": 100,
+      "passed": true,
+      "failed_items": [],
+      "source": "content/puzzles/sudoku-batch.json"
+    }
+  ],
+  "note": "Each item re-verified independently of its generator (code verifies code)."
+}

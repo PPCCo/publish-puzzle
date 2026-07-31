@@ -1,0 +1,23 @@
+{
+  "approval_id": "apr-compliance-20260731t133613z-47cb93c4",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "compliance",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
+    "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
+    "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
+    "sha256:306e75023e518222cd386739af4f1b2b6f21a650017e04f42e7399b546563bb1",
+    "sha256:b4028dad689372ecb1406295dfafe1922a4c3eeab535b5296e8f919f8dbcc26f",
+    "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac"
+  ],
+  "scope": "Compliance evidence reviewed and accepted for paperback puzzle-book, senior-large-print audience: accessibility PASS (type_size 18pt, high_contrast confirmed), rights cleared (fonts open-license, cover-art originality attested, ai_assistance_disclosure_required=true), no child-safety concerns, no open blockers or majors.",
+  "exclusions": [],
+  "notes": "",
+  "created_at": "2026-07-31T13:36:13Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "current_state": "RELEASE_AUTHORIZATION",
+  "previous_state": "PLATFORM_PACKAGING",
+  "revision_cycle": 0,
+  "targeted_repairs": {},
+  "active_artifacts": {
+    "intake-note": "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
+    "product-brief": "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
+    "niche-assessment": "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
+    "content-plan": "sha256:f729a19991b367ca26b2ed137f5e46da9d35739d7dc215bc67accfb7a547759c",
+    "project-spec": "sha256:306e75023e518222cd386739af4f1b2b6f21a650017e04f42e7399b546563bb1",
+    "content-sudoku": "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+    "content-verification": "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+    "interior-pdf": "sha256:b4028dad689372ecb1406295dfafe1922a4c3eeab535b5296e8f919f8dbcc26f",
+    "interior-proof": "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
+    "quality-review": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
+    "quality-gate": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
+    "cover-art-direction": "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
+    "cover-pdf": "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
+    "cover-proof": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+    "accessibility-gate": "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
+    "rights-ledger": "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
+    "rights-gate": "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
+    "metadata": "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7",
+    "metadata-validation": "sha256:7e8641cd83d8b1d9a2f44a840a52bff3d41a121ac88e3a6827febe6469af8bde",
+    "listing-kit": "sha256:9f4218d3da7dc09583b9e9f076ccb45efbfd1eb16581c7dc288b4e5532be7ae0",
+    "launch-guide": "sha256:378caf1d70eb12ee6698efce9e21a8423b1e1cf965a71436fa5c213d81b45c89",
+    "platform-package-kdp": "sha256:c277c592193c8686c26816731656f2190843cbd7207da9d349c8b38673beae43",
+    "platform-package-etsy": "sha256:dc03f0e4885833fd336f6bae320aadc668ba0975e44facd78203c44193cf0f6b"
+  },
+  "required_reviews": [],
+  "completed_reviews": [],
+  "blocked_reasons": [],
+  "quality_gate": {
+    "decision": "PASS",
+    "evaluated_at": "2026-07-31T13:05:12Z",
+    "counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0,
+      "note": 1
+    },
+    "weighted_overall": 4.75
+  },
+  "rights_gate": {
+    "decision": "PASS",
+    "evaluated_at": "2026-07-31T13:28:50Z",
+    "unlinked": 0,
+    "blocked": 0
+  },
+  "invalidated_approvals": [
+    "apr-interior-20260731t130811z-15865981",
+    "apr-cover-20260731t131846z-4844a6de"
+  ],
+  "updated_at": "2026-07-31T13:47:35Z",
+  "updated_by": "packaging-engineer",
+  "niche_assessment": {
+    "decision": "PASS",
+    "opportunity_score": 0.4,
+    "evaluated_at": "2026-07-31T12:45:33Z"
+  },
+  "content_verification": {
+    "decision": "PASS",
+    "evaluated_at": "2026-07-31T13:03:52Z",
+    "item_count": 100,
+    "failed_batches": 0
+  },
+  "accessibility_gate": {
+    "decision": "PASS",
+    "evaluated_at": "2026-07-31T13:26:00Z",
+    "issues": 0
+  }
+}

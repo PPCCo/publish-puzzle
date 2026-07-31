@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "generated_at": "2026-07-31T13:38:07Z",
+  "external_write_performed": false,
+  "channels": [
+    "kdp",
+    "etsy"
+  ],
+  "per_channel_steps": {
+    "kdp": [
+      "Recheck current KDP format, trim, bleed, and cover specifications.",
+      "Create the title; enter metadata from listing.json; set categories/keywords.",
+      "Upload interior and cover; inspect in the current previewer.",
+      "Order a physical proof before publishing.",
+      "Set territories, pricing, and complete AI-content disclosure.",
+      "Publish only after recording a valid release authorization."
+    ],
+    "etsy": [
+      "Create a digital listing; upload preview images and the print-ready files.",
+      "Enter title, description, and tags from the listing kit.",
+      "Set the digital-download delivery and commercial-use terms.",
+      "Confirm shop policies, pricing, and file formats.",
+      "Publish only after recording a valid release authorization."
+    ]
+  },
+  "note": "Offline guidance only. No external logins or writes are performed by the framework."
+}

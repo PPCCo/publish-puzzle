@@ -1,0 +1,149 @@
+schema_version: '1.0'
+project_id: clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with
+working_title: 'Large Print Sudoku for Seniors: Easy Puzzles with Solutions'
+topic: large print sudoku for seniors, easy puzzles with solutions
+book_type: puzzle-book
+product_type: puzzle-book
+genre: ''
+audience: senior-large-print
+language: en-US
+formats:
+- paperback
+sales_channels:
+- kdp
+- etsy
+edition: 1
+created_at: '2026-07-31T12:22:33Z'
+created_by: human
+objectives: []
+constraints: []
+content_plan:
+  puzzle_types:
+  - sudoku-9x9
+  target_content_count: 100
+  difficulty_progression: progressive
+  solutions_placement: back-only
+  difficulty_tiers:
+  - easy
+  difficulty_tiers_description: forgiving, single easy tier; no medium or hard
+  page_budget_target: 110
+  puzzle_grid_spec:
+    grid: 9x9
+    digits: 1-9
+    cells_per_grid: 81
+    givens_range_easy:
+    - 36
+    - 45
+  section_structure:
+  - introduction (1p)
+  - puzzles (1 per page, ~100p)
+  - solutions (back-only, ~9p)
+  content_plan_notes: Advisory targets from pipeline; counts to be confirmed by code-generation
+    output. Any [N] in metadata must equal code-verified puzzle count.
+production:
+  trim_size: 8.5x11
+  bleed: false
+  colour_interior: false
+  colour_policy: &id001
+    colour_interior_default: false
+    digital:
+      text: colour
+      images: colour
+    print_interior:
+      text: black-and-white-high-contrast
+      images: black-and-white
+    image_colour_rule: Interior colour is used only when it carries meaning or the
+      product family requires it (young coloring, colour-by-number). Puzzle grids,
+      solutions, and journal pages default to black-and-white to control print cost.
+    global_page_rule: Whenever a print page carries a colour image, the entire page
+      is a colour page for costing; keep colour pages contiguous to avoid per-signature
+      colour surcharges.
+    notes: 'senior-large-print: high-contrast black-and-white interior for legibility;
+      large grids/type; colour avoided to preserve contrast.'
+  design:
+    schema_version: '1.0'
+    resolved: true
+    inputs:
+      audience: senior-large-print
+      book_type: puzzle-book
+      formats:
+      - paperback
+    trim_size: 8.5x11
+    trim_size_candidates:
+    - 8.5x11
+    - 8x10
+    colour_interior: false
+    colour_policy: *id001
+    tone_register: calm-clear
+    reading_level_target:
+      band: senior-large-print
+      resolved: true
+      age_min: 55
+      age_max: null
+      default_words:
+      - 0
+      - 3000
+      sentence_words_target:
+      - 6
+      - 18
+      paragraph_sentences_target:
+      - 1
+      - 4
+      technical_terms_per_1000_words_max: 20
+      visuals_per_spread_target:
+      - 0
+      - 2
+      guidance:
+      - Large-print type (>= 16pt body) and oversized grids
+      - High contrast; avoid low-contrast greys and thin rules
+      - One puzzle per page with ample white space
+      - Simple, unambiguous instructions
+    body_type_pt: 18.0
+    high_contrast: true
+    visual_density: medium
+    emotional_intensity_ceiling: gentle
+    pedagogy_approach: progressive
+    binding_hint: paperback
+    paper_hint: white
+    rationale:
+      audience_default: 'Large-print accessibility band: large grids and type, high
+        contrast, low density, black-and-white to preserve contrast.'
+      book_type_override: Puzzle books lead with grids and solvability; difficulty
+        progresses front-to-back, solutions grouped back-only.
+      colour: 'senior-large-print: high-contrast black-and-white interior for legibility;
+        large grids/type; colour avoided to preserve contrast.'
+    provenance:
+      engine: publishing_house.design_policy.derive_design
+      config: .claude/config/design_policy.json
+      age_bands: .claude/config/age_bands.json
+      colour_source: publishing_house.project.default_colour_policy
+      field_source:
+        binding_hint: audience:senior-large-print
+        body_type_pt: audience:senior-large-print (guidance >= 16pt; 18pt applied for oversized-grid legibility)
+        colour_interior: audience:senior-large-print
+        emotional_intensity_ceiling: audience:senior-large-print
+        high_contrast: audience:senior-large-print (mandatory for large-print band)
+        paper_hint: audience:senior-large-print
+        pedagogy_approach: book_type:puzzle-book
+        tone_register: audience:senior-large-print
+        trim_size_candidates: audience:senior-large-print
+        trim_size_recommended: audience:senior-large-print
+        visual_density: book_type:puzzle-book
+      audience_profile_resolved: true
+      book_type_override_applied: true
+  print:
+    paper: white
+    binding: paperback
+    spine_width_in: null
+commercial:
+  currency: USD
+  ebook_price: null
+  paperback_price: null
+  hardcover_price: null
+  digital_price: null
+rights:
+  territories:
+  - WORLD
+  ai_assistance_disclosure_required: true
+  originals_only: true
+status_notes: ''

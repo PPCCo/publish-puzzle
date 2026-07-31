@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "evaluated_at": "2026-07-31T13:38:01Z",
+  "decision": "PASS",
+  "issues": [],
+  "warnings": [
+    "No identifiers recorded; verify whether each format/channel requires an ISBN or other identifier"
+  ],
+  "metadata_path": "metadata/book.json"
+}
