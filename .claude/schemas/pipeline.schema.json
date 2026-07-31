@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pipeline.schema.json",
+  "title": "Category Product Pipeline (product backlog)",
+  "description": "The backlog of future products for one category, keyed by PRODUCT_ID. Each entry carries enough context that /product-new <category> <PRODUCT_ID> needs zero further research. Craft literals here are ADVISORY only (rule 20): the design-policy engine is authoritative at project init. Only human-input points (working_title, audience, product_type, formats) are required.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "category", "generated_at", "products"],
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "category": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "generated_at": { "type": "string", "minLength": 1 },
+    "evidence_mode": { "type": "string", "enum": ["http", "browser", "manual", "mixed", "none"] },
+    "category_overview": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "trending_types": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type"],
+            "properties": {
+              "type": { "type": "string", "minLength": 1 },
+              "confidence": { "type": "string", "enum": ["low", "med", "high"] },
+              "evidence_ref": { "type": "string" }
+            }
+          }
+        },
+        "audiences": { "type": "array", "items": { "type": "string" } },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "bisac_or_browse": { "type": "string" },
+              "evidence_ref": { "type": "string" }
+            }
+          }
+        },
+        "seo": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "title_patterns": { "type": "array", "items": { "type": "string" } },
+            "keyword_ideas": { "type": "array", "items": { "type": "string" } },
+            "evidence_ref": { "type": "string" }
+          }
+        },
+        "size_norms": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "trim": { "type": "array", "items": { "type": "string" } },
+            "page_band": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+            "evidence_ref": { "type": "string" }
+          }
+        }
+      }
+    },
+    "products": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/product" }
+    },
+    "note": { "type": "string" }
+  },
+  "$defs": {
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product_id", "status", "working_title", "audience", "product_type", "formats"],
+      "properties": {
+        "product_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "status": { "type": "string", "enum": ["candidate", "promoted", "dropped"] },
+        "promoted_project_id": { "type": ["string", "null"], "pattern": "^clr-[0-9]{4}-[a-z0-9-]+$" },
+        "priority": { "type": "integer", "minimum": 1 },
+        "confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+        "working_title": { "type": "string", "minLength": 1 },
+        "audience": {
+          "type": "string",
+          "enum": ["kids-4-8", "kids-6-10", "tween-8-12", "teen-13-17", "adult-general", "senior-large-print"]
+        },
+        "product_type": {
+          "type": "string",
+          "enum": ["puzzle-book", "coloring-book", "guided-journal", "digital-printable"]
+        },
+        "formats": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "enum": ["paperback", "hardcover", "digital-pdf"] }
+        },
+        "trim_size_preference": { "type": "string" },
+        "difficulty": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "tier": { "type": "string" },
+            "spread": { "type": "string" }
+          }
+        },
+        "puzzle_count_target": { "type": ["integer", "null"], "minimum": 0 },
+        "page_budget_target": { "type": ["integer", "null"], "minimum": 0 },
+        "cover_style": { "type": "object", "additionalProperties": true },
+        "interior_style_notes": { "type": "string" },
+        "seo": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "title_pattern": { "type": "string" },
+            "keyword_ideas": { "type": "array", "items": { "type": "string" } },
+            "categories": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "positioning": { "type": "string" },
+        "series_grouping": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "is_series": { "type": "boolean" },
+            "series_slug": { "type": "string" },
+            "position": { "type": "integer", "minimum": 1 },
+            "set": { "type": "string" }
+          }
+        },
+        "pricing_hypothesis": { "type": ["object", "string", "null"] },
+        "evidence_refs": { "type": "array", "items": { "type": "string", "pattern": "^F-[0-9]{3,}$" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

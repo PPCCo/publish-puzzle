@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-connectivity.schema.json",
+  "title": "Research Connectivity Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "web_search_available",
+    "http_fetch_available",
+    "browser_available",
+    "checked_at",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "web_search_available": { "type": "string", "enum": ["true", "false", "unknown"] },
+    "http_fetch_available": { "type": "string", "enum": ["true", "false", "unknown"] },
+    "browser_available": { "type": "string", "enum": ["true", "false", "unknown"] },
+    "checked_at": { "type": "string", "minLength": 1 },
+    "checked_under": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "model": { "type": "string" },
+        "harness": { "type": "string" },
+        "provider": { "type": "string" }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "host", "best_tier", "status", "checked_at"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "host": { "type": "string", "minLength": 1 },
+          "best_tier": { "type": "string", "enum": ["cache", "web_search", "http", "browser", "assisted", "manual"] },
+          "status": { "type": "string", "enum": ["ok", "blocked", "unknown"] },
+          "checked_at": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "note": { "type": "string" }
+  }
+}

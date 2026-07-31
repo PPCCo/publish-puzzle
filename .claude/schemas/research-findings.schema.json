@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-findings.schema.json",
+  "title": "Category Research Findings (evidence store)",
+  "description": "Normalized evidence claims gathered for a product category via the tiered retrieval ladder. Pipeline entries reference these by id. Anything from a paywalled/manual/browser-uncertain source is labeled unverified.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "category", "generated_at", "findings"],
+  "properties": {
+    "schema_version": { "type": "string", "minLength": 1 },
+    "category": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "generated_at": { "type": "string", "minLength": 1 },
+    "evidence_mode": { "type": "string", "enum": ["http", "browser", "manual", "mixed", "none"] },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "note": { "type": "string" }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim", "topic", "confidence", "tier", "captured_at"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^F-[0-9]{3,}$" },
+        "claim": { "type": "string", "minLength": 1 },
+        "topic": {
+          "type": "string",
+          "enum": ["trending_types", "audiences", "categories", "seo", "size_norms", "saturation", "positioning", "other"]
+        },
+        "confidence": { "type": "string", "enum": ["low", "med", "high"] },
+        "tier": { "type": "string", "enum": ["cache", "web_search", "http", "browser", "assisted", "manual"] },
+        "verified": { "type": "boolean" },
+        "source_ref": { "type": "string" },
+        "source_url": { "type": "string" },
+        "captured_at": { "type": "string", "minLength": 1 },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

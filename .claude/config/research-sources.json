@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "description": "Sources + retrieval tiers for /product-doctor probing and /research. Human-editable. The `sources[].host` list is the network allowlist enforced by publishing_house/net/fetch.py — a host absent here cannot be fetched.",
+  "search": { "engine": "ddg", "host": "html.duckduckgo.com", "tier": "http" },
+  "sources": [
+    {
+      "id": "ddg",
+      "host": "html.duckduckgo.com",
+      "tiers": ["http"],
+      "topics": ["search", "titles", "trends", "categories"],
+      "paywalled": false
+    },
+    {
+      "id": "kdpeasy",
+      "host": "www.kdpeasy.com",
+      "tiers": ["http"],
+      "topics": ["kdp-niche", "categories", "keywords"],
+      "paywalled": false
+    },
+    {
+      "id": "bookbolt",
+      "host": "bookbolt.io",
+      "tiers": ["http", "assisted"],
+      "topics": ["bsr", "keywords", "trends"],
+      "paywalled": true,
+      "note": "Public pages via http. BSR/keyword-volume DATA is login-gated -> assisted tier (interactive human login; never credentials in the fetcher)."
+    },
+    {
+      "id": "amazon",
+      "host": "www.amazon.com",
+      "tiers": ["browser", "manual"],
+      "topics": ["saturation", "titles", "bsr", "categories"],
+      "paywalled": false,
+      "note": "Bot-blocks curl (captcha stub). Try headless browser; else manual."
+    },
+    {
+      "id": "etsy",
+      "host": "www.etsy.com",
+      "tiers": ["browser", "manual"],
+      "topics": ["printables", "tags", "titles"],
+      "paywalled": false,
+      "note": "403 to curl."
+    },
+    {
+      "id": "gtrends",
+      "host": "trends.google.com",
+      "tiers": ["manual"],
+      "topics": ["trends", "seasonality"],
+      "paywalled": false,
+      "note": "429 to curl; manual only."
+    }
+  ],
+  "manual_platforms": [
+    { "id": "chatgpt", "label": "ChatGPT (web UI)", "url": "https://chatgpt.com", "good_for": ["synthesis", "title-ideation", "category-map"] },
+    { "id": "claude-ai", "label": "Claude.ai (web UI)", "url": "https://claude.ai", "good_for": ["synthesis", "positioning"] }
+  ]
+}

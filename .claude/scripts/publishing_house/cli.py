@@ -59,6 +59,12 @@ def _load_json_argument(value: str | None, default: Any) -> Any:
     return json.loads(value)
 
 
+def _read_stdin_if_dash(value: str | None) -> str | None:
+    if value == "-":
+        return sys.stdin.read()
+    return value
+
+
 PRODUCT_TYPES = ["puzzle-book", "coloring-book", "guided-journal", "digital-printable"]
 
 
@@ -71,7 +77,48 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--compact", action="store_true", help="Print compact JSON.")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    sub.add_parser("doctor", help="Check framework, dependencies, model pin, and optional tools.")
+    doctor = sub.add_parser("doctor", help="Check framework, dependencies, model pin, and optional tools.")
+    doctor.add_argument("--probe-plan", action="store_true", help="Print the ordered research connectivity probe plan (offline; no network).")
+
+    connectivity = sub.add_parser("connectivity", help="Read/write the research connectivity manifest (offline; no network).")
+    connectivity_sub = connectivity.add_subparsers(dest="connectivity_command", required=True)
+    connectivity_sub.add_parser("show", help="Print the connectivity manifest (or an 'unknown' stub if absent).")
+    c_write = connectivity_sub.add_parser("write", help="Validate and atomically write the connectivity manifest.")
+    c_write.add_argument("--json", required=True, help="Manifest JSON (inline, a file path, or '-' for stdin).")
+
+    fetch = sub.add_parser("fetch", help="Quarantined research fetcher (GET-only, host-allowlisted, cached). Network only with --allow-net or RESEARCH_FETCH_ENABLED=1.")
+    fetch.add_argument("--allow-net", action="store_true", help="Enable network for this call (else returns a disabled stub).")
+    fetch.add_argument("--no-cache", action="store_true", help="Bypass the on-disk cache (Tier 0).")
+    fetch_sub = fetch.add_subparsers(dest="fetch_command", required=True)
+    f_search = fetch_sub.add_parser("search", help="Search via an allowlisted HTML endpoint (Tier 2).")
+    f_search.add_argument("query")
+    f_search.add_argument("--engine", default="ddg")
+    f_search.add_argument("--max", type=int, default=10, dest="max_results")
+    f_get = fetch_sub.add_parser("get", help="GET one allowlisted URL; body written to cache, path returned (Tier 2).")
+    f_get.add_argument("url")
+    f_probe = fetch_sub.add_parser("probe", help="Probe Tiers 2->3 for one configured source; report best tier.")
+    f_probe.add_argument("source_id")
+
+    research = sub.add_parser("research", help="Offline category-research pipeline (scaffold/validate/merge/show/log). No network.")
+    research_sub = research.add_subparsers(dest="research_command", required=True)
+    r_init = research_sub.add_parser("init", help="Scaffold research/<category>/ with empty findings + pipeline (idempotent).")
+    r_init.add_argument("category")
+    r_validate = research_sub.add_parser("validate", help="Schema-validate findings + pipeline; check evidence-ref resolution and enums.")
+    r_validate.add_argument("category")
+    r_add = research_sub.add_parser("pipeline-add", help="Validate and merge one product entry (never clobbers a promoted entry).")
+    r_add.add_argument("category")
+    r_add.add_argument("--json", required=True, help="Product entry JSON (inline, a file path, or '-' for stdin).")
+    r_promote = research_sub.add_parser("promote", help="Flip a candidate entry to promoted and record its project id (backlog only).")
+    r_promote.add_argument("category")
+    r_promote.add_argument("--product-id", required=True, dest="product_id")
+    r_promote.add_argument("--project-id", required=True, dest="project_id")
+    r_show = research_sub.add_parser("show", help="Print the pipeline (or one product entry with resolved evidence).")
+    r_show.add_argument("category")
+    r_show.add_argument("--product-id", dest="product_id")
+    r_log = research_sub.add_parser("log", help="Append one event to research-log.ndjson.")
+    r_log.add_argument("category")
+    r_log.add_argument("--event", required=True)
+    r_log.add_argument("--json", dest="detail_json", help="Event detail JSON (inline, a file path, or '-' for stdin).")
 
     framework = sub.add_parser("framework", help="Framework-level operations.")
     framework_sub = framework.add_subparsers(dest="framework_command", required=True)
@@ -361,9 +408,60 @@ def _dispatch_build(args: argparse.Namespace, root: Path) -> Any:
     raise RuntimeError("Unhandled build command")
 
 
+def _dispatch_fetch(args: argparse.Namespace, root: Path) -> Any:
+    # The enable flag is the single gate for network egress in net.fetch. Setting
+    # it here (from --allow-net) keeps every network decision at the CLI boundary.
+    import os as _os
+
+    if getattr(args, "allow_net", False):
+        _os.environ["RESEARCH_FETCH_ENABLED"] = "1"
+    from .net import fetch as _fetch  # imported lazily: the ONLY network module
+
+    use_cache = not getattr(args, "no_cache", False)
+    if args.fetch_command == "search":
+        return _fetch.search(args.query, engine=args.engine, max_results=args.max_results, root=root, use_cache=use_cache)
+    if args.fetch_command == "get":
+        return _fetch.get_to_cache(args.url, root=root, use_cache=use_cache)
+    if args.fetch_command == "probe":
+        return _fetch.probe(args.source_id, root=root)
+    raise RuntimeError("Unhandled fetch command")
+
+
+def _dispatch_research(args: argparse.Namespace, root: Path) -> Any:
+    from . import research as _research  # offline; no network
+
+    if args.research_command == "init":
+        return _research.init_research(root, args.category)
+    if args.research_command == "validate":
+        return _research.validate_research(root, args.category)
+    if args.research_command == "pipeline-add":
+        entry = _load_json_argument(_read_stdin_if_dash(args.json), {})
+        return _research.pipeline_add(root, args.category, entry)
+    if args.research_command == "promote":
+        return _research.promote(root, args.category, args.product_id, args.project_id)
+    if args.research_command == "show":
+        return _research.show_research(root, args.category, args.product_id)
+    if args.research_command == "log":
+        detail = _load_json_argument(_read_stdin_if_dash(args.detail_json), {}) if args.detail_json else {}
+        return _research.log_event(root, args.category, args.event, detail)
+    raise RuntimeError("Unhandled research command")
+
+
 def dispatch(args: argparse.Namespace, root: Path) -> Any:
     if args.command == "doctor":
+        if getattr(args, "probe_plan", False):
+            from .connectivity import probe_plan
+            return probe_plan(root)
         return run_doctor(root)
+    if args.command == "connectivity":
+        from .connectivity import show_manifest, write_manifest
+        if args.connectivity_command == "show":
+            return show_manifest(root)
+        return write_manifest(root, _load_json_argument(_read_stdin_if_dash(args.json), {}))
+    if args.command == "fetch":
+        return _dispatch_fetch(args, root)
+    if args.command == "research":
+        return _dispatch_research(args, root)
     if args.command == "framework":
         return validate_framework(root)
     if args.command == "project":

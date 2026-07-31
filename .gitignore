@@ -11,6 +11,7 @@ htmlcov/
 .claude/settings.local.json
 .claude/config/company.local.json
 .claude/config/tools.local.json
+.claude/config/research-connectivity.json
 .claude/worktrees/
 .claude/logs/
 .publishing/
@@ -21,3 +22,4 @@ projects/*/.lock
 *.egg-info/
 dist/
 build/
+node_modules/

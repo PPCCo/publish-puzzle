@@ -7,7 +7,8 @@
     "CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS": "12",
     "CLAUDE_CODE_MCP_ALLOWLIST_ENV": "1",
     "PUBLISHING_EXTERNAL_WRITES": "disabled",
-    "PUBLISHING_TIMEZONE": "America/New_York"
+    "PUBLISHING_TIMEZONE": "America/New_York",
+    "RESEARCH_FETCH_ENABLED": "0"
   },
   "permissions": {
     "allow": [
