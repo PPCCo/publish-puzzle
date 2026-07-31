@@ -41,6 +41,8 @@ Formats: paperback, hardcover, digital-pdf. Channels: KDP, Etsy, Gumroad, generi
 | Python 3.11 or later | Yes | State, validation, generation, verification, build, and hook scripts |
 | `pip` or `uv` | Yes | Python dependencies |
 | Git | Recommended | Version history and release tags |
+| Node.js 18 or later | Optional | Tier-3 headless-browser fetcher (`net/browser_fetch.mjs`) used by `/research` |
+| Playwright for Node + Chromium | Optional | Renders JS-heavy pages when curl returns a shell; install once with the commands below |
 | ImageMagick / Ghostscript | Optional | Print preflight and PDF inspection |
 
 ## 4. Installation
@@ -54,6 +56,17 @@ python3 .claude/scripts/ph_cli.py doctor
 python -m unittest discover -s tests -v
 ```
 
+To enable the Tier-3 headless browser (one-time, optional):
+
+```bash
+npm i -D playwright
+npx playwright install chromium
+```
+
+Playwright browsers install outside the repo (`~/Library/Caches/ms-playwright`);
+`node_modules/` is gitignored. Without this step the `/research` skill degrades
+gracefully to Tier-4 manual queries for JS-only sources.
+
 Review `.claude/settings.json`, `.claude/hooks/`, and `.mcp.json` before accepting Claude Code workspace trust.
 
 ## 5. Start Claude Code
@@ -65,14 +78,26 @@ claude --agent publisher-in-chief --model "@bedrock-eus2/us.anthropic.claude-opu
 Then run:
 
 ```text
-/product-doctor
+/product-doctor                                           # framework + tool health check
+/product-doctor --probe-plan                              # print the research connectivity probe plan
+
+# Research a category once; spin up many products from the resulting pipeline
+/research "sudoku puzzles"                                # gather evidence, produce 15-20 candidates
+/research --status "sudoku puzzles"                       # show pipeline state
+/research --ingest research/pipeline/sudoku-puzzles/queries.md   # ingest manual answers (Tier 4)
+
+# Create a project — direct form or from a researched pipeline entry
 /product-new "Large-print sudoku for seniors" --audience senior-large-print --type puzzle-book --formats paperback
+/product-new sudoku-puzzles PRODUCT_ID                    # pipeline-sourced: zero further research
+
 /product-status <project-id>
 /product-run <project-id> --until human-gate --max-stages 3
 /product-resume <project-id>
 ```
 
 `/product-run` advances validated stages until its configured stage limit, a blocker, or the next human gate. Skills beginning with `product-approve-`, `product-freeze`, `product-release-authorize`, and `product-submit` are human-only. Claude cannot invoke them autonomously.
+
+`/research` runs a tiered retrieval ladder: on-disk cache → `web_search` tool → HTTP fetcher (curl + DuckDuckGo) → headless browser (Playwright). Manual queries are emitted only for sources that remain blocked after Tiers 0–3. The pipeline output is version-controlled; the per-machine connectivity manifest (`.claude/config/research-connectivity.json`) is gitignored.
 
 ## 6. Canonical lifecycle
 
@@ -138,7 +163,26 @@ projects/<project-id>/
 ```bash
 # Environment and framework
 python3 .claude/scripts/ph_cli.py doctor
+python3 .claude/scripts/ph_cli.py doctor --probe-plan          # print research probe plan (offline)
 python3 .claude/scripts/ph_cli.py framework validate
+
+# Category research pipeline (pre-project; writes under research/pipeline/<category>/)
+python3 .claude/scripts/ph_cli.py research init "sudoku puzzles"
+python3 .claude/scripts/ph_cli.py research validate "sudoku puzzles"
+python3 .claude/scripts/ph_cli.py research pipeline-add "sudoku puzzles" --json <path-or-stdin>
+python3 .claude/scripts/ph_cli.py research promote "sudoku puzzles" --product-id <id> --project-id clr-YYYY-slug
+python3 .claude/scripts/ph_cli.py research show "sudoku puzzles"
+python3 .claude/scripts/ph_cli.py research show "sudoku puzzles" --product-id <id>   # resolves evidence inline
+python3 .claude/scripts/ph_cli.py research log "sudoku puzzles" --event gather --json '{"tier":"http"}'
+
+# Tiered network fetcher (requires --allow-net; network-free by default)
+python3 .claude/scripts/ph_cli.py fetch search "large print sudoku 2026" --allow-net
+python3 .claude/scripts/ph_cli.py fetch get https://www.kdpeasy.com/ --allow-net
+python3 .claude/scripts/ph_cli.py fetch probe amazon --allow-net          # Tier 2→3 probe; returns best_tier
+
+# Connectivity manifest (offline read/write; network probing is done by fetch probe)
+python3 .claude/scripts/ph_cli.py connectivity show
+python3 .claude/scripts/ph_cli.py connectivity write --json <path-or-stdin>
 
 # Projects
 python3 .claude/scripts/ph_cli.py project init --topic "..." --audience senior-large-print --product-type puzzle-book --formats paperback

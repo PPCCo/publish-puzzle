@@ -1,0 +1,897 @@
+{
+  "schema_version": "1.0",
+  "category": "sudoku-puzzles",
+  "generated_at": "2026-07-31T11:52:46Z",
+  "evidence_mode": "mixed",
+  "category_overview": {
+    "trending_types": [
+      {
+        "type": "Classic 9x9 (difficulty-tiered: easy/medium/hard/expert)",
+        "confidence": "high",
+        "evidence_ref": "F-001"
+      },
+      {
+        "type": "Large-print / 'Bold and Easy' for seniors",
+        "confidence": "high",
+        "evidence_ref": "F-024"
+      },
+      {
+        "type": "Sudoku Variations (killer, samurai, jigsaw)",
+        "confidence": "med",
+        "evidence_ref": "F-018"
+      },
+      {
+        "type": "Kids mini-grid (4x4 / 6x6 stepping to 9x9)",
+        "confidence": "med",
+        "evidence_ref": "F-019"
+      },
+      {
+        "type": "Volume-anchored (1000 puzzles)",
+        "confidence": "med",
+        "evidence_ref": "F-020"
+      }
+    ],
+    "audiences": [
+      "adult-general (primary, ~35-70; head term crowded)",
+      "senior-large-print (rising demand, essential large-print)",
+      "kids-6-10 (dominant kids framing) & kids-4-8 (mini-grid)",
+      "tween-8-12",
+      "teen-13-17 (real but small niche, F-025)"
+    ],
+    "categories": [
+      {
+        "bisac_or_browse": "Amazon browse: Books > Humor & Entertainment > Puzzles & Games > Sudoku",
+        "evidence_ref": "F-013"
+      },
+      {
+        "bisac_or_browse": "BISAC Games & Activities > Puzzles family (exact code to confirm at listing)",
+        "evidence_ref": "F-013"
+      },
+      {
+        "bisac_or_browse": "Etsy: Digital Download > Puzzles / Puzzle Book / Large Print Puzzle > Sudoku",
+        "evidence_ref": "F-022"
+      }
+    ],
+    "seo": {
+      "title_patterns": [
+        "[Difficulty] Sudoku for [Audience]: [N] Puzzles to [Benefit]",
+        "Large Print Sudoku Puzzle Book for Seniors: [N] [Difficulty] Puzzles with Solutions",
+        "Sudoku for Beginners: [N] Step-by-Step Puzzles with Tips & Full Solutions",
+        "Daily Sudoku Puzzle Book: [N] Puzzles for Brain Health & [Benefit]",
+        "[N] Sudoku Puzzles: [Range] with Solutions"
+      ],
+      "keyword_ideas": [
+        "sudoku puzzle book for adults",
+        "large print sudoku for seniors",
+        "easy sudoku for beginners",
+        "hard sudoku puzzles",
+        "expert level sudoku",
+        "brain games for seniors",
+        "daily sudoku puzzle book",
+        "medium difficulty sudoku book",
+        "sudoku with solutions",
+        "1000 sudoku puzzles book"
+      ],
+      "evidence_ref": "F-011"
+    },
+    "size_norms": {
+      "trim": [
+        "6x9",
+        "8.5x11"
+      ],
+      "page_band": [
+        100,
+        200
+      ],
+      "evidence_ref": "F-007"
+    }
+  },
+  "products": {
+    "adult-easy": {
+      "product_id": "adult-easy",
+      "status": "candidate",
+      "priority": 1,
+      "confidence": "high",
+      "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "easy",
+        "spread": "single-tier easy"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 150,
+      "positioning": "Entry point of a difficulty-tiered series; low-competition tail via 'easy/relaxing' framing.",
+      "interior_style_notes": "Advisory: clean high-contrast grids, back-only answer key with numbered puzzles.",
+      "seo": {
+        "title_pattern": "Easy Sudoku for Adults: [N] Puzzles to [Benefit]",
+        "keyword_ideas": [
+          "easy sudoku for beginners",
+          "sudoku puzzle book for adults",
+          "sudoku with solutions"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "adult-difficulty-tier",
+        "position": 1,
+        "set": "Easy/Medium/Hard/Expert"
+      },
+      "evidence_refs": [
+        "F-001",
+        "F-009",
+        "F-011",
+        "F-012",
+        "F-007",
+        "F-016"
+      ],
+      "open_questions": [
+        "Confirm live BSR/price via manual Amazon tier before committing price band."
+      ]
+    },
+    "senior-large-print-easy": {
+      "product_id": "senior-large-print-easy",
+      "status": "candidate",
+      "priority": 1,
+      "confidence": "high",
+      "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
+      "audience": "senior-large-print",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "easy",
+        "spread": "easy, forgiving"
+      },
+      "puzzle_count_target": 100,
+      "page_budget_target": 110,
+      "positioning": "High-contrast, oversized-grid large print; senior-care bulk-purchase demand cited.",
+      "interior_style_notes": "Advisory: senior-large-print band requires high contrast and oversized grids per house rules.",
+      "seo": {
+        "title_pattern": "Large Print Sudoku Puzzle Book for Seniors: [N] Puzzles with Solutions",
+        "keyword_ideas": [
+          "large print sudoku for seniors",
+          "brain games for seniors",
+          "sudoku with solutions"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "senior-large-print",
+        "position": 1,
+        "set": "Easy/Medium large print"
+      },
+      "evidence_refs": [
+        "F-002",
+        "F-005",
+        "F-006",
+        "F-007",
+        "F-011",
+        "F-012",
+        "F-017",
+        "F-024"
+      ],
+      "open_questions": [
+        "Confirm accessibility gate contrast/type-size targets at project init."
+      ]
+    },
+    "adult-medium": {
+      "product_id": "adult-medium",
+      "status": "candidate",
+      "priority": 2,
+      "confidence": "high",
+      "working_title": "Medium Sudoku for Adults: [N] Puzzles with Full Solutions",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "medium",
+        "spread": "single-tier medium"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 150,
+      "positioning": "Second book of the difficulty-tiered series; drives repeat purchase from same buyer.",
+      "seo": {
+        "title_pattern": "Medium Sudoku for Adults: [N] Puzzles with Solutions",
+        "keyword_ideas": [
+          "medium difficulty sudoku book",
+          "sudoku puzzle book for adults"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "adult-difficulty-tier",
+        "position": 2,
+        "set": "Easy/Medium/Hard/Expert"
+      },
+      "evidence_refs": [
+        "F-009",
+        "F-011",
+        "F-012",
+        "F-016"
+      ],
+      "open_questions": []
+    },
+    "adult-hard": {
+      "product_id": "adult-hard",
+      "status": "candidate",
+      "priority": 2,
+      "confidence": "high",
+      "working_title": "Hard Sudoku Puzzles for Adults: [N] Challenging Grids with Solutions",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "hard",
+        "spread": "single-tier hard"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 150,
+      "positioning": "Advanced solvers blow through easy/medium volumes; higher engagement and review velocity.",
+      "seo": {
+        "title_pattern": "Hard Sudoku Puzzles: [N] Grids",
+        "keyword_ideas": [
+          "hard sudoku puzzles",
+          "sudoku with solutions"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "adult-difficulty-tier",
+        "position": 3,
+        "set": "Easy/Medium/Hard/Expert"
+      },
+      "evidence_refs": [
+        "F-009",
+        "F-011",
+        "F-016"
+      ],
+      "open_questions": []
+    },
+    "beginners-guided": {
+      "product_id": "beginners-guided",
+      "status": "candidate",
+      "priority": 2,
+      "confidence": "high",
+      "working_title": "Sudoku for Beginners: Step-by-Step Puzzles with Tips and Full Solutions",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "easy",
+        "spread": "how-to + graded easy"
+      },
+      "puzzle_count_target": 150,
+      "page_budget_target": 140,
+      "positioning": "Instructional on-ramp; captures 'sudoku for beginners' + how-to intent that pure puzzle books miss.",
+      "interior_style_notes": "Advisory: front-matter technique pages (scanning, pencil marks) at adult-general reading level; back-only solutions.",
+      "seo": {
+        "title_pattern": "Sudoku for Beginners: [N] Step-by-Step Puzzles with Tips & Full Solutions",
+        "keyword_ideas": [
+          "easy sudoku for beginners",
+          "sudoku with solutions",
+          "sudoku puzzle book for adults"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-011",
+        "F-012",
+        "F-014",
+        "F-016"
+      ],
+      "open_questions": [
+        "Instruction complexity is engine-derived from audience+family at init; refine within policy only."
+      ]
+    },
+    "kids-6-10-mixed": {
+      "product_id": "kids-6-10-mixed",
+      "status": "candidate",
+      "priority": 2,
+      "confidence": "medium",
+      "working_title": "Sudoku for Kids Ages 6-10: 4x4, 6x6 and 9x9 Puzzles",
+      "audience": "kids-6-10",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "easy",
+        "spread": "4x4 to intro 9x9"
+      },
+      "puzzle_count_target": 180,
+      "page_budget_target": 120,
+      "positioning": "Step-up grid progression for the 6-10 band; modest difficulty ramp.",
+      "seo": {
+        "title_pattern": "Sudoku for Kids Ages 6-10: [N] Puzzles",
+        "keyword_ideas": [
+          "sudoku for kids",
+          "sudoku 6x6",
+          "kids activity book"
+        ],
+        "categories": [
+          "Juvenile Nonfiction > Activity Books"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "kids-grid-progression",
+        "position": 2,
+        "set": "4x4-6x6 to 9x9"
+      },
+      "evidence_refs": [
+        "F-004",
+        "F-019"
+      ],
+      "open_questions": []
+    },
+    "adult-expert": {
+      "product_id": "adult-expert",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "Expert Sudoku: [N] Very Hard Puzzles for Advanced Solvers",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "expert",
+        "spread": "single-tier expert"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 150,
+      "positioning": "Top of the tiered ladder; captures the 'expert level sudoku' long-tail.",
+      "seo": {
+        "title_pattern": "Expert Sudoku: [N] Very Hard Puzzles",
+        "keyword_ideas": [
+          "expert level sudoku",
+          "hard sudoku puzzles"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "adult-difficulty-tier",
+        "position": 4,
+        "set": "Easy/Medium/Hard/Expert"
+      },
+      "evidence_refs": [
+        "F-009",
+        "F-011",
+        "F-012",
+        "F-016"
+      ],
+      "open_questions": []
+    },
+    "senior-large-print-medium": {
+      "product_id": "senior-large-print-medium",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "Large Print Sudoku for Seniors: Medium Puzzles with Solutions",
+      "audience": "senior-large-print",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "medium",
+        "spread": "medium"
+      },
+      "puzzle_count_target": 100,
+      "page_budget_target": 110,
+      "positioning": "Repeat purchase for large-print buyers who have finished the easy volume.",
+      "seo": {
+        "title_pattern": "Large Print Sudoku for Seniors: Medium [N] Puzzles",
+        "keyword_ideas": [
+          "large print sudoku for seniors",
+          "brain games for seniors"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "senior-large-print",
+        "position": 2,
+        "set": "Easy/Medium large print"
+      },
+      "evidence_refs": [
+        "F-002",
+        "F-006",
+        "F-011",
+        "F-017",
+        "F-024"
+      ],
+      "open_questions": []
+    },
+    "daily-brain-health": {
+      "product_id": "daily-brain-health",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "Daily Sudoku Puzzle Book: One Puzzle a Day for Brain Health",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "mixed",
+        "spread": "gentle progression across the year"
+      },
+      "puzzle_count_target": 365,
+      "page_budget_target": 200,
+      "positioning": "Wellness/'brain health' framing riding screen-fatigue trend; daily-habit hook.",
+      "seo": {
+        "title_pattern": "Daily Sudoku Puzzle Book: [N] Puzzles for Brain Health & [Benefit]",
+        "keyword_ideas": [
+          "daily sudoku puzzle book",
+          "brain games for seniors",
+          "sudoku puzzle book for adults"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-001",
+        "F-011",
+        "F-012",
+        "F-016"
+      ],
+      "open_questions": [
+        "Avoid any medical/therapeutic claim; 'brain health' framing must stay non-clinical."
+      ]
+    },
+    "volume-1000": {
+      "product_id": "volume-1000",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "1000 Sudoku Puzzles: Easy to Expert with Full Solutions",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "mixed",
+        "spread": "easy to expert, labeled sections"
+      },
+      "puzzle_count_target": 1000,
+      "page_budget_target": 260,
+      "positioning": "Volume-anchored perceived value; sustains a higher list price band.",
+      "seo": {
+        "title_pattern": "1000 Sudoku Puzzles: [Range] with Solutions",
+        "keyword_ideas": [
+          "1000 sudoku puzzles book",
+          "sudoku with solutions",
+          "sudoku puzzle book for adults"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-008",
+        "F-011",
+        "F-012",
+        "F-020"
+      ],
+      "open_questions": [
+        "Page budget at 1000 puzzles depends on grids-per-page; engine/layout decides at init."
+      ]
+    },
+    "variations-adult": {
+      "product_id": "variations-adult",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "Sudoku Variations for Adults: Killer, Samurai, and Jigsaw Puzzles",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "medium-hard",
+        "spread": "variety across variants"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 170,
+      "positioning": "Differentiated variety pack for experienced solvers bored of classic 9x9.",
+      "interior_style_notes": "Advisory: killer needs cage sums; samurai needs overlapping 5-grid layout; jigsaw needs irregular regions \u2014 all raise verification complexity.",
+      "seo": {
+        "title_pattern": "Sudoku Variations for Adults: Killer, Samurai, Jigsaw [N] Puzzles",
+        "keyword_ideas": [
+          "killer sudoku",
+          "samurai sudoku",
+          "jigsaw sudoku"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-003",
+        "F-011",
+        "F-018"
+      ],
+      "open_questions": [
+        "Confirm the deterministic generator supports killer/samurai/jigsaw with code-verifiable uniqueness before scoping."
+      ]
+    },
+    "kids-4-8-mini": {
+      "product_id": "kids-4-8-mini",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "Sudoku for Kids Ages 4-8: Fun 4x4 and 6x6 Puzzles",
+      "audience": "kids-4-8",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "very-easy",
+        "spread": "4x4 then 6x6, forgiving"
+      },
+      "puzzle_count_target": 120,
+      "page_budget_target": 100,
+      "positioning": "Mini-grid entry for youngest band; large cells for fine-motor limits.",
+      "interior_style_notes": "Advisory: kids-4-8 needs large cells/type, friendly imagery, forgiving difficulty with visual scaffolding; colour policy engine-derived.",
+      "seo": {
+        "title_pattern": "Sudoku for Kids Ages 4-8: [N] 4x4 & 6x6 Puzzles",
+        "keyword_ideas": [
+          "sudoku for kids",
+          "mini sudoku",
+          "sudoku 4x4"
+        ],
+        "categories": [
+          "Juvenile Nonfiction > Activity Books"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "kids-grid-progression",
+        "position": 1,
+        "set": "4x4-6x6 to 9x9"
+      },
+      "evidence_refs": [
+        "F-004",
+        "F-019"
+      ],
+      "open_questions": [
+        "Child-safety review required; number-only content is low-risk but imagery must pass kids-4-8 rules."
+      ]
+    },
+    "printable-easy-pack": {
+      "product_id": "printable-easy-pack",
+      "status": "candidate",
+      "priority": 3,
+      "confidence": "medium",
+      "working_title": "Printable Sudoku Pack: Easy Puzzles (US Letter & A4)",
+      "audience": "adult-general",
+      "product_type": "digital-printable",
+      "formats": [
+        "digital-pdf"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "easy",
+        "spread": "easy"
+      },
+      "puzzle_count_target": 100,
+      "page_budget_target": 110,
+      "positioning": "Print-at-home digital bundle (Gumroad/Etsy); no print cost, full colour allowed digitally.",
+      "interior_style_notes": "Advisory: must meet stated DPI and US Letter/A4 print-at-home page sizes; clear usage/licensing terms.",
+      "seo": {
+        "title_pattern": "Printable Sudoku Pack: [N] Easy Puzzles (US Letter + A4)",
+        "keyword_ideas": [
+          "printable sudoku",
+          "sudoku pdf",
+          "sudoku with solutions"
+        ],
+        "categories": [
+          "Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "printable-difficulty",
+        "position": 1,
+        "set": "Easy/Medium/Hard printable"
+      },
+      "evidence_refs": [
+        "F-001",
+        "F-007",
+        "F-012",
+        "F-021",
+        "F-022",
+        "F-023"
+      ],
+      "open_questions": [
+        "Etsy 13-tag list is inferred (F-021), not seller tags \u2014 confirm at listing.",
+        "Target 300-1000 puzzle bundle sweet spot (F-023, advisory)."
+      ]
+    },
+    "killer-sudoku": {
+      "product_id": "killer-sudoku",
+      "status": "candidate",
+      "priority": 4,
+      "confidence": "low",
+      "working_title": "Killer Sudoku for Adults: Easy to Hard with Solutions",
+      "audience": "adult-general",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "medium-hard",
+        "spread": "easy to hard killer"
+      },
+      "puzzle_count_target": 150,
+      "page_budget_target": 150,
+      "positioning": "Single-variant deep-dive for the killer sudoku sub-audience.",
+      "seo": {
+        "title_pattern": "Killer Sudoku: [N] Puzzles Easy to Hard",
+        "keyword_ideas": [
+          "killer sudoku",
+          "sudoku with solutions"
+        ],
+        "categories": [
+          "Humor & Entertainment > Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-003",
+        "F-018"
+      ],
+      "open_questions": [
+        "Generator support for cage-sum constraints and uniqueness verification unconfirmed."
+      ]
+    },
+    "tween-8-12-challenge": {
+      "product_id": "tween-8-12-challenge",
+      "status": "candidate",
+      "priority": 4,
+      "confidence": "low",
+      "working_title": "Sudoku for Tweens Ages 8-12: 9x9 Puzzles Easy to Medium",
+      "audience": "tween-8-12",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "easy-medium",
+        "spread": "full 9x9 easy to medium"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 130,
+      "positioning": "Full-grid challenge for tweens; school/family-appropriate.",
+      "seo": {
+        "title_pattern": "Sudoku for Tweens Ages 8-12: [N] Puzzles",
+        "keyword_ideas": [
+          "sudoku for kids",
+          "sudoku for tweens"
+        ],
+        "categories": [
+          "Juvenile Nonfiction > Activity Books"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "kids-grid-progression",
+        "position": 3,
+        "set": "4x4-6x6 to 9x9"
+      },
+      "evidence_refs": [
+        "F-004",
+        "F-019"
+      ],
+      "open_questions": []
+    },
+    "teen-13-17-hard": {
+      "product_id": "teen-13-17-hard",
+      "status": "candidate",
+      "priority": 4,
+      "confidence": "medium",
+      "working_title": "Sudoku for Teens: Medium to Hard 9x9 Puzzles",
+      "audience": "teen-13-17",
+      "product_type": "puzzle-book",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "trim_size_preference": "6x9",
+      "difficulty": {
+        "tier": "medium-hard",
+        "spread": "medium to hard"
+      },
+      "puzzle_count_target": 200,
+      "page_budget_target": 150,
+      "positioning": "Legitimate but small, uncrowded niche; dedicated teen titles exist with BSR ~#20k-#150k.",
+      "seo": {
+        "title_pattern": "Sudoku for Teens: [N] Medium to Hard Puzzles",
+        "keyword_ideas": [
+          "sudoku for teens",
+          "hard sudoku puzzles"
+        ],
+        "categories": [
+          "Young Adult Nonfiction > Activity Books"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-001",
+        "F-025"
+      ],
+      "open_questions": [
+        "Smaller market than adult/senior; scope conservatively."
+      ]
+    },
+    "printable-hard-pack": {
+      "product_id": "printable-hard-pack",
+      "status": "candidate",
+      "priority": 4,
+      "confidence": "low",
+      "working_title": "Printable Sudoku Pack: Hard Puzzles (US Letter & A4)",
+      "audience": "adult-general",
+      "product_type": "digital-printable",
+      "formats": [
+        "digital-pdf"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "hard",
+        "spread": "hard"
+      },
+      "puzzle_count_target": 100,
+      "page_budget_target": 110,
+      "positioning": "Hard tier of the printable set for advanced solvers.",
+      "seo": {
+        "title_pattern": "Printable Sudoku Pack: [N] Hard Puzzles (US Letter + A4)",
+        "keyword_ideas": [
+          "printable sudoku",
+          "hard sudoku puzzles",
+          "sudoku pdf"
+        ],
+        "categories": [
+          "Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": true,
+        "series_slug": "printable-difficulty",
+        "position": 2,
+        "set": "Easy/Medium/Hard printable"
+      },
+      "evidence_refs": [
+        "F-007",
+        "F-012",
+        "F-021",
+        "F-022",
+        "F-023"
+      ],
+      "open_questions": [
+        "Etsy tags inferred (F-021); confirm at listing.",
+        "Bundle size advisory per F-023."
+      ]
+    },
+    "senior-large-print-printable": {
+      "product_id": "senior-large-print-printable",
+      "status": "candidate",
+      "priority": 4,
+      "confidence": "low",
+      "working_title": "Large Print Printable Sudoku for Seniors (US Letter & A4)",
+      "audience": "senior-large-print",
+      "product_type": "digital-printable",
+      "formats": [
+        "digital-pdf"
+      ],
+      "trim_size_preference": "8.5x11",
+      "difficulty": {
+        "tier": "easy",
+        "spread": "easy, oversized grids"
+      },
+      "puzzle_count_target": 80,
+      "page_budget_target": 90,
+      "positioning": "Print-at-home large-print bundle; senior audience without paperback logistics.",
+      "interior_style_notes": "Advisory: high-contrast, oversized grids; DPI + US Letter/A4 required.",
+      "seo": {
+        "title_pattern": "Large Print Printable Sudoku for Seniors (US Letter + A4)",
+        "keyword_ideas": [
+          "large print sudoku for seniors",
+          "printable sudoku",
+          "brain games for seniors"
+        ],
+        "categories": [
+          "Puzzles & Games > Sudoku"
+        ]
+      },
+      "series_grouping": {
+        "is_series": false
+      },
+      "evidence_refs": [
+        "F-002",
+        "F-006",
+        "F-007",
+        "F-017",
+        "F-024",
+        "F-023"
+      ],
+      "open_questions": [
+        "Accessibility contrast/type targets engine-derived at init."
+      ]
+    }
+  }
+}
