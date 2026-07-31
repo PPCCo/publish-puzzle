@@ -90,16 +90,82 @@ def _draw_placeholder_page(c, inch, width_in: float, height_in: float, title: st
     c.showPage()
 
 
+def _draw_sudoku_page(
+    c: Any,
+    inch: float,
+    width_in: float,
+    height_in: float,
+    title: str,
+    difficulty: str,
+    grid: list[list[int]],
+    *,
+    is_solution: bool = False,
+) -> None:
+    """Draw a 9x9 sudoku grid page. grid is a 9x9 list-of-lists; 0 = blank cell."""
+    MARGIN = 0.75
+    HEADER_H = 1.0
+    grid_area = min(width_in - 2 * MARGIN, height_in - 2 * MARGIN - HEADER_H)
+    cell = grid_area / 9
+    grid_left = (width_in - grid_area) / 2
+    grid_top_in = height_in - MARGIN - HEADER_H  # top of grid in inches from bottom
+    grid_bottom_in = grid_top_in - grid_area
+
+    c.setPageSize((width_in * inch, height_in * inch))
+
+    # Header
+    c.setFont("Helvetica-Bold", 18)
+    c.drawString(MARGIN * inch, (height_in - MARGIN - 0.35) * inch, title)
+    if difficulty:
+        c.setFont("Helvetica", 14)
+        c.drawString(MARGIN * inch, (height_in - MARGIN - 0.70) * inch, f"Difficulty: {difficulty.capitalize()}")
+
+    # Grid lines
+    c.setStrokeColorRGB(0, 0, 0)
+    for i in range(10):
+        lw = 2.0 if i % 3 == 0 else 0.5
+        c.setLineWidth(lw)
+        # horizontal
+        y = (grid_bottom_in + i * cell) * inch
+        c.line(grid_left * inch, y, (grid_left + grid_area) * inch, y)
+        # vertical
+        x = (grid_left + i * cell) * inch
+        c.line(x, grid_bottom_in * inch, x, (grid_bottom_in + grid_area) * inch)
+
+    # Digits
+    font_size = max(10, min(18, cell * inch * 0.55))
+    c.setFont("Helvetica-Bold", font_size)
+    c.setFillColorRGB(0, 0, 0)
+    for row in range(9):
+        for col in range(9):
+            val = grid[row][col] if grid and row < len(grid) and col < len(grid[row]) else 0
+            if val:
+                cx = (grid_left + col * cell + cell / 2) * inch
+                cy = (grid_bottom_in + (8 - row) * cell + cell / 2 - font_size / 72 / 2) * inch
+                c.drawCentredString(cx, cy, str(val))
+
+    c.showPage()
+
+
 def _content_pages(batches: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    """Return (content_pages, solution_pages) as lightweight descriptors."""
+    """Return (content_pages, solution_pages) as descriptors carrying the full payload/solution."""
     content: list[dict[str, Any]] = []
     solutions: list[dict[str, Any]] = []
     for batch in batches:
         ctype = batch.get("content_type", "content")
         for item in batch.get("items", []):
-            content.append({"type": ctype, "index": item.get("index"), "difficulty": item.get("difficulty")})
+            content.append({
+                "type": ctype,
+                "index": item.get("index"),
+                "difficulty": item.get("difficulty"),
+                "payload": item.get("payload"),
+                "solution": item.get("solution"),
+            })
             if item.get("solution") is not None:
-                solutions.append({"type": ctype, "index": item.get("index")})
+                solutions.append({
+                    "type": ctype,
+                    "index": item.get("index"),
+                    "solution": item.get("solution"),
+                })
     return content, solutions
 
 
@@ -126,8 +192,12 @@ def build_interior(root: Path, project_id: str, binding: str = "paperback") -> d
     page_no += 1
     # Content pages.
     for page in content_pages:
-        _draw_placeholder_page(c, inch, width_in, height_in, f"{page['type'].title()} #{(page['index'] or 0) + 1}", [f"Difficulty: {page.get('difficulty')}"])
-        page_map.append({"page": page_no, "kind": "content", **page})
+        num = (page["index"] or 0) + 1
+        if page.get("type") == "sudoku" and page.get("payload") and page["payload"].get("grid"):
+            _draw_sudoku_page(c, inch, width_in, height_in, f"Sudoku #{num}", page.get("difficulty", ""), page["payload"]["grid"])
+        else:
+            _draw_placeholder_page(c, inch, width_in, height_in, f"{page['type'].title()} #{num}", [f"Difficulty: {page.get('difficulty')}"])
+        page_map.append({"page": page_no, "kind": "content", **{k: v for k, v in page.items() if k not in ("payload", "solution")}})
         page_no += 1
     # BACK-ONLY solutions section.
     if solution_pages:
@@ -135,8 +205,13 @@ def build_interior(root: Path, project_id: str, binding: str = "paperback") -> d
         page_map.append({"page": page_no, "kind": "solutions-divider"})
         page_no += 1
         for page in solution_pages:
-            _draw_placeholder_page(c, inch, width_in, height_in, f"Solution: {page['type'].title()} #{(page['index'] or 0) + 1}", [])
-            page_map.append({"page": page_no, "kind": "solution", **page})
+            num = (page["index"] or 0) + 1
+            sol = page.get("solution") or {}
+            if page.get("type") == "sudoku" and sol.get("grid"):
+                _draw_sudoku_page(c, inch, width_in, height_in, f"Solution #{num}", "", sol["grid"], is_solution=True)
+            else:
+                _draw_placeholder_page(c, inch, width_in, height_in, f"Solution: {page['type'].title()} #{num}", [])
+            page_map.append({"page": page_no, "kind": "solution", **{k: v for k, v in page.items() if k != "solution"}})
             page_no += 1
     # Pad to even page count (KDP requirement).
     total = page_no - 1

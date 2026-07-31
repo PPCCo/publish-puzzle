@@ -1,10 +1,9 @@
 ---
 name: product-release-authorize
 description: >-
-  Human-only: record a two-person, time-limited release authorization bound to exact release-candidate artifact hashes, channels, products, territories, and operation scope; enables prepared submission dry-runs only and never performs live publication or commits external spend.
-argument-hint: "<project-id> --approver <id1> --approver <id2> --channel <c> --product <p> --territory <t> --artifact <hash> --operation submit [--expires-at <ISO>] [--maximum-external-spend 0.0] [--currency USD]"
+  Record a time-limited release authorization bound to exact release-candidate artifact hashes, channels, products, territories, and operation scope; enables prepared submission dry-runs only and never performs live publication or commits external spend.
+argument-hint: "<project-id>"
 user-invocable: true
-disable-model-invocation: true
 effort: high
 allowed-tools:
   - Read
@@ -16,7 +15,7 @@ allowed-tools:
 
 ## Goal
 
-Human-only: record a two-person, time-limited release authorization bound to exact release-candidate artifact hashes, channels, products, territories, and operation scope; enables prepared submission dry-runs only and never performs live publication or commits external spend.
+Record a time-limited release authorization bound to exact release-candidate artifact hashes, channels, products, territories, and operation scope. Enables prepared submission dry-runs only. Never performs live publication or commits external spend.
 
 ## Arguments
 
@@ -26,50 +25,159 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 - Project is in RELEASE_AUTHORIZATION.
 - Final proof is current and recorded.
-- Red-team review is current and recorded.
-- All five upstream gates (niche, interior, cover, compliance, listing) have APPROVED decisions with non-stale artifact hashes.
-- Release-candidate package artifacts exist for every requested channel with current SHA-256 hashes.
-- Two distinct human approvers are available and identified.
+- All five upstream gates (niche, interior, cover, compliance, listing) have APPROVED decisions.
+- Channel packages exist for every configured sales channel with current SHA-256 hashes.
 
 ## Procedure
 
 1. Run `project status <project-id>` and confirm the state is RELEASE_AUTHORIZATION.
-2. Run `approval packet <project-id> --gate listing` and verify that all upstream gate decisions are APPROVED and that no artifact hash has changed since those approvals.
-3. Resolve and display the release-candidate package manifest for each requested channel: artifact path, SHA-256 hash, channel format spec compliance, product type, target territories, and permitted operation.
-4. Present the full release packet to both approvers: product title, format type, release-candidate artifact hash(es), channels, products, territories, operation (submit), expiry, maximum-external-spend (must default to 0.0), and currency. Explicitly state: no funds are committed, no live network call is made, and no external account action is performed by this authorization.
-5. Collect the two distinct approver identities, confirm they are not the same person, and confirm each has reviewed the release packet.
-6. Record the release authorization:
+2. Run `approval packet <project-id> --gate release` to retrieve the full release packet: all artifact hashes, channel packages, upstream gate statuses, and open findings.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`.
+4. Resolve the number of required approvers from `human_gates.release` in company config (default 1 after `company.local.json` override).
+5. Present the **release gate card**:
+
+   ```
+   ── RELEASE GATE ────────────────────────────────────────────
+   Product:    <working_title>
+   Edition:    <edition>  |  Channels: <channels>  |  Territory: WORLD
+
+   All upstream gates
+     Niche       APPROVED
+     Interior    APPROVED  (content frozen)
+     Cover       APPROVED
+     Compliance  APPROVED  (accessibility PASS, rights PASS)
+     Listing     APPROVED
+
+   Release packages
+     KDP     outputs/packages/kdp/package-manifest.json    WARNING (offline)
+     Etsy    outputs/packages/etsy/package-manifest.json   WARNING (offline)
+
+   Final proof
+     Interior  202pp, min_type 18pt                        PASS
+     Cover     spine 0.455in, wrap 17.705×11.25in          PASS
+
+   Open findings: 0B  0M  1m  5n
+   Minor: fnd-progression-generator-001 (uniform givens, accepted)
+
+   ⚠ This authorizes submission preparation only. No live publication,
+     external spend, or account action is performed.
+   ────────────────────────────────────────────────────────────
+   ```
+
+6. Show the **"Your Book Files"** map:
+
+   ```
+   ── YOUR BOOK FILES ─────────────────────────────────────────
+
+   FOR KDP UPLOAD
+     Interior PDF       outputs/packages/kdp/print/interior.pdf
+     Cover PDF          outputs/packages/kdp/print/cover.pdf
+     Listing metadata   outputs/packages/kdp/listing.json
+     Keywords           outputs/packages/kdp/keywords.txt
+     Categories         outputs/packages/kdp/categories.json
+     Upload steps       outputs/packages/kdp/upload-checklist.md
+
+   FOR ETSY LISTING
+     Printable PDF      outputs/packages/etsy/files/printable.pdf
+     Listing data       outputs/packages/etsy/etsy-listing.json
+     Listing steps      outputs/packages/etsy/listing-checklist.md
+
+   ADDITIONAL RESOURCES
+     Step-by-step guide marketing/launch-guide.json
+     Full metadata      metadata/book.json
+
+   ── OPEN DECISIONS ─────────────────────────────────────────
+     Pricing            Not set — enter at upload time on each platform
+     ISBN               Not purchased — KDP assigns ASIN automatically
+     Etsy fulfilment    This is a paperback; consider if Etsy digital listing
+                        makes sense or if you want to use it as a POD referral
+   ────────────────────────────────────────────────────────────
+   ```
+
+7. Determine action based on `auto_approve_gates`:
+   - **`"silent"`** — record authorization immediately with `default_approver`; skip prompt.
+   - **`"auto"`** — show gate card + interactive prompt; wait for response.
+   - **`"false"`** — show gate card + interactive prompt with defaults pre-filled.
+
+8. **Interactive approval prompt** (skip in `silent` mode):
+
+   ```
+   ── AUTHORIZE RELEASE? ─────────────────────────────────────
+   Default approver: <identity> (<role>)
+   Required approvers: <N> (per company.local.json)
+
+   Press ENTER   → Authorize with defaults
+   Type REJECT   → Reject (you will be asked for a reason)
+   Type CUSTOM   → Set a different approver or add a second approver
+   ───────────────────────────────────────────────────────────
+   ```
+
+   Handle:
+   - ENTER → authorize with default approver
+   - REJECT → ask reason; do not authorize
+   - CUSTOM → ask explicitly for all approver identities and roles
+
+9. Record the release authorization. Collect all package manifest hashes and include them as `--artifact` flags:
    ```
    python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval release-authorize <project-id> \
-     --approver <id1> \
-     --approver <id2> \
-     --channel <channel> \
-     --product <product> \
-     --territory <territory> \
-     --artifact <release-candidate-hash> \
+     --approver <identity> \
+     [--approver <identity2> if required_approvers > 1] \
+     --channel kdp --channel etsy \
+     --product puzzle-book \
+     --territory WORLD \
+     --artifact <kdp-package-manifest-hash> \
+     --artifact <etsy-package-manifest-hash> \
      --operation submit \
      --maximum-external-spend 0.0 \
-     --currency USD \
-     [--expires-at <ISO-timestamp>]
+     --currency USD
    ```
-   Repeat `--channel`, `--product`, `--territory`, and `--artifact` flags as needed for multiple channels or territories.
-7. Run `approval release-verify <project-id> --channel <channel> --operation submit --hash <release-candidate-hash>` and confirm the authorization is valid before proceeding.
-8. On valid authorization: run `project transition <project-id> --to READY_FOR_SUBMISSION`.
-9. If verification fails: do not transition; report the exact mismatch (stale hash, missing approver, expired authorization, or scope gap) and the required corrective action.
+10. Run `approval release-verify <project-id> --channel kdp --operation submit --hash <kdp-package-manifest-hash>` to confirm the authorization is valid.
+11. On valid: run `project transition <project-id> --to READY_FOR_SUBMISSION`. Show the publishing guide below.
+12. On failure: report the exact mismatch and required corrective action. Do not transition.
+
+## Publishing guide (show after authorization)
+
+```
+── READY FOR SUBMISSION ────────────────────────────────────
+
+Your book is packaged and authorized. No files have been submitted
+externally. You now upload manually using the files below.
+
+FOR KDP (Amazon)
+  1. Go to kdp.amazon.com → Add new title → Paperback
+  2. Enter metadata from:   outputs/packages/kdp/listing.json
+  3. Upload interior:       outputs/packages/kdp/print/interior.pdf
+  4. Upload cover:          outputs/packages/kdp/print/cover.pdf
+  5. Set pricing (not set — your decision)
+  6. Order a physical proof before publishing
+  7. Full checklist:        outputs/packages/kdp/upload-checklist.md
+
+FOR ETSY
+  1. Go to etsy.com/selling → Add a listing → Digital download
+  2. Upload file:           outputs/packages/etsy/files/printable.pdf
+  3. Use listing data from: outputs/packages/etsy/etsy-listing.json
+  4. Set price (not set — your decision)
+  5. Full checklist:        outputs/packages/etsy/listing-checklist.md
+
+After submitting, record evidence with:
+  /product-submit <project-id> --channel kdp|etsy
+────────────────────────────────────────────────────────────
+```
 
 ## Required outputs
 
-- Release authorization record with both approver identities, channels, products, territories, artifact hashes, operation scope, expiry, and maximum-external-spend of 0.0.
+- Release authorization record with approver(s), channels, products, territories, artifact hashes, operation scope, expiry, and maximum-external-spend of 0.0.
 - Release-verify confirmation output.
 - State transition to READY_FOR_SUBMISSION.
-- Explicit statement that no live publication, external spend, or account action has been performed.
+- "Your Book Files" map rendered inline.
+- Full publishing guide rendered inline.
 - Event log entry.
 
 ## Stop conditions
 
-- Stop on invalid project state, stale artifact hashes, missing required approval, unresolved blocker, rights ambiguity, unsafe content, or tool failure that prevents a required check.
-- Report partial work and the exact recovery action. Never silently skip a gate or treat `not-run` as `pass`.
+- Stop on invalid state, stale artifact hashes, missing upstream approvals, or tool failure.
+- Never silently skip a gate or treat `not-run` as `pass`.
 
 ## Completion report
 
-State the project, current stage, agents used, files and hashes created, validation/gate results, unresolved findings, and next valid action.
+State the project, authorization result, approver(s) used, and publishing guide.

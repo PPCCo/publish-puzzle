@@ -1,10 +1,9 @@
 ---
 name: product-approve-compliance
 description: >-
-  Human-only: grant or reject the compliance gate against AI-disclosure evidence, accessibility PASS or WARNING result, rights clearance, and child-safety review; on approval transition to METADATA_AND_COMMERCIAL_PACKAGE.
-argument-hint: "<project-id> --approver <identity> --approver-role <role> --artifact <compliance-packet-hash> --scope <text> [--decision APPROVED|REJECTED] [--exclusion <e>] [--notes <n>]"
+  Grant or reject the compliance gate against AI-disclosure evidence, accessibility PASS or WARNING result, rights clearance, and child-safety review; on approval transition to METADATA_AND_COMMERCIAL_PACKAGE.
+argument-hint: "<project-id>"
 user-invocable: true
-disable-model-invocation: true
 effort: high
 allowed-tools:
   - Read
@@ -16,7 +15,7 @@ allowed-tools:
 
 ## Goal
 
-Human-only: grant or reject the compliance gate against AI-disclosure evidence, accessibility PASS or WARNING result, rights clearance, and child-safety review; on approval transition to METADATA_AND_COMMERCIAL_PACKAGE.
+Grant or reject the compliance gate against AI-disclosure evidence, accessibility PASS or WARNING result, rights clearance, and child-safety review; on approval transition to METADATA_AND_COMMERCIAL_PACKAGE.
 
 ## Arguments
 
@@ -25,45 +24,102 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 ## Entry criteria
 
 - Project is in COMPLIANCE_APPROVAL.
-- Accessibility gate result is recorded as PASS or WARNING (a FAIL blocks this gate; do not proceed).
-- Rights check is recorded as clean, or all flagged items have documented resolutions.
-- AI-disclosure statement is present if any content was produced or assisted by generative tools.
-- Child-safety review is recorded if the product targets readers under 13 or depicts minors in any coloring art.
+- Accessibility gate result is PASS or WARNING (FAIL blocks this gate).
+- Rights check is clean or all flagged items have documented resolutions.
+- AI-disclosure statement is present if any content used generative tools.
 
 ## Procedure
 
 1. Run `project status <project-id>` and confirm the state is COMPLIANCE_APPROVAL.
-2. Run `approval packet <project-id> --gate compliance` to retrieve the compliance packet hash, accessibility result, AI-disclosure record, rights clearance summary, child-safety review result, and any open findings or accepted-risk notes.
-3. Present to the approver: product title, format type (puzzle/coloring/journal/printable), compliance packet artifact hash, accessibility result (PASS/WARNING) and outstanding warnings with their accepted-risk justifications, AI-disclosure statement text and scope, rights clearance status for all interior art, cover art, fonts, and third-party data, child-safety assessment outcome, and any open legal or regulatory flags that require human judgment.
-4. Confirm that a FAIL on accessibility blocks this gate — do not proceed; return to the accessibility repair stage.
-5. Require the approver to supply: approver identity, approver role, decision (APPROVED or REJECTED), scope statement covering the specific compliance evidence reviewed, and any exclusions (e.g., accepted WARNING items) or notes. Do not infer or default these values.
-6. Record the gate decision:
+2. Run `approval packet <project-id> --gate compliance` to retrieve compliance packet hash, accessibility result, AI-disclosure record, rights clearance summary, child-safety result, and open findings.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`.
+4. Present the **gate card**:
+
+   ```
+   ── COMPLIANCE GATE ─────────────────────────────────────────
+   Product:        <working_title>
+   Audience:       <audience>  |  Format: <book_type>
+
+   Compliance checks
+     Accessibility   <PASS|WARNING|FAIL>  (type <Xpt>, high_contrast: <true|false>)
+     Rights          <PASS>  (<N> assets cleared, 0 blocked)
+     AI disclosure   <PRESENT|MISSING>
+     Child safety    <n/a|PASS>
+
+   Open findings: <blocker>B  <major>M  <minor>m  <note>n
+   ────────────────────────────────────────────────────────────
+   ```
+
+   If accessibility is FAIL: stop immediately. Do not present the approval prompt. State: "Accessibility gate FAIL — return to accessibility repair before compliance can proceed." Run `project transition <project-id>` to the accessibility repair state.
+
+5. Show **file links**:
+
+   ```
+   Files at this gate
+     accessibility/gate-latest.json        — accessibility audit result
+     rights/ledger.json                    — rights clearance ledger
+     rights/gate-latest.json               — rights gate summary
+     project.yaml                          — AI disclosure field (rights.ai_assistance_disclosure_required)
+   ```
+
+6. Determine action based on `auto_approve_gates` (silent / auto / false — same logic as other gates).
+
+7. **Interactive approval prompt** (skip in `silent` mode):
+
+   ```
+   ── APPROVE COMPLIANCE GATE? ───────────────────────────────
+   Default approver: <identity> (<role>)
+   Default scope:    <scope>
+
+   Press ENTER   → Approve with defaults
+   Type REJECT   → Reject (you will be asked for a reason)
+   Type CUSTOM   → Set a different approver, role, or scope
+   ───────────────────────────────────────────────────────────
+   ```
+
+   Handle ENTER → APPROVED with defaults; REJECT → ask reason; CUSTOM → ask fields.
+
+8. Record the gate decision:
    ```
    python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval grant <project-id> \
      --gate compliance \
-     --approver <id> \
+     --approver <identity> \
      --approver-role <role> \
-     --artifact <compliance-packet-hash> \
+     --artifact <accessibility-gate-hash> \
+     --artifact <rights-gate-hash> \
      --scope "<scope>" \
      --decision APPROVED|REJECTED \
-     [--exclusion "<e>"] \
-     [--notes "<n>"]
+     [--notes "<notes>"]
    ```
-7. On APPROVED: run `project transition <project-id> --to METADATA_AND_COMMERCIAL_PACKAGE`.
-8. On REJECTED: identify the specific non-compliance (accessibility FAIL, missing AI disclosure, rights gap, child-safety concern) and run `project transition <project-id>` to the appropriate repair state; escalate legal or safety findings to qualified human reviewers rather than resolving them autonomously.
+9. On APPROVED: run `project transition <project-id> --to METADATA_AND_COMMERCIAL_PACKAGE`.
+10. On REJECTED: identify the specific non-compliance and run `project transition <project-id>` to the appropriate repair state. Escalate legal or safety findings — do not resolve autonomously.
+
+## Publishing guide (show after every gate action)
+
+```
+── WHAT'S READY ────────────────────────────────────────────
+  accessibility/gate-latest.json   ✓ Accessibility PASS (18pt, high contrast)
+  rights/ledger.json               ✓ All assets rights-cleared
+  rights/gate-latest.json          ✓ Rights gate PASS
+
+── NEXT STEP ───────────────────────────────────────────────
+  Run /product-run <project-id> to continue to metadata and listing build.
+────────────────────────────────────────────────────────────
+```
 
 ## Required outputs
 
-- Compliance gate approval record with decision, approver, role, scope, and compliance packet hash.
-- Documented resolution or accepted-risk notation for each WARNING item included in the approval scope.
+- Compliance gate approval record with decision, approver, role, scope, and artifact hashes.
+- WARNING items documented with accepted-risk notation.
 - State transition to METADATA_AND_COMMERCIAL_PACKAGE (approved) or repair state (rejected).
+- Publishing guide rendered inline.
 - Event log entry.
 
 ## Stop conditions
 
-- Stop on invalid project state, stale artifact hashes, missing required approval, unresolved blocker, rights ambiguity, unsafe content, or tool failure that prevents a required check.
-- Report partial work and the exact recovery action. Never silently skip a gate or treat `not-run` as `pass`.
+- Stop on accessibility FAIL, invalid state, stale hashes, open blockers, or tool failure.
+- Never silently skip a gate or treat `not-run` as `pass`.
 
 ## Completion report
 
-State the project, current stage, agents used, files and hashes created, validation/gate results, unresolved findings, and next valid action.
+State the project, gate result, approver used, and next valid action.

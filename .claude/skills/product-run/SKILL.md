@@ -47,7 +47,7 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project validate $ARGUMENTS` and `project status $ARGUMENTS`; stop immediately on state divergence, stale artifact hashes, or unresolved blockers.
 3. Begin the autonomous loop:
    a. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project plan $ARGUMENTS` and read `autonomy_action`.
-   b. If `autonomy_action` is `STOP_AT_GATE`: assemble and present the gate packet (design policy, product type, audience, formats, all produced artifact paths and hashes, validation results, open findings); halt and wait for human review. Never approve, transition past, or simulate a gate approval.
+   b. If `autonomy_action` is `STOP_AT_GATE`: assemble and present the gate packet (design policy, product type, audience, formats, all produced artifact paths and hashes, validation results, open findings); then immediately render the publishing guide (see below); halt and wait for human review. Never approve, transition past, or simulate a gate approval.
    c. If `autonomy_action` is `BLOCKED`: report each blocker with its type and resolution; halt.
    d. If `autonomy_action` is `PROCEED`: delegate the recommended skill or agent with exact input hashes, output paths, acceptance criteria, and independence requirements. After completion, register produced artifacts with their hashes.
 4. After each stage, run the applicable validator (`project validate $ARGUMENTS`) and quality gate (`python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project next $ARGUMENTS`); reconcile any new findings before transitioning.
@@ -56,6 +56,51 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 7. Never invoke human-only gate-approval, freeze, release-authorization, listing-submission, or distribution skills.
 8. Stop when the requested state or human-gate limit is reached, the stage cap is exhausted, a blocker cannot be resolved autonomously, or any required check is `not-run` and release policy requires it.
 9. Write `projects/<id>/release/autonomous-run-latest.json` with completed stages, agents used, artifacts and hashes, validation decisions, stop reason, and next valid human action.
+
+## Publishing guide (render at every STOP_AT_GATE)
+
+After presenting the gate packet, always render a concise **"What's ready / Next steps"** section inline. Tailor to the gate:
+
+**For all gates — "What's ready" table:**
+Show the finalized artifacts produced up to and including this gate, with their paths relative to the project root and a one-line description. Mark frozen artifacts with ✓ FROZEN.
+
+**For all gates — "Next step":**
+One clear line: what the user should do right now (approve this gate, or the skill command to invoke).
+
+**For gates niche / interior / cover / compliance / listing** — after the gate card, show:
+```
+── WHAT'S READY ────────────────────────────────────────────
+  [path]   [description of artifact]
+  ...
+── NEXT STEP ───────────────────────────────────────────────
+  Approve this gate to continue, or type REJECT.
+  Invoke: /product-approve-<gate> <project-id>
+────────────────────────────────────────────────────────────
+```
+
+**For the release gate** — additionally render a "Your Book Files" map showing exactly which files to use for each platform:
+```
+── YOUR BOOK FILES ─────────────────────────────────────────
+
+FOR KDP UPLOAD
+  Interior PDF       outputs/packages/kdp/print/interior.pdf
+  Cover PDF          outputs/packages/kdp/print/cover.pdf
+  Listing metadata   outputs/packages/kdp/listing.json
+  Upload steps       outputs/packages/kdp/upload-checklist.md
+
+FOR ETSY LISTING
+  Printable PDF      outputs/packages/etsy/files/printable.pdf
+  Listing data       outputs/packages/etsy/etsy-listing.json
+  Listing steps      outputs/packages/etsy/listing-checklist.md
+
+ADDITIONAL RESOURCES
+  Launch guide       marketing/launch-guide.json
+  Full metadata      metadata/book.json
+
+── OPEN DECISIONS ──────────────────────────────────────────
+  [list any unresolved human decisions: pricing, Etsy fulfilment, ISBN, series]
+────────────────────────────────────────────────────────────
+```
 
 ## Required outputs
 

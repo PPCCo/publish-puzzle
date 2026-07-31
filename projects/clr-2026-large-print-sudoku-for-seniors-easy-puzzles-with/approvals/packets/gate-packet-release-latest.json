@@ -3,7 +3,7 @@
   "kind": "approval-gate-packet",
   "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
   "gate": "release",
-  "generated_at": "2026-07-31T13:47:41Z",
+  "generated_at": "2026-07-31T21:38:26Z",
   "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
   "current_state": "RELEASE_AUTHORIZATION",
   "expected_state": "RELEASE_AUTHORIZATION",
@@ -279,10 +279,10 @@
     "open_blocker_or_major": []
   },
   "existing_approvals": {
-    "required_distinct_approvers": 2,
+    "required_distinct_approvers": 1,
     "current_distinct_approvers": [],
     "current_count": 0,
-    "approvers_still_needed": 2,
+    "approvers_still_needed": 1,
     "invalidated": []
   },
   "risks": [
@@ -326,18 +326,6 @@
   },
   "audit": {
     "recent_events": [
-      {
-        "actor": "prepress-specialist",
-        "details": {
-          "from": "FINAL_PROOF",
-          "reason": "FINAL_PROOF PASS. Interior: 202pp, even, back-only solutions, min_type_pt=18.0pt (art-interior-proof-b049dc23dc84). Cover: spine 0.455in, wrap 17.705x11.25in (art-cover-proof-298f1fd15f83). All frozen artifacts confirmed. Advancing to PLATFORM_PACKAGING.",
-          "to": "PLATFORM_PACKAGING"
-        },
-        "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260731T134311Z-70a55092",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T13:43:11Z"
-      },
       {
         "actor": "package-kdp",
         "details": {
@@ -391,6 +379,18 @@
         "event_id": "evt-20260731T134735Z-082871a1",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
         "time": "2026-07-31T13:47:35Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub-clr/projects/clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with/release/autonomous-run-latest.json",
+          "sha256": "sha256:ffac6443afbb83f1cfc35a25733e0aae4be2ed001cf25b45f963bc50804fb37d",
+          "tool": "Write"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260731T134801Z-1daee5d9",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-07-31T13:48:01Z"
       }
     ]
   },

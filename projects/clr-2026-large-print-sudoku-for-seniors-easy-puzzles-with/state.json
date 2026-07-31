@@ -13,7 +13,7 @@
     "project-spec": "sha256:306e75023e518222cd386739af4f1b2b6f21a650017e04f42e7399b546563bb1",
     "content-sudoku": "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
     "content-verification": "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
-    "interior-pdf": "sha256:b4028dad689372ecb1406295dfafe1922a4c3eeab535b5296e8f919f8dbcc26f",
+    "interior-pdf": "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
     "interior-proof": "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
     "quality-review": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
     "quality-gate": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
@@ -27,8 +27,8 @@
     "metadata-validation": "sha256:7e8641cd83d8b1d9a2f44a840a52bff3d41a121ac88e3a6827febe6469af8bde",
     "listing-kit": "sha256:9f4218d3da7dc09583b9e9f076ccb45efbfd1eb16581c7dc288b4e5532be7ae0",
     "launch-guide": "sha256:378caf1d70eb12ee6698efce9e21a8423b1e1cf965a71436fa5c213d81b45c89",
-    "platform-package-kdp": "sha256:c277c592193c8686c26816731656f2190843cbd7207da9d349c8b38673beae43",
-    "platform-package-etsy": "sha256:dc03f0e4885833fd336f6bae320aadc668ba0975e44facd78203c44193cf0f6b"
+    "platform-package-kdp": "sha256:5ca117d230712c9c152b9eb28822eab2b188bf7a6509017d4861f7a86e6d9ba3",
+    "platform-package-etsy": "sha256:b37d24a352fa08287afc4be1c80a479681407afa2b3af6cfa2d66ae9aee55fb6"
   },
   "required_reviews": [],
   "completed_reviews": [],
@@ -52,10 +52,11 @@
   },
   "invalidated_approvals": [
     "apr-interior-20260731t130811z-15865981",
-    "apr-cover-20260731t131846z-4844a6de"
+    "apr-cover-20260731t131846z-4844a6de",
+    "apr-compliance-20260731t133613z-47cb93c4"
   ],
-  "updated_at": "2026-07-31T13:47:35Z",
-  "updated_by": "packaging-engineer",
+  "updated_at": "2026-07-31T22:02:52Z",
+  "updated_by": "package-etsy",
   "niche_assessment": {
     "decision": "PASS",
     "opportunity_score": 0.4,

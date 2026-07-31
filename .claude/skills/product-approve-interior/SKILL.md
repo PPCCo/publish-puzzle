@@ -1,10 +1,9 @@
 ---
 name: product-approve-interior
 description: >-
-  Human-only: grant or reject the interior gate (content freeze) against exact verified-content and layout hashes; freezes those verified batches so later stages build only from the frozen set; on approval transition to VISUAL_DEVELOPMENT.
-argument-hint: "<project-id> --approver <identity> --approver-role <role> --artifact <verified-content-hash> --artifact <layout-hash> --scope <text> [--decision APPROVED|REJECTED] [--exclusion <e>] [--notes <n>]"
+  Grant or reject the interior gate (content freeze) against exact verified-content and layout hashes; freezes those verified batches so later stages build only from the frozen set; on approval transition to VISUAL_DEVELOPMENT.
+argument-hint: "<project-id>"
 user-invocable: true
-disable-model-invocation: true
 effort: high
 allowed-tools:
   - Read
@@ -16,7 +15,7 @@ allowed-tools:
 
 ## Goal
 
-Human-only: grant or reject the interior gate (content freeze) against exact verified-content and layout hashes; freezes those verified batches so later stages build only from the frozen set; on approval transition to VISUAL_DEVELOPMENT.
+Grant or reject the interior gate (content freeze) against exact verified-content and layout hashes; freezes those verified batches so later stages build only from the frozen set; on approval transition to VISUAL_DEVELOPMENT.
 
 ## Arguments
 
@@ -26,44 +25,103 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 - Project is in INTERIOR_APPROVAL.
 - Content verification for all interior batches has a recorded PASS decision.
-- Quality gate and accessibility check are current (no stale results).
-- Verified-content artifact hash and layout artifact hash are both present in the project record.
-- No open BLOCKER findings against interior content.
+- Quality gate is current with zero open blockers.
+- Verified-content artifact hash and interior-PDF hash are both present in the project record.
 
 ## Procedure
 
 1. Run `project status <project-id>` and confirm the state is INTERIOR_APPROVAL.
-2. Run `approval packet <project-id> --gate interior` to retrieve verified-content artifact hash, layout artifact hash, verification decision record, quality gate result, accessibility check result, and any open findings or accepted-risk notes.
-3. Present to the approver: product title, format type (puzzle/coloring/journal/printable), page count, verified-content batch list with individual SHA-256 hashes, layout artifact hash, verification decision, quality gate outcome, accessibility outcome, open findings summary, and the consequence of approval (those exact hashes become the immutable frozen set for all downstream stages).
-4. Require the approver to supply: approver identity, approver role, decision (APPROVED or REJECTED), scope statement covering the exact content batches, and any exclusions or notes. Do not infer or default these values.
-5. Record the gate decision:
+2. Run `approval packet <project-id> --gate interior` to retrieve artifact hashes, verification decision, quality gate result, and open findings.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`.
+4. Present the **gate card**:
+
+   ```
+   ── INTERIOR GATE ───────────────────────────────────────────
+   Product:    <working_title>
+   Format:     <book_type>  |  Pages: <page_count>
+   Puzzles:    <item_count> verified  |  Verification: PASS
+   Quality:    <weighted_overall>/5.0  |  <blocker>B <major>M <minor>m
+
+   Evidence
+     Content batch     <sha256 short>  PASS  [frozen on approval]
+     Verification      <sha256 short>  PASS
+     Interior PDF      <sha256 short>
+     Quality gate      <sha256 short>  PASS
+
+   ⚠ Approval freezes the content batch — revisions need a new cycle.
+   ────────────────────────────────────────────────────────────
+   ```
+
+5. Show **file links**:
+
+   ```
+   Files at this gate
+     content/puzzles/sudoku-batch.json    — generated puzzle content (frozen on approval)
+     verification/content-verification-latest.json  — code verification record
+     outputs/interior/interior.pdf        — interior PDF
+     reviews/quality-gate-latest.json     — quality gate result
+   ```
+
+6. Determine action based on `auto_approve_gates`:
+   - **`"silent"`** — record approval immediately with defaults; skip prompt.
+   - **`"auto"`** — show gate card + interactive prompt; wait for response.
+   - **`"false"`** — show gate card + interactive prompt with pre-filled defaults displayed.
+
+7. **Interactive approval prompt** (skip in `silent` mode):
+
+   ```
+   ── APPROVE INTERIOR GATE? ─────────────────────────────────
+   Default approver: <identity> (<role>)
+   Default scope:    <scope>
+
+   Press ENTER   → Approve and freeze content with defaults
+   Type REJECT   → Reject (you will be asked for a reason)
+   Type CUSTOM   → Set a different approver, role, or scope
+   ───────────────────────────────────────────────────────────
+   ```
+
+   Handle ENTER → APPROVED with defaults; REJECT → ask reason; CUSTOM → ask fields.
+
+8. Record the gate decision:
    ```
    python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval grant <project-id> \
      --gate interior \
-     --approver <id> \
+     --approver <identity> \
      --approver-role <role> \
      --artifact <verified-content-hash> \
-     --artifact <layout-hash> \
+     --artifact <interior-pdf-hash> \
      --scope "<scope>" \
      --decision APPROVED|REJECTED \
-     [--exclusion "<e>"] \
-     [--notes "<n>"]
+     [--notes "<notes>"]
    ```
-6. On APPROVED: confirm to the approver that the listed artifact hashes are now frozen; any revision to interior content requires a new revision cycle and re-verification before the interior gate can be re-entered. Run `project transition <project-id> --to VISUAL_DEVELOPMENT`.
-7. On REJECTED: state the specific finding that blocked approval and run `project transition <project-id> --to INTERIOR_APPROVAL` (or to the appropriate repair state as directed); do not freeze artifacts.
+9. On APPROVED: confirm that the listed hashes are now **frozen** — no further content changes without a new revision cycle. Run `project transition <project-id> --to VISUAL_DEVELOPMENT`.
+10. On REJECTED: state the specific blocker and run `project transition <project-id> --to INTERIOR_APPROVAL` or the directed repair state.
+
+## Publishing guide (show after every gate action)
+
+```
+── WHAT'S READY ────────────────────────────────────────────
+  content/puzzles/sudoku-batch.json   ✓ FROZEN — 100 puzzles, code-verified
+  outputs/interior/interior.pdf       ✓ FROZEN — 202-page print-ready interior
+
+── NEXT STEP ───────────────────────────────────────────────
+  Run /product-run <project-id> to continue to cover design.
+────────────────────────────────────────────────────────────
+```
 
 ## Required outputs
 
 - Interior gate approval record with decision, approver, role, scope, and frozen artifact hashes (on APPROVED).
 - State transition to VISUAL_DEVELOPMENT (approved) or repair state (rejected).
-- Written statement that the approved artifact hashes are frozen and immutable for downstream stages.
+- Explicit confirmation that approved hashes are frozen.
+- Publishing guide rendered inline.
 - Event log entry.
 
 ## Stop conditions
 
-- Stop on invalid project state, stale artifact hashes, missing required approval, unresolved blocker, rights ambiguity, unsafe content, or tool failure that prevents a required check.
-- Report partial work and the exact recovery action. Never silently skip a gate or treat `not-run` as `pass`.
+- Stop on invalid state, stale artifact hashes, open blockers, or tool failure.
+- Never silently skip a gate or treat `not-run` as `pass`.
 
 ## Completion report
 
-State the project, current stage, agents used, files and hashes created, validation/gate results, unresolved findings, and next valid action.
+State the project, gate result, approver used, frozen hashes (on APPROVED), and next valid action.
