@@ -1,0 +1,22 @@
+{
+  "approval_id": "apr-interior-20260801t021332z-178fb7ae",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "interior",
+  "approver": "Qaiser Abbas",
+  "approver_role": "Publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
+    "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+    "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+    "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
+    "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318"
+  ],
+  "scope": "Interior content freeze: 100 verified easy sudoku puzzles, real 9x9 grid rendering, back-only solutions, 202 pages, proof PASS",
+  "exclusions": [],
+  "notes": "Re-approval after layout fix: blank placeholder pages replaced with rendered sudoku grids. Content batch unchanged.",
+  "created_at": "2026-08-01T02:13:32Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

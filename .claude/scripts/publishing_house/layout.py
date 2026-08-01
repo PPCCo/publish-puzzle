@@ -239,6 +239,22 @@ def _spine_width_in(page_count: int, paper: str) -> float:
     return round(page_count * _PAPER_CALIPER_IN.get(paper, _PAPER_CALIPER_IN["white"]), 4)
 
 
+def _wrap_text(text: str, max_chars: int) -> list[str]:
+    """Wrap text to lines of at most max_chars, splitting on spaces."""
+    words = text.split()
+    lines: list[str] = []
+    current = ""
+    for word in words:
+        if current and len(current) + 1 + len(word) > max_chars:
+            lines.append(current)
+            current = word
+        else:
+            current = f"{current} {word}".strip() if current else word
+    if current:
+        lines.append(current)
+    return lines
+
+
 def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict[str, Any]:
     canvas, inch = _require_reportlab()
     paths = ProjectPaths(root, project_id).require()
@@ -254,12 +270,163 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     wrap_width = (width_in * 2) + spine + (bleed * 2)
     wrap_height = height_in + (bleed * 2)
 
+    title = str(project.get("working_title", project_id))
+    description = ""
+    listing_kit_path = paths.directory / "marketing" / "listing-kit.json"
+    if listing_kit_path.exists():
+        try:
+            kit = load_json(listing_kit_path)
+            description = kit.get("description", "") or ""
+        except Exception:  # noqa: BLE001
+            pass
+
     out_dir = paths.directory / "outputs" / "cover"
     out_dir.mkdir(parents=True, exist_ok=True)
     pdf_path = out_dir / "cover-wrap.pdf"
     c = canvas.Canvas(str(pdf_path), pagesize=(wrap_width * inch, wrap_height * inch))
-    c.setFont("Helvetica-Bold", 18)
-    c.drawString((width_in + spine + bleed + 0.75) * inch, (wrap_height - 1.0) * inch, str(project.get("working_title", project_id)))
+
+    # ------------------------------------------------------------------ #
+    # Coordinate system: (0,0) = bottom-left of the full wrap canvas.
+    # Layout left-to-right: back panel | spine | front panel (all + bleed).
+    # back panel occupies x: 0 .. (width_in + bleed)*inch
+    # spine occupies x: (width_in + bleed)*inch .. (width_in + bleed + spine)*inch
+    # front panel occupies x: (width_in + bleed + spine)*inch .. wrap_width*inch
+    # ------------------------------------------------------------------ #
+    front_x = (width_in + bleed + spine) * inch   # left edge of front panel
+    front_w = width_in * inch
+    back_x = 0.0
+    back_w = width_in * inch
+    spine_x = (width_in + bleed) * inch
+    spine_w = spine * inch
+    wrap_h = wrap_height * inch
+    margin = 0.625 * inch   # interior margin on front/back
+
+    from reportlab.lib.colors import HexColor  # noqa: PLC0415
+    navy = HexColor("#1a3a5c")
+    cream = HexColor("#fdf6e3")
+    white = HexColor("#ffffff")
+
+    # --- Front panel background ---
+    c.setFillColor(navy)
+    c.rect(front_x, 0, front_w, wrap_h, fill=1, stroke=0)
+
+    # Decorative horizontal rule below header area
+    rule_y = wrap_h - 2.5 * inch
+    c.setStrokeColor(cream)
+    c.setLineWidth(2)
+    c.line(front_x + margin, rule_y, front_x + front_w - margin, rule_y)
+
+    # Title on front (white, bold, large, wrapped)
+    c.setFillColor(white)
+    title_lines = _wrap_text(title, 28)
+    font_size = 28 if len(title_lines) <= 2 else 22
+    line_h = font_size * 1.3
+    title_block_h = len(title_lines) * line_h
+    title_top_y = wrap_h - 1.1 * inch
+    c.setFont("Helvetica-Bold", font_size)
+    for i, line in enumerate(title_lines):
+        y = title_top_y - i * line_h
+        c.drawString(front_x + margin, y, line)
+
+    # Decorative rule below title
+    rule2_y = title_top_y - title_block_h - 0.2 * inch
+    c.setStrokeColor(cream)
+    c.setLineWidth(1)
+    c.line(front_x + margin, rule2_y, front_x + front_w - margin, rule2_y)
+
+    # Puzzle count callout box
+    callout_y = rule2_y - 1.6 * inch
+    callout_h = 1.1 * inch
+    c.setFillColor(cream)
+    c.roundRect(front_x + margin, callout_y, front_w - 2 * margin, callout_h, 6, fill=1, stroke=0)
+    c.setFillColor(navy)
+    c.setFont("Helvetica-Bold", 32)
+    c.drawCentredString(front_x + front_w / 2, callout_y + callout_h * 0.52, "100 Puzzles")
+    c.setFont("Helvetica", 14)
+    c.drawCentredString(front_x + front_w / 2, callout_y + callout_h * 0.18, "Large Print  •  Easy  •  Complete Solutions")
+
+    # Sudoku grid preview (4x4 sample, decorative)
+    grid_preview_size = 1.8 * inch
+    gp_x = front_x + margin
+    gp_y = callout_y - grid_preview_size - 0.35 * inch
+    cell_p = grid_preview_size / 4
+    c.setStrokeColor(cream)
+    c.setLineWidth(1.5)
+    sample_digits = ["5", "3", " ", " ", "7", " ", " ", " ", " ", "6",
+                     " ", " ", "1", "9", "5", " "]
+    for r in range(5):
+        lw = 2.5 if r % 2 == 0 else 0.8
+        c.setLineWidth(lw)
+        c.line(gp_x, gp_y + r * cell_p, gp_x + grid_preview_size, gp_y + r * cell_p)
+        c.line(gp_x + r * cell_p, gp_y, gp_x + r * cell_p, gp_y + grid_preview_size)
+    c.setFillColor(white)
+    c.setFont("Helvetica-Bold", 14)
+    for r in range(4):
+        for col in range(4):
+            d = sample_digits[r * 4 + col]
+            if d != " ":
+                cx = gp_x + col * cell_p + cell_p / 2
+                cy = gp_y + (3 - r) * cell_p + cell_p / 3
+                c.drawCentredString(cx, cy, d)
+
+    # Format badge bottom-right of front
+    badge_y = 0.5 * inch
+    c.setFillColor(cream)
+    c.setFont("Helvetica", 12)
+    c.drawRightString(front_x + front_w - margin, badge_y, "8.5 × 11 in  |  Paperback")
+
+    # --- Back panel background ---
+    c.setFillColor(navy)
+    c.rect(back_x, 0, back_w, wrap_h, fill=1, stroke=0)
+
+    # Back panel: description text
+    c.setFillColor(white)
+    back_margin = 0.625 * inch
+    desc_lines = _wrap_text(description, 46) if description else []
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(back_margin, wrap_h - 1.0 * inch, "About This Book")
+    c.setStrokeColor(cream)
+    c.setLineWidth(1)
+    c.line(back_margin, wrap_h - 1.2 * inch, back_w - back_margin, wrap_h - 1.2 * inch)
+    c.setFont("Helvetica", 12)
+    text_y = wrap_h - 1.65 * inch
+    for line in desc_lines:
+        c.drawString(back_margin, text_y, line)
+        text_y -= 0.22 * inch
+        if text_y < 1.0 * inch:
+            break
+
+    # Back panel: features list
+    features_y = text_y - 0.3 * inch
+    features = [
+        "✓  100 unique easy sudoku puzzles",
+        "✓  One puzzle per page, large print",
+        "✓  High-contrast black-on-white grids",
+        "✓  Complete solutions at the back",
+        "✓  No guessing required",
+    ]
+    c.setFont("Helvetica", 13)
+    for feat in features:
+        if features_y > 1.2 * inch:
+            c.drawString(back_margin, features_y, feat)
+            features_y -= 0.28 * inch
+
+    # --- Spine ---
+    if spine_w >= 0.25 * inch:
+        c.setFillColor(navy)
+        c.rect(spine_x, 0, spine_w, wrap_h, fill=1, stroke=0)
+        # Spine title (rotated 90°, bottom-to-top)
+        c.setFillColor(white)
+        c.saveState()
+        c.translate(spine_x + spine_w / 2, wrap_h / 2)
+        c.rotate(90)
+        spine_font = min(10, spine_w * 72 * 0.7)
+        c.setFont("Helvetica-Bold", max(6, spine_font))
+        # Truncate if title is very long
+        spine_title = title if len(title) <= 50 else title[:47] + "..."
+        c.drawCentredString(0, 0, spine_title)
+        c.restoreState()
+
     c.showPage()
     c.save()
 

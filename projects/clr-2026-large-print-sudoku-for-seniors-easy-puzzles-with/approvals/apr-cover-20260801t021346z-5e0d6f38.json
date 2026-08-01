@@ -1,0 +1,20 @@
+{
+  "approval_id": "apr-cover-20260801t021346z-5e0d6f38",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "cover",
+  "approver": "Qaiser Abbas",
+  "approver_role": "Publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+    "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+    "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f"
+  ],
+  "scope": "Cover wrap approved: navy/cream/white full-bleed design, spine 0.4549in, wrap 17.70x11.25in, proof PASS",
+  "exclusions": [],
+  "notes": "Re-approval after cover fix: single title string replaced with full-bleed design (front panel, spine, back panel).",
+  "created_at": "2026-08-01T02:13:46Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

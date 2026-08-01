@@ -18,7 +18,7 @@
     "quality-review": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
     "quality-gate": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
     "cover-art-direction": "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
-    "cover-pdf": "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
+    "cover-pdf": "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
     "cover-proof": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
     "accessibility-gate": "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
     "rights-ledger": "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
@@ -27,8 +27,8 @@
     "metadata-validation": "sha256:7e8641cd83d8b1d9a2f44a840a52bff3d41a121ac88e3a6827febe6469af8bde",
     "listing-kit": "sha256:9f4218d3da7dc09583b9e9f076ccb45efbfd1eb16581c7dc288b4e5532be7ae0",
     "launch-guide": "sha256:378caf1d70eb12ee6698efce9e21a8423b1e1cf965a71436fa5c213d81b45c89",
-    "platform-package-kdp": "sha256:5ca117d230712c9c152b9eb28822eab2b188bf7a6509017d4861f7a86e6d9ba3",
-    "platform-package-etsy": "sha256:b37d24a352fa08287afc4be1c80a479681407afa2b3af6cfa2d66ae9aee55fb6"
+    "platform-package-kdp": "sha256:577670bf1c3bd52e75272dd70a756fbb773c18465275f87dbb30e918d35f2ef9",
+    "platform-package-etsy": "sha256:b4fc4307a015498307778a0f0fc07b8ffdeddb6f876c5a157752bf34890293e6"
   },
   "required_reviews": [],
   "completed_reviews": [],
@@ -55,7 +55,7 @@
     "apr-cover-20260731t131846z-4844a6de",
     "apr-compliance-20260731t133613z-47cb93c4"
   ],
-  "updated_at": "2026-07-31T22:02:52Z",
+  "updated_at": "2026-08-01T01:30:59Z",
   "updated_by": "package-etsy",
   "niche_assessment": {
     "decision": "PASS",

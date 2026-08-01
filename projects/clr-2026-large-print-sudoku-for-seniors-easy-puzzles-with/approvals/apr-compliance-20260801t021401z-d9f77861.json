@@ -1,0 +1,23 @@
+{
+  "approval_id": "apr-compliance-20260801t021401z-d9f77861",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "compliance",
+  "approver": "Qaiser Abbas",
+  "approver_role": "Publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
+    "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+    "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
+    "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
+    "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
+    "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7"
+  ],
+  "scope": "Compliance re-approval against updated interior-pdf and cover-pdf. AI disclosure, accessibility PASS, rights PASS all unchanged.",
+  "exclusions": [],
+  "notes": "Re-approval after interior and cover rebuild. Compliance evidence (accessibility, rights, AI disclosure) unchanged — re-binding to new artifact hashes only.",
+  "created_at": "2026-08-01T02:14:01Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

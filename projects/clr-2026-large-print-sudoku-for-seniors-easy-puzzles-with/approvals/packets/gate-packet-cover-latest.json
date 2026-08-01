@@ -1,286 +1,117 @@
 {
   "schema_version": "1.0",
   "kind": "approval-gate-packet",
-  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
   "gate": "cover",
-  "generated_at": "2026-07-31T13:13:25Z",
-  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
-  "current_state": "COVER_APPROVAL",
-  "expected_state": "COVER_APPROVAL",
-  "state_matches_gate": true,
-  "scope": {
-    "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
-    "audience": "senior-large-print",
-    "book_type": "puzzle-book",
-    "formats": [
-      "paperback"
-    ],
-    "sales_channels": [
-      "kdp",
-      "etsy"
-    ],
-    "territory": null
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "prepared_at": "2026-08-01T02:15:00Z",
+  "prepared_by": "human-collaboration-facilitator (AGT-003; deterministic assembly, grants nothing)",
+  "scope": "Approve cover-pdf artifact for print wrap. Spine width 0.4549in derived from 202-page count on white paper. Full-bleed design: navy/cream/white. Thumbnail legibility: title readable at small size.",
+  "context": "Cover PDF was rebuilt to fix a blank cover (only a title string was being drawn). The new cover has a proper full-bleed design: navy background, title, callout box, decorative sudoku grid, spine text, back panel with description. This rebuild changed the cover-pdf and cover-proof hashes and invalidated the prior cover approval, so the cover gate must be re-presented for a fresh human decision.",
+  "cover_spec": {
+    "wrap_size_in": [17.7049, 11.25],
+    "spine_width_in": 0.4549,
+    "bleed_in": 0.125,
+    "trim_in": [8.5, 11.0],
+    "page_count": 202,
+    "paper": "white",
+    "binding": "paperback",
+    "source": "outputs/cover/cover-spec.json"
   },
-  "artifacts_under_review": [
+  "artifacts": [
     {
-      "kind": "content-plan",
-      "sha256": "sha256:f729a19991b367ca26b2ed137f5e46da9d35739d7dc215bc67accfb7a547759c",
-      "type": "content-plan",
-      "path": "content/content-plan.md",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
+      "kind": "cover-pdf",
+      "sha256": "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+      "type": "cover-pdf",
+      "path": "outputs/cover/cover-wrap.pdf",
+      "registered": true,
+      "note": "Rebuilt full-bleed cover. Supersedes prior blank cover sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac."
     },
     {
-      "kind": "content-sudoku",
-      "sha256": "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
-      "type": "content-sudoku",
-      "path": "content/puzzles/sudoku-batch.json",
-      "frozen": true,
-      "rights_status": "not-applicable",
-      "validation_status": "pass",
-      "registered": true
-    },
-    {
-      "kind": "content-verification",
-      "sha256": "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
-      "type": "content-verification",
-      "path": "verification/content-verification-latest.json",
-      "frozen": true,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
+      "kind": "cover-proof",
+      "sha256": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+      "type": "cover-proof",
+      "path": "outputs/proof/cover-proof-report.json",
+      "registered": true,
+      "note": "Pre-flight proof for the rebuilt cover. Supersedes prior proof sha256:0c10e23ed8d8a6ad37d7169d4aaacf47bc243e6bc7d28c6ff72893358fd8d648."
+    }
+  ],
+  "supporting_artifacts": [
     {
       "kind": "cover-art-direction",
       "sha256": "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
       "type": "cover-art-direction",
       "path": "concepts/cover-art-direction.md",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "cover-pdf",
-      "sha256": "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
-      "type": "cover-pdf",
-      "path": "outputs/cover/cover-wrap.pdf",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "cover-proof",
-      "sha256": "sha256:0c10e23ed8d8a6ad37d7169d4aaacf47bc243e6bc7d28c6ff72893358fd8d648",
-      "type": "cover-proof",
-      "path": "outputs/proof/cover-proof-report.json",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "intake-note",
-      "sha256": "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
-      "type": "intake-note",
-      "path": "notes/intake.md",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
+      "note": "Unchanged since prior approval; navy/white/gold art direction, sudoku grid motif, large clear title. Included for context; not the artifact being decided at this gate."
     },
     {
       "kind": "interior-pdf",
-      "sha256": "sha256:b4028dad689372ecb1406295dfafe1922a4c3eeab535b5296e8f919f8dbcc26f",
+      "sha256": "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
       "type": "interior-pdf",
       "path": "outputs/interior/interior.pdf",
-      "frozen": true,
-      "rights_status": "not-applicable",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "interior-proof",
-      "sha256": "sha256:9503f0a6ff3a5f49af1d9cc9c1493bce4ac683918d93ad0709104a20b3f2de46",
-      "type": "interior-proof",
-      "path": "outputs/proof/interior-proof-report.json",
-      "frozen": true,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "niche-assessment",
-      "sha256": "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
-      "type": "niche-assessment",
-      "path": "niche/assessment-latest.json",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "product-brief",
-      "sha256": "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
-      "type": "product-brief",
-      "path": "brief/product-brief.md",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "project-spec",
-      "sha256": "sha256:08f00aca62663310a92681a3bf31c5dde56cf9639207131f236f35651303db25",
-      "type": "project-spec",
-      "path": "project.yaml",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "quality-gate",
-      "sha256": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
-      "type": "quality-gate",
-      "path": "reviews/quality-gate-latest.json",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
-    },
-    {
-      "kind": "quality-review",
-      "sha256": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
-      "type": "quality-review",
-      "path": "reviews/review-solvability.json",
-      "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
-      "registered": true
+      "note": "Source of the 202-page count that derives the 0.4549in spine width. Included as spine-width evidence only; not the artifact being decided at this gate."
     }
   ],
-  "deterministic_evidence": [
+  "gate_reports": [
     {
-      "present": true,
-      "decision": "PASS",
       "report": "outputs/proof/cover-proof-report.json",
-      "is_pass": true
+      "source_hash": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+      "decision": "PASS",
+      "evidence": {
+        "cover_present": true,
+        "spine_width_in": 0.4549,
+        "wrap_size_in": [17.7049, 11.25],
+        "wrap_size_correct": true
+      },
+      "summary": "Cover proof PASS — spine present, wrap size correct."
     }
   ],
-  "channel_packages": [],
-  "series_context": null,
+  "review_checklist": [
+    "Original art confirmed — no licensed or traced elements (decorative sudoku grid, navy/cream/white treatment).",
+    "Audience-appropriate visual tone for senior-large-print: high contrast, large clear title, calm-clear register.",
+    "Trim and bleed compliance: trim 8.5x11in, 0.125in bleed, wrap 17.7049x11.25in.",
+    "Spine width 0.4549in derived from 202-page count on white paper; matches the cover-proof report.",
+    "Thumbnail legibility: title readable at small (channel) size.",
+    "Font licensing note: font commercial-use rights are tracked and decided at the compliance gate, not at this cover gate."
+  ],
   "open_findings": {
     "counts": {
       "blocker": 0,
       "major": 0,
-      "minor": 1,
-      "note": 5
+      "minor": 0,
+      "note": 0
     },
-    "open_blocker_or_major": []
+    "open_blocker_or_major": [],
+    "summary": "No open findings against the cover artifacts; cover proof is PASS on the current cover-pdf and cover-proof hashes."
   },
-  "existing_approvals": {
-    "required_distinct_approvers": 1,
-    "current_distinct_approvers": [],
-    "current_count": 0,
-    "approvers_still_needed": 1,
-    "invalidated": []
-  },
-  "risks": [],
-  "ready_for_human_review": true,
-  "decision_options": [
-    "APPROVE",
-    "REJECT",
-    "REQUEST_CHANGES"
+  "invalidated_approvals": [
+    {
+      "approval_id": "apr-cover-20260731t131846z-4844a6de",
+      "gate": "cover",
+      "approver": "PPC",
+      "approver_role": "publisher",
+      "prior_decision": "APPROVED",
+      "invalidated_at": "2026-07-31T13:42:59Z",
+      "prior_artifact_hashes": [
+        "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
+        "sha256:0c10e23ed8d8a6ad37d7169d4aaacf47bc243e6bc7d28c6ff72893358fd8d648",
+        "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f"
+      ],
+      "invalidation_reason": "Cover PDF rebuilt to fix a blank cover (title-string-only). cover-pdf changed e04916e1... -> e87c241a...; cover-proof changed 0c10e23e... -> 298f1fd1.... The prior approval no longer binds to the active cover artifacts and does not clear this gate.",
+      "notice": "The prior cover approval is INVALIDATED and grants nothing on the current cover artifacts. A fresh human decision on the hashes in this packet is required."
+    }
   ],
+  "required_approvers": 1,
+  "decision_options": ["APPROVE", "REJECT", "REQUEST_CHANGES"],
+  "risks": [
+    "STATE MISMATCH: project state is RELEASE_AUTHORIZATION, not COVER_APPROVAL. The deterministic gate packet reports state_matches_gate=false, gate_is_required_transition=false, and ready_for_human_review=false. The project previously advanced past the cover gate on the OLD (blank) cover hashes and reached RELEASE_AUTHORIZATION; the cover was then rebuilt on 2026-08-01, which retroactively invalidated the prior cover approval (and, per state.json, the interior and compliance approvals as well). This cover re-approval alone does not restore a clean release-ready state. The Publisher-in-Chief must determine the correct workflow recovery path (e.g. re-approval of all invalidated gates on current hashes) before release. This packet does not resolve that sequencing."
+  ],
+  "what_approval_commits_to": "By approving the cover gate, the approver confirms that the cover wrap at cover-pdf hash sha256:e87c241a... is an original full-bleed design appropriate for the senior-large-print audience, that its spine width (0.4549in) and wrap size (17.7049x11.25in) are correct for the 202-page interior on white paper as verified by the cover-proof PASS, and that the title is legible at channel thumbnail size. Approval binds to the exact cover-pdf and cover-proof hashes listed in this packet. It does NOT clear font commercial-use rights, cover-art originality attestation, or AI-assistance disclosure (those are decided at the compliance gate), and it does NOT by itself make the project release-ready given the state mismatch noted under risks.",
   "human_action": {
     "recording_skill": "/product-approve-cover",
-    "note": "This packet grants nothing. A human must record the decision with the human-only skill /product-approve-cover bound to the exact artifact hashes listed above. Autonomy must STOP here.",
     "artifact_hashes_to_bind": [
-      "sha256:f729a19991b367ca26b2ed137f5e46da9d35739d7dc215bc67accfb7a547759c",
-      "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
-      "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
-      "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
-      "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
-      "sha256:0c10e23ed8d8a6ad37d7169d4aaacf47bc243e6bc7d28c6ff72893358fd8d648",
-      "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
-      "sha256:b4028dad689372ecb1406295dfafe1922a4c3eeab535b5296e8f919f8dbcc26f",
-      "sha256:9503f0a6ff3a5f49af1d9cc9c1493bce4ac683918d93ad0709104a20b3f2de46",
-      "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
-      "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
-      "sha256:08f00aca62663310a92681a3bf31c5dde56cf9639207131f236f35651303db25",
-      "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
-      "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87"
+      "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+      "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136"
     ]
   },
-  "audit": {
-    "recent_events": [
-      {
-        "actor": "cover-builder",
-        "details": {
-          "active": true,
-          "artifact_id": "art-cover-pdf-e04916e1e87d",
-          "path": "outputs/cover/cover-wrap.pdf",
-          "sha256": "sha256:e04916e1e87dea2214620121a03477d9bcf34f6aec7e595b84bafc103820d7ac",
-          "type": "cover-pdf"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260731T131246Z-710e55f7",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T13:12:46Z"
-      },
-      {
-        "actor": "cover-builder",
-        "details": {
-          "artifact_id": "art-cover-pdf-e04916e1e87d",
-          "spine_width_in": 0.4549
-        },
-        "event": "COVER_BUILT",
-        "event_id": "evt-20260731T131246Z-9fe1a719",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T13:12:46Z"
-      },
-      {
-        "actor": "proof-builder",
-        "details": {
-          "cover_decision": "PASS",
-          "interior_decision": "PASS"
-        },
-        "event": "PROOF_BUILT",
-        "event_id": "evt-20260731T131251Z-867d1022",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T13:12:51Z"
-      },
-      {
-        "actor": "ph_cli-proof",
-        "details": {
-          "active": true,
-          "artifact_id": "art-cover-proof-0c10e23ed8d8",
-          "path": "outputs/proof/cover-proof-report.json",
-          "sha256": "sha256:0c10e23ed8d8a6ad37d7169d4aaacf47bc243e6bc7d28c6ff72893358fd8d648",
-          "type": "cover-proof"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260731T131258Z-f8bd1f96",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T13:12:58Z"
-      },
-      {
-        "actor": "product-run",
-        "details": {
-          "from": "VISUAL_DEVELOPMENT",
-          "reason": "Cover wrap built (art-cover-pdf-e04916e1e87d, spine 0.455in, wrap 17.7x11.25in); cover proof PASS (art-cover-proof-0c10e23ed8d8). VISUAL_DEVELOPMENT acceptance criteria met.",
-          "to": "COVER_APPROVAL"
-        },
-        "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260731T131310Z-1b42a246",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T13:13:10Z"
-      }
-    ]
-  },
-  "gate_is_required_transition": true
+  "notice": "This packet grants no approval. A human approver must invoke /product-approve-cover to record a decision."
 }
