@@ -3,6 +3,7 @@ name: journal-prompt-writer
 description: >-
   Produces original guided-journal, workbook, and planner prompts and templates calibrated to the audience reading level and page-space targets, without making clinical or therapeutic claims.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

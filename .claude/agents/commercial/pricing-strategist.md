@@ -3,6 +3,7 @@ name: pricing-strategist
 description: >-
   Recommends commercially coherent prices and product ladders across KDP, Etsy, and Gumroad by exposing assumptions and uncertainty; never commits spend, launches paid ads, or sets live prices.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

@@ -3,6 +3,7 @@ name: solvability-checker
 description: >-
   Independently proves by code that every puzzle in a project is solvable, that any puzzle requiring a unique solution has exactly one, and that the answer key matches the verified solution exactly.
 effort: xhigh
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
 tools:

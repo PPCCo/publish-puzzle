@@ -3,6 +3,7 @@ name: content-architect
 description: >-
   Turns an approved brief into a feasible, audience-calibrated content plan covering puzzle-batch composition, difficulty progression, page budget, section structure, and answer-key placement.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

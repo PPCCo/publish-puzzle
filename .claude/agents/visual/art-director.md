@@ -3,6 +3,7 @@ name: art-director
 description: >-
   Defines a coherent original visual language for covers and interior art — including line weight, palette intent, density, composition, and typography relationship — to improve comprehension, appeal, and audience fit before bulk asset production.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

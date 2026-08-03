@@ -3,6 +3,7 @@ name: printable-designer
 description: >-
   Designs digital printable templates meeting stated DPI and print-at-home page size requirements (US Letter or A4) with clear usage and licensing constraints for the digital-printable product family.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
 tools:

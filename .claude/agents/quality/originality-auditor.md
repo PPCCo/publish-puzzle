@@ -3,6 +3,7 @@ name: originality-auditor
 description: >-
   Identifies material similarity risk in puzzle content, coloring line art, prompts, and layouts; strengthens original expression; and flags resemblance to protected works or named living artists' styles.
 effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

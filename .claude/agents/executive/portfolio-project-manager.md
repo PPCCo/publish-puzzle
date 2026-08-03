@@ -3,6 +3,7 @@ name: portfolio-project-manager
 description: >-
   Keeps puzzle, coloring, journal, and printable projects and series feasible, bounded, visible, and recoverable while preserving all quality gates, content freezes, and human approval records.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
 tools:

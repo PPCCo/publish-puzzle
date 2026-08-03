@@ -5,6 +5,7 @@ description: >-
 argument-hint: "<project-id>"
 user-invocable: true
 effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash

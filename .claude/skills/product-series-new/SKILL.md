@@ -5,6 +5,7 @@ description: >-
 argument-hint: "--series-id <id> --books-json <json-or-path>"
 user-invocable: true
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 allowed-tools:
   - Read
   - Write

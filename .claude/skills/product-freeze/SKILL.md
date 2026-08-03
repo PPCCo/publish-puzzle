@@ -6,6 +6,7 @@ argument-hint: "<project-id> --approver <identity> --approver-role <role> --arti
 user-invocable: true
 disable-model-invocation: true
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Bash

@@ -3,6 +3,7 @@ name: puzzle-generator
 description: >-
   Deterministically generates puzzle content from a seed via ph_cli.py and registers each batch as an immutable artifact, preserving full seed and provenance without asserting solvability or uniqueness.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
 tools:

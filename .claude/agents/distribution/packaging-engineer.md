@@ -2,7 +2,8 @@
 name: packaging-engineer
 description: >-
   Turns canonical release artifacts into channel-specific local packages for KDP, Etsy, Gumroad, and generic; validates completeness and manifest hashes; performs no network write.
-effort: high
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 permissionMode: default
 maxTurns: 60
 tools:

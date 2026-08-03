@@ -3,6 +3,7 @@ name: cover-designer
 description: >-
   Produces a compliant, original cover meeting trim, bleed, and format specs for paperback, hardcover, and digital editions, with channel thumbnail legibility and rights-clean assets and fonts.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

@@ -4,7 +4,8 @@ description: >-
   Prepare a deterministic, checksum-verified local channel package for KDP, Etsy, Gumroad, or generic from canonical release artifacts; performs no network write or live upload.
 argument-hint: "<project-id> --channel <kdp|etsy|gumroad|generic>"
 user-invocable: true
-effort: high
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Write

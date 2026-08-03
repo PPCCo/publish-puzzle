@@ -3,6 +3,7 @@ name: content-verifier
 description: >-
   Independently verifies generated puzzle content by code — checking solution uniqueness where applicable, solvability, answer-key correctness, and difficulty accuracy — and reports evidence-backed findings without repairing or regenerating anything.
 effort: xhigh
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
 tools:

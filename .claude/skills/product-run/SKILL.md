@@ -5,6 +5,7 @@ description: >-
 argument-hint: "<project-id> [--until <STATE>]"
 user-invocable: true
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Grep

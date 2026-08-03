@@ -5,7 +5,8 @@ description: >-
 argument-hint: "<project-id> --channel <channel> --mode dry-run|record-manual [--status submitted|accepted|published|rejected|withdrawn|unknown] [--evidence <path-or-id>]"
 user-invocable: true
 disable-model-invocation: true
-effort: high
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash

@@ -6,6 +6,7 @@ argument-hint: "<project-id> <incident description>"
 user-invocable: true
 disable-model-invocation: true
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Write

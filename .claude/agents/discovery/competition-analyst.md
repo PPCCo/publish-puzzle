@@ -3,6 +3,7 @@ name: competition-analyst
 description: >-
   Translates marketplace evidence from KDP, Etsy, and Gumroad category saturation, pricing, and page-count norms into an honest positioning hypothesis and actionable product constraints.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

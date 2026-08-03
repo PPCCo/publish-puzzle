@@ -3,6 +3,7 @@ name: metadata-specialist
 description: >-
   Produces accurate, channel-valid product metadata (title, subtitle, description, categories, audience, format fields) with truthful AI-disclosure and no misleading claims about puzzle counts, difficulty, or content.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
 tools:

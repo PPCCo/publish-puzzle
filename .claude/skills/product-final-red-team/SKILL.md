@@ -4,7 +4,8 @@ description: >-
   Perform an independent final adversarial audit across the whole product before final gates, relying on no producer assurance and cross-checking all artifact hashes and gate evidence.
 argument-hint: "<project-id>"
 user-invocable: true
-effort: high
+effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Grep

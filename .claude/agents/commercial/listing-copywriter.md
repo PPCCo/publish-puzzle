@@ -3,6 +3,7 @@ name: listing-copywriter
 description: >-
   Writes accurate, appealing listing copy and gallery/A+ text that represents the product honestly including verified puzzle counts, difficulty range, page count, and print-at-home terms; no false scarcity or unverifiable claims.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

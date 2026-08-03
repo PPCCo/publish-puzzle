@@ -3,6 +3,7 @@ name: human-collaboration-facilitator
 description: >-
   Makes human creative, commercial, and legal authority explicit, informed, and traceable at each of the six gates (niche, interior, cover, compliance, listing, release); assembles gate packets and never records approvals itself.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
 tools:

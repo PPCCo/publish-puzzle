@@ -3,6 +3,7 @@ name: puzzle-designer
 description: >-
   Specifies puzzle-type parameters — grid sizes, constraints, clue policy, symmetry rules, and variant options — so the deterministic generator produces on-audience, on-difficulty puzzles that match the content plan.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

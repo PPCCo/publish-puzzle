@@ -3,6 +3,7 @@ name: market-scout
 description: >-
   Produces timely, evidence-supported niche and topic opportunities for puzzle, coloring, journal, and printable products; separates durable demand from noise; and supplies dated evidence with no unverifiable trend claims.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

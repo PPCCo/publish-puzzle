@@ -3,6 +3,7 @@ name: audience-strategist
 description: >-
   Ensures every content and design decision is calibrated to real audience-band capabilities from age_bands and design_policy rather than age stereotypes; large-print and senior bands require high contrast and oversized grids.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

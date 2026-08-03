@@ -3,6 +3,7 @@ name: review-responder
 description: >-
   Triages reader feedback and errata into evidence-weighted edition-maintenance recommendations; preserves edition history; avoids reactive changes from weak signals; routes content-correctness fixes back through code verification.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
 tools:

@@ -5,6 +5,7 @@ description: >-
 argument-hint: "<category> <PRODUCT_ID>  |  --topic <t> --audience <a> --product-type <pt> --formats <f> [--working-title <wt>]"
 user-invocable: true
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 allowed-tools:
   - Read
   - Write

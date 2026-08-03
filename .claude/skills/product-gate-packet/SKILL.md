@@ -4,7 +4,8 @@ description: >-
   Assemble a deterministic human-gate packet containing current active-artifact hashes, gate report decisions, open findings, invalidated approvals, scope summary, and required-approver count for a named gate; prepares only and grants nothing.
 argument-hint: "<project-id> --gate <niche|interior|cover|compliance|listing|release>"
 user-invocable: true
-effort: high
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Grep

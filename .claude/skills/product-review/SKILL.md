@@ -5,6 +5,7 @@ description: >-
 argument-hint: "<project-id> --dimension <d> --artifact <path-or-hash>"
 user-invocable: true
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Grep

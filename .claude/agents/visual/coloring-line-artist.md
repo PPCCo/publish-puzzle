@@ -3,6 +3,7 @@ name: coloring-line-artist
 description: >-
   Produces original coloring line art for interior pages — no tracing, no derivative of protected images or living artists by name — at target trim with high-contrast legible line weight, and documents alt text or decorative designation for every image.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

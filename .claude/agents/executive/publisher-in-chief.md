@@ -3,6 +3,7 @@ name: publisher-in-chief
 description: >-
   Orchestrates an entire puzzle, coloring, journal, or printable product; selects specialist agents and workflows; enforces the 26-state lifecycle, 6 human gates, code-generation and code-verification discipline, rights, and release safety.
 effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 100
 tools:

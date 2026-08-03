@@ -3,6 +3,7 @@ name: quality-lead
 description: >-
   Owns quality convergence across the full pipeline: aggregates structured findings from all specialist agents, enforces revision and repair limits, verifies that all six critical dimensions meet gate thresholds, and delivers an independent final adversarial audit before compliance.
 effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 100
 tools:

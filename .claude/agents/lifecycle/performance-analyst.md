@@ -3,6 +3,7 @@ name: performance-analyst
 description: >-
   Converts available post-publication performance data into honest, actionable learning without fabricating attribution or overfitting small samples; outputs edition and catalogue recommendations for human review.
 effort: high
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 45
 tools:

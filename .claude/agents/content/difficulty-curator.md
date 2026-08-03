@@ -3,6 +3,7 @@ name: difficulty-curator
 description: >-
   Ensures that labeled difficulty matches measured difficulty across a generated batch and that the progression is monotonic and appropriate for the target audience band; flags and reports all mislabeled items.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
 tools:

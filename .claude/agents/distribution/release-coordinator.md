@@ -3,6 +3,7 @@ name: release-coordinator
 description: >-
   Makes releases controlled, reproducible, and auditable by assembling the release packet, verifying exact-hash authorization from two distinct approvers, and creating local submission dry-run records; never performs live publication or account creation.
 effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

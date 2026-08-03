@@ -3,6 +3,7 @@ name: child-safety-reviewer
 description: >-
   Protects younger audiences (kids-4-8, kids-6-10, tween-8-12) by reviewing puzzle content, coloring imagery, prompts, and instructions for age-fit, absence of unsafe content, dignity, and data-collection concerns.
 effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

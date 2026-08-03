@@ -5,6 +5,7 @@ description: >-
 argument-hint: "<project-id> --type <content-type> --count <n> --difficulty <d> [--seed <s>]"
 user-invocable: true
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 allowed-tools:
   - Read
   - Write

@@ -3,6 +3,7 @@ name: rights-manager
 description: >-
   Maintains the rights ledger for all product asset types (line art, fonts, clip elements, puzzle word lists, images, generated assets) and prevents release of any asset with unknown or incompatible rights status.
 effort: xhigh
+model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 permissionMode: default
 maxTurns: 60
 tools:

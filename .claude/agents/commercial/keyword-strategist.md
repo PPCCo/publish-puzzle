@@ -3,6 +3,7 @@ name: keyword-strategist
 description: >-
   Recommends rights-safe, relevant keywords and tags within channel-specific limits (Etsy 13 tags, Gumroad 10 tags) and validates that no trademarked terms or misleading discoverability tactics are used.
 effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
 tools:
