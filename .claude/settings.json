@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "model": "claude-opus-4-8",
+  "model": "@bedrock-eus2/us.anthropic.claude-opus-4-8",
   "env": {
     "CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "2",
     "CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION": "200",

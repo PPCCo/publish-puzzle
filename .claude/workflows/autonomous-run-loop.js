@@ -1,6 +1,13 @@
 export const meta = {
   name: 'autonomous-run-loop',
   description: 'Advance one product through valid non-gate stages, stopping at every human gate with a prepared packet. Never approves, freezes, releases, or submits.',
+  phases: [
+    { title: 'Plan', detail: 'read deterministic next-action', model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0' },
+    { title: 'Decide', detail: 'classify stop/proceed token', model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0' },
+    { title: 'Gate', detail: 'assemble gate packet', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5' },
+    { title: 'Stage', detail: 'execute one publishing stage', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8' },
+    { title: 'Report', detail: 'autonomous-run report', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5' },
+  ],
 }
 
 // args: { projectId, until?: "human-gate"|"<STATE>", max_stages?: number }
@@ -30,7 +37,7 @@ for (let stage = 1; stage <= maxStages; stage += 1) {
   // 1. Deterministic recommendation for the current state.
   const planText = await agent(
     `Return ONLY the raw JSON from: ${cli} project plan ${projectId}. Do not modify state. Do not run any other command.`,
-    { label: `plan-${stage}` },
+    { label: `plan-${stage}`, phase: 'Plan', model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0', effort: 'low' },
   )
   lastPlan = planText
 
@@ -43,7 +50,7 @@ for (let stage = 1; stage <= maxStages; stage += 1) {
 - "STOP_TARGET" if the plan's current_state already equals the requested until state "${until}" (and until is not "human-gate")
 - "PROCEED" otherwise
 Plan JSON: ${planText}`,
-    { label: `decide-${stage}` },
+    { label: `decide-${stage}`, phase: 'Decide', model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0', effort: 'low' },
   )
   const token = String(decision).trim().toUpperCase()
 
@@ -54,7 +61,7 @@ Plan JSON: ${planText}`,
 ${cli} approval packet ${projectId} --gate <required_gate>
 Return the packet JSON and the exact /product-approve-* (or /product-freeze, /product-release-authorize) command a human must run. Do NOT grant, freeze, release, or transition. Do NOT invoke any human-only skill yourself.
 Plan JSON: ${planText}`,
-      { label: `gate-packet-${stage}` },
+      { label: `gate-packet-${stage}`, phase: 'Gate', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5', effort: 'medium' },
     )
     stopReason = { type: 'HUMAN_GATE', stage, packet }
     break
@@ -87,7 +94,7 @@ Rules:
 - The transition will (correctly) fail if any blocker remains; treat that failure as a STOP, not something to work around.
 - NEVER invoke approval, freeze, release, submission, incident, spending, legal-acceptance, or live-listing skills. NEVER edit state.json directly.
 Return: the target_state reached (or the exact blocker that stopped you), artifacts + hashes created, and validator/gate decisions.`,
-    { label: `stage-${stage}` },
+    { label: `stage-${stage}`, phase: 'Stage', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8', effort: 'high' },
   )
   completed.push({ stage, result: work })
 
@@ -107,5 +114,5 @@ return await agent(
 Completed stages: ${JSON.stringify(completed)}
 Stop: ${JSON.stringify(stopReason)}
 Last plan: ${lastPlan}`,
-  { label: 'autonomous-run-report' },
+  { label: 'autonomous-run-report', phase: 'Report', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5', effort: 'high' },
 )

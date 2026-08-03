@@ -1,6 +1,10 @@
 export const meta = {
   name: 'niche-opportunity-scan',
   description: 'Discover and cross-check current puzzle/coloring/journal/printable niche opportunities across independent evidence lenses',
+  phases: [
+    { title: 'Research', detail: 'per-lens dated evidence gathering', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8' },
+    { title: 'Rank', detail: 'cross-check and rank opportunities', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8' },
+  ],
 }
 
 const input = args ?? {}
@@ -17,6 +21,9 @@ const findings = await pipeline(lenses, lens =>
   agent(`Act as the specialist best suited to this lens: ${lens}.
 Research niche opportunities for ${JSON.stringify(input)}. Use current, dated, credible evidence. Separate event date from publication date. Return an object with an opportunities array. Each opportunity must include niche, productType, audience, evidence, evidenceDates, durability, saturation, feasibility, rightsRisk, safetyRisk, confidence, and sources. Do not claim demand without dated evidence.`, {
     label: lens,
+    phase: 'Research',
+    model: '@bedrock-eus2/us.anthropic.claude-opus-4-8',
+    effort: 'high',
     schema: {
       type: 'object',
       required: ['opportunities'],
@@ -52,6 +59,9 @@ Deduplicate and challenge these independent findings:
 ${JSON.stringify(findings)}
 Return 5-12 ranked niche opportunities. Reject claims without dated evidence. Preserve disagreements and identify which claims remain unverified. Score audience value, evidence strength, durability, saturation, production feasibility, accessibility opportunity, rights complexity, and child-safety risk from 0-5. Do not select a niche or record any approval.`, {
   label: 'cross-check-and-rank',
+  phase: 'Rank',
+  model: '@bedrock-eus2/us.anthropic.claude-opus-4-8',
+  effort: 'high',
   schema: {
     type: 'object',
     required: ['rankedOpportunities', 'rejectedClaims', 'limitations'],

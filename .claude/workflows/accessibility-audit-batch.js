@@ -1,6 +1,10 @@
 export const meta = {
   name: 'accessibility-audit-batch',
   description: 'Independently audit accessibility, contrast, legibility, large-print fit, and alt-text/decorative designation across artifacts in parallel and synthesize a deduplicated finding register',
+  phases: [
+    { title: 'Audit', detail: 'per-lens accessibility checks', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5' },
+    { title: 'Synthesis', detail: 'deduplicated finding register', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8' },
+  ],
 }
 
 // args: { projectId, targets?: string[], context? }
@@ -25,6 +29,9 @@ const audits = await pipeline(targets, target =>
 ${cli} audit accessibility ${projectId}
 Read the resolved design policy and age band. Do NOT edit any artifact. Return decision PASS/WARNING/FAIL for this lens with exact per-artifact evidence and the required correction. Treat not-run as fail.`, {
     label: target,
+    phase: 'Audit',
+    model: '@bedrock-eus1/us.anthropic.claude-sonnet-5',
+    effort: 'high',
     schema: {
       type: 'object',
       required: ['lens', 'decision', 'findings'],
@@ -40,4 +47,4 @@ Read the resolved design policy and age band. Do NOT edit any artifact. Return d
 // FAN-IN: accessibility-auditor synthesis. Gate must PASS/WARNING before compliance;
 // this workflow reports, it does not grant the compliance gate.
 return await agent(`Act as the accessibility-auditor lead. Merge these independent accessibility audits for project ${projectId} into one deduplicated finding register and repair sequence. Any FAIL blocks the compliance gate; preserve each lens's exact evidence. State which repaired artifacts require re-audit by code. Do not edit artifacts and do not grant the compliance gate.
-${JSON.stringify(audits)}`, { label: 'accessibility-synthesis' })
+${JSON.stringify(audits)}`, { label: 'accessibility-synthesis', phase: 'Synthesis', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8', effort: 'xhigh' })
