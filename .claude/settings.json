@@ -26,7 +26,7 @@
       "Bash(magick -version)",
       "Bash(convert -version)"
     ],
-    "deny": [
+    "ask": [
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(./secrets/**)",
@@ -39,6 +39,14 @@
       "Bash(curl -X PATCH *)",
       "Bash(curl -X DELETE *)",
       "Bash(wget --post-data *)"
+    ],
+    "deny": [
+      "Write(./.claude/settings.json)",
+      "Write(./.mcp.json)",
+      "Write(./projects/*/state.json)",
+      "Write(./projects/*/artifacts/manifest.json)",
+      "Write(./projects/*/approvals/**)",
+      "Write(./projects/*/events.ndjson)"
     ]
   },
   "hooks": {

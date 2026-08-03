@@ -75,3 +75,14 @@ def structured_deny(reason: str) -> None:
         }
     }))
     raise SystemExit(0)
+
+
+def structured_ask(reason: str) -> None:
+    print(json.dumps({
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "ask",
+            "permissionDecisionReason": reason,
+        }
+    }))
+    raise SystemExit(0)

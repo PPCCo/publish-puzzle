@@ -13,22 +13,71 @@ for value in (str(HERE), str(SCRIPTS)):
     if value not in sys.path:
         sys.path.insert(0, value)
 
-from hooklib import active_project, append_audit, project_root, read_input, structured_deny
+from hooklib import active_project, append_audit, project_root, read_input, structured_ask, structured_deny
 from publishing_house.util import ensure_within, utc_now
 
 
+# CLI-owned state under projects/<id>/: writes to these paths bypass the
+# deterministic scripts that are the sole authority for state, artifacts,
+# and approvals (rule 01-workflow-state, rule 03-artifact-provenance). Hard deny.
+CLI_OWNED_STATE_PATTERNS = [
+    re.compile(r"^projects/[^/]+/state\.json$"),
+    re.compile(r"^projects/[^/]+/artifacts/manifest\.json$"),
+    re.compile(r"^projects/[^/]+/approvals(/|$)"),
+    re.compile(r"^projects/[^/]+/events\.ndjson$"),
+]
+
+# Shared harness/security configuration. Hard deny.
+PROTECTED_CONFIG_FILES = {".claude/settings.json", ".mcp.json"}
+
+# Previously hard-denied; downgraded to ask per the new posture (option 1:
+# only CLI-owned state + harness config + sanctioned-egress stay hard).
 PROTECTED_PARTS = {".git", ".env", "secrets", "credentials"}
 PROTECTED_SUFFIXES = {".pem", ".key", ".p12", ".pfx"}
-HIGH_RISK_PATTERNS = [
-    (r"\brm\s+-[^\n]*r[^\n]*f\b|\brm\s+-rf\b", "recursive forced deletion is prohibited"),
-    (r"\bsudo\b", "privilege escalation is prohibited"),
-    (r"\bgit\s+push\b", "remote Git writes require direct human execution"),
-    (r"\bgit\s+reset\s+--hard\b", "destructive Git reset is prohibited"),
-    (r"\bgit\s+clean\s+-[^\n]*f", "destructive Git cleaning is prohibited"),
-    (r"\b(curl|wget)\b[^\n]*(--data|-d\s|--request\s+(POST|PUT|PATCH|DELETE)|-X\s*(POST|PUT|PATCH|DELETE))", "unreviewed network writes are prohibited"),
-    (r"\b(aws|gcloud|az|terraform|kubectl)\b[^\n]*(apply|delete|destroy|create|deploy|publish|upload|put-object)", "cloud infrastructure or upload writes are prohibited"),
-    (r"\b(npm|pip|uv|brew|apt|apt-get|dnf|yum)\s+(publish|install|uninstall|remove)\b", "dependency or package changes require explicit human control"),
+
+TEMP_DIR_PATTERNS = [
+    r"/tmp/",
+    r"/var/tmp/",
+    r"/private/tmp/",
+    r"/private/var/folders/",
+    r"\$TMPDIR",
+    r"\bTMPDIR\b",
+    r"(^|/)\.tmp(/|$)",
+    r"(^|/)tmp(/|$)",
+]
+
+
+def _is_temp_path_only(command: str) -> bool:
+    """True if every rm target in the command looks like a temp path."""
+    targets = re.findall(r"\brm\s+(?:-[A-Za-z-]+\s+)*([^\n;&|]+)", command, flags=re.IGNORECASE)
+    if not targets:
+        return False
+    for target_group in targets:
+        for token in shlex.split(target_group, posix=True):
+            if token.startswith("-"):
+                continue
+            if not any(re.search(pattern, token) for pattern in TEMP_DIR_PATTERNS):
+                return False
+    return True
+
+
+# Sanctioned-egress + external-publish verbs: these remain hard deny even
+# under the relaxed posture (rule 11-external-side-effects).
+HARD_DENY_PATTERNS = [
+    (r"\byt-dlp\b(?![^\n]*--publishing-house-approved)", "yt-dlp is only permitted with an explicit reviewed flag"),
     (r"\b(kdp|amazon|ebay|apple)\b[^\n]*(submit|publish|upload|list|activate|purchase)", "marketplace publication must use an approved connector and release authorization"),
+]
+
+# General-risk operations: previously hard-denied, now escalate to the user
+# for confirmation instead of failing outright.
+ASK_PATTERNS = [
+    (r"\bsudo\b", "this command requests privilege escalation (sudo)"),
+    (r"\bgit\s+push\b", "this command pushes to a remote Git repository"),
+    (r"\bgit\s+reset\s+--hard\b", "this command performs a destructive Git reset"),
+    (r"\bgit\s+clean\s+-[^\n]*f", "this command performs a destructive Git clean"),
+    (r"\b(curl|wget)\b[^\n]*(--data|-d\s|--request\s+(POST|PUT|PATCH|DELETE)|-X\s*(POST|PUT|PATCH|DELETE))", "this command performs an unreviewed network write"),
+    (r"\b(aws|gcloud|az|terraform|kubectl)\b[^\n]*(apply|delete|destroy|create|deploy|publish|upload|put-object)", "this command performs a cloud infrastructure or upload write"),
+    (r"\b(npm|pip|uv|brew|apt|apt-get|dnf|yum)\s+(publish|install|uninstall|remove)\b", "this command changes installed dependencies or packages"),
 ]
 
 
@@ -42,22 +91,36 @@ def _file_path(tool_input: dict, root: Path) -> Path | None:
     return path.resolve()
 
 
-def _protected(path: Path, root: Path) -> str | None:
+def _hard_denied_write(path: Path, root: Path) -> str | None:
+    """CLI-owned state and harness config: never writable by the agent."""
     try:
         relative = path.relative_to(root)
     except ValueError:
-        return "writes outside the repository are prohibited"
+        return None
+    as_posix = relative.as_posix()
+    if as_posix in PROTECTED_CONFIG_FILES:
+        return "shared harness/security configuration (.claude/settings.json, .mcp.json) is CLI/human-owned and cannot be written by the agent"
+    for pattern in CLI_OWNED_STATE_PATTERNS:
+        if pattern.search(as_posix):
+            return "this path is CLI-owned workflow state/artifacts/approvals; only .claude/scripts/ph_cli.py may write it"
+    return None
+
+
+def _ask_worthy_write(path: Path, root: Path) -> str | None:
+    """Previously hard-denied secret/.git-adjacent writes: now ask, not deny."""
+    try:
+        relative = path.relative_to(root)
+    except ValueError:
+        return "this write targets a path outside the repository"
     lowered = [part.lower() for part in relative.parts]
     if ".git" in lowered:
-        return "direct edits inside .git are prohibited"
+        return "this writes directly inside .git"
     if any(part.startswith(".env") for part in lowered):
-        return "environment and secret files are protected"
+        return "this writes to an environment/secret file"
     if any(part in PROTECTED_PARTS for part in lowered):
-        return "secret or credential directories are protected"
+        return "this writes inside a secret or credential directory"
     if path.suffix.lower() in PROTECTED_SUFFIXES:
-        return "private key and certificate files are protected"
-    if relative.as_posix() in {".claude/settings.json", ".mcp.json"}:
-        return "shared security configuration requires direct human editing or a reviewed change request"
+        return "this writes a private key or certificate file"
     return None
 
 
@@ -75,40 +138,52 @@ def main() -> int:
         "project_id": project_id,
     }
 
-    if tool in {"Write", "Edit", "NotebookEdit"}:
-        path = _file_path(tool_input, root)
-        if path:
-            reason = _protected(path, root)
-            if reason:
-                record.update({"decision": "deny", "reason": reason, "path": str(path)})
-                if project_id:
-                    append_audit(root, record)
-                structured_deny(reason)
-            record["path"] = str(path)
-
-    if tool == "Bash":
-        command = str(tool_input.get("command") or "")
-        record["command"] = command[:1000]
-        for pattern, reason in HIGH_RISK_PATTERNS:
-            if re.search(pattern, command, flags=re.IGNORECASE):
-                record.update({"decision": "deny", "reason": reason})
-                if project_id:
-                    append_audit(root, record)
-                structured_deny(reason)
-        if os.environ.get("PUBLISHING_EXTERNAL_WRITES", "disabled").lower() != "enabled":
-            if re.search(r"\b(submit|publish|upload|activate|purchase|spend|create-listing)\b", command, re.IGNORECASE):
-                reason = "external writes are disabled; create a package or dry-run record instead"
-                record.update({"decision": "deny", "reason": reason})
-                if project_id:
-                    append_audit(root, record)
-                structured_deny(reason)
-
-    if tool.startswith("mcp__") and re.search(r"(?:create|update|delete|publish|submit|upload|purchase|send|post)", tool, re.IGNORECASE):
-        reason = "write-capable MCP tools are not approved by the baseline framework"
+    def deny(reason: str) -> None:
         record.update({"decision": "deny", "reason": reason})
         if project_id:
             append_audit(root, record)
         structured_deny(reason)
+
+    def ask(reason: str) -> None:
+        record.update({"decision": "ask", "reason": reason})
+        if project_id:
+            append_audit(root, record)
+        structured_ask(reason)
+
+    if tool in {"Write", "Edit", "NotebookEdit"}:
+        path = _file_path(tool_input, root)
+        if path:
+            record["path"] = str(path)
+            hard_reason = _hard_denied_write(path, root)
+            if hard_reason:
+                deny(hard_reason)
+            ask_reason = _ask_worthy_write(path, root)
+            if ask_reason:
+                ask(ask_reason)
+
+    if tool == "Bash":
+        command = str(tool_input.get("command") or "")
+        record["command"] = command[:1000]
+
+        for pattern, reason in HARD_DENY_PATTERNS:
+            if re.search(pattern, command, flags=re.IGNORECASE):
+                deny(reason)
+
+        if os.environ.get("PUBLISHING_EXTERNAL_WRITES", "disabled").lower() != "enabled":
+            if re.search(r"\b(submit|publish|upload|activate|purchase|spend|create-listing)\b", command, re.IGNORECASE):
+                deny("external writes are disabled; create a package or dry-run record instead")
+
+        if re.search(r"\brm\s+-[^\n]*r[^\n]*f\b|\brm\s+-rf\b", command, flags=re.IGNORECASE):
+            if not _is_temp_path_only(command):
+                ask("this command recursively force-deletes path(s) outside a temp directory")
+            # else: recursive rm confined to temp paths — allow, no interception.
+
+        for pattern, reason in ASK_PATTERNS:
+            if re.search(pattern, command, flags=re.IGNORECASE):
+                ask(f"{reason} and needs your confirmation")
+
+    if tool.startswith("mcp__") and re.search(r"(?:create|update|delete|publish|submit|upload|purchase|send|post)", tool, re.IGNORECASE):
+        ask("this write-capable MCP tool call needs your confirmation")
 
     if project_id:
         record["decision"] = "no-objection"
