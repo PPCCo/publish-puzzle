@@ -9,6 +9,7 @@ model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Bash
+  - AskUserQuestion
   - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
 ---
 
@@ -33,7 +34,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is RELEASE_AUTHORIZATION.
 2. Run `approval packet <project-id> --gate release` to retrieve the full release packet: all artifact hashes, channel packages, upstream gate statuses, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet.
 4. Resolve the number of required approvers from `human_gates.release` in company config (default 1 after `company.local.json` override).
 5. Present the **release gate card**:
 
@@ -96,27 +97,14 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
    ```
 
 7. Determine action based on `auto_approve_gates`:
-   - **`"silent"`** — record authorization immediately with `default_approver`; skip prompt.
-   - **`"auto"`** — show gate card + interactive prompt; wait for response.
-   - **`"false"`** — show gate card + interactive prompt with defaults pre-filled.
+   - **`"silent"`** — record authorization immediately with `default_approver`; skip prompt. (Only valid when the resolved required-approver count is 1; if more than one approver is required, you cannot proceed silently — fall through to the interactive path and collect the additional distinct approver.)
+   - **`"auto"` / `"false"`** — show the gate card, the "Your Book Files" map, and the `review_files` list, then collect the decision interactively (step 8).
 
-8. **Interactive approval prompt** (skip in `silent` mode):
-
-   ```
-   ── AUTHORIZE RELEASE? ─────────────────────────────────────
-   Default approver: <identity> (<role>)
-   Required approvers: <N> (per company.local.json)
-
-   Press ENTER   → Authorize with defaults
-   Type REJECT   → Reject (you will be asked for a reason)
-   Type CUSTOM   → Set a different approver or add a second approver
-   ───────────────────────────────────────────────────────────
-   ```
-
-   Handle:
-   - ENTER → authorize with default approver
-   - REJECT → ask reason; do not authorize
-   - CUSTOM → ask explicitly for all approver identities and roles
+8. **Interactive decision** (skip in `silent` mode). List the `review_files` (relative paths) inline, then call **`AskUserQuestion`**:
+   - Question: "Authorize release for <working_title>? (This authorizes submission preparation only — no live publication, spend, or account action.)"
+   - Options: **Authorize** (recommended only when `ready_for_human_review` is true and no open blocker/major; records the authorization with `default_approver`), **Reject** (ask reason; do not authorize), **Customize** (ask explicitly for all approver identities and roles).
+   - If the required-approver count is greater than 1, do not offer a one-click Authorize: you MUST collect that many **distinct** human identities (with the interior/compliance and commercial/operations role split from the two-person-release pattern). One person cannot fill both slots.
+   - A selection is an explicit human decision; the `next_command` (`/product-release-authorize <project-id>`) is the equivalent manual path. Authorization never grants permission to accept legal terms or exceed the stated spend/territory/channel scope.
 
 9. Record the release authorization. Collect all package manifest hashes and include them as `--artifact` flags:
    ```

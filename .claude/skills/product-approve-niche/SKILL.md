@@ -9,6 +9,7 @@ model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Bash
+  - AskUserQuestion
   - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
 ---
 
@@ -33,7 +34,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is NICHE_APPROVAL.
 2. Run `approval packet <project-id> --gate niche` to retrieve artifacts, hashes, viability scores, risk flags, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` (identity/role/decision/scope) and `auto_approve_gates`.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` (identity/role/decision/scope) and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet — these carry the exact files to review and the equivalent manual command.
 4. Present the **gate card** to the approver:
 
    ```
@@ -61,27 +62,16 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 6. Determine the approval action based on `auto_approve_gates`:
    - **`"silent"`** — record approval immediately using `default_approver` values; skip the prompt; show "Approved as <identity> (<role>)."
-   - **`"auto"`** — display the gate card, then show the interactive prompt (step 7) and wait for a single response.
-   - **`"false"` (default)** — display the gate card, then show the interactive prompt (step 7) and wait for a full response. If `default_approver` is set, pre-fill the values as shown defaults that the approver may override.
+   - **`"auto"` / `"false"` (default)** — display the gate card and the review-files list, then collect the decision interactively (step 7). Under `"false"`, `default_approver` is shown as the pre-filled default the approver may override.
 
-7. **Interactive approval prompt** (skip entirely in `silent` mode):
-
-   ```
-   ── APPROVE NICHE GATE? ────────────────────────────────────
-   Default approver: <identity> (<role>)
-   Default scope:    <scope>
-
-   Press ENTER   → Approve with defaults
-   Type REJECT   → Reject (you will be asked for a reason)
-   Type CUSTOM   → Set a different approver, role, or scope
-   ───────────────────────────────────────────────────────────
-   ```
-
-   Wait for the approver's response. Handle:
-   - Empty / ENTER → proceed as APPROVED with default values
-   - `REJECT` (any case) → ask for rejection reason; proceed as REJECTED
-   - `CUSTOM` (any case) → ask explicitly for approver identity, role, scope, decision; use those values
-   - Any other text → treat as a scope note appended to the default scope
+7. **Interactive decision** (skip entirely in `silent` mode). List the `review_files` (relative paths) inline so the human knows what to open, then call **`AskUserQuestion`**:
+   - Question: "Approve the niche gate for <working_title>?"
+   - Options:
+     - **Approve** — recommended *only* when the packet's `ready_for_human_review` is true and there is no open blocker or major finding; records APPROVED with `default_approver`. If not ready, list the top risk in the option description and do not mark it Recommended.
+     - **Reject** — records REJECTED; then ask for a rejection reason.
+     - **Customize** — ask explicitly for approver identity, role, scope, and decision; use those values.
+   - The user may also answer with free text via "Other" (e.g. an added scope note); append it to the default scope.
+   - A selection here is an explicit human decision. The typed command in `next_command` (`/product-approve-niche <project-id>`) remains valid as the equivalent manual path.
 
 8. Record the gate decision:
    ```

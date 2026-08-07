@@ -15,6 +15,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
+  - AskUserQuestion
   - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
 ---
 
@@ -48,7 +49,7 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project validate $ARGUMENTS` and `project status $ARGUMENTS`; stop immediately on state divergence, stale artifact hashes, or unresolved blockers.
 3. Begin the autonomous loop:
    a. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project plan $ARGUMENTS` and read `autonomy_action`.
-   b. If `autonomy_action` is `STOP_AT_GATE`: assemble and present the gate packet (design policy, product type, audience, formats, all produced artifact paths and hashes, validation results, open findings); then immediately render the publishing guide (see below); halt and wait for human review. Never approve, transition past, or simulate a gate approval.
+   b. If `autonomy_action` is `STOP_AT_GATE`: assemble and present the gate packet (design policy, product type, audience, formats, all produced artifact paths and hashes, validation results, open findings); render the publishing guide (see below); then present the gate decision interactively (see "Interactive gate decision" below). Never approve, transition past, or simulate a gate approval — the human decides.
    c. If `autonomy_action` is `BLOCKED`: report each blocker with its type and resolution; halt.
    d. If `autonomy_action` is `PROCEED`: delegate the recommended skill or agent with exact input hashes, output paths, acceptance criteria, and independence requirements. After completion, register produced artifacts with their hashes.
 4. After each stage, run the applicable validator (`project validate $ARGUMENTS`) and quality gate (`python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project next $ARGUMENTS`); reconcile any new findings before transitioning.
@@ -73,9 +74,11 @@ One clear line: what the user should do right now (approve this gate, or the ski
 ── WHAT'S READY ────────────────────────────────────────────
   [path]   [description of artifact]
   ...
+── TO REVIEW ───────────────────────────────────────────────
+  [the packet's human_action.review_files, relative paths]
 ── NEXT STEP ───────────────────────────────────────────────
-  Approve this gate to continue, or type REJECT.
-  Invoke: /product-approve-<gate> <project-id>
+  A gate decision is needed (see the interactive prompt).
+  Equivalent manual command: [the packet's human_action.next_command.command]
 ────────────────────────────────────────────────────────────
 ```
 
@@ -102,6 +105,18 @@ ADDITIONAL RESOURCES
   [list any unresolved human decisions: pricing, Etsy fulfilment, ISBN, series]
 ────────────────────────────────────────────────────────────
 ```
+
+## Interactive gate decision (at every STOP_AT_GATE)
+
+After the gate packet and publishing guide, read the packet's `human_action.review_files` and `human_action.next_command`, then present the decision via **`AskUserQuestion`** rather than telling the user to re-type a command:
+
+- Question: "The <gate> gate is ready for your decision on <working_title>. How do you want to proceed?"
+- Options:
+  - **Approve <gate>** — recommended **only** when the packet's `ready_for_human_review` is true (no open blocker or major finding); this invokes the matching `/product-approve-<gate>` (or `/product-release-authorize`) skill to record the decision. When not ready, do not mark it Recommended and name the top risk in the option description.
+  - **Reject** — record a rejection (you will collect a reason) via the same approval skill.
+  - **Not now** — stop and leave the project at the gate; the user can decide later with `next_command`.
+- Recording still goes through the human-only approval skill and binds the exact artifact hashes; `product-run` itself never records the approval. This skill does not enter `silent`/`auto` behavior — that is decided inside the approval skill from `auto_approve_gates`.
+- The `next_command` slash form is always shown as the equivalent manual path for headless use.
 
 ## Required outputs
 

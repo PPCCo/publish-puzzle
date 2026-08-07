@@ -11,15 +11,23 @@ from publishing_house.validation import validate_framework
 
 FRONTMATTER = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
 
-HUMAN_ONLY_SKILLS = {
+# Skills that perform or record an irreversible / outward-facing action and must stay
+# locked to human invocation. Approval/authorization gate skills are intentionally NOT
+# here: they are model-invocable so the assistant can run the interactive approval flow
+# and record the human's explicit, hash-bound decision.
+LOCKED_SKILLS = {
+    "product-submit",
+    "product-incident",
+    "product-freeze",
+}
+
+APPROVAL_SKILLS = {
     "product-approve-niche",
     "product-approve-interior",
     "product-approve-cover",
     "product-approve-compliance",
     "product-approve-listing",
     "product-release-authorize",
-    "product-submit",
-    "product-incident",
 }
 
 
@@ -40,10 +48,15 @@ class FrameworkStructureTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             self.assertIsNotNone(FRONTMATTER.match(text), path.as_posix())
 
-    def test_human_only_gate_skills_disable_model_invocation(self) -> None:
-        for name in HUMAN_ONLY_SKILLS:
+    def test_locked_skills_disable_model_invocation(self) -> None:
+        for name in LOCKED_SKILLS:
             text = (SOURCE_ROOT / ".claude" / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
             self.assertIn("disable-model-invocation: true", text, name)
+
+    def test_approval_gate_skills_are_model_invocable(self) -> None:
+        for name in APPROVAL_SKILLS:
+            text = (SOURCE_ROOT / ".claude" / "skills" / name / "SKILL.md").read_text(encoding="utf-8")
+            self.assertNotIn("disable-model-invocation: true", text, name)
 
     def test_external_writes_are_disabled(self) -> None:
         settings = json.loads((SOURCE_ROOT / ".claude" / "settings.json").read_text(encoding="utf-8"))

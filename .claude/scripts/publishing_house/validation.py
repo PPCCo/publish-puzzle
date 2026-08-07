@@ -128,19 +128,38 @@ def validate_framework(root: Path) -> dict[str, Any]:
         if len(body.splitlines()) > 500:
             warnings.append(f"Skill {name} exceeds 500 body lines")
 
-    human_only = {
+    # Only skills that perform or record an irreversible / outward-facing action stay
+    # locked to human invocation. Approval/authorization gate skills are model-invocable
+    # by design: the assistant presents the gate interactively and records the human's
+    # explicit decision, bound to exact artifact hashes (human authority is preserved by
+    # the hash binding, not by forcing a typed command).
+    locked_skills = {
+        "product-submit", "product-incident", "product-freeze",
+    }
+    approval_skills = {
         "product-approve-niche", "product-approve-interior", "product-approve-cover",
         "product-approve-compliance", "product-approve-listing",
-        "product-release-authorize", "product-submit", "product-incident",
+        "product-release-authorize",
     }
-    for name in human_only:
+    for name in locked_skills:
         path = root / ".claude" / "skills" / name / "SKILL.md"
         if not path.exists():
-            errors.append(f"Missing human-only skill: {name}")
+            errors.append(f"Missing locked skill: {name}")
             continue
         fm, _ = parse_frontmatter(path)
         if fm.get("disable-model-invocation") is not True:
-            errors.append(f"Human-only skill is model-invocable: {name}")
+            errors.append(f"External-effect skill is model-invocable: {name}")
+    for name in approval_skills:
+        path = root / ".claude" / "skills" / name / "SKILL.md"
+        if not path.exists():
+            errors.append(f"Missing approval skill: {name}")
+            continue
+        fm, _ = parse_frontmatter(path)
+        if fm.get("disable-model-invocation") is True:
+            errors.append(
+                f"Approval gate skill must stay model-invocable for the interactive "
+                f"flow: {name}"
+            )
 
     if len(agent_names) < 30:
         errors.append(f"Expected at least 30 agents, found {len(agent_names)}")

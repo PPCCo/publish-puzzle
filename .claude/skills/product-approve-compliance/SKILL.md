@@ -9,6 +9,7 @@ model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Bash
+  - AskUserQuestion
   - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
 ---
 
@@ -33,7 +34,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is COMPLIANCE_APPROVAL.
 2. Run `approval packet <project-id> --gate compliance` to retrieve compliance packet hash, accessibility result, AI-disclosure record, rights clearance summary, child-safety result, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet.
 4. Present the **gate card**:
 
    ```
@@ -63,22 +64,14 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
      project.yaml                          — AI disclosure field (rights.ai_assistance_disclosure_required)
    ```
 
-6. Determine action based on `auto_approve_gates` (silent / auto / false — same logic as other gates).
+6. Determine action based on `auto_approve_gates`:
+   - **`"silent"`** — record approval immediately with defaults; skip prompt.
+   - **`"auto"` / `"false"`** — show the gate card and the `review_files` list, then collect the decision interactively (step 7). (If accessibility is FAIL, per step 4 you already stopped and never reach here.)
 
-7. **Interactive approval prompt** (skip in `silent` mode):
-
-   ```
-   ── APPROVE COMPLIANCE GATE? ───────────────────────────────
-   Default approver: <identity> (<role>)
-   Default scope:    <scope>
-
-   Press ENTER   → Approve with defaults
-   Type REJECT   → Reject (you will be asked for a reason)
-   Type CUSTOM   → Set a different approver, role, or scope
-   ───────────────────────────────────────────────────────────
-   ```
-
-   Handle ENTER → APPROVED with defaults; REJECT → ask reason; CUSTOM → ask fields.
+7. **Interactive decision** (skip in `silent` mode). List the `review_files` (relative paths) inline, then call **`AskUserQuestion`**:
+   - Question: "Approve the compliance gate for <working_title>?"
+   - Options: **Approve** (recommended only when `ready_for_human_review` is true and no open blocker/major; records APPROVED with `default_approver`), **Reject** (ask reason), **Customize** (ask approver identity, role, scope, decision).
+   - Free-text "Other" is appended to the default scope. A selection is an explicit human decision; the `next_command` (`/product-approve-compliance <project-id>`) is the equivalent manual path. Escalate legal or safety findings — never resolve them autonomously.
 
 8. Record the gate decision:
    ```

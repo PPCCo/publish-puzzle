@@ -9,6 +9,7 @@ model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
+  - AskUserQuestion
   - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
 ---
 
@@ -32,7 +33,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project plan $ARGUMENTS`.
 2. Read the `autonomy_action` field from the plan output and treat it as authoritative:
    - `PROCEED` — the next stage is fully autonomous; report the recommended skill or agent and exact CLI command.
-   - `STOP_AT_GATE` — a human gate (niche, interior, cover, compliance, listing, or release) is required; present the gate name, the gate packet location, and what the human must review and approve before any autonomous work continues.
+   - `STOP_AT_GATE` — a human gate (niche, interior, cover, compliance, listing, or release) is required. Assemble the packet (`approval packet <id> --gate <gate>`) and present the gate name, the packet location, the packet's `human_action.review_files` (relative paths to open), and the `human_action.next_command`. Then offer the next action via **`AskUserQuestion`** — e.g. "Prepare/decide the <gate> gate now" (invokes the matching approval skill, where the human decides) vs "Just show status" (stay read-only). Never record an approval from this skill.
    - `BLOCKED` — one or more blockers prevent progress; list each blocker with its type (missing artifact, failed validation, stale hash, rights ambiguity, unsafe content flag) and the resolution action.
 3. Report the target state the plan recommends transitioning to, and the full list of required artifacts that must be produced or verified at that stage.
 4. Identify the producing skill or agent (e.g., `product-generate`, `product-build-interior`, `product-build-cover`) that would execute the recommended action.
@@ -42,7 +43,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 - Current lifecycle state and `autonomy_action` value.
 - Recommended next action with the exact CLI command or skill invocation.
-- Human gate notice if `autonomy_action` is `STOP_AT_GATE`, including gate name and gate packet path.
+- Human gate notice if `autonomy_action` is `STOP_AT_GATE`, including gate name, gate packet path, the packet's `review_files`, and the `next_command`.
 - Blocker list with resolution steps if `autonomy_action` is `BLOCKED`.
 - Missing artifacts required at the next stage.
 - Producing skill or agent for the recommended action.

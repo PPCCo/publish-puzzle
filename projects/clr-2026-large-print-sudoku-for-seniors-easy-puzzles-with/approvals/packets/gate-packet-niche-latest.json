@@ -3,11 +3,11 @@
   "kind": "approval-gate-packet",
   "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
   "gate": "niche",
-  "generated_at": "2026-07-31T12:46:00Z",
+  "generated_at": "2026-08-07T01:57:05Z",
   "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
-  "current_state": "NICHE_APPROVAL",
+  "current_state": "RELEASE_AUTHORIZATION",
   "expected_state": "NICHE_APPROVAL",
-  "state_matches_gate": true,
+  "state_matches_gate": false,
   "scope": {
     "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
     "audience": "senior-large-print",
@@ -23,10 +23,140 @@
   },
   "artifacts_under_review": [
     {
+      "kind": "accessibility-gate",
+      "sha256": "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
+      "type": "accessibility-gate",
+      "path": "accessibility/gate-latest.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "content-plan",
+      "sha256": "sha256:f729a19991b367ca26b2ed137f5e46da9d35739d7dc215bc67accfb7a547759c",
+      "type": "content-plan",
+      "path": "content/content-plan.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "content-sudoku",
+      "sha256": "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+      "type": "content-sudoku",
+      "path": "content/puzzles/sudoku-batch.json",
+      "frozen": true,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "content-verification",
+      "sha256": "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+      "type": "content-verification",
+      "path": "verification/content-verification-latest.json",
+      "frozen": true,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "cover-art-direction",
+      "sha256": "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
+      "type": "cover-art-direction",
+      "path": "concepts/cover-art-direction.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "cover-pdf",
+      "sha256": "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+      "type": "cover-pdf",
+      "path": "outputs/cover/cover-wrap.pdf",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "cover-proof",
+      "sha256": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+      "type": "cover-proof",
+      "path": "outputs/proof/cover-proof-report.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
       "kind": "intake-note",
       "sha256": "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
       "type": "intake-note",
       "path": "notes/intake.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "interior-pdf",
+      "sha256": "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
+      "type": "interior-pdf",
+      "path": "outputs/interior/interior.pdf",
+      "frozen": true,
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "interior-proof",
+      "sha256": "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
+      "type": "interior-proof",
+      "path": "outputs/proof/interior-proof-report.json",
+      "frozen": true,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "launch-guide",
+      "sha256": "sha256:378caf1d70eb12ee6698efce9e21a8423b1e1cf965a71436fa5c213d81b45c89",
+      "type": "launch-guide",
+      "path": "marketing/launch-guide.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "listing-kit",
+      "sha256": "sha256:9f4218d3da7dc09583b9e9f076ccb45efbfd1eb16581c7dc288b4e5532be7ae0",
+      "type": "listing-kit",
+      "path": "marketing/listing-kit.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "metadata",
+      "sha256": "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7",
+      "type": "metadata",
+      "path": "metadata/book.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "metadata-validation",
+      "sha256": "sha256:7e8641cd83d8b1d9a2f44a840a52bff3d41a121ac88e3a6827febe6469af8bde",
+      "type": "metadata-validation",
+      "path": "metadata/validation-report.json",
       "frozen": false,
       "rights_status": "pending",
       "validation_status": "not-run",
@@ -43,10 +173,80 @@
       "registered": true
     },
     {
+      "kind": "platform-package-etsy",
+      "sha256": "sha256:b4fc4307a015498307778a0f0fc07b8ffdeddb6f876c5a157752bf34890293e6",
+      "type": "platform-package-etsy",
+      "path": "outputs/packages/etsy/package-manifest.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "warning",
+      "registered": true
+    },
+    {
+      "kind": "platform-package-kdp",
+      "sha256": "sha256:577670bf1c3bd52e75272dd70a756fbb773c18465275f87dbb30e918d35f2ef9",
+      "type": "platform-package-kdp",
+      "path": "outputs/packages/kdp/package-manifest.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "warning",
+      "registered": true
+    },
+    {
       "kind": "product-brief",
       "sha256": "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
       "type": "product-brief",
       "path": "brief/product-brief.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "project-spec",
+      "sha256": "sha256:306e75023e518222cd386739af4f1b2b6f21a650017e04f42e7399b546563bb1",
+      "type": "project-spec",
+      "path": "project.yaml",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "quality-gate",
+      "sha256": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
+      "type": "quality-gate",
+      "path": "reviews/quality-gate-latest.json",
+      "frozen": true,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "quality-review",
+      "sha256": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
+      "type": "quality-review",
+      "path": "reviews/review-solvability.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "rights-gate",
+      "sha256": "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
+      "type": "rights-gate",
+      "path": "rights/gate-latest.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "rights-ledger",
+      "sha256": "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
+      "type": "rights-ledger",
+      "path": "rights/ledger.json",
       "frozen": false,
       "rights_status": "pending",
       "validation_status": "not-run",
@@ -67,20 +267,24 @@
     "counts": {
       "blocker": 0,
       "major": 0,
-      "minor": 0,
-      "note": 0
+      "minor": 1,
+      "note": 5
     },
     "open_blocker_or_major": []
   },
   "existing_approvals": {
     "required_distinct_approvers": 1,
-    "current_distinct_approvers": [],
-    "current_count": 0,
-    "approvers_still_needed": 1,
+    "current_distinct_approvers": [
+      "PPC"
+    ],
+    "current_count": 1,
+    "approvers_still_needed": 0,
     "invalidated": []
   },
-  "risks": [],
-  "ready_for_human_review": true,
+  "risks": [
+    "Project state is RELEASE_AUTHORIZATION, not NICHE_APPROVAL; this gate is not the current forward step."
+  ],
+  "ready_for_human_review": false,
   "decision_options": [
     "APPROVE",
     "REJECT",
@@ -88,11 +292,63 @@
   ],
   "human_action": {
     "recording_skill": "/product-approve-niche",
-    "note": "This packet grants nothing. A human must record the decision with the human-only skill /product-approve-niche bound to the exact artifact hashes listed above. Autonomy must STOP here.",
+    "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-approve-niche — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
     "artifact_hashes_to_bind": [
+      "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
+      "sha256:f729a19991b367ca26b2ed137f5e46da9d35739d7dc215bc67accfb7a547759c",
+      "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+      "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+      "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
+      "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+      "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
       "sha256:ddb37f896336cbc0492d0ddc33f4189cd86ec50dc9275a16eedebd8d14f11513",
+      "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
+      "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
+      "sha256:378caf1d70eb12ee6698efce9e21a8423b1e1cf965a71436fa5c213d81b45c89",
+      "sha256:9f4218d3da7dc09583b9e9f076ccb45efbfd1eb16581c7dc288b4e5532be7ae0",
+      "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7",
+      "sha256:7e8641cd83d8b1d9a2f44a840a52bff3d41a121ac88e3a6827febe6469af8bde",
       "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
-      "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25"
+      "sha256:b4fc4307a015498307778a0f0fc07b8ffdeddb6f876c5a157752bf34890293e6",
+      "sha256:577670bf1c3bd52e75272dd70a756fbb773c18465275f87dbb30e918d35f2ef9",
+      "sha256:ac56faf8eed41711e071c40eb5a5d681f882fd3f9afc67c9a8dbfb82fbe57a25",
+      "sha256:306e75023e518222cd386739af4f1b2b6f21a650017e04f42e7399b546563bb1",
+      "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
+      "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
+      "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
+      "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90"
+    ],
+    "next_command": {
+      "form": "slash",
+      "command": "/product-approve-niche clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+      "description": "Resolve blockers before deciding the niche gate: Project state is RELEASE_AUTHORIZATION, not NICHE_APPROVAL; this gate is not the current forward step.",
+      "ready": false
+    },
+    "review_files": [
+      "accessibility/gate-latest.json",
+      "content/content-plan.md",
+      "content/puzzles/sudoku-batch.json",
+      "verification/content-verification-latest.json",
+      "concepts/cover-art-direction.md",
+      "outputs/cover/cover-wrap.pdf",
+      "outputs/proof/cover-proof-report.json",
+      "notes/intake.md",
+      "outputs/interior/interior.pdf",
+      "outputs/proof/interior-proof-report.json",
+      "marketing/launch-guide.json",
+      "marketing/listing-kit.json",
+      "metadata/book.json",
+      "metadata/validation-report.json",
+      "niche/assessment-latest.json",
+      "outputs/packages/etsy/package-manifest.json",
+      "outputs/packages/kdp/package-manifest.json",
+      "brief/product-brief.md",
+      "project.yaml",
+      "reviews/quality-gate-latest.json",
+      "reviews/review-solvability.json",
+      "rights/gate-latest.json",
+      "rights/ledger.json",
+      "approvals/packets/gate-packet-niche-latest.json"
     ]
   },
   "audit": {
@@ -100,67 +356,91 @@
       {
         "actor": "claude-code",
         "details": {
-          "path": "/Users/qaiser.abbas/Dev/my-repos/pub-clr/projects/clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with/niche/assessment-latest.json",
-          "sha256": "sha256:ba67412babf0e00e9322e80b7eb9f5b520ee97ac7ff7c043d08b63099fa0a8d0",
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub-clr/projects/clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with/approvals/packets/gate-packet-cover-latest.json",
+          "sha256": "sha256:11b040e63a4070751e45383c7cdbcb86a7ffd1c4f71e707d3e068df0250605d7",
           "tool": "Write"
         },
         "event": "CLAUDE_TOOL_USED",
-        "event_id": "evt-20260731T124438Z-ca96f966",
+        "event_id": "evt-20260801T021214Z-91f7fc76",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T12:44:38Z"
+        "time": "2026-08-01T02:12:14Z"
       },
       {
-        "actor": "market-scout",
+        "actor": "Qaiser Abbas",
         "details": {
-          "active": true,
-          "artifact_id": "art-niche-assessment-ba67412babf0",
-          "path": "niche/assessment-latest.json",
-          "sha256": "sha256:ba67412babf0e00e9322e80b7eb9f5b520ee97ac7ff7c043d08b63099fa0a8d0",
-          "type": "niche-assessment"
+          "approval_id": "apr-interior-20260801t021332z-178fb7ae",
+          "artifact_hashes": [
+            "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
+            "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+            "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+            "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
+            "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318"
+          ],
+          "decision": "APPROVED",
+          "gate": "interior",
+          "scope": "Interior content freeze: 100 verified easy sudoku puzzles, real 9x9 grid rendering, back-only solutions, 202 pages, proof PASS"
         },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260731T124456Z-590bc601",
+        "event": "APPROVAL_RECORDED",
+        "event_id": "evt-20260801T021332Z-0f0a8710",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T12:44:56Z"
+        "time": "2026-08-01T02:13:32Z"
       },
       {
-        "actor": "niche-assessor",
+        "actor": "Qaiser Abbas",
         "details": {
-          "decision": "PASS",
-          "score": 0.4
+          "hashes": [
+            "sha256:69175ea7b7f22edc3cacb443ac17b9e599ea3831285d8f61a6e5b6edc54bdaf7",
+            "sha256:29bc4463444f121e52c4fb1c5072567252975f9354b804ce8c4ceaeb7a0a928e",
+            "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
+            "sha256:b049dc23dc8470bc6e4de0a8e6050759db79963b0947f309da55a8cef463d19f",
+            "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae"
+          ]
         },
-        "event": "NICHE_ASSESSED",
-        "event_id": "evt-20260731T124533Z-4ada52a1",
+        "event": "ARTIFACTS_FROZEN",
+        "event_id": "evt-20260801T021332Z-8ff5c629",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T12:45:33Z"
+        "time": "2026-08-01T02:13:32Z"
       },
       {
-        "actor": "ph_cli-niche",
+        "actor": "Qaiser Abbas",
         "details": {
-          "active": true,
-          "artifact_id": "art-niche-assessment-8aeac258334e",
-          "path": "niche/assessment-latest.json",
-          "sha256": "sha256:8aeac258334e357344ba0aa936f96f1f0156d190a20ea7377e53d0f8fc855f5c",
-          "type": "niche-assessment"
+          "approval_id": "apr-cover-20260801t021346z-5e0d6f38",
+          "artifact_hashes": [
+            "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+            "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+            "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f"
+          ],
+          "decision": "APPROVED",
+          "gate": "cover",
+          "scope": "Cover wrap approved: navy/cream/white full-bleed design, spine 0.4549in, wrap 17.70x11.25in, proof PASS"
         },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260731T124545Z-5355d035",
+        "event": "APPROVAL_RECORDED",
+        "event_id": "evt-20260801T021346Z-393ffc76",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T12:45:45Z"
+        "time": "2026-08-01T02:13:46Z"
       },
       {
-        "actor": "product-run",
+        "actor": "Qaiser Abbas",
         "details": {
-          "from": "NICHE_ASSESSMENT",
-          "reason": "Deterministic niche assessment (art-niche-assessment-8aeac258334e) PASS; niche gate packet ready for human review.",
-          "to": "NICHE_APPROVAL"
+          "approval_id": "apr-compliance-20260801t021401z-d9f77861",
+          "artifact_hashes": [
+            "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
+            "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+            "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
+            "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
+            "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
+            "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7"
+          ],
+          "decision": "APPROVED",
+          "gate": "compliance",
+          "scope": "Compliance re-approval against updated interior-pdf and cover-pdf. AI disclosure, accessibility PASS, rights PASS all unchanged."
         },
-        "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260731T124550Z-e047c841",
+        "event": "APPROVAL_RECORDED",
+        "event_id": "evt-20260801T021401Z-2b88ff9a",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-07-31T12:45:50Z"
+        "time": "2026-08-01T02:14:01Z"
       }
     ]
   },
-  "gate_is_required_transition": true
+  "gate_is_required_transition": false
 }

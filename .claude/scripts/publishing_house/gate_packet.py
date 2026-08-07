@@ -261,6 +261,47 @@ def build_gate_packet(root: Path, project_id: str, gate: str) -> dict[str, Any]:
 
     ready_for_human = not risks
 
+    # review_files: the concrete, project-root-relative files a human should open to
+    # decide this gate. Assembled only from data already computed above; deduped in
+    # first-seen order; restricted to paths that actually exist on disk. Set to None
+    # (JSON null) when nothing applies, so consumers can branch cleanly.
+    packet_rel = (paths.directory / "approvals" / "packets" / f"gate-packet-{gate}-latest.json").relative_to(
+        paths.directory
+    ).as_posix()
+    candidate_review_files: list[str] = []
+    candidate_review_files.extend(a["path"] for a in artifacts_under_review if a.get("path"))
+    candidate_review_files.extend(ev["report"] for ev in evidence if ev.get("report"))
+    candidate_review_files.extend(pkg["report"] for pkg in channel_packages if pkg.get("report"))
+    candidate_review_files.append(packet_rel)
+    review_files: list[str] = []
+    for rel in candidate_review_files:
+        if rel in review_files:
+            continue
+        if (paths.directory / rel).exists():
+            review_files.append(rel)
+
+    # next_command: the single next step for the human, copy-paste runnable. Approvals
+    # are recorded through Claude skills (a slash command), not a shell call, so the
+    # form is "slash" for all six gates; the "shell" form (a `!`-prefixed command) is
+    # reserved for future non-approval steps. When the gate is not yet ready, the
+    # command still points at the recording skill but the description names the top
+    # blocker(s) so the packet always states the real next action.
+    recording_skill = _GATE_SKILL[gate]
+    if ready_for_human:
+        if gate == "release":
+            next_description = "Authorize release (submission preparation only), or reject."
+        else:
+            next_description = f"Approve the {gate} gate, or reject."
+    else:
+        top = "; ".join(risks[:3])
+        next_description = f"Resolve blockers before deciding the {gate} gate: {top}"
+    next_command = {
+        "form": "slash",
+        "command": f"{recording_skill} {project_id}",
+        "description": next_description,
+        "ready": ready_for_human,
+    }
+
     packet = {
         "schema_version": "1.0",
         "kind": "approval-gate-packet",
@@ -297,11 +338,14 @@ def build_gate_packet(root: Path, project_id: str, gate: str) -> dict[str, Any]:
         "human_action": {
             "recording_skill": _GATE_SKILL[gate],
             "note": (
-                "This packet grants nothing. A human must record the decision with the human-only "
-                f"skill {_GATE_SKILL[gate]} bound to the exact artifact hashes listed above. "
-                "Autonomy must STOP here."
+                "This packet grants nothing. A human must DECIDE this gate — either "
+                "interactively in-session (the assistant presents the options and records the "
+                f"choice) or by invoking {_GATE_SKILL[gate]} — bound to the exact artifact hashes "
+                "listed above. Autonomy must STOP here until the human decides."
             ),
             "artifact_hashes_to_bind": [a["sha256"] for a in artifacts_under_review if a["sha256"]],
+            "next_command": next_command,
+            "review_files": review_files or None,
         },
         "audit": {
             "recent_events": read_events(paths.events, limit=5),

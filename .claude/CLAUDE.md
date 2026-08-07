@@ -110,8 +110,11 @@ The base framework prepares packages; it does not publish autonomously. Never:
 - create accounts;
 - expose secrets or unpublished content to unapproved services.
 
-Human-only release skills require exact-hash approval. Direct external writes remain
-disabled unless a separately reviewed connector explicitly enables them.
+Release requires an exact-hash human authorization. A human must *decide* every gate —
+either interactively in-session (the assistant presents the options via `AskUserQuestion`
+and records the choice) or by invoking the approval command directly; both bind the exact
+artifact hashes. Direct external writes remain disabled unless a separately reviewed
+connector explicitly enables them.
 
 ## 12. Completion response
 
