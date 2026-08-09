@@ -41,12 +41,12 @@
       "Bash(wget --post-data *)"
     ],
     "deny": [
-      "Write(./.claude/settings.json)",
-      "Write(./.mcp.json)",
-      "Write(./projects/*/state.json)",
-      "Write(./projects/*/artifacts/manifest.json)",
-      "Write(./projects/*/approvals/**)",
-      "Write(./projects/*/events.ndjson)"
+      "Edit(./.claude/settings.json)",
+      "Edit(./.mcp.json)",
+      "Edit(./projects/*/state.json)",
+      "Edit(./projects/*/artifacts/manifest.json)",
+      "Edit(./projects/*/approvals/**)",
+      "Edit(./projects/*/events.ndjson)"
     ]
   },
   "hooks": {
