@@ -66,8 +66,8 @@ All material outputs must identify the project, source artifact hashes, creator 
 3. Check cycle count: if three full revision cycles have completed with open blockers or majors remaining, the gate is ESCALATE — do not begin a fourth cycle.
 4. Check repair count per artifact: if five targeted repairs have been applied to an artifact without resolving the triggering finding, classify the artifact as stagnated and escalate.
 5. For each of the six critical dimensions, retrieve the specialist evidence and apply the higher configured threshold; record explicit PASS, FAIL, or UNVERIFIED:
-   - solvability: requires solvability-checker PASS with zero UNSOLVABLE or NON-UNIQUE items.
-   - solution_correctness: requires solvability-checker PASS with zero KEY-MISMATCH items.
+   - solvability: requires content-verifier PASS with zero UNSOLVABLE or NON-UNIQUE items.
+   - solution_correctness: requires content-verifier PASS with zero KEY-MISMATCH items.
    - originality: requires originality-auditor with zero HIGH or BLOCKER findings.
    - rights: requires rights ledger complete and zero unresolved HIGH or BLOCKER findings from originality-auditor and rights agents.
    - accessibility: requires accessibility-auditor at PASS or WARNING (not FAIL) per CLAUDE.md §9.

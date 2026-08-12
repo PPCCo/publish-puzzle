@@ -5,12 +5,12 @@ description: >-
 argument-hint: "<project-id>"
 user-invocable: true
 effort: high
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 allowed-tools:
   - Read
   - Bash
   - AskUserQuestion
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-release-authorize
@@ -34,7 +34,8 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is RELEASE_AUTHORIZATION.
 2. Run `approval packet <project-id> --gate release` to retrieve the full release packet: all artifact hashes, channel packages, upstream gate statuses, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Resolve the **effective mode for THIS gate (`release`)**: if `auto_approve_gates` is an object/map, use `auto_approve_gates["release"]` (default `"false"` if the key is absent); if it is a plain string (legacy), use that string for every gate. **Release is the highest-stakes human gate:** the recommended posture is `"false"`, and `"silent"` is valid only when the resolved required-approver count is 1 (see step 7). Also read `human_action.review_files` and `human_action.next_command` from the packet.
+   Then load the project's `production.legal_defaults.release_scope_defaults` from `project.yaml` (copied from company `legal_defaults` at init; fall back to company `legal_defaults.release_scope_defaults`). Use it to **pre-fill** the release scope — `channels`, `territories`, `permitted_operations`, `maximum_external_spend` (default `0.0`), `currency` — presented for one-step human confirmation. **This is the single place legal/commercial release scope is confirmed before release.** The defaults never grant permission to accept legal terms or exceed the stated spend/territory/channel scope; `maximum_external_spend` stays `0.0` unless the human explicitly raises it, and any live publication/spend remains disabled regardless.
 4. Resolve the number of required approvers from `human_gates.release` in company config (default 1 after `company.local.json` override).
 5. Present the **release gate card**:
 
@@ -88,6 +89,12 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
      Step-by-step guide marketing/launch-guide.json
      Full metadata      metadata/book.json
 
+   ── RELEASE SCOPE (pre-filled from legal_defaults — confirm/override) ──
+     Channels           <channels from release_scope_defaults>
+     Territories        <territories>
+     Operations         <permitted_operations>  (prepare/dry-run only)
+     Max external spend <maximum_external_spend> <currency>   (0.0 = no spend)
+
    ── OPEN DECISIONS ─────────────────────────────────────────
      Pricing            Not set — enter at upload time on each platform
      ISBN               Not purchased — KDP assigns ASIN automatically
@@ -96,9 +103,11 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
    ────────────────────────────────────────────────────────────
    ```
 
-7. Determine action based on `auto_approve_gates`:
+7. Act on the **resolved effective mode** (from step 3):
    - **`"silent"`** — record authorization immediately with `default_approver`; skip prompt. (Only valid when the resolved required-approver count is 1; if more than one approver is required, you cannot proceed silently — fall through to the interactive path and collect the additional distinct approver.)
-   - **`"auto"` / `"false"`** — show the gate card, the "Your Book Files" map, and the `review_files` list, then collect the decision interactively (step 8).
+   - **`"auto"`** — show the gate card, the "Your Book Files" map, and the `review_files` list, then a single `AskUserQuestion` confirm (Authorize recommended / Reject / Customize). Only valid when the required-approver count is 1; otherwise fall through to interactive to collect the additional distinct approver.
+   - **`"false"`** — show the gate card, the "Your Book Files" map, and the `review_files` list, then collect the decision interactively (step 8).
+   - **Safety override (applies to every mode):** if the packet's `ready_for_human_review` is false, or any open blocker or major finding exists, do NOT auto-authorize regardless of mode — fall through to interactive (step 8) and name the top risk. Never treat `not-run` as `pass`.
 
 8. **Interactive decision** (skip in `silent` mode). List the `review_files` (relative paths) inline, then call **`AskUserQuestion`**:
    - Question: "Authorize release for <working_title>? (This authorizes submission preparation only — no live publication, spend, or account action.)"
@@ -108,7 +117,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 9. Record the release authorization. Collect all package manifest hashes and include them as `--artifact` flags:
    ```
-   python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval release-authorize <project-id> \
+   ${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py approval release-authorize <project-id> \
      --approver <identity> \
      [--approver <identity2> if required_approvers > 1] \
      --channel kdp --channel etsy \

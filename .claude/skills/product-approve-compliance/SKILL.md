@@ -4,13 +4,13 @@ description: >-
   Grant or reject the compliance gate against AI-disclosure evidence, accessibility PASS or WARNING result, rights clearance, and child-safety review; on approval transition to METADATA_AND_COMMERCIAL_PACKAGE.
 argument-hint: "<project-id>"
 user-invocable: true
-effort: high
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 allowed-tools:
   - Read
   - Bash
   - AskUserQuestion
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-approve-compliance
@@ -34,7 +34,8 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is COMPLIANCE_APPROVAL.
 2. Run `approval packet <project-id> --gate compliance` to retrieve compliance packet hash, accessibility result, AI-disclosure record, rights clearance summary, child-safety result, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Resolve the **effective mode for THIS gate (`compliance`)**: if `auto_approve_gates` is an object/map, use `auto_approve_gates["compliance"]` (default `"false"` if the key is absent); if it is a plain string (legacy), use that string for every gate. **Compliance is a human-decided gate:** a resolved mode of `"silent"` is downgraded to `"auto"` here — compliance is never recorded without a human confirmation. Also read `human_action.review_files` and `human_action.next_command` from the packet.
+   Then load the project's `production.legal_defaults` from `project.yaml` (this was copied from company `legal_defaults` at init; fall back to company `legal_defaults` if the project block is absent). It carries the pre-filled `ai_disclosure` text, `rights_posture`, `originality_attestation_template`, and `child_safety_policy`. Present these as the **pre-filled decision** the human confirms; ask only about **deltas** (values the human wants to change) — do not re-collect posture that matches the defaults. These remain DEFAULTS, not clearances: never treat `default_asset_rights_status: "unknown-blocks-release"` as cleared, and always gate on the real accessibility/rights/child-safety evidence in the packet.
 4. Present the **gate card**:
 
    ```
@@ -47,6 +48,11 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
      Rights          <PASS>  (<N> assets cleared, 0 blocked)
      AI disclosure   <PRESENT|MISSING>
      Child safety    <n/a|PASS>
+
+   Legal posture (pre-filled from production.legal_defaults — confirm or edit deltas)
+     AI disclosure   "<ai_disclosure text, truncated>"
+     Rights posture  line_art:<..>  fonts:<..>  word_lists:<..>  default_status:<..>
+     Child safety    <policy line for this audience band, if a child band>
 
    Open findings: <blocker>B  <major>M  <minor>m  <note>n
    ────────────────────────────────────────────────────────────
@@ -64,9 +70,10 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
      project.yaml                          — AI disclosure field (rights.ai_assistance_disclosure_required)
    ```
 
-6. Determine action based on `auto_approve_gates`:
-   - **`"silent"`** — record approval immediately with defaults; skip prompt.
-   - **`"auto"` / `"false"`** — show the gate card and the `review_files` list, then collect the decision interactively (step 7). (If accessibility is FAIL, per step 4 you already stopped and never reach here.)
+6. Act on the **resolved effective mode** (from step 3; `"silent"` was already downgraded to `"auto"`):
+   - **`"auto"`** — show the gate card and the `review_files` list, then a single `AskUserQuestion` confirm (Approve recommended / Reject / Customize).
+   - **`"false"`** — show the gate card and the `review_files` list, then collect the decision interactively (step 7). (If accessibility is FAIL, per step 4 you already stopped and never reach here.)
+   - **Compliance safety override:** never present Approve as recommended (and never auto-confirm) if rights-gate or accessibility-gate is not PASS/WARNING, any child-safety flag is open, AI-disclosure is MISSING, or any open blocker/major finding exists — fall through to interactive and name the top risk. Escalate legal or safety findings; never resolve them autonomously. Never treat `not-run` as `pass`.
 
 7. **Interactive decision** (skip in `silent` mode). List the `review_files` (relative paths) inline, then call **`AskUserQuestion`**:
    - Question: "Approve the compliance gate for <working_title>?"
@@ -75,7 +82,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 8. Record the gate decision:
    ```
-   python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval grant <project-id> \
+   ${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py approval grant <project-id> \
      --gate compliance \
      --approver <identity> \
      --approver-role <role> \

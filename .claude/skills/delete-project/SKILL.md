@@ -9,7 +9,7 @@ model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /delete-project
@@ -45,12 +45,12 @@ Stop and escalate to the human when any of these hold:
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status <project-id>` and read `projects/<id>/project.yaml` and `projects/<id>/state.json`. Record the current lifecycle state and whether any approvals exist.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status <project-id>` and read `projects/<id>/project.yaml` and `projects/<id>/state.json`. Record the current lifecycle state and whether any approvals exist.
 2. Check all refuse-and-escalate conditions. If any hold, STOP and report exactly why; delete nothing.
 3. Confirm `--confirm` is present in `$ARGUMENTS`; if absent, halt and instruct the human to re-invoke with `--confirm`.
 4. Present the blast radius to the human before deleting: the project directory path, file count, the `catalog/books.json` entry that will be dropped, and what will NOT be touched (framework config/rules/standards, other projects, `.claude/logs/` audit logs).
-5. Remove the project directory using a targeted non-recursive-force approach: `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project transition <project-id> --to DELETED --actor cli` if the CLI supports a DELETED terminal state, otherwise move the directory to `projects/.trash/<project-id>-deleted/` using a single `mv`. Never use `rm -rf`.
-6. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py catalog rebuild` to remove the project from `catalog/books.json` via the CLI; do not hand-edit catalog files.
+5. Remove the project directory using a targeted non-recursive-force approach: `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project transition <project-id> --to DELETED --actor cli` if the CLI supports a DELETED terminal state, otherwise move the directory to `projects/.trash/<project-id>-deleted/` using a single `mv`. Never use `rm -rf`.
+6. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py catalog rebuild` to remove the project from `catalog/books.json` via the CLI; do not hand-edit catalog files.
 7. Confirm: the project directory is absent from `projects/`, the catalog entry is gone, and `project status <project-id>` reports the project as absent or deleted.
 
 ## Required outputs

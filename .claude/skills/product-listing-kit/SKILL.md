@@ -12,7 +12,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-listing-kit
@@ -35,16 +35,15 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 ## Specialist delegation
 
 Use these agents only for bounded assignments with exact input hashes, output paths, and acceptance tests:
-- `listing-copywriter`
-- `keyword-strategist`
+- `commercial-writer`
 - `pricing-strategist`
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the project is in a list-eligible state with no unresolved blocking findings.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py marketing listing --project-id <id> --channel <c>` for each requested channel; if no channel is specified, run `marketing kit --project-id <id>` to generate all channels in one pass.
-3. Delegate to `listing-copywriter` to draft the title (max 200 chars KDP / 140 chars Etsy / 100 chars Gumroad), subtitle where supported, and channel-specific description using only features verifiable from registered artifacts. No superlatives, no competitor names, no trademarked third-party terms without rights evidence.
-4. Delegate to `keyword-strategist` to produce keyword and tag sets within hard channel limits: KDP 7 keyword phrases, Etsy exactly 13 tags (each ≤ 20 chars), Gumroad exactly 10 tags. Flag any term that is a registered trademark or brand name for human review before inclusion.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the project is in a list-eligible state with no unresolved blocking findings.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py marketing listing --project-id <id> --channel <c>` for each requested channel; if no channel is specified, run `marketing kit --project-id <id>` to generate all channels in one pass.
+3. Delegate to `commercial-writer` to draft the title (max 200 chars KDP / 140 chars Etsy / 100 chars Gumroad), subtitle where supported, and channel-specific description using only features verifiable from registered artifacts. No superlatives, no competitor names, no trademarked third-party terms without rights evidence.
+4. Delegate to `commercial-writer` to produce keyword and tag sets within hard channel limits: KDP 7 keyword phrases, Etsy exactly 13 tags (each ≤ 20 chars), Gumroad exactly 10 tags. Flag any term that is a registered trademark or brand name for human review before inclusion.
 5. Delegate to `pricing-strategist` to produce a pricing recommendation based on product type, page/file count, comparable market data, and royalty-rate projections. Label all prices explicitly as RECOMMENDATIONS — they are not committed or live.
 6. Validate description length, keyword/tag counts, prohibited term list, and category path validity for each channel. FAIL the affected channel if any limit is violated; do not silently truncate.
 7. Confirm `external_write_performed` is false. No listing is submitted, posted, or published by this skill.

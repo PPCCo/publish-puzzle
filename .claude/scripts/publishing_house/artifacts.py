@@ -8,6 +8,24 @@ from .paths import ProjectPaths
 from .util import atomic_write_json, load_json, project_lock, relative_to, sha256_path, slugify, utc_now
 from .validation import validate_data
 
+# Artifact types that are pure downstream build outputs. Re-registering one of these
+# with a new hash MUST NOT invalidate an upstream gate approval, because approvals bind
+# to the SOURCE content/design/metadata hashes (see gate_packet._GATE_ARTIFACT_TYPES),
+# never to the rebuilt PDF or channel package. Belt-and-braces guard so the fix holds
+# even if a future gate accidentally binds one of these types.
+_DOWNSTREAM_BUILD_TYPES = {
+    "interior-pdf",
+    "interior-proof",
+    "cover-pdf",
+    "cover-proof",
+    "platform-package-kdp",
+    "platform-package-etsy",
+    "platform-package-gumroad",
+    "platform-package-generic",
+    "launch-guide",
+    "marketing-kit",
+}
+
 
 def list_artifacts(root: Path, project_id: str) -> list[dict[str, Any]]:
     paths = ProjectPaths(root, project_id).require()
@@ -93,7 +111,7 @@ def register_artifact(
         manifest["artifacts"].append(artifact)
         atomic_write_json(paths.artifact_manifest, manifest)
         append_event(paths.events, project_id, "ARTIFACT_REGISTERED", actor, {"artifact_id": artifact["artifact_id"], "type": artifact_type, "path": rel, "sha256": digest, "active": active})
-        if previous_hash and previous_hash != digest:
+        if previous_hash and previous_hash != digest and artifact_type not in _DOWNSTREAM_BUILD_TYPES:
             from .approvals import invalidate_approvals_for_hashes
             invalidate_approvals_for_hashes(root, project_id, [previous_hash], actor, f"Superseded by {digest}")
         return artifact

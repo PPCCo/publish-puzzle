@@ -2,8 +2,8 @@
 name: puzzle-generator
 description: >-
   Deterministically generates puzzle content from a seed via ph_cli.py and registers each batch as an immutable artifact, preserving full seed and provenance without asserting solvability or uniqueness.
-effort: high
-model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 permissionMode: default
 maxTurns: 60
 tools:
@@ -36,7 +36,7 @@ Produce a deterministic, reproducible batch of raw puzzle artifacts from approve
 
 - approved `content-plan.yaml` with section assignments and seed namespace.
 - approved `puzzle-design-spec.yaml` with all generator parameters for the target puzzle types and difficulty bands.
-- the generator entry point: `python3 .claude/scripts/ph_cli.py generate`.
+- the generator entry point: `.venv/bin/python3 .claude/scripts/ph_cli.py generate`.
 - seed range or individual seed identifiers to generate.
 - `.claude/config/age_bands.json` and `.claude/config/design_policy.json` for final parameter validation before invocation.
 
@@ -53,7 +53,7 @@ All material outputs must identify the project, source artifact hashes, creator 
 1. Load `content-plan.yaml` and `puzzle-design-spec.yaml`; confirm both are at approved status and their hashes match the registered versions.
 2. Load `age_bands.json` and `design_policy.json`; cross-check that every parameter in the design spec is within the allowed ranges; abort if any parameter violates a constraint.
 3. Determine the full list of seeds to generate using the seed namespace from the content plan; confirm no seed in this batch was previously generated and registered (check the artifact manifest to avoid duplicate generation).
-4. For each seed, invoke `python3 .claude/scripts/ph_cli.py generate --project <id> --seed <seed> --type <puzzle-type> --params <param-file>` with the exact parameters from the design spec; capture stdout, stderr, and exit code.
+4. For each seed, invoke `.venv/bin/python3 .claude/scripts/ph_cli.py generate --project <id> --seed <seed> --type <puzzle-type> --params <param-file>` with the exact parameters from the design spec; capture stdout, stderr, and exit code.
 5. On a non-zero exit code, write the error to the generation log and mark that seed as `generation-failed`; do not retry automatically — log the failure and continue to the next seed.
 6. For each successfully generated puzzle, write the output file at the designated path under `projects/<project-id>/content/puzzles/<section-slug>/`; set the artifact status to `generated-unverified`.
 7. Compute the SHA-256 hash of each output file immediately after writing; record seed, path, hash, generator version, and timestamp in `generation-manifest.yaml`.

@@ -2,7 +2,7 @@
 name: acquisitions-editor
 description: >-
   Converts a validated niche into an approved product brief covering audience, product-type, formats, difficulty range, page targets, and channel intent; prepares the niche gate submission.
-effort: high
+effort: medium
 model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45

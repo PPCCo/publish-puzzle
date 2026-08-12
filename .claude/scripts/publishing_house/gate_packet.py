@@ -43,6 +43,22 @@ _GATE_EVIDENCE: dict[str, list[str]] = {
     "release": [],
 }
 
+# Which active-artifact TYPES each human gate binds its approval to. A type NOT
+# listed here is intentionally excluded so re-registering a DIFFERENT artifact type
+# later (e.g. rebuilding the interior/cover PDF or a channel package) cannot
+# invalidate this gate's approval. Interior/cover bind to the SOURCE content/design
+# artifacts, explicitly NOT to the *-pdf downstream build outputs.
+# ``None`` means "bind every active artifact" (release binds channel-package hashes
+# through its own logic, so its scoping is unchanged).
+_GATE_ARTIFACT_TYPES: dict[str, list[str] | None] = {
+    "niche": ["niche-assessment", "product-brief"],
+    "interior": ["content-sudoku", "content-verification", "content-plan"],
+    "cover": ["cover-art-direction"],
+    "compliance": ["rights-ledger", "rights-gate", "accessibility-gate"],
+    "listing": ["metadata", "metadata-validation", "listing-kit"],
+    "release": None,
+}
+
 # The state a project must be sitting in for each human gate.
 _GATE_STATE = {
     "niche": "NICHE_APPROVAL",
@@ -164,9 +180,20 @@ def build_gate_packet(root: Path, project_id: str, gate: str) -> dict[str, Any]:
     # Exact active-artifact hashes under review.
     active = dict(state.get("active_artifacts", {}))
     manifest = {item.get("sha256"): item for item in list_artifacts(root, project_id)}
+    # ``artifacts_under_review`` is scoped to this gate's binding TYPES (see
+    # _GATE_ARTIFACT_TYPES) so the approval it produces is NOT bound to unrelated
+    # downstream build outputs. ``all_artifact_paths`` keeps EVERY active artifact's
+    # path for human visibility (review_files) even when it is not bound.
+    allowed_types = _GATE_ARTIFACT_TYPES.get(gate)
     artifacts_under_review = []
+    all_artifact_paths: list[str] = []
     for kind, digest in sorted(active.items()):
         entry = manifest.get(digest, {})
+        if entry.get("path"):
+            all_artifact_paths.append(entry["path"])
+        if allowed_types is not None and entry.get("type") not in allowed_types:
+            # Not material to THIS gate's approval; visible above but not bound.
+            continue
         artifacts_under_review.append(
             {
                 "kind": kind,
@@ -268,8 +295,12 @@ def build_gate_packet(root: Path, project_id: str, gate: str) -> dict[str, Any]:
     packet_rel = (paths.directory / "approvals" / "packets" / f"gate-packet-{gate}-latest.json").relative_to(
         paths.directory
     ).as_posix()
+    # review_files lists ALL built outputs (all_artifact_paths) for human visibility;
+    # the approval BINDING is scoped to the gate's source types via _GATE_ARTIFACT_TYPES,
+    # so a human still sees the built interior/cover PDF even though the approval is not
+    # bound to its hash.
     candidate_review_files: list[str] = []
-    candidate_review_files.extend(a["path"] for a in artifacts_under_review if a.get("path"))
+    candidate_review_files.extend(all_artifact_paths)
     candidate_review_files.extend(ev["report"] for ev in evidence if ev.get("report"))
     candidate_review_files.extend(pkg["report"] for pkg in channel_packages if pkg.get("report"))
     candidate_review_files.append(packet_rel)

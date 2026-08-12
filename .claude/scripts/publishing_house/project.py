@@ -11,6 +11,7 @@ from .paths import PROJECT_DIRS, ProjectPaths
 from .util import (
     atomic_write_json,
     atomic_write_yaml,
+    load_company_config,
     load_json,
     load_yaml,
     parse_csv,
@@ -139,6 +140,15 @@ def init_project(
     from .design_policy import derive_design
 
     design = derive_design(root, audience, book_type, formats_list)
+    # Copy the company-wide legal/rights posture into the project so the human
+    # confirms only *deltas* at the compliance and release gates rather than
+    # re-collecting disclosure/rights/safety values ad hoc. These are DEFAULTS,
+    # not clearances: default_asset_rights_status stays "unknown-blocks-release",
+    # preserving the rule that clearance is never inferred from missing evidence
+    # (.claude/rules/12-rights.md). Deep-copy via JSON round-trip so later project
+    # edits never alias the shared company config; offline and deterministic.
+    company = load_company_config(root)
+    legal_defaults = json.loads(json.dumps(company.get("legal_defaults", {})))
     project = {
         "schema_version": "1.0",
         "project_id": project_id,
@@ -175,6 +185,10 @@ def init_project(
                 "binding": design.get("binding_hint") or "paperback",
                 "spine_width_in": None,
             },
+            # Company legal/rights defaults, copied at init. The owner MAY edit
+            # these per project; the compliance and release gates read them as the
+            # pre-filled decision so the human confirms only deltas.
+            "legal_defaults": legal_defaults,
         },
         "commercial": {"currency": "USD", "ebook_price": None, "paperback_price": None, "hardcover_price": None, "digital_price": None},
         "rights": {"territories": ["WORLD"], "ai_assistance_disclosure_required": "unknown", "originals_only": True},

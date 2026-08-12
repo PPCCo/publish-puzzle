@@ -2,8 +2,8 @@
 name: compliance-officer
 description: >-
   Assembles the compliance-gate evidence package covering AI-disclosure, accessibility status, channel content policy, child-safety, and rights status; flags every unresolved issue that blocks release.
-effort: xhigh
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
 tools:

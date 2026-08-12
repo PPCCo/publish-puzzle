@@ -4,7 +4,7 @@ description: >-
   Perform an independent final adversarial audit across the whole product before final gates, relying on no producer assurance and cross-checking all artifact hashes and gate evidence.
 argument-hint: "<project-id>"
 user-invocable: true
-effort: xhigh
+effort: high
 model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
@@ -14,7 +14,7 @@ allowed-tools:
   - Write
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-final-red-team
@@ -40,14 +40,14 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` in a fresh independent agent context; accept no prior session's assumptions.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact list <id>` and reconstruct the full artifact inventory; confirm every declared artifact has a registered hash.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` in a fresh independent agent context; accept no prior session's assumptions.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact list <id>` and reconstruct the full artifact inventory; confirm every declared artifact has a registered hash.
 3. Reconstruct the promised product from: project brief, cover design, title, difficulty labels, page/puzzle count, audience claims, and metadata; identify any gap between promise and content.
 4. Cross-check exact hashes across interior PDF, cover, digital bundle, answer-key placement (back-only), provenance records, rights ledger, accessibility report, and metadata artifact.
 5. Independently verify that every quality gate report is current (references the release-candidate hash, not a prior revision hash) and that no gate shows `not-run` or `INCOMPLETE`.
 6. Spot-check: at least 10% of puzzle/coloring/printable items for solvability, solution correctness, and difficulty label accuracy; all coloring line art for origination flags; all printable pages for DPI and page-size compliance.
 7. Search for placeholders (e.g., `TODO`, `TBD`, `FIXME`, `[INSERT]`), accidental personal data, stale page counts or difficulty counts in metadata, missing answer keys, and cross-format count inconsistencies.
-8. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py quality evaluate --project-id <id>` and `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py audit accessibility --project-id <id>` independently; do not reuse cached reports.
+8. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py quality evaluate --project-id <id>` and `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py audit accessibility --project-id <id>` independently; do not reuse cached reports.
 9. Write blocker and major findings without repairing them; issue a residual-risk statement covering any findings below blocker threshold.
 10. Recommend PASS only when: all critical dimension thresholds are met with current-hash evidence, no blocker findings are open, and the declared product matches the built artifacts.
 

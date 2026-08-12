@@ -12,7 +12,7 @@ allowed-tools:
   - Glob
   - Bash
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-quality-gate
@@ -32,8 +32,8 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` to confirm stage and artifact hashes.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py quality evaluate --project-id <id> [--stage <s>]` with all arguments resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` to confirm stage and artifact hashes.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py quality evaluate --project-id <id> [--stage <s>]` with all arguments resolved from `$ARGUMENTS`.
 3. Confirm every review references the current artifact hash; flag any stale-hash review as invalid evidence and treat its dimension as `not-run`.
 4. For each critical dimension (solvability, solution_correctness, originality, rights, accessibility, audience_fit), verify the score meets the higher configured threshold; a single critical dimension below threshold forces a FAIL gate decision.
 5. Treat any dimension with status `not-run` as FAIL; do not substitute narrative confidence for a completed check.

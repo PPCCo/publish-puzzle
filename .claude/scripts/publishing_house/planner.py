@@ -161,7 +161,7 @@ def plan_next(root: Path, project_id: str) -> dict[str, Any]:
         )
         result["recommended_action"] = (
             f"HUMAN GATE. Assemble and present the approval packet "
-            f"(python3 .claude/scripts/ph_cli.py approval packet {project_id} --gate {gate_name}) "
+            f"(.venv/bin/python3 .claude/scripts/ph_cli.py approval packet {project_id} --gate {gate_name}) "
             f"then STOP. A human must record approval via {result['human_gate_command'] or 'the human-only approval skill'}. "
             f"Never auto-approve. Packet will be written to {packet_hint}."
         )

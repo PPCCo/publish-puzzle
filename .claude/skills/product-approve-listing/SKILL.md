@@ -4,13 +4,13 @@ description: >-
   Grant or reject the listing gate against exact metadata and listing-kit artifact hashes, truthful-claims review, and pricing recommendation; on approval transition to FINAL_PROOF.
 argument-hint: "<project-id>"
 user-invocable: true
-effort: high
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
   - AskUserQuestion
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-approve-listing
@@ -34,7 +34,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is LISTING_APPROVAL.
 2. Run `approval packet <project-id> --gate listing` to retrieve the metadata hash, listing-kit hash, channel-limit compliance, pricing recommendation, truthful-claims outcome, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` and `auto_approve_gates`. Resolve the **effective mode for THIS gate (`listing`)**: if `auto_approve_gates` is an object/map, use `auto_approve_gates["listing"]` (default `"false"` if the key is absent); if it is a plain string (legacy), use that string for every gate. Also read `human_action.review_files` and `human_action.next_command` from the packet.
 4. Present the **gate card**:
 
    ```
@@ -69,9 +69,11 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
      marketing/launch-guide.json     — per-channel upload steps
    ```
 
-6. Determine action based on `auto_approve_gates`:
-   - **`"silent"`** — record approval immediately with defaults; skip prompt.
-   - **`"auto"` / `"false"`** — show the gate card and the `review_files` list, then collect the decision interactively (step 7).
+6. Act on the **resolved effective mode** (from step 3):
+   - **`"silent"`** — record approval immediately with `default_approver`; skip the prompt; print the confirmation and the `review_files` list.
+   - **`"auto"`** — show the gate card and the `review_files` list, then a single `AskUserQuestion` confirm (Approve recommended / Reject / Customize).
+   - **`"false"`** — show the gate card and the `review_files` list, then collect the decision interactively (step 7).
+   - **Safety override (applies to every mode):** if the packet's `ready_for_human_review` is false, or any open blocker or major finding exists, do NOT auto-approve regardless of mode — fall through to the interactive path (step 7) and name the top risk. Never treat `not-run` as `pass`.
 
 7. **Interactive decision** (skip in `silent` mode). List the `review_files` (relative paths) inline, then call **`AskUserQuestion`**:
    - Question: "Approve the listing gate for <title>? (No pricing or text is submitted externally at this stage.)"
@@ -80,7 +82,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 8. Record the gate decision:
    ```
-   python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval grant <project-id> \
+   ${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py approval grant <project-id> \
      --gate listing \
      --approver <identity> \
      --approver-role <role> \

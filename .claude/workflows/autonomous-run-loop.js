@@ -20,7 +20,7 @@ const until = input.until ?? 'human-gate'
 // Hard cap of 5 completed stages (mirrors /product-run). Requested value is clamped.
 const maxStages = Math.max(1, Math.min(Number(input.max_stages ?? 3) || 3, 5))
 
-const cli = 'python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py'
+const cli = '${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py'
 
 // The loop is deterministic in its SEQUENCING and STOP conditions; the actual
 // artifact production is delegated to bounded specialist agents. The workflow

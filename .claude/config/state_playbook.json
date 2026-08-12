@@ -20,7 +20,7 @@
     },
     "NICHE_ASSESSMENT": {
       "forward_target": "NICHE_APPROVAL",
-      "recommended_agents": ["market-scout", "competition-analyst", "keyword-strategist"],
+      "recommended_agents": ["market-scout", "competition-analyst", "commercial-writer"],
       "recommended_skills": ["product-niche-assess"],
       "recommended_workflows": [],
       "entry_criteria": "Product brief recorded.",
@@ -54,7 +54,7 @@
     },
     "CONTENT_VERIFICATION": {
       "forward_target": "INTERIOR_APPROVAL",
-      "recommended_agents": ["content-verifier", "solvability-checker", "quality-lead"],
+      "recommended_agents": ["content-verifier", "quality-lead"],
       "recommended_skills": ["product-verify", "product-quality-gate"],
       "recommended_workflows": ["verify_content"],
       "entry_criteria": "Content generated.",
@@ -127,7 +127,7 @@
     },
     "METADATA_AND_COMMERCIAL_PACKAGE": {
       "forward_target": "LISTING_APPROVAL",
-      "recommended_agents": ["metadata-specialist", "pricing-strategist", "listing-copywriter"],
+      "recommended_agents": ["commercial-writer", "pricing-strategist"],
       "recommended_skills": ["product-metadata-build", "product-listing-kit"],
       "entry_criteria": "Compliance approved.",
       "acceptance": "metadata/book.json canonical; metadata/validation-report.json = PASS/WARNING; listing kit prepared.",

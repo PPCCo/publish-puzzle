@@ -13,7 +13,7 @@ allowed-tools:
   - Write
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-review
@@ -42,7 +42,7 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and resolve the exact current artifact hash for the target artifact.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and resolve the exact current artifact hash for the target artifact.
 2. Confirm the reviewer agent is independent of the generator that produced the artifact; reject self-review assignments.
 3. Assign the review dimension from `$ARGUMENTS`; valid dimensions include: solvability, solution_correctness, difficulty_accuracy, uniqueness, originality, audience_fit, child_safety, accessibility, rights_compliance, printable_spec, and line_art_originality.
 4. Delegate the review to the appropriate specialist agent with: exact artifact hash, dimension schema, severity rubric, and stop criteria.

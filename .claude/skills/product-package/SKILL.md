@@ -12,7 +12,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-package
@@ -39,8 +39,8 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm release-authorization is current with no hash mismatches.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py package --project-id <id> --channel <channel>` to assemble the local channel package from registered canonical artifacts.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm release-authorization is current with no hash mismatches.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py package --project-id <id> --channel <channel>` to assemble the local channel package from registered canonical artifacts.
 3. Delegate to `packaging-engineer` to validate the assembled package: check that all required files for the channel are present (e.g., KDP interior PDF bleed/trim compliance, cover flat-file dimensions, Etsy/Gumroad zip bundle contents), that every file hash in the manifest matches the registered canonical source hash, and that metadata mapping is complete and correctly formatted for the channel.
 4. Confirm `external_write_performed` is false. The package is a local artifact only; no file is transmitted, listed, or uploaded by this skill.
 5. Generate the package manifest (file list with SHA-256 hashes), a preflight report (dimension checks, color-space checks, file-size limits, metadata completeness), and a manual submission checklist stating the exact steps a human must perform to upload the package to the channel.

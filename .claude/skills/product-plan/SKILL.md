@@ -10,7 +10,7 @@ allowed-tools:
   - Read
   - Bash
   - AskUserQuestion
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-plan
@@ -30,7 +30,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project plan $ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project plan $ARGUMENTS`.
 2. Read the `autonomy_action` field from the plan output and treat it as authoritative:
    - `PROCEED` — the next stage is fully autonomous; report the recommended skill or agent and exact CLI command.
    - `STOP_AT_GATE` — a human gate (niche, interior, cover, compliance, listing, or release) is required. Assemble the packet (`approval packet <id> --gate <gate>`) and present the gate name, the packet location, the packet's `human_action.review_files` (relative paths to open), and the `human_action.next_command`. Then offer the next action via **`AskUserQuestion`** — e.g. "Prepare/decide the <gate> gate now" (invokes the matching approval skill, where the human decides) vs "Just show status" (stay read-only). Never record an approval from this skill.

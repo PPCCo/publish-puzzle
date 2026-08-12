@@ -1,6 +1,6 @@
 # Specialist Agents
 
-The framework defines 34 role-specific agents. Run the company through `publisher-in-chief`; it delegates bounded tasks to specialists. Direct agent use is appropriate for focused work, but no agent may bypass project state or approve its own output.
+The framework defines 31 role-specific agents. Run the company through `publisher-in-chief`; it delegates bounded tasks to specialists. Direct agent use is appropriate for focused work, but no agent may bypass project state or approve its own output.
 
 ## Departments
 

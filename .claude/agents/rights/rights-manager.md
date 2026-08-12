@@ -2,8 +2,8 @@
 name: rights-manager
 description: >-
   Maintains the rights ledger for all product asset types (line art, fonts, clip elements, puzzle word lists, images, generated assets) and prevents release of any asset with unknown or incompatible rights status.
-effort: xhigh
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+effort: high
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
 tools:
@@ -60,7 +60,7 @@ All material outputs must identify the project, source artifact hashes, creator 
 ## Procedure
 
 1. Load the artifact manifest and enumerate every included asset: interior line art files, cover illustration files, font files (interior body, heading, cover), clip elements, decorative borders, puzzle word lists (each source list separately), reference images, and AI-generated asset records.
-2. For each asset, locate or create a rights record with fields: asset ID, hash, creator or provider, acquisition method, license or contract identifier, commercial use allowed (yes/no/conditional), modification allowed, attribution required, territories, formats, term start and expiry, consent records (for any real-person reference), AI-generation provenance, and meaningful human contribution description.
+2. For each asset, locate or create a rights record with fields: asset ID, hash, creator or provider, acquisition method, license or contract identifier, commercial use allowed (yes/no/conditional), modification allowed, attribution required, territories, formats, term start and expiry, consent records (for any real-person reference), AI-generation provenance, and meaningful human contribution description. Where the project carries `production.legal_defaults` (copied from company `legal_defaults` at init), you MAY pre-seed default fields from it — the `rights_posture` (line_art/fonts/word-list posture), default territories from `release_scope_defaults.territories`, the AI-disclosure requirement, and the `originality_attestation_template` for original assets. These are DEFAULTS to fill blanks, never clearances: seeding a posture does NOT set a CLEARED status. The `default_asset_rights_status` (`unknown-blocks-release`) is the starting status until real evidence is verified. Do not infer clearance from a seeded default any more than from absence.
 3. Verify that commercial use explicitly covers the target channels and product types (print-on-demand paperback, digital PDF download, print-at-home). Do not infer clearance from the absence of a restriction.
 4. Check license compatibility across co-present assets; flag any copyleft or share-alike terms that would constrain the overall product.
 5. Review AI-generation provenance: record tool name, version, model identifier, date, and prompt hash. Note the meaningful human contribution. Do not assert that AI-produced material is copyrightable or that the asset is automatically cleared for commercial use — verify the provider's commercial terms explicitly.

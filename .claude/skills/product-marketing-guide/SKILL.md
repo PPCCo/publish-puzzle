@@ -14,7 +14,7 @@ allowed-tools:
   - WebFetch
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-marketing-guide
@@ -37,18 +37,18 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 ## Specialist delegation
 
 Use these agents only for bounded assignments with exact input hashes, output paths, and acceptance tests:
-- `metadata-specialist`
+- `commercial-writer`
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm listing-kit and package artifacts are current with matching hashes for the requested channel.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py marketing guide --project-id <id> --channel <channel>` to retrieve the stored guide scaffold and any previously recorded channel-specific notes for this product.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm listing-kit and package artifacts are current with matching hashes for the requested channel.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py marketing guide --project-id <id> --channel <channel>` to retrieve the stored guide scaffold and any previously recorded channel-specific notes for this product.
 3. Use WebSearch and WebFetch to verify current official platform upload and listing requirements against the documentation sources below. Record the URL and retrieval date for each source consulted. If a source returns a non-200 status or is behind an authenticated wall, note it as unverified and flag for human review.
    - KDP: https://kdp.amazon.com/help (paperback/hardcover content guidelines, cover specifications, metadata requirements, pricing policy)
    - Etsy: https://www.etsy.com/legal/sellers/ and https://help.etsy.com/hc/en-us/categories/200327107 (digital download listing, tag and title policies, prohibited items)
    - Gumroad: https://help.gumroad.com/ (product setup, file requirements, pricing, payout)
    - Generic: record the channel name and note that official documentation must be supplied by the human operator.
-4. Delegate to `metadata-specialist` to cross-check the registered listing kit fields (title, description, tags, categories, pricing recommendation) against the verified platform rules retrieved in step 3. Flag any field that exceeds a platform limit or uses a term prohibited by current policy. Do not auto-correct; open a finding for each discrepancy and route to human review.
+4. Delegate to `commercial-writer` to cross-check the registered listing kit fields (title, description, tags, categories, pricing recommendation) against the verified platform rules retrieved in step 3. Flag any field that exceeds a platform limit or uses a term prohibited by current policy. Do not auto-correct; open a finding for each discrepancy and route to human review.
 5. Produce the channel-specific manual launch guide. Each guide MUST:
    - Be written as step-by-step instructions for a human operator to execute manually.
    - Reference the specific files from the local channel package by name and hash.

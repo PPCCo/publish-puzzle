@@ -10,7 +10,7 @@ model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
 allowed-tools:
   - Read
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-freeze
@@ -38,7 +38,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 5. Require the approver to confirm: approver identity, approver role, and explicit acknowledgment that the listed artifact hashes will be frozen and immutable for all downstream stages (cover, compliance, listing, release, and submission). Do not infer or default these values.
 6. Record the freeze via the gate record and artifact freeze command:
    ```
-   python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval grant <project-id> \
+   ${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py approval grant <project-id> \
      --gate interior \
      --approver <id> \
      --approver-role <role> \

@@ -4,13 +4,13 @@ description: >-
   Grant or reject the niche gate against exact niche-assessment and product-brief hashes; on approval transition to PLANNING, on rejection return to NICHE_ASSESSMENT.
 argument-hint: "<project-id>"
 user-invocable: true
-effort: high
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+effort: medium
+model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
   - AskUserQuestion
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-approve-niche
@@ -34,7 +34,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 1. Run `project status <project-id>` and confirm the state is NICHE_APPROVAL.
 2. Run `approval packet <project-id> --gate niche` to retrieve artifacts, hashes, viability scores, risk flags, and open findings.
-3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` (identity/role/decision/scope) and `auto_approve_gates`. Also read `human_action.review_files` and `human_action.next_command` from the packet — these carry the exact files to review and the equivalent manual command.
+3. Read `.claude/config/company.local.json` (falling back to `company.default.json`) to load `default_approver` (identity/role/decision/scope) and `auto_approve_gates`. Resolve the **effective mode for THIS gate (`niche`)**: if `auto_approve_gates` is an object/map, use `auto_approve_gates["niche"]` (default `"false"` if the key is absent); if it is a plain string (legacy), use that string for every gate. Also read `human_action.review_files` and `human_action.next_command` from the packet — these carry the exact files to review and the equivalent manual command.
 4. Present the **gate card** to the approver:
 
    ```
@@ -60,9 +60,11 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
      brief/product-brief.md         — approved product brief
    ```
 
-6. Determine the approval action based on `auto_approve_gates`:
-   - **`"silent"`** — record approval immediately using `default_approver` values; skip the prompt; show "Approved as <identity> (<role>)."
-   - **`"auto"` / `"false"` (default)** — display the gate card and the review-files list, then collect the decision interactively (step 7). Under `"false"`, `default_approver` is shown as the pre-filled default the approver may override.
+6. Act on the **resolved effective mode** (from step 3):
+   - **`"silent"`** — record approval immediately using `default_approver` values; skip the prompt; show "Approved as <identity> (<role>)." and the review-files list.
+   - **`"auto"`** — display the gate card and the review-files list, then a single `AskUserQuestion` confirm (Approve recommended / Reject / Customize).
+   - **`"false"`** — display the gate card and the review-files list, then collect the decision interactively (step 7). `default_approver` is shown as the pre-filled default the approver may override.
+   - **Safety override (applies to every mode):** if the packet's `ready_for_human_review` is false, or any open blocker or major finding exists, do NOT auto-approve regardless of mode — fall through to the interactive path (step 7) and name the top risk. Never treat `not-run` as `pass`.
 
 7. **Interactive decision** (skip entirely in `silent` mode). List the `review_files` (relative paths) inline so the human knows what to open, then call **`AskUserQuestion`**:
    - Question: "Approve the niche gate for <working_title>?"
@@ -75,7 +77,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 8. Record the gate decision:
    ```
-   python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval grant <project-id> \
+   ${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py approval grant <project-id> \
      --gate niche \
      --approver <identity> \
      --approver-role <role> \

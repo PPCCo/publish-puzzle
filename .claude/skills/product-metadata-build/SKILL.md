@@ -12,7 +12,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-metadata-build
@@ -35,18 +35,17 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 ## Specialist delegation
 
 Use these agents only for bounded assignments with exact input hashes, output paths, and acceptance tests:
-- `metadata-specialist`
-- `keyword-strategist`
+- `commercial-writer`
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the artifact inventory is complete and hashes are current.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact list <id>` to confirm the verified page count, puzzle/item count, difficulty distribution, and page size from the registered interior artifact; use only these verified counts in metadata — do not use planned or estimated values.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the artifact inventory is complete and hashes are current.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact list <id>` to confirm the verified page count, puzzle/item count, difficulty distribution, and page size from the registered interior artifact; use only these verified counts in metadata — do not use planned or estimated values.
 3. Draft product title, subtitle, and description using only claims supported by the artifact: puzzle type, count, difficulty labels (only those confirmed by verification), target audience, and page size.
 4. Include truthful AI-disclosure language as required by the project plan and applicable channel policy; do not invent, minimize, or omit disclosure.
 5. Do not include misleading marketing claims (e.g., "hundreds of puzzles" if the verified count is lower, "expert difficulty" if difficulty verification did not pass for all expert-labeled items).
-6. Delegate keyword research and channel-specific category selection to `keyword-strategist` with a confirmed attribute summary; delegate metadata schema validation to `metadata-specialist`.
-7. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py audit metadata --project-id <id>` to validate the drafted metadata against channel rules (title length, description length, keyword count limits, required fields, prohibited terms).
+6. Delegate keyword research, channel-specific category selection, and metadata schema validation to `commercial-writer` with a confirmed attribute summary.
+7. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py audit metadata --project-id <id>` to validate the drafted metadata against channel rules (title length, description length, keyword count limits, required fields, prohibited terms).
 8. Resolve all validation errors; treat WARNING-level items as findings requiring a decision, not silent acceptance.
 9. Register the final metadata artifact with its hash; the metadata artifact must reference the interior and cover artifact hashes it describes.
 10. Do not set a price, publish, or submit the listing; record the metadata artifact as ready for the listing-kit or submission workflow.

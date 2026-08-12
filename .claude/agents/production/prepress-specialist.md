@@ -2,7 +2,7 @@
 name: prepress-specialist
 description: >-
   Prepares print-ready and print-at-home files from the approved interior layout and cover: trim, bleed, margins, DPI, colour mode, PDF/X compliance where relevant, and US Letter/A4 for printables; produces a proof record.
-effort: high
+effort: medium
 model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60

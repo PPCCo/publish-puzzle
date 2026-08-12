@@ -5,7 +5,7 @@ description: >-
 argument-hint: "<project-id>"
 user-invocable: true
 effort: high
-model: '@bedrock-eus2/us.anthropic.claude-opus-4-8'
+model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 allowed-tools:
   - Read
   - Grep
@@ -13,7 +13,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-analytics
@@ -40,7 +40,7 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` to confirm the product is in a post-release state and identify all registered performance data files and their hashes.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` to confirm the product is in a post-release state and identify all registered performance data files and their hashes.
 2. Delegate to `performance-analyst` to validate the data before any computation: check period boundaries, timezone consistency, currency normalization, granularity (daily/weekly/monthly), duplicate rows, missingness, and channel-specific metric definitions (e.g., KDP KENP pages read vs. unit sales, Etsy views vs. visits, Gumroad conversions). Flag any data-quality issue as a finding before proceeding.
 3. Annotate the dataset with known external events: product launch date, price change dates, promotional campaigns, platform algorithm updates, and seasonal patterns relevant to the product niche (puzzles, coloring, journaling, printables). These annotations inform interpretation; they do not establish causation.
 4. Delegate to `performance-analyst` to compute transparent descriptive metrics: units sold per period, revenue per period, conversion rate (views to purchases), return/refund rate, average review score and review velocity. Apply uncertainty appropriate to sample size — label each metric's confidence as HIGH (>90 data points), MEDIUM (20–90 data points), or LOW (<20 data points). Do not extrapolate trends from LOW-confidence windows.

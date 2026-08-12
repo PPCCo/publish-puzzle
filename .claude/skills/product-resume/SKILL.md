@@ -11,7 +11,7 @@ allowed-tools:
   - Grep
   - Glob
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-resume
@@ -31,12 +31,12 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` to get the authoritative lifecycle state.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project plan $ARGUMENTS` to get the deterministic next-action recommendation.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` to get the authoritative lifecycle state.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project plan $ARGUMENTS` to get the deterministic next-action recommendation.
 3. Read `projects/<id>/project.yaml` for product type, audience, formats, channels, and engine-derived design policy (trim size, colour policy, visual density, pedagogy).
 4. Read `projects/<id>/state.json` for current state, completed transitions, and recorded artifact hashes.
 5. Glob `projects/<id>/findings/` and `projects/<id>/approvals/` to identify open findings and recorded human gate approvals.
-6. Read the most recent entries in the event log (`python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py event tail $ARGUMENTS`) to understand what was last executed.
+6. Read the most recent entries in the event log (`${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py event tail $ARGUMENTS`) to understand what was last executed.
 7. Detect repository/state divergence: verify on-disk artifact hashes against recorded hashes; flag any mismatch before recommending work.
 8. Summarize: what is complete and authoritative, what gate approvals are recorded, what open findings remain, and what the next bounded action is.
 9. Do not replay completed stages unless they are explicitly invalidated by a hash mismatch or the human requests a redo.

@@ -10,7 +10,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-new
@@ -48,7 +48,7 @@ Run these steps first when the invocation is a bare `<category> <PRODUCT_ID>` pa
 continue into the standard Procedure at step 2. **Perform no research in this skill** —
 the pipeline was built by `/research`.
 
-- **A0.** Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py research show <category> --product-id <PRODUCT_ID>`.
+- **A0.** Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py research show <category> --product-id <PRODUCT_ID>`.
   - If it returns `not-found`: STOP and list the available `available_ids`; suggest
     `/research --status "<category>"` or picking a listed ID.
   - If the entry `status` is already `promoted`: STOP and point to the existing project
@@ -60,7 +60,7 @@ the pipeline was built by `/research`.
   narrower than the `project init` enum (`activity-book`→`puzzle-book`,
   `workbook`/`planner`→`guided-journal`) map to the nearest valid init type and the
   original intent is recorded in the intake note.
-- **A2.** After `project init` (standard Procedure step 2) and the intake note (step 5),
+- **A2.** After `project init` (standard Procedure step 2) and the intake note (step 6),
   write a **"Pipeline-sourced context (advisory — not human-committed craft values)"**
   block into the intake note capturing the entry's `difficulty`, `cover_style`,
   `interior_style_notes`, `seo`, `positioning`, `series_grouping`, `evidence_refs`, and
@@ -75,11 +75,12 @@ the pipeline was built by `/research`.
 ## Procedure
 
 1. Parse `$ARGUMENTS` without inventing missing human decisions. The human supplies the topic, audience band, product type, and formats — do not substitute defaults for these human-input points. (Pipeline-sourced form: these values come from the pipeline entry via Procedure A, which is still human-input data — no research is done in this skill.)
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project init --topic <t> --audience <a> --product-type <pt> --formats <f> [--project-id <id>] [--working-title <wt>]` using the exact values from `$ARGUMENTS`.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project init --topic <t> --audience <a> --product-type <pt> --formats <f> [--project-id <id>] [--working-title <wt>]` using the exact values from `$ARGUMENTS`.
 3. Read the created `project.yaml` and `state.json`. Surface the engine-derived design policy written under the `production` and `design` blocks: trim size, colour interior flag, colour policy, line-art density, age-appropriate content constraints, reading level, visual density, and pedagogy. Report these derived values explicitly — they are determined deterministically by the design-policy engine from `audience` + `product_type` + age band; no human picks them per product.
 4. Confirm the assigned project ID follows the pattern `clr-YYYY-slug` and the initial lifecycle state is `DISCOVERY`.
-5. Create a concise intake note under `projects/<id>/notes/intake.md` listing: supplied arguments; engine-derived design policy with its recorded rationale and source; the six human gate points (niche approval, interior approval, cover approval, compliance approval, listing approval, release approval); decisions still required from the human; and the next valid command.
-6. Register the intake note as an artifact if it is non-template.
+5. Note the `production.legal_defaults` block that `project init` copied from company config (AI-disclosure text, rights posture, originality-attestation template, release-scope defaults, child-safety policy). These are the pre-filled legal/rights posture the human will confirm — as *deltas* only — at the compliance and release gates; they are DEFAULTS, not clearances (`default_asset_rights_status` stays `unknown-blocks-release`). The owner MAY edit them per project in `project.yaml`.
+6. Create a concise intake note under `projects/<id>/notes/intake.md` listing: supplied arguments; engine-derived design policy with its recorded rationale and source; the six human gate points (niche approval, interior approval, cover approval, compliance approval, listing approval, release approval); a one-line pointer to the seeded `production.legal_defaults` (so the human knows legal/rights posture is pre-filled and where to edit it); decisions still required from the human; and the next valid command.
+7. Register the intake note as an artifact if it is non-template.
 
 ## Required outputs
 

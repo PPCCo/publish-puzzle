@@ -2,7 +2,7 @@
 name: difficulty-curator
 description: >-
   Ensures that labeled difficulty matches measured difficulty across a generated batch and that the progression is monotonic and appropriate for the target audience band; flags and reports all mislabeled items.
-effort: high
+effort: medium
 model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 45
@@ -56,7 +56,7 @@ All material outputs must identify the project, source artifact hashes, creator 
 5. Flag a puzzle as `mislabeled` if the declared label and the measured label do not match; record severity as `major` for a two-or-more step mislabeling and `minor` for a one-step mislabeling.
 6. Aggregate per section: compute the median and distribution of measured difficulty labels; compare to the approved progression type from `content-plan.yaml`.
 7. Flag a section as `progression-fail` if the measured label sequence violates the required curve; flag as `progression-warn` if a single puzzle breaks the curve but the overall trend is correct.
-8. Run `python3 .claude/scripts/ph_cli.py verify-difficulty --project <id> --report <report-path>` if the script is available; capture its output and include it in the curation report as independent code evidence; do not override the script output with manual judgement.
+8. Run `.venv/bin/python3 .claude/scripts/ph_cli.py verify-difficulty --project <id> --report <report-path>` if the script is available; capture its output and include it in the curation report as independent code evidence; do not override the script output with manual judgement.
 9. Write `difficulty-curation-report.yaml` and `difficulty-curation-summary.md`; register both artifacts.
 10. Do not modify, regenerate, or relabel any puzzle; only report findings and recommend the remediation path (e.g., regenerate with adjusted parameters, relabel with justified threshold override, or escalate for human decision).
 

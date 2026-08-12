@@ -23,7 +23,51 @@
     "listing": 1,
     "release": 2
   },
+  "auto_approve_gates": {
+    "niche": "silent",
+    "interior": "silent",
+    "cover": "silent",
+    "listing": "silent",
+    "compliance": "auto",
+    "release": "false"
+  },
+  "default_approver": {
+    "identity": "PPC",
+    "role": "publisher",
+    "decision": "APPROVED",
+    "scope": "reviewed and accepted the content"
+  },
+  "legal_defaults": {
+    "ai_disclosure": "This book's puzzles and layout were generated and verified by software; cover and interior art are original works. No AI-generated text is presented as human authorship.",
+    "rights_posture": {
+      "line_art": "original-only",
+      "fonts": "licensed-for-commercial-embedding",
+      "puzzle_word_lists": "original-or-public-domain",
+      "default_asset_rights_status": "unknown-blocks-release"
+    },
+    "originality_attestation_template": "Original work created via deterministic code generation and original illustration; no protected reference was traced or closely derived; no living artist imitated by name or style.",
+    "release_scope_defaults": {
+      "territories": [
+        "US"
+      ],
+      "channels": [
+        "kdp",
+        "etsy"
+      ],
+      "permitted_operations": [
+        "prepare-package",
+        "dry-run"
+      ],
+      "maximum_external_spend": 0.0,
+      "currency": "USD"
+    },
+    "child_safety_policy": {
+      "kids-4-8": "friendly/familiar imagery only; no scary/dark/ambiguous-threat; large cells+type; forgiving difficulty",
+      "kids-6-10": "positive imagery; modest progression; no violence/sexualisation/disturbing themes",
+      "tween-8-12": "no horror/graphic-violence/age-inappropriate social themes; school/family safe"
+    }
+  },
   "physical_proof_required_for_print": true,
   "external_writes_enabled": false,
-  "notes": "Copy to company.local.json and complete before production. human_gates sets the number of distinct approvers each gate requires; release requires two by default."
+  "notes": "Copy to company.local.json and complete before production. human_gates sets the number of distinct approvers each gate requires; release requires two by default. auto_approve_gates is a per-gate map: 'silent' records with default_approver and no prompt; 'auto' shows a card + one-tap confirm; 'false' collects a full interactive decision. A legacy single-string value (false|auto|silent) is still accepted and applies to every gate. Safety overrides always fall through to interactive when evidence is not PASS or a blocker/major finding is open; compliance and release remain human-decided. legal_defaults holds company-wide legal/rights posture (AI-disclosure text, rights posture, originality-attestation template, release-scope defaults, child-safety policy); it is copied into each new project's project.yaml under production.legal_defaults at init so the human confirms only deltas at the compliance and release gates. These are DEFAULTS, not clearances: default_asset_rights_status 'unknown-blocks-release' preserves the rule that clearance is never inferred from missing evidence."
 }

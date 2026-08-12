@@ -12,7 +12,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-build-cover
@@ -40,15 +40,15 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the interior page count is final; do not calculate spine width from an estimated count.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py build cover --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the interior page count is final; do not calculate spine width from an estimated count.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py build cover --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
 3. Calculate spine width using the confirmed page count and declared paper stock thickness formula from the channel print specification; record the formula, inputs, and result in the build log.
 4. Confirm the full cover wrap (front, spine, back) meets the declared trim size and bleed (typically 0.125 in / 3 mm on all outer edges) with no live content inside the safety margin.
 5. Confirm the cover art and title typography are readable at the channel's minimum thumbnail dimensions (e.g., 160 × 160 px equivalent); flag illegible spine text at narrow spine widths as a major finding.
 6. Confirm color mode matches channel requirements (CMYK for offset print, RGB/sRGB for digital channels) and that art DPI meets the 300 DPI minimum for print.
 7. Confirm AI-disclosure language required by the project plan is present on the cover or copyright page text, accurately reflecting the content generation method.
 8. Delegate cover-art quality and brand-consistency review to `art-director`; delegate typography and legibility review to `cover-designer`.
-9. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact register` to register the cover PDF with its hash.
+9. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact register` to register the cover PDF with its hash.
 10. Queue preflight via `/product-build-proof`.
 
 ## Required outputs

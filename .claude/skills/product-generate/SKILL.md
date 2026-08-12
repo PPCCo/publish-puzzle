@@ -12,7 +12,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-generate
@@ -42,13 +42,13 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the stage permits generation.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project plan $ARGUMENTS` to confirm type, count, difficulty, and audience targets.
-3. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py generate --project-id <id> --type <content-type> --count <n> --difficulty <d> [--seed <s>]` with all arguments resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the stage permits generation.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project plan $ARGUMENTS` to confirm type, count, difficulty, and audience targets.
+3. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py generate --project-id <id> --type <content-type> --count <n> --difficulty <d> [--seed <s>]` with all arguments resolved from `$ARGUMENTS`.
 4. Record the seed (auto-assigned or caller-supplied), generator version, content type, difficulty label, and timestamp in a provenance record alongside the artifact.
 5. For coloring line art: confirm the origination flag is set to `original`; reject any asset flagged as traced or sourced from a third-party reference image.
 6. For printables: confirm page size (US Letter or A4) and DPI meet configured minimums before registration.
-7. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact register` to register the generated artifact with its hash.
+7. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact register` to register the generated artifact with its hash.
 8. Do not assert solvability, uniqueness, or difficulty accuracy; queue independent verification via `/product-verify`.
 9. Delegate bounded sub-generation tasks to specialist agents where content type warrants it; each delegation must include exact output path, content schema, and acceptance test.
 

@@ -9,7 +9,7 @@ model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-status
@@ -29,7 +29,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS`.
 2. Do not infer completion from file presence alone; read the `state.json` lifecycle state authoritatively.
 3. Highlight stale approvals, hash mismatches between recorded and on-disk artifact hashes, and any open blockers in a dedicated section.
 4. Report each of the six human gate results (niche, interior, cover, compliance, listing, release) as PASS, FAIL, PENDING, or NOT-RUN — never treat NOT-RUN as PASS.

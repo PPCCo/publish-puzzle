@@ -12,7 +12,7 @@ export const meta = {
 const input = args ?? {}
 const projectId = input.projectId
 const batches = input.batches ?? []
-const cli = 'python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py'
+const cli = '${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py'
 
 if (!projectId || batches.length === 0) {
   return 'ERROR: content-generation-fanout requires args.projectId and a non-empty args.batches array'
@@ -52,7 +52,7 @@ Report, per item: solvability, uniqueness of solution where applicable, answer-k
     label: `verify-${gen.contentType}`,
     phase: 'Verify',
     model: '@bedrock-eus1/us.anthropic.claude-sonnet-5',
-    effort: 'xhigh',
+    effort: 'medium',
     schema: {
       type: 'object',
       required: ['contentType', 'decision', 'results'],

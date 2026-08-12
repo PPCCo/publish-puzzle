@@ -1,6 +1,15 @@
 # Human approval
 
-- A human MUST decide every gate. The decision MAY be collected two ways, both valid:
+- A human MUST decide the **compliance** and **release** gates. The craft/quality gates
+  (niche, interior, cover, listing) MAY be auto-approved by the configured
+  `auto_approve_gates` policy when their deterministic gate evidence PASSes and no blocker
+  or major finding is open; the human keeps override and reviews the final product.
+  Auto-approvals are recorded with the configured default approver identity and remain
+  fully auditable in `events.ndjson`. A safety override (evidence not PASS, open
+  blocker/major, unresolved rights or child-safety concern) always forces the interactive
+  path, regardless of policy.
+- For every gate that a human decides (compliance, release, or any gate whose resolved mode
+  is `false`), the decision MAY be collected two ways, both valid:
   - **Interactively in-session** — the assistant presents the gate (scope, exact
     artifact hashes, open findings, risks) and offers the choices via `AskUserQuestion`
     with a Recommended option where applicable, then records the human's selection on

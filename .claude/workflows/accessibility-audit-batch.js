@@ -1,50 +1,57 @@
 export const meta = {
   name: 'accessibility-audit-batch',
-  description: 'Independently audit accessibility, contrast, legibility, large-print fit, and alt-text/decorative designation across artifacts in parallel and synthesize a deduplicated finding register',
+  description: 'Independently audit accessibility, contrast, legibility, large-print fit, and alt-text/decorative designation across all lenses in a single pass over the deterministic audit, returning a deduplicated finding register',
   phases: [
-    { title: 'Audit', detail: 'per-lens accessibility checks', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5' },
-    { title: 'Synthesis', detail: 'deduplicated finding register', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8' },
+    { title: 'Audit', detail: 'single accessibility audit covering all lenses (code runs once)', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5' },
   ],
 }
 
 // args: { projectId, targets?: string[], context? }
 const input = args ?? {}
 const projectId = input.projectId
-const cli = 'python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py'
+const cli = '${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py'
 
 if (!projectId) {
   return 'ERROR: accessibility-audit-batch requires args.projectId'
 }
 
-const targets = input.targets ?? [
+// The four lenses all read the SAME deterministic `audit accessibility` result and the
+// same design policy, so fanning them into separate agents re-ran identical work. One
+// auditor now covers every lens after the code runs once; it MUST still return a
+// per-lens decision + evidence so the finding register keeps per-lens granularity.
+const lenses = input.targets ?? [
   'grid, cell, and rule contrast and legibility at target trim',
   'type size, font, and large-print/senior band conformance',
   'alt text or documented decorative designation for cover and interior art',
   'digital printable DPI and print-at-home page size (US Letter / A4)',
 ]
 
-// FAN-OUT: independent accessibility lenses. Reviewers do not repair.
-const audits = await pipeline(targets, target =>
-  agent(`Act as the independent accessibility-auditor for project ${projectId}, focused on: ${target}. Run the deterministic accessibility audit for evidence:
+return await agent(`Act as the independent accessibility-auditor for project ${projectId}. Run the deterministic accessibility audit ONCE for evidence:
 ${cli} audit accessibility ${projectId}
-Read the resolved design policy and age band. Do NOT edit any artifact. Return decision PASS/WARNING/FAIL for this lens with exact per-artifact evidence and the required correction. Treat not-run as fail.`, {
-    label: target,
-    phase: 'Audit',
-    model: '@bedrock-eus1/us.anthropic.claude-sonnet-5',
-    effort: 'high',
-    schema: {
-      type: 'object',
-      required: ['lens', 'decision', 'findings'],
-      properties: {
-        lens: { type: 'string' },
-        decision: { enum: ['PASS', 'WARNING', 'FAIL'] },
-        findings: { type: 'array', items: { type: 'object' } },
+Then evaluate EVERY lens below against that evidence and the resolved design policy + age band. Do NOT edit any artifact. Emit a SEPARATE decision (PASS/WARNING/FAIL) and per-artifact evidence for EACH lens; do not collapse them. Treat not-run as fail. Merge into one deduplicated finding register and repair sequence: any FAIL blocks the compliance gate; state which repaired artifacts require re-audit by code. Do not grant the compliance gate — this workflow reports, it does not approve.
+LENSES=${JSON.stringify(lenses)}`, {
+  label: 'accessibility-audit-all-lenses',
+  phase: 'Audit',
+  model: '@bedrock-eus1/us.anthropic.claude-sonnet-5',
+  effort: 'high',
+  schema: {
+    type: 'object',
+    required: ['decision', 'lensResults', 'findings'],
+    properties: {
+      decision: { enum: ['PASS', 'WARNING', 'FAIL'] },
+      lensResults: {
+        type: 'array',
+        items: {
+          type: 'object',
+          required: ['lens', 'decision'],
+          properties: {
+            lens: { type: 'string' },
+            decision: { enum: ['PASS', 'WARNING', 'FAIL'] },
+            evidence: { type: 'string' },
+          },
+        },
       },
+      findings: { type: 'array', items: { type: 'object' } },
     },
-  }),
-)
-
-// FAN-IN: accessibility-auditor synthesis. Gate must PASS/WARNING before compliance;
-// this workflow reports, it does not grant the compliance gate.
-return await agent(`Act as the accessibility-auditor lead. Merge these independent accessibility audits for project ${projectId} into one deduplicated finding register and repair sequence. Any FAIL blocks the compliance gate; preserve each lens's exact evidence. State which repaired artifacts require re-audit by code. Do not edit artifacts and do not grant the compliance gate.
-${JSON.stringify(audits)}`, { label: 'accessibility-synthesis', phase: 'Synthesis', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8', effort: 'xhigh' })
+  },
+})

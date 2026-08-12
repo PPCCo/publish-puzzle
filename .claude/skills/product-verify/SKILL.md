@@ -11,9 +11,8 @@ allowed-tools:
   - Grep
   - Glob
   - Bash
-  - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-verify
@@ -32,25 +31,17 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 - Provenance record confirms seed, generator version, and content type.
 - Verification has not already been run against the current artifact hash.
 
-## Specialist delegation
-
-Use these agents only for bounded assignments with exact input hashes, output paths, and acceptance tests:
-- `content-verifier`
-- `solvability-checker`
-- `difficulty-curator`
-
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the artifact hash matches the registered generation output.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py verify --project-id <id> [--type <content-type>]` with all arguments resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the artifact hash matches the registered generation output.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py verify --project-id <id> [--type <content-type>]` with all arguments resolved from `$ARGUMENTS`.
 3. Treat the script decision (PASS / FAIL / WARNING) as authoritative for each check dimension; do not override a FAIL with reasoning.
 4. Confirm each check dimension was executed; record any `not-run` dimension explicitly as FAIL for gate purposes.
 5. For puzzles: confirm uniqueness (no duplicate grids or clue sets within the artifact), solvability (every puzzle has at least one valid solution), solution correctness (answer key matches all valid solutions), and difficulty accuracy (measured difficulty metric matches the labeled tier).
 6. For journal prompts: confirm uniqueness (no repeated prompt text), audience fit (language and theme match declared age/audience), and absence of unsafe or distressing content for the target audience.
 7. For printables: confirm page-size compliance (US Letter or A4), DPI minimum, and that answer keys are grouped in a back-only section when applicable.
 8. Record per-item verification results with item IDs, check dimension, result, and evidence; do not edit or regenerate any content item.
-9. Delegate deep solvability analysis to `solvability-checker` and difficulty calibration review to `difficulty-curator` with exact artifact hash and item ID range.
-10. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact list <id>` to confirm the verification record is linked to the correct artifact.
+9. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact list <id>` to confirm the verification record is linked to the correct artifact.
 
 ## Required outputs
 

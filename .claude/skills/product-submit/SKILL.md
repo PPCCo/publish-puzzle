@@ -10,7 +10,7 @@ model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-submit
@@ -42,7 +42,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
    a. Require the human to supply externally obtained evidence: platform submission ID, submission timestamp, status, and optionally a screenshot path or confirmation reference. Do not invent these values.
    b. Record the outcome only from the evidence provided:
       ```
-      python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py submission record <project-id> \
+      ${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py submission record <project-id> \
         --channel <channel> \
         --status <submitted|accepted|published|rejected|withdrawn|unknown> \
         [additional evidence flags as available]

@@ -7,7 +7,7 @@ This guide is for the human publisher operating the puzzle/printable publishing 
 ```bash
 cp .claude/settings.local.example.json .claude/settings.local.json
 python3 -m venv .venv && . .venv/bin/activate
-python -m pip install -e '.[dev,mcp]'
+.venv/bin/python -m pip install -e '.[dev,mcp]'
 python3 .claude/scripts/ph_cli.py doctor
 python3 .claude/scripts/ph_cli.py framework validate
 ```
@@ -22,19 +22,30 @@ confirms the agent/skill/workflow/schema inventory and safety settings.
 3. `/product-run <id> --until human-gate --max-stages 3` to advance validated non-gate stages.
 4. Inspect the prepared gate packet, then run the matching human-only approval skill.
 
-## 3. The six human gates
+## 3. The six gates
 
-| Gate | Skill | What you are approving |
-|---|---|---|
-| Niche | `/product-approve-niche` | The niche is worth producing; evidence is dated |
-| Interior | `/product-approve-interior` | Code-verified content batches; freezes them by hash |
-| Cover | `/product-approve-cover` | Original line art / cover design |
-| Compliance | `/product-approve-compliance` | Accessibility, rights, child-safety, AI disclosure |
-| Listing | `/product-approve-listing` | Metadata and channel listings |
-| Release | `/product-release-authorize` | Final packages; requires two approvers |
+There are six gate checkpoints. A human MUST decide **compliance** and **release**. The
+craft/quality gates (**niche, interior, cover, listing**) MAY be auto-approved by the
+configured `auto_approve_gates` policy when their deterministic gate evidence PASSes and
+no blocker or major finding is open; you keep override and review the final product.
+Auto-approvals are recorded with the configured default approver and remain fully
+auditable in `events.ndjson`. Any safety override (evidence not PASS, an open
+blocker/major, or a rights/child-safety concern) forces the interactive human path
+regardless of policy.
 
-Each gate binds to exact artifact hashes. Approvals are invalidated automatically when
-an input hash changes.
+| Gate | Decision | Skill | What is approved |
+|---|---|---|---|
+| Niche | auto-approvable | `/product-approve-niche` | The niche is worth producing; evidence is dated |
+| Interior | auto-approvable | `/product-approve-interior` | Code-verified content batches; freezes them by hash |
+| Cover | auto-approvable | `/product-approve-cover` | Original line art / cover design |
+| Compliance | **human** | `/product-approve-compliance` | Accessibility, rights, child-safety, AI disclosure |
+| Listing | auto-approvable | `/product-approve-listing` | Metadata and channel listings |
+| Release | **human** (two approvers) | `/product-release-authorize` | Final packages |
+
+Each gate binds to exact **source** artifact hashes (the content/design/metadata it
+approves). Approvals are invalidated automatically when a bound source hash changes;
+re-rendering a downstream build output (interior/cover PDF, channel package) from an
+unchanged approved source does NOT invalidate the approval.
 
 ## 4. Reading a gate packet
 

@@ -11,9 +11,8 @@ allowed-tools:
   - Grep
   - Glob
   - Bash
-  - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-gate-packet
@@ -33,18 +32,12 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 - All artifacts that feed into the gate are registered in the project event log (stale or missing artifacts are a blocking finding, not a silent skip).
 - No prior gate packet for the same gate and artifact set is already awaiting human decision (duplicate packet prevention).
 
-## Specialist delegation
-
-Use these agents only for bounded assignments with exact input hashes, output paths, and acceptance tests:
-- `human-collaboration-facilitator`
-- `quality-lead`
-
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` to confirm current project state and identify any hash mismatches or stale approvals before packet assembly.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py approval packet <id> --gate <gate>` to generate the structured gate packet from the current event log.
-3. Delegate to `quality-lead` to verify that every artifact listed in the packet carries a current hash and that all preceding gate results referenced are themselves non-stale.
-4. Delegate to `human-collaboration-facilitator` to format the packet for human review: present the gate scope (what is being decided), the set of active-artifact hashes under review, all prior gate report decisions relevant to this gate, every open finding with severity and owner, any approvals that have been invalidated by subsequent artifact changes, the required-approver count and role, and the explicit decision options available to the approver (APPROVE / REJECT / REQUEST CHANGES).
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` to confirm current project state and identify any hash mismatches or stale approvals before packet assembly.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py approval packet <id> --gate <gate>` to generate the structured gate packet from the current event log. This command is authoritative for the packet contents, hash freshness, and required-approver count.
+3. Confirm against the packet that every listed artifact carries a current hash and that all preceding gate results it references are non-stale; any stale or missing hash is a blocking finding, not a silent skip.
+4. Format the packet for human review inline (do not delegate): present the gate scope (what is being decided), the set of active-artifact hashes under review, all prior gate report decisions relevant to this gate, every open finding with severity and owner, any approvals that have been invalidated by subsequent artifact changes, the required-approver count and role, and the explicit decision options available to the approver (APPROVE / REJECT / REQUEST CHANGES).
 5. Record prominently that this skill grants no approval, makes no gate decision, and takes no action on behalf of any human approver. The packet is read-only input to a human decision process.
 6. Write the assembled packet to `approvals/gate-packet-<gate>-<timestamp>.yaml` and record its hash in the project event log.
 7. Emit the event `gate_packet_prepared` with gate name, packet hash, and required-approver count. Do not emit `gate_approved` or any approval event.

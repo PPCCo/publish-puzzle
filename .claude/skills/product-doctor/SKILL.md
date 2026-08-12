@@ -9,7 +9,7 @@ model: '@bedrock-eus1/us.anthropic.claude-haiku-4-5-20251001-v1:0'
 allowed-tools:
   - Read
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
   - WebSearch
   - WebFetch
 ---
@@ -31,8 +31,8 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py doctor $ARGUMENTS`.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py framework validate`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py doctor $ARGUMENTS`.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py framework validate`.
 3. Report required failures (Python version, schema files, CLI availability, model pin) separately from optional-tool warnings (PDF renderers, image processors, barcode generators, KDP/Etsy/Gumroad CLI tools).
 4. Do not mark a missing optional production tool (e.g., a PDF compositor or line-art renderer) as a passed validation; report it as an optional-tool warning with its release impact.
 5. Do not make any changes to configuration, dependencies, or framework files during this check.
@@ -45,7 +45,7 @@ reads it to avoid wasting turns. All network happens through the reviewed
 `ph_cli.py fetch` path (the quarantined `net/fetch.py`) or the `web_search` tool —
 never loose `curl`.
 
-6. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py doctor --probe-plan` to get the ordered per-source tier plan.
+6. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py doctor --probe-plan` to get the ordered per-source tier plan.
 7. **Tier 1 (web_search tool):** make ONE cheap `WebSearch` (e.g. "large print sudoku 2026"). If it returns results, set `web_search_available: "true"`; if it fails/blocks, set `"false"`.
 8. **Tier 2 (HTTP fetcher):** run `ph_cli.py fetch --allow-net search "large print sudoku"` and `ph_cli.py fetch --allow-net get https://www.kdpeasy.com/`. If either returns `status: 200` (not `disabled`), set `http_fetch_available: "true"`.
 9. **Tier 3 (headless browser):** run `ph_cli.py fetch --allow-net probe amazon`. Read `best_tier`/`browser_available` to set `browser_available` for the manifest.

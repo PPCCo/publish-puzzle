@@ -25,7 +25,7 @@ originality, or successful build unless the corresponding script or evidence con
 For project work:
 
 1. Resolve the project ID from the user or active context.
-2. Run `python3 .claude/scripts/ph_cli.py project status <id>`.
+2. Run `.venv/bin/python3 .claude/scripts/ph_cli.py project status <id>`.
 3. Read `project.yaml`, `state.json`, unresolved findings, current approvals, and the artifact manifest.
 4. Run `project plan <id>` to see the deterministic next action.
 5. State the intended agents, outputs, and gate before work begins.
@@ -110,11 +110,18 @@ The base framework prepares packages; it does not publish autonomously. Never:
 - create accounts;
 - expose secrets or unpublished content to unapproved services.
 
-Release requires an exact-hash human authorization. A human must *decide* every gate —
-either interactively in-session (the assistant presents the options via `AskUserQuestion`
-and records the choice) or by invoking the approval command directly; both bind the exact
-artifact hashes. Direct external writes remain disabled unless a separately reviewed
-connector explicitly enables them.
+Release requires an exact-hash human authorization. A human MUST *decide* the
+**compliance** and **release** gates. The craft/quality gates (niche, interior, cover,
+listing) MAY be auto-approved by the configured `auto_approve_gates` policy when their
+deterministic gate evidence PASSes and no blocker or major finding is open; the human
+retains override and reviews the final product. A human decision (compliance, release, or
+any gate whose resolved mode is `false`) is recorded either interactively in-session (the
+assistant presents the options via `AskUserQuestion` and records the choice) or by invoking
+the approval command directly; both bind the exact artifact hashes. Auto-approvals are
+recorded with the configured default approver identity and remain fully auditable in
+`events.ndjson`. Any safety override (evidence not PASS, open blocker/major, rights or
+child-safety concern) forces the interactive path regardless of policy. Direct external
+writes remain disabled unless a separately reviewed connector explicitly enables them.
 
 ## 12. Completion response
 

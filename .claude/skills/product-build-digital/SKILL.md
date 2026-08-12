@@ -12,7 +12,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-build-digital
@@ -40,8 +40,8 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm content hash matches the approved artifact.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py build digital --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm content hash matches the approved artifact.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py build digital --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
 3. Confirm every page in the bundle targets the declared page size (US Letter: 8.5 × 11 in; A4: 210 × 297 mm); flag any page with a mismatched size as a blocker.
 4. Confirm all raster art (coloring line art, puzzle grids, decorative frames) is embedded at 300 DPI minimum; flag any image below 300 DPI as a major finding.
 5. Confirm coloring pages have adequate white space and line weight for print-at-home ink usage; heavy fill areas that would drain ink excessively are a minor finding.
@@ -49,7 +49,7 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 7. Confirm fonts are embedded in the PDF; no subset-only embedding that omits glyphs present in the content.
 8. For linked download pages: confirm all URLs resolve, file sizes are within declared maximums, and download links reference the registered artifact hashes.
 9. Delegate page-spec compliance review to `prepress-specialist` and digital layout quality review to `printable-designer`, each with exact page hash range.
-10. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact register` to register the digital bundle with its hash.
+10. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact register` to register the digital bundle with its hash.
 
 ## Required outputs
 

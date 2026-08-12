@@ -10,7 +10,7 @@ export const meta = {
 // args: { projectId, contentTypes?: string[], context? }
 const input = args ?? {}
 const projectId = input.projectId
-const cli = 'python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py'
+const cli = '${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py'
 
 if (!projectId) {
   return 'ERROR: content-verification-batch requires args.projectId'
@@ -21,17 +21,17 @@ if (contentTypes.length === 0) {
   // Verify all content types at once when none are specified.
   return await agent(`Act as the independent content-verifier for project ${projectId}. Run:
 ${cli} verify ${projectId}
-Report the overall decision and, per content type, solvability, uniqueness of solution where applicable, answer-key correctness, and difficulty-label accuracy. Return failing items with exact evidence. Never edit or regenerate content; treat not-run as fail.`, { label: 'verify-all', phase: 'Verify', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5', effort: 'xhigh' })
+Report the overall decision and, per content type, solvability, uniqueness of solution where applicable, answer-key correctness, and difficulty-label accuracy. Return failing items with exact evidence. Never edit or regenerate content; treat not-run as fail.`, { label: 'verify-all', phase: 'Verify', model: '@bedrock-eus1/us.anthropic.claude-sonnet-5', effort: 'medium' })
 }
 
 const checks = await pipeline(contentTypes, contentType =>
-  agent(`Act as the independent content-verifier and solvability-checker for the "${contentType}" batch in project ${projectId}. Do not trust any generator summary. Run:
+  agent(`Act as the independent content-verifier for the "${contentType}" batch in project ${projectId}. Do not trust any generator summary. Run:
 ${cli} verify ${projectId} --type ${contentType}
 Return the decision (PASS/FAIL) and per-item results for solvability, uniqueness where applicable, answer-key correctness, and difficulty-label accuracy, with exact failing-item evidence. Never edit or regenerate content.`, {
     label: contentType,
     phase: 'Verify',
     model: '@bedrock-eus1/us.anthropic.claude-sonnet-5',
-    effort: 'xhigh',
+    effort: 'medium',
     schema: {
       type: 'object',
       required: ['contentType', 'decision', 'results'],

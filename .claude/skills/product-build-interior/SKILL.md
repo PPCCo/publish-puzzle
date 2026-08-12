@@ -10,9 +10,8 @@ allowed-tools:
   - Read
   - Write
   - Bash
-  - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-build-interior
@@ -32,24 +31,17 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 - Trim size, bleed, margins, paper type, and page-count parity requirement are defined in the project plan.
 - Coloring line art origination is confirmed original.
 
-## Specialist delegation
-
-Use these agents only for bounded assignments with exact input hashes, output paths, and acceptance tests:
-- `layout-engineer`
-- `coloring-line-artist`
-
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm content hash matches the approved artifact.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py build interior --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm content hash matches the approved artifact.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py build interior --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
 3. Confirm the interior PDF is assembled in the correct page order: front matter, content pages (puzzles / coloring pages / journal prompts / printable pages), then answer keys grouped together in a back-only section.
 4. Verify even page count (required for print binding); if the count is odd, add a declared blank page and record it in the build log.
 5. Confirm trim size, bleed (typically 0.125 in / 3 mm), and safety-margin settings match the declared channel print specification.
 6. Confirm all coloring line art pages use the approved line-weight settings and are embedded as vector or high-resolution raster at 300 DPI minimum.
 7. Confirm all puzzle grids, clue sets, and journal prompt pages are paginated correctly with no truncated content.
-8. Delegate coloring line art quality inspection to `coloring-line-artist` with exact page hash range; delegate layout integrity review to `layout-engineer`.
-9. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py artifact register` to register the interior PDF with its hash.
-10. Queue preflight via `/product-build-proof` before final approval.
+8. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py artifact register` to register the interior PDF with its hash.
+9. Queue preflight via `/product-build-proof` before final approval. Coloring line-art quality and layout-integrity inspection belong to the proof/review pass, not a second inspection here.
 
 ## Required outputs
 

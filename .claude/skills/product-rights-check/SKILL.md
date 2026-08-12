@@ -13,7 +13,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-rights-check
@@ -38,8 +38,8 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the artifact inventory is complete.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py rights check --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the artifact inventory is complete.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py rights check --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
 3. Review the rights ledger for every component: generated puzzle/journal/printable content, coloring line art, cover art, fonts, clip art or decorative elements, and any third-party tools or data sources used in generation.
 4. Flag any entry with status `unknown`, `unresolved`, `missing`, or `incompatible`; these are blockers and must not be cleared by assumption.
 5. For coloring line art: confirm the `origination` field is `original` and the artist or generator provenance is documented; any entry without a confirmed origination record is a blocker.

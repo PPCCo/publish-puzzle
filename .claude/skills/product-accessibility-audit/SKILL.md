@@ -13,7 +13,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-accessibility-audit
@@ -38,8 +38,8 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm artifact hashes are current.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py audit accessibility --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm artifact hashes are current.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py audit accessibility --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
 3. Evaluate contrast ratios for all puzzle grids, coloring-page instruction text, journal prompt text, and printable body text against WCAG AA minimums (4.5:1 for normal text, 3:1 for large text and UI components).
 4. Evaluate grid and cell legibility: minimum cell size for sudoku, word search, and crossword grids at declared trim size; minimum font size for clue numbers and labels; line weight sufficient for monochrome printing.
 5. For large-print editions (if declared): verify all body text meets the configured large-print minimum point size and that cell sizes are enlarged proportionally.

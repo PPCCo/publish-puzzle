@@ -13,7 +13,7 @@ allowed-tools:
   - Bash
   - Agent
   - Skill
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-build-proof
@@ -38,8 +38,8 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the interior and cover artifact hashes are current.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py build proof --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` and confirm the interior and cover artifact hashes are current.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py build proof --project-id <id>` with the project ID resolved from `$ARGUMENTS`.
 3. For the interior PDF: verify trim size matches the channel specification; verify bleed extends at least 0.125 in (3 mm) on all exterior pages where bleed is declared; verify all content is within the safety margin; verify even page count.
 4. For the cover PDF: verify the full wrap dimensions (front + spine + back + bleed) match the channel template calculated from the confirmed page count and paper stock; verify no live text or art is within the bleed zone.
 5. Check image resolution: flag any raster image below 300 DPI as a major finding; flag any image below 200 DPI as a blocker.

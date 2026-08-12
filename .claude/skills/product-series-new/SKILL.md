@@ -10,7 +10,7 @@ allowed-tools:
   - Read
   - Write
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-series-new
@@ -33,17 +33,17 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 ## Procedure
 
 1. Parse `$ARGUMENTS`; extract the `--series-id` and `--books-json` (inline JSON array or path to a JSON file) values exactly as provided.
-2. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py series init $ARGUMENTS` to create the series manifest under `series/<series-id>/series.yaml` and initialize volume 1 as its own project.
-3. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py series list` to confirm the series appears in the series registry.
-4. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py series status <series-id>` to confirm the manifest is valid and volume 1 is linked.
+2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py series init $ARGUMENTS` to create the series manifest under `series/<series-id>/series.yaml` and initialize volume 1 as its own project.
+3. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py series list` to confirm the series appears in the series registry.
+4. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py series status <series-id>` to confirm the manifest is valid and volume 1 is linked.
 5. Read the created `series/<series-id>/series.yaml` and the volume-1 `project.yaml` and `state.json`. Surface the engine-derived design policy for volume 1 (trim size, colour policy, line-art density, age-appropriate content constraints, visual density, and pedagogy) exactly as `product-new` does.
 6. Confirm volume 1 carries a `series` back-reference (series_id, position, total_planned, prior_project_ids).
-7. Explain the on-demand model: subsequent volumes are created when the human is ready with `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py series add-book <series-id> --position N`. An existing standalone project can be folded in with `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py series link <series-id> <project-id>`.
+7. Explain the on-demand model: subsequent volumes are created when the human is ready with `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py series add-book <series-id> --position N`. An existing standalone project can be folded in with `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py series link <series-id> <project-id>`.
 8. Emphasize: each volume is a fully independent project. The series manifest links them and provides shared context (shared visual system, recurring characters, terminology, and canon) but does NOT create a series-level niche, interior, cover, compliance, listing, or release gate that bypasses any individual volume's human gates.
 
 ## Sibling context
 
-When working on any volume in the set, read its sibling context with `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py series context <project-id>` before generating content or layout. This returns read-only: what earlier volumes cover, what later volumes will cover, and the shared canon. Never write into a sibling project's files; cite a sibling's frozen artifact by hash if you rely on it.
+When working on any volume in the set, read its sibling context with `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py series context <project-id>` before generating content or layout. This returns read-only: what earlier volumes cover, what later volumes will cover, and the shared canon. Never write into a sibling project's files; cite a sibling's frozen artifact by hash if you rely on it.
 
 ## Required outputs
 

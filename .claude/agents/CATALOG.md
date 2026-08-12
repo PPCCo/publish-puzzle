@@ -15,8 +15,7 @@
 | AGT-011 | `difficulty-curator` | Content | Ensure labeled difficulty matches measured difficulty and the progression fits the audience band. |
 | AGT-012 | `journal-prompt-writer` | Content | Produce original guided-journal, workbook, and planner prompts at the audience reading level and page-space targets. |
 | AGT-013 | `printable-designer` | Content | Design digital printables and templates meeting stated DPI and print-at-home page size. |
-| AGT-014 | `content-verifier` | Content | Independently verify generated content by code: uniqueness, solvability, answer-key correctness, and difficulty accuracy. |
-| AGT-015 | `solvability-checker` | Quality | Prove by code that each puzzle is solvable, unique where required, and that the answer key is correct. |
+| AGT-014 | `content-verifier` | Content | Independently verify generated content by code: solvability, solution uniqueness where required, answer-key correctness, difficulty accuracy, and enumeration completeness (subsumes the former solvability-checker). |
 | AGT-016 | `originality-auditor` | Quality | Identify material similarity risk and strengthen original expression before release. |
 | AGT-017 | `quality-lead` | Quality | Own convergence, enforce revision limits, and verify critical dimensions meet the higher threshold before a gate. |
 | AGT-018 | `child-safety-reviewer` | Quality | Protect younger audiences while preserving challenge, dignity, and value. |
@@ -28,10 +27,8 @@
 | AGT-024 | `accessibility-auditor` | Production | Make each edition perceivable, operable, understandable, and robust; the accessibility gate must PASS or WARNING before compliance. |
 | AGT-025 | `rights-manager` | Rights and Compliance | Prevent release of assets with unknown or incompatible rights and never infer clearance from missing evidence. |
 | AGT-026 | `compliance-officer` | Rights and Compliance | Assemble the compliance-gate evidence across AI-disclosure, accessibility, channel policy, child-safety, and rights. |
-| AGT-027 | `metadata-specialist` | Commercial | Produce accurate, channel-valid product metadata with truthful AI-disclosure. |
-| AGT-028 | `keyword-strategist` | Commercial | Recommend rights-safe, relevant keywords and tags within channel limits. |
+| AGT-027 | `commercial-writer` | Commercial | Draft the full commercial package — canonical/per-channel metadata, rights-safe keywords within channel limits, and honest listing copy — with truthful AI-disclosure (subsumes the former metadata-specialist, keyword-strategist, and listing-copywriter). |
 | AGT-029 | `pricing-strategist` | Commercial | Recommend commercially coherent prices and product ladders while exposing assumptions and uncertainty. |
-| AGT-030 | `listing-copywriter` | Commercial | Write accurate, appealing listing copy that represents the product honestly. |
 | AGT-031 | `packaging-engineer` | Distribution | Turn canonical release artifacts into channel-specific local packages with no network write. |
 | AGT-032 | `release-coordinator` | Distribution | Make releases controlled, reproducible, and auditable; assemble the release packet and local dry-run records. |
 | AGT-033 | `performance-analyst` | Lifecycle | Convert available performance data into honest, actionable learning without fabricating attribution. |

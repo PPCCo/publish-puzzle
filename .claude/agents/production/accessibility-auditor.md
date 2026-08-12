@@ -2,7 +2,7 @@
 name: accessibility-auditor
 description: >-
   Makes each edition perceivable, operable, and understandable: contrast, grid and cell legibility, large-print compliance, meaningful alt text or decorative designation, and printable DPI and page size. Accessibility gate must PASS or WARNING before compliance approval.
-effort: xhigh
+effort: medium
 model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60

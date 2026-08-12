@@ -11,7 +11,7 @@ allowed-tools:
   - Grep
   - Glob
   - Bash
-  - "Bash(python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py *)"
+  - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-standards-refresh
@@ -31,7 +31,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 ## Procedure
 
-1. Run `python3 ${CLAUDE_PROJECT_DIR}/.claude/scripts/ph_cli.py framework validate` to confirm the framework is internally consistent before reading policy files.
+1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py framework validate` to confirm the framework is internally consistent before reading policy files.
 2. Glob `.claude/config/` for all active configuration files; read each one and note its version or last-modified marker.
 3. Glob `.claude/rules/` for all rule files applicable to the product domain (puzzle-book, activity-book, coloring-book, guided-journal, workbook, planner, digital-printable); read each one.
 4. Glob `.claude/standards/` for all standards files covering: content safety (kids-4-8, kids-6-10, tween-8-12, teen-13-17, adult-general, senior-large-print), original-only line-art policy, KDP/Etsy/Gumroad/generic channel requirements, paperback/hardcover/digital-pdf format specifications, and accessibility requirements.

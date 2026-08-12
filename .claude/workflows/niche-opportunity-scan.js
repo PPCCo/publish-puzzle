@@ -8,13 +8,14 @@ export const meta = {
 }
 
 const input = args ?? {}
+// Four grouped evidence lenses (was six). Each grouped researcher must still return
+// opportunities covering every sub-lens it bundles; grouping changes WHO researches,
+// not WHAT evidence is required. Callers may override via input.lenses.
 const lenses = input.lenses ?? [
-  'durable audience needs and recurring puzzle/activity demand',
-  'seasonal and event-driven printable and journal opportunities',
-  'category saturation and pricing norms on KDP, Etsy, and Gumroad',
-  'audience-band fit and large-print/senior accessibility openings',
-  'format opportunities across paperback, hardcover, and digital-pdf printables',
-  'rights, trademark, child-safety, and feasibility risks',
+  'demand: durable audience needs and recurring puzzle/activity demand AND seasonal/event-driven printable and journal opportunities',
+  'market structure: category saturation and pricing norms on KDP, Etsy, and Gumroad AND format opportunities across paperback, hardcover, and digital-pdf printables',
+  'audience & accessibility: audience-band fit and large-print/senior accessibility openings',
+  'risk: rights, trademark, child-safety, and feasibility risks',
 ]
 
 const findings = await pipeline(lenses, lens =>

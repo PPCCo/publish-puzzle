@@ -2,7 +2,7 @@
 name: layout-engineer
 description: >-
   Translates approved puzzle, coloring, and journal content into a robust, standards-compliant interior layout across print and digital formats: grid sizing, type size, difficulty section order, back-only answer keys, and page budget.
-effort: high
+effort: medium
 model: '@bedrock-eus1/us.anthropic.claude-sonnet-5'
 permissionMode: default
 maxTurns: 60
