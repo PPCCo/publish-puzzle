@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "evaluated_at": "2026-08-14T09:27:49Z",
+  "topic": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+  "product_family": "puzzle-book",
+  "audience": "adult-general",
+  "sales_channels": [
+    "kdp",
+    "etsy"
+  ],
+  "offline_saturation_prior": 0.75,
+  "audience_signal": {
+    "audience": "adult-general",
+    "accessibility_sensitive": false,
+    "note": "Standard-sight audience; differentiate on content and cohesion."
+  },
+  "opportunity_score": 0.25,
+  "recommended_differentiators": [
+    "large-print / accessibility band",
+    "themed content set with a narrative hook",
+    "verified-unique solutions as a trust signal",
+    "difficulty progression tuned to a specific audience"
+  ],
+  "human_inputs_required": [
+    "Current best-seller rank / demand for the exact sub-niche",
+    "Live competitor count and top-listing quality on each target channel",
+    "Advertising cost and keyword competition, if paid launch is planned",
+    "Confirmation the topic is evergreen vs. trend-dependent"
+  ],
+  "decision": "PASS",
+  "external_data_used": false,
+  "note": "Advisory, offline assessment from project config + conservative priors. No live market data was fetched; the human niche gate is the authority."
+}

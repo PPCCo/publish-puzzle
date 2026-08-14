@@ -19,9 +19,10 @@ created_by: human
 objectives: []
 constraints: []
 content_plan:
-  puzzle_types: []
-  target_content_count: null
-  difficulty_progression: progressive
+  puzzle_types:
+  - sudoku
+  target_content_count: 200
+  difficulty_progression: flat-single-tier-easy
   solutions_placement: back-only
 production:
   trim_size: 8.5x11

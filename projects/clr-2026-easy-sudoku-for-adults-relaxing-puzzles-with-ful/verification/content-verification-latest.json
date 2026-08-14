@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "evaluated_at": "2026-08-14T10:11:10Z",
+  "decision": "PASS",
+  "batch_count": 1,
+  "item_count": 200,
+  "failed_batch_count": 0,
+  "batches": [
+    {
+      "content_type": "sudoku",
+      "family": "puzzle",
+      "verifiable": true,
+      "item_count": 200,
+      "passed_count": 200,
+      "passed": true,
+      "failed_items": [],
+      "source": "content/puzzles/sudoku-batch.json"
+    }
+  ],
+  "note": "Each item re-verified independently of its generator (code verifies code)."
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "artifact_hashes": [
+    "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+    "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
+    "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608",
+    "sha256:d52d041134cacb71892a2f8cfd193e9b3ab64776494a6cdfde8413608eac644c"
+  ],
+  "evaluated_at": "2026-08-14T10:12:16Z",
+  "counts": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 0,
+    "note": 2
+  },
+  "scores": {
+    "solvability": 5.0,
+    "solution_correctness": 5.0,
+    "difficulty_accuracy": 5.0,
+    "audience_fit": 4.8,
+    "originality": 4.8,
+    "instructions_clarity": 4.5,
+    "clarity": 4.5,
+    "structure": 4.8
+  },
+  "weighted_overall": 4.8,
+  "decision": "PASS",
+  "reasons": [],
+  "source_reviews": [
+    "reviews/quality-gate-review.json"
+  ],
+  "stale_reviews": [],
+  "invalid_reviews": []
+}

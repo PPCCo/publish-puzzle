@@ -1,0 +1,19 @@
+{
+  "approval_id": "apr-interior-20260814t101318z-3b437b10",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "interior",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+    "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf"
+  ],
+  "scope": "reviewed and accepted the content",
+  "exclusions": [],
+  "notes": "Auto-approved (auto_approve_gates.interior=silent): content verification PASS + quality gate PASS (weighted 4.8), 0 blocker/major, ready_for_human_review true, no safety override. Bound to SOURCE hashes only (content-plan + sudoku batch); interior PDF not built yet (FIX A).",
+  "created_at": "2026-08-14T10:13:18Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

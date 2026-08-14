@@ -1,0 +1,172 @@
+{
+  "schema_version": "1.0",
+  "kind": "approval-gate-packet",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "interior",
+  "generated_at": "2026-08-14T10:13:05Z",
+  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
+  "current_state": "INTERIOR_APPROVAL",
+  "expected_state": "INTERIOR_APPROVAL",
+  "state_matches_gate": true,
+  "scope": {
+    "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+    "audience": "adult-general",
+    "book_type": "puzzle-book",
+    "formats": [
+      "paperback",
+      "digital-pdf"
+    ],
+    "sales_channels": [
+      "kdp",
+      "etsy"
+    ],
+    "territory": null
+  },
+  "artifacts_under_review": [
+    {
+      "kind": "content-plan",
+      "sha256": "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+      "type": "content-plan",
+      "path": "content/content-plan.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "content-sudoku",
+      "sha256": "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
+      "type": "content-sudoku",
+      "path": "content/puzzles/sudoku-batch.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    }
+  ],
+  "deterministic_evidence": [
+    {
+      "present": true,
+      "decision": "PASS",
+      "report": "verification/content-verification-latest.json",
+      "is_pass": true
+    },
+    {
+      "present": true,
+      "decision": "PASS",
+      "report": "reviews/quality-gate-latest.json",
+      "is_pass": true
+    }
+  ],
+  "channel_packages": [],
+  "series_context": null,
+  "open_findings": {
+    "counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0,
+      "note": 2
+    },
+    "open_blocker_or_major": []
+  },
+  "existing_approvals": {
+    "required_distinct_approvers": 1,
+    "current_distinct_approvers": [],
+    "current_count": 0,
+    "approvers_still_needed": 1,
+    "invalidated": []
+  },
+  "risks": [],
+  "ready_for_human_review": true,
+  "decision_options": [
+    "APPROVE",
+    "REJECT",
+    "REQUEST_CHANGES"
+  ],
+  "human_action": {
+    "recording_skill": "/product-approve-interior",
+    "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-approve-interior — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
+    "artifact_hashes_to_bind": [
+      "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+      "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf"
+    ],
+    "next_command": {
+      "form": "slash",
+      "command": "/product-approve-interior clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "description": "Approve the interior gate, or reject.",
+      "ready": true
+    },
+    "review_files": [
+      "content/content-plan.md",
+      "content/puzzles/sudoku-batch.json",
+      "notes/intake.md",
+      "notes/product-brief.md",
+      "verification/content-verification-latest.json",
+      "reviews/quality-gate-latest.json",
+      "approvals/packets/gate-packet-interior-latest.json"
+    ]
+  },
+  "audit": {
+    "recent_events": [
+      {
+        "actor": "content-verifier",
+        "details": {
+          "decision": "PASS",
+          "item_count": 200
+        },
+        "event": "CONTENT_VERIFIED",
+        "event_id": "evt-20260814T100853Z-d7060418",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T10:08:53Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "from": "CONTENT_GENERATION",
+          "reason": "200 sudoku generated (art-content-sudoku-4b8e51f4ce2e, seed 3974830097) and independently code-verified: 200/200 PASS, 0 failed items, no difficulty-progression finding on the flat single-tier plan. CONTENT_GENERATION acceptance met.",
+          "to": "CONTENT_VERIFICATION"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260814T100928Z-dbbdd72d",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T10:09:28Z"
+      },
+      {
+        "actor": "content-verifier",
+        "details": {
+          "decision": "PASS",
+          "item_count": 200
+        },
+        "event": "CONTENT_VERIFIED",
+        "event_id": "evt-20260814T101110Z-8cd910b4",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T10:11:10Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/reviews/quality-gate-review.json",
+          "sha256": "sha256:5521c6b9ba1e8a2936c2173875ff847b0dc81d7e658cc5aaa11159b74eba398d",
+          "tool": "Write"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260814T101145Z-a6a070aa",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T10:11:45Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "from": "CONTENT_VERIFICATION",
+          "reason": "Content verified (200/200 code PASS) and quality gate PASS (0 blocker/major, weighted 4.8) on source reports only; no interior proof required or built (FIX A). CONTENT_VERIFICATION acceptance met.",
+          "to": "INTERIOR_APPROVAL"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260814T101230Z-690f1be5",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T10:12:30Z"
+      }
+    ]
+  },
+  "gate_is_required_transition": true
+}

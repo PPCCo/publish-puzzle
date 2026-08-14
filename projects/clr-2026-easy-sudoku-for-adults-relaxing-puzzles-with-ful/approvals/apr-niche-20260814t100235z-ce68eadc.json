@@ -1,0 +1,18 @@
+{
+  "approval_id": "apr-niche-20260814t100235z-ce68eadc",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "niche",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608"
+  ],
+  "scope": "reviewed and accepted the content",
+  "exclusions": [],
+  "notes": "Auto-approved (auto_approve_gates.niche=silent): deterministic niche assessment PASS, 0 blocker/major findings, ready_for_human_review true, no safety override.",
+  "created_at": "2026-08-14T10:02:35Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

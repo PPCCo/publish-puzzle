@@ -19,6 +19,110 @@
       "validation_status": "not-run",
       "supersedes": null,
       "frozen": false
+    },
+    {
+      "artifact_id": "art-product-brief-503b2bcdee75",
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "type": "product-brief",
+      "stage": "DISCOVERY",
+      "version": 1,
+      "path": "notes/product-brief.md",
+      "sha256": "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608",
+      "size_bytes": 10486,
+      "created_at": "2026-08-14T09:33:49Z",
+      "created_by": "claude-code",
+      "source_artifact_ids": [],
+      "provenance": {},
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "supersedes": null,
+      "frozen": false
+    },
+    {
+      "artifact_id": "art-content-plan-45a916125273",
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "type": "content-plan",
+      "stage": "PLANNING",
+      "version": 1,
+      "path": "content/content-plan.md",
+      "sha256": "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+      "size_bytes": 9783,
+      "created_at": "2026-08-14T10:08:21Z",
+      "created_by": "content-architect",
+      "source_artifact_ids": [
+        "art-product-brief-503b2bcdee75"
+      ],
+      "provenance": {},
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "supersedes": null,
+      "frozen": true
+    },
+    {
+      "artifact_id": "art-content-sudoku-4b8e51f4ce2e",
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "type": "content-sudoku",
+      "stage": "CONTENT_GENERATION",
+      "version": 1,
+      "path": "content/puzzles/sudoku-batch.json",
+      "sha256": "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
+      "size_bytes": 641549,
+      "created_at": "2026-08-14T10:08:44Z",
+      "created_by": "puzzle-generator",
+      "source_artifact_ids": [],
+      "provenance": {
+        "content_type": "sudoku",
+        "family": "puzzle",
+        "base_seed": 3974830097,
+        "difficulty": "easy",
+        "audience": "adult-general"
+      },
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "supersedes": null,
+      "frozen": true
+    },
+    {
+      "artifact_id": "art-interior-pdf-5c76fea23901",
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "type": "interior-pdf",
+      "stage": "LAYOUT_AND_FORMAT_BUILD",
+      "version": 1,
+      "path": "outputs/interior/interior.pdf",
+      "sha256": "sha256:5c76fea23901ca80bc0cf32267088606f68c1872bcd728a6faa05826116964ad",
+      "size_bytes": 436658,
+      "created_at": "2026-08-14T10:17:57Z",
+      "created_by": "interior-builder",
+      "source_artifact_ids": [],
+      "provenance": {
+        "binding": "paperback",
+        "page_count": 402
+      },
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "supersedes": null,
+      "frozen": false
+    },
+    {
+      "artifact_id": "art-interior-pdf-f52bda82af53",
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "type": "interior-pdf",
+      "stage": "LAYOUT_AND_FORMAT_BUILD",
+      "version": 2,
+      "path": "outputs/interior/interior.pdf",
+      "sha256": "sha256:f52bda82af5325773d0b4cc52649d1e583afd50c37cd6154ca6698ab389e7eee",
+      "size_bytes": 436658,
+      "created_at": "2026-08-14T10:18:10Z",
+      "created_by": "interior-builder",
+      "source_artifact_ids": [],
+      "provenance": {
+        "binding": "hardcover",
+        "page_count": 402
+      },
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "supersedes": "art-interior-pdf-5c76fea23901",
+      "frozen": false
     }
   ]
 }
