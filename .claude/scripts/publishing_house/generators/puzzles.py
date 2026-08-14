@@ -75,6 +75,49 @@ def _valid_sudoku_solution(grid: list[list[int]]) -> bool:
     return True
 
 
+def _count_sudoku_solutions(puzzle: list[list[int]], limit: int = 2) -> int:
+    """Count solutions to a 9x9 sudoku by backtracking, stopping at ``limit``.
+
+    Pure and deterministic (fills the first empty cell in row-major order, tries
+    candidates 1..9 in order). Early-exits as soon as ``limit`` solutions are found
+    so an ambiguous puzzle costs no more than proving non-uniqueness.
+    """
+    grid = [row[:] for row in puzzle]
+
+    def _legal(r: int, c: int, v: int) -> bool:
+        for i in range(9):
+            if grid[r][i] == v or grid[i][c] == v:
+                return False
+        br, bc = 3 * (r // 3), 3 * (c // 3)
+        for dr in range(3):
+            for dc in range(3):
+                if grid[br + dr][bc + dc] == v:
+                    return False
+        return True
+
+    count = 0
+
+    def _solve() -> None:
+        nonlocal count
+        if count >= limit:
+            return
+        for r in range(9):
+            for c in range(9):
+                if grid[r][c] == 0:
+                    for v in range(1, 10):
+                        if _legal(r, c, v):
+                            grid[r][c] = v
+                            _solve()
+                            grid[r][c] = 0
+                            if count >= limit:
+                                return
+                    return  # no legal value here: dead end for this branch
+        count += 1  # no empty cell remained -> a complete solution
+
+    _solve()
+    return count
+
+
 def validate_sudoku(item: dict[str, Any]) -> ValidationResult:
     result = ValidationResult(content_type="sudoku", index=int(item.get("index", 0)), passed=True)
     payload = item.get("payload", {})
@@ -94,10 +137,23 @@ def validate_sudoku(item: dict[str, Any]) -> ValidationResult:
     checks["clues_match_solution"] = bool(consistent)
     givens = sum(1 for row in puzzle for v in row if v)
     checks["has_givens"] = givens >= 17  # theoretical minimum for a unique 9x9
+
+    # Solution uniqueness: independently re-derived by counting solutions from the
+    # PUZZLE alone (never trusting the shipped key). Recorded as evidence but kept
+    # NON-FATAL for now — existing content predates this check, so flipping it into
+    # the pass set would retroactively fail verified batches. Making it fatal is a
+    # separate, propose-only change (regenerate + human OK).
+    if checks["clues_match_solution"]:
+        checks["unique_solution"] = _count_sudoku_solutions(puzzle, limit=2) == 1
+    else:
+        checks["unique_solution"] = False
+
     result.checks = checks
-    result.passed = all(checks.values())
+    # Pass set intentionally EXCLUDES unique_solution (non-fatal for now).
+    fatal_checks = {"solution_valid", "clues_match_solution", "has_givens"}
+    result.passed = all(ok for name, ok in checks.items() if name in fatal_checks)
     if not result.passed:
-        result.errors = [name for name, ok in checks.items() if not ok]
+        result.errors = [name for name, ok in checks.items() if name in fatal_checks and not ok]
     return result
 
 

@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "learnings": [
+    {
+      "id": "cover-builder-hardcoded-claims",
+      "title": "Cover builder derives count + large-print descriptor from project data",
+      "status": "pruned",
+      "auto_apply": true,
+      "matches_memory": [
+        "cover-builder-hardcoded-claims"
+      ],
+      "sentinels": [
+        {
+          "file": ".claude/scripts/publishing_house/layout.py",
+          "contains": "count_label = f\"{puzzle_count} Puzzles\" if puzzle_count > 0 else \"Puzzles\""
+        },
+        {
+          "file": ".claude/scripts/publishing_house/layout.py",
+          "contains": "descriptor_parts = ([\"Large Print\"] if is_large_print else [])"
+        },
+        {
+          "file": ".claude/scripts/publishing_house/claims.py",
+          "contains": "def audit_claims"
+        }
+      ],
+      "test": "tests/test_claims_audit.py",
+      "durable_fix": "layout.build_cover derives the front-cover count from content_plan.target_content_count and emits 'Large Print' only for the senior-large-print band; audit_claims (claims.py) now checks human-facing claims against verified facts deterministically.",
+      "changed_files": [],
+      "applied_at": null,
+      "applied_by": null,
+      "verified_at": null,
+      "pruned_at": "2026-08-14T15:01:23Z"
+    },
+    {
+      "id": "compliance-gate-artifact-registration",
+      "title": "Rights + accessibility stages auto-register their compliance-bound reports",
+      "status": "pruned",
+      "auto_apply": true,
+      "matches_memory": [
+        "compliance-gate-artifact-registration"
+      ],
+      "sentinels": [
+        {
+          "file": ".claude/scripts/publishing_house/rights.py",
+          "contains": "register_artifact"
+        },
+        {
+          "file": ".claude/scripts/publishing_house/rights.py",
+          "contains": "\"rights-gate\""
+        },
+        {
+          "file": ".claude/scripts/publishing_house/accessibility.py",
+          "contains": "register_artifact"
+        },
+        {
+          "file": ".claude/scripts/publishing_house/accessibility.py",
+          "contains": "\"accessibility-gate\""
+        }
+      ],
+      "test": "tests/test_compliance_artifact_registration.py",
+      "durable_fix": "check_rights registers rights-gate (and rights-ledger when present) and audit_accessibility registers accessibility-gate, so the compliance packet has the exact types _GATE_ARTIFACT_TYPES['compliance'] binds without a manual `artifact register`.",
+      "changed_files": [
+        {
+          "path": ".claude/scripts/publishing_house/rights.py",
+          "sha256": "sha256:dde97e1aebc4f0f3b437d9b1831b9c6c1759ec4e5306543c482737bd2ba66018"
+        },
+        {
+          "path": ".claude/scripts/publishing_house/accessibility.py",
+          "sha256": "sha256:54e318f63c5f8bc5315afb423f0f1634cc4d4acb0a9c32810188112afe333667"
+        }
+      ],
+      "applied_at": "2026-08-14T15:01:02Z",
+      "applied_by": "framework-learn",
+      "verified_at": "2026-08-14T15:01:02Z",
+      "pruned_at": "2026-08-14T15:01:23Z"
+    },
+    {
+      "id": "release-packet-preflight-status-mismatch",
+      "title": "Release packet reads channel-package preflight_status",
+      "status": "pruned",
+      "auto_apply": true,
+      "matches_memory": [
+        "release-packet-preflight-status-mismatch"
+      ],
+      "sentinels": [
+        {
+          "file": ".claude/scripts/publishing_house/gate_packet.py",
+          "contains": "data.get(\"preflight_status\")"
+        }
+      ],
+      "test": "tests/test_gate_packet_report_summary.py",
+      "durable_fix": "gate_packet._report_summary reads decision/status/preflight_status so a correctly-built channel package is not misread as missing at the release gate.",
+      "changed_files": [],
+      "applied_at": null,
+      "applied_by": null,
+      "verified_at": null,
+      "pruned_at": "2026-08-14T15:01:23Z"
+    }
+  ]
+}

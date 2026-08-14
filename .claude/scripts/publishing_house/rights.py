@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .artifacts import list_artifacts
+from .artifacts import list_artifacts, register_artifact
 from .paths import ProjectPaths
 from .util import atomic_write_json, load_json, utc_now
 from .validation import validate_data
@@ -66,6 +66,23 @@ def check_rights(root: Path, project_id: str) -> dict[str, Any]:
         "warnings": warnings,
     }
     atomic_write_json(paths.directory / "rights" / "gate-latest.json", result)
+
+    # Auto-register the compliance-bound artifacts so the compliance packet has
+    # the exact TYPES gate_packet._GATE_ARTIFACT_TYPES["compliance"] binds, with no
+    # manual `artifact register`. These are not downstream-build types, and
+    # register_artifact dedups an unchanged report on re-run, so this is safe and
+    # idempotent. register_artifact updates active_artifacts in state, so it runs
+    # BEFORE the rights_gate summary write below (which re-reads state).
+    register_artifact(
+        root, project_id, "rights/gate-latest.json", "rights-gate", "RIGHTS_CLEARANCE",
+        "rights-gate", rights_status="not-applicable", validation_status="pass" if decision == "PASS" else "fail",
+    )
+    if paths.rights_ledger.exists():
+        register_artifact(
+            root, project_id, "rights/ledger.json", "rights-ledger", "RIGHTS_CLEARANCE",
+            "rights-manager", rights_status="not-applicable", validation_status="not-run",
+        )
+
     state = load_json(paths.state)
     state["rights_gate"] = {"decision": decision, "evaluated_at": result["evaluated_at"], "unlinked": len(unlinked), "blocked": len(blocked)}
     state["updated_at"] = utc_now()

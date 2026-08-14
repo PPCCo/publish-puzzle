@@ -1,0 +1,6 @@
+{"time": "2026-08-14T15:00:53Z", "action": "scan", "memories": 3, "false_positive_denies": 0}
+{"time": "2026-08-14T15:01:02Z", "action": "promote-apply", "learning_id": "compliance-gate-artifact-registration", "changed_files": 2}
+{"time": "2026-08-14T15:01:23Z", "action": "prune", "learning_id": "cover-builder-hardcoded-claims", "removed_files": ["project_cover_builder_hardcoded_claims.md"], "index_lines_removed": 1}
+{"time": "2026-08-14T15:01:23Z", "action": "prune", "learning_id": "release-packet-preflight-status-mismatch", "removed_files": ["release-packet-preflight-status-mismatch.md"], "index_lines_removed": 1}
+{"time": "2026-08-14T15:01:23Z", "action": "prune", "learning_id": "compliance-gate-artifact-registration", "removed_files": ["compliance-gate-artifact-registration.md"], "index_lines_removed": 1}
+{"time": "2026-08-14T15:01:38Z", "action": "scan", "memories": 0, "false_positive_denies": 0}

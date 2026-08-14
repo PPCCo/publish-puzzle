@@ -128,6 +128,18 @@ def audit_accessibility(root: Path, project_id: str) -> dict[str, Any]:
     out = paths.directory / "accessibility" / "gate-latest.json"
     atomic_write_json(out, result)
 
+    # Auto-register the accessibility-gate artifact (a compliance-bound TYPE) so the
+    # compliance packet can bind it with no manual `artifact register`. Not a
+    # downstream-build type; dedups on unchanged re-run. Runs before the state
+    # summary write below because register_artifact also updates state.
+    from .artifacts import register_artifact  # local import: avoid a module-load cycle
+
+    register_artifact(
+        root, project_id, "accessibility/gate-latest.json", "accessibility-gate",
+        "ACCESSIBILITY_VALIDATION", "accessibility-auditor",
+        rights_status="not-applicable", validation_status="pass" if decision == "PASS" else "fail",
+    )
+
     state = load_json(paths.state)
     state["accessibility_gate"] = {"decision": decision, "evaluated_at": result["evaluated_at"], "issues": len(issues)}
     state["updated_at"] = utc_now()

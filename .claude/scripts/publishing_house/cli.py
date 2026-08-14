@@ -294,7 +294,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     audit = sub.add_parser("audit", help="Run deterministic content and production audits.")
     audit_sub = audit.add_subparsers(dest="audit_command", required=True)
-    for name in ("metadata", "accessibility"):
+    for name in ("metadata", "accessibility", "claims"):
         item = audit_sub.add_parser(name)
         item.add_argument("project_id")
 
@@ -345,6 +345,27 @@ def build_parser() -> argparse.ArgumentParser:
     m_listing.add_argument("project_id")
     m_kit = marketing_sub.add_parser("kit", help="Prepare the full marketing kit (guide + listing).")
     m_kit.add_argument("project_id")
+
+    # Occasional-use framework maintenance: scan logs + memory, promote durable
+    # learnings into the framework, prune redundant memory (never events.ndjson).
+    maintenance = sub.add_parser(
+        "maintenance",
+        help="Scan logs + memory, promote durable learnings into the framework, prune redundant memory.",
+    )
+    maintenance_sub = maintenance.add_subparsers(dest="maintenance_command", required=True)
+    mt_scan = maintenance_sub.add_parser("scan", help="Read-only scan of hook/event logs + memory; writes maintenance/scan-latest.json.")
+    mt_scan.add_argument("--memory-dir", help="Machine-local memory directory. Defaults to the local path; empty result when absent.")
+    mt_scan.add_argument("--no-write", action="store_true", help="Do not persist the scan report.")
+    mt_promote = maintenance_sub.add_parser("promote", help="Record (or, with --apply, stamp applied) a durable learning promotion.")
+    mt_promote.add_argument("learning_id")
+    mt_promote.add_argument("--apply", action="store_true", help="Stamp the registry 'applied' (auto_apply entries only; requires the durable fix to verify present).")
+    mt_promote.add_argument("--actor", default="framework-maintenance")
+    mt_verify = maintenance_sub.add_parser("verify", help="Deterministically verify a learning's durable fix is present (sentinels + test).")
+    mt_verify.add_argument("learning_id")
+    mt_prune = maintenance_sub.add_parser("prune", help="Remove a memory file only after its learning is verifiably embedded (status applied + verified).")
+    mt_prune.add_argument("learning_id")
+    mt_prune.add_argument("--memory-dir", help="Machine-local memory directory. Defaults to the local path.")
+    maintenance_sub.add_parser("rotate-hooks", help="Archive .claude/logs/hooks.ndjson to a timestamped .bak and truncate it (never events.ndjson).")
 
     return parser
 
@@ -469,6 +490,23 @@ def _dispatch_research(args: argparse.Namespace, root: Path) -> Any:
     raise RuntimeError("Unhandled research command")
 
 
+def _dispatch_maintenance(args: argparse.Namespace, root: Path) -> Any:
+    from . import maintenance as _maintenance  # offline; stdlib + local imports only
+
+    memory_dir = Path(args.memory_dir).expanduser() if getattr(args, "memory_dir", None) else None
+    if args.maintenance_command == "scan":
+        return _maintenance.scan(root, memory_dir=memory_dir, write=not args.no_write)
+    if args.maintenance_command == "promote":
+        return _maintenance.promote(root, args.learning_id, apply=args.apply, actor=args.actor)
+    if args.maintenance_command == "verify":
+        return _maintenance.verify_promotion(root, args.learning_id)
+    if args.maintenance_command == "prune":
+        return _maintenance.prune_memory(root, args.learning_id, memory_dir=memory_dir)
+    if args.maintenance_command == "rotate-hooks":
+        return _maintenance.rotate_hooks_log(root)
+    raise RuntimeError("Unhandled maintenance command")
+
+
 def dispatch(args: argparse.Namespace, root: Path) -> Any:
     if args.command == "doctor":
         if getattr(args, "probe_plan", False):
@@ -513,6 +551,11 @@ def dispatch(args: argparse.Namespace, root: Path) -> Any:
             return audit_metadata(root, args.project_id)
         if args.audit_command == "accessibility":
             return audit_accessibility(root, args.project_id)
+        if args.audit_command == "claims":
+            from .claims import audit_claims
+            return audit_claims(root, args.project_id)
+    if args.command == "maintenance":
+        return _dispatch_maintenance(args, root)
     if args.command == "build":
         return _dispatch_build(args, root)
     if args.command == "package":

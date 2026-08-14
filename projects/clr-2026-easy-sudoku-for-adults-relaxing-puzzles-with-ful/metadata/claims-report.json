@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "evaluated_at": "2026-08-14T15:01:51Z",
+  "decision": "PASS",
+  "verified_facts": {
+    "item_count": 200,
+    "content_verification_decision": "PASS",
+    "audience_band": "adult-general",
+    "is_large_print": false,
+    "solutions_placement": "back-only",
+    "all_unique_solutions": null,
+    "difficulty_tier": null
+  },
+  "claim_sources": {
+    "cover": {
+      "count_label": "200 Puzzles",
+      "declared_count": 200,
+      "descriptor": "Easy  •  Complete Solutions",
+      "descriptor_parts": [
+        "Easy",
+        "Complete Solutions"
+      ]
+    },
+    "text_blocks": [
+      "listing_kit",
+      "metadata"
+    ]
+  },
+  "checks": {
+    "count_matches": true,
+    "large_print_valid": true,
+    "uniqueness_valid": true,
+    "back_only_valid": true,
+    "difficulty_word_valid": true
+  },
+  "issues": [],
+  "warnings": [
+    "A uniqueness claim is made but solution uniqueness was not measured; verify before release."
+  ]
+}

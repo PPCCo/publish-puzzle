@@ -68,6 +68,19 @@ HARD_DENY_PATTERNS = [
     (r"\b(kdp|amazon|ebay|apple)\b[^\n]*(submit|publish|upload|list|activate|purchase)", "marketplace publication must use an approved connector and release authorization"),
 ]
 
+# External-writes soft net (only when PUBLISHING_EXTERNAL_WRITES != enabled).
+# The sanctioned local CLI performs no external write, so it is exempt.
+_PH_CLI_RE = re.compile(r"\bph_cli\.py\b")
+# Scrub --operation/--op flag values (e.g. `--operation submit`) so a legitimate
+# CLI operation name is not read as an external verb.
+_OPERATION_VALUE_RE = re.compile(r"--op(?:eration)?[=\s]+\S+", re.IGNORECASE)
+# Genuine external-publish verbs, bounded so they do NOT match inside a flag name
+# or value (e.g. `spend` inside `--maximum-external-spend`, or a hyphenated flag).
+_EXTERNAL_VERB_RE = re.compile(
+    r"(?<![\w-])(submit|publish|upload|activate|purchase|spend|create-listing)(?![\w-])",
+    re.IGNORECASE,
+)
+
 # General-risk operations: previously hard-denied, now escalate to the user
 # for confirmation instead of failing outright.
 ASK_PATTERNS = [
@@ -170,8 +183,21 @@ def main() -> int:
                 deny(reason)
 
         if os.environ.get("PUBLISHING_EXTERNAL_WRITES", "disabled").lower() != "enabled":
-            if re.search(r"\b(submit|publish|upload|activate|purchase|spend|create-listing)\b", command, re.IGNORECASE):
-                deny("external writes are disabled; create a package or dry-run record instead")
+            # This soft net catches genuine external-publish verbs. Two refinements
+            # keep it from false-positiving on the sanctioned local CLI and on flag
+            # names/values that merely CONTAIN a verb:
+            #   1. ph_cli.py is the framework's own offline entry point (it performs
+            #      no external write; release-authorize only records a local
+            #      authorization). Skip the net entirely for it.
+            #   2. Match verbs only as genuine tokens, not inside flags like
+            #      --maximum-external-spend or values like --operation submit. We
+            #      first scrub --operation/--op values, then require the verb to be
+            #      bounded by non-[word|dash] on both sides so `spend` does not match
+            #      inside `--maximum-external-spend`.
+            if not _PH_CLI_RE.search(command):
+                scrubbed = _OPERATION_VALUE_RE.sub(" ", command)
+                if _EXTERNAL_VERB_RE.search(scrubbed):
+                    deny("external writes are disabled; create a package or dry-run record instead")
 
         if re.search(r"\brm\s+-[^\n]*r[^\n]*f\b|\brm\s+-rf\b", command, flags=re.IGNORECASE):
             if not _is_temp_path_only(command):

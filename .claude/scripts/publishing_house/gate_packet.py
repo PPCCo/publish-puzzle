@@ -41,7 +41,7 @@ _GATE_EVIDENCE: dict[str, list[str]] = {
         "rights/gate-latest.json",
         "accessibility/gate-latest.json",
     ],
-    "listing": ["metadata/validation-report.json"],
+    "listing": ["metadata/validation-report.json", "metadata/claims-report.json"],
     "release": [],
 }
 

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "framework-learnings.schema.json",
+  "title": "Framework learnings promotion registry",
+  "description": "Idempotent, auditable registry of durable learnings promoted from machine-local memory into the framework. One entry per learning; id equals the memory frontmatter name.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "learnings"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "learnings": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/learning"}
+    }
+  },
+  "$defs": {
+    "learning": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "status", "auto_apply", "matches_memory", "sentinels"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable id; equals the memory frontmatter `name` slug.",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {"type": "string"},
+        "status": {
+          "type": "string",
+          "enum": ["reported", "applied", "pruned"],
+          "description": "reported = proposal recorded; applied = durable fix embedded in framework; pruned = source memory removed after verified promotion."
+        },
+        "auto_apply": {
+          "type": "boolean",
+          "description": "true only for well-understood, low-risk edits. A change to gate/policy semantics MUST be false (propose-only)."
+        },
+        "matches_memory": {
+          "type": "array",
+          "description": "Memory frontmatter `name` slugs this learning promotes.",
+          "items": {"type": "string"}
+        },
+        "sentinels": {
+          "type": "array",
+          "description": "Exact substrings that MUST be present in the named framework files for the promotion to count as embedded. Deterministic, no LLM.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["file", "contains"],
+            "properties": {
+              "file": {"type": "string", "description": "Repo-relative path."},
+              "contains": {"type": "string", "description": "Exact substring that must appear in the file."}
+            }
+          }
+        },
+        "test": {
+          "type": ["string", "null"],
+          "description": "Repo-relative path of the regression test that must exist for the promotion to be considered verified."
+        },
+        "durable_fix": {
+          "type": "string",
+          "description": "One-line description of the durable framework change this learning corresponds to."
+        },
+        "changed_files": {
+          "type": "array",
+          "description": "Files changed by the promotion, with the sha256 recorded at apply time.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "sha256"],
+            "properties": {
+              "path": {"type": "string"},
+              "sha256": {"type": "string"}
+            }
+          }
+        },
+        "proposed_at": {"type": ["string", "null"], "description": "First time this learning was recorded as a proposal (status reported)."},
+        "applied_at": {"type": ["string", "null"]},
+        "applied_by": {"type": ["string", "null"]},
+        "verified_at": {"type": ["string", "null"]},
+        "pruned_at": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

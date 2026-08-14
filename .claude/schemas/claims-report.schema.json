@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "claims-report.schema.json",
+  "title": "Truthful-claims audit report",
+  "description": "Deterministic reconciliation of human-facing claim strings (metadata, listing kit, cover) against verified content facts. Writes no state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "project_id", "evaluated_at", "decision", "checks", "issues", "warnings"],
+  "properties": {
+    "schema_version": {"type": "string"},
+    "project_id": {"type": "string"},
+    "evaluated_at": {"type": "string"},
+    "decision": {"type": "string", "enum": ["PASS", "FAIL", "WARNING"]},
+    "verified_facts": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "item_count": {"type": ["integer", "null"]},
+        "content_verification_decision": {"type": ["string", "null"]},
+        "audience_band": {"type": ["string", "null"]},
+        "is_large_print": {"type": "boolean"},
+        "solutions_placement": {"type": ["string", "null"]},
+        "all_unique_solutions": {"type": ["boolean", "null"]},
+        "difficulty_tier": {"type": ["string", "null"]}
+      }
+    },
+    "claim_sources": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": {"type": "boolean"}
+    },
+    "issues": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}

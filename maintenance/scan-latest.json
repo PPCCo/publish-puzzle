@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "kind": "framework-maintenance-scan",
+  "generated_at": "2026-08-14T15:01:38Z",
+  "signals": {
+    "hooks_log": ".claude/logs/hooks.ndjson",
+    "hook_record_count": 286,
+    "deny_reasons": [
+      {
+        "reason": "this path is CLI-owned workflow state/artifacts/approvals; only .claude/scripts/ph_cli.py may write it",
+        "count": 4
+      },
+      {
+        "reason": "yt-dlp is only permitted with an explicit reviewed flag",
+        "count": 2
+      }
+    ],
+    "ask_reasons": [],
+    "false_positive_denies": [],
+    "late_stage_gate_fails": [],
+    "compliance_artifact_registrations": {}
+  },
+  "memories": [],
+  "registry_summary": [
+    {
+      "id": "cover-builder-hardcoded-claims",
+      "status": "pruned",
+      "auto_apply": true
+    },
+    {
+      "id": "compliance-gate-artifact-registration",
+      "status": "pruned",
+      "auto_apply": true
+    },
+    {
+      "id": "release-packet-preflight-status-mismatch",
+      "status": "pruned",
+      "auto_apply": true
+    }
+  ]
+}
