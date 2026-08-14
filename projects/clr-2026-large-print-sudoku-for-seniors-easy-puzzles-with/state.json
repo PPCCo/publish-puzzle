@@ -55,8 +55,8 @@
     "apr-cover-20260731t131846z-4844a6de",
     "apr-compliance-20260731t133613z-47cb93c4"
   ],
-  "updated_at": "2026-08-01T01:30:59Z",
-  "updated_by": "package-etsy",
+  "updated_at": "2026-08-14T06:54:05Z",
+  "updated_by": "content-verifier",
   "niche_assessment": {
     "decision": "PASS",
     "opportunity_score": 0.4,
@@ -64,7 +64,7 @@
   },
   "content_verification": {
     "decision": "PASS",
-    "evaluated_at": "2026-07-31T13:03:52Z",
+    "evaluated_at": "2026-08-14T06:54:05Z",
     "item_count": 100,
     "failed_batches": 0
   },
