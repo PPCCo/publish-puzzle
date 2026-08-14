@@ -15,7 +15,7 @@ from .approvals import (
     verify_release_authorization,
 )
 from .artifacts import freeze_artifacts, list_artifacts, register_artifact
-from .catalog import rebuild_catalog
+from .catalog import rebuild_catalog, verify_catalog
 from .doctor import run_doctor
 from .errors import PublishingHouseError
 from .events import read_events
@@ -36,8 +36,10 @@ from .series import (
     link_book,
     list_series,
     series_milestone,
+    series_recommend,
     series_status,
     sibling_context,
+    suggest_series_from_research,
 )
 from .state import next_actions, transition
 from .submission import create_dry_run, record_submission
@@ -66,6 +68,14 @@ def _read_stdin_if_dash(value: str | None) -> str | None:
 
 
 PRODUCT_TYPES = ["puzzle-book", "coloring-book", "guided-journal", "digital-printable"]
+AUDIENCE_BANDS = [
+    "kids-4-8",
+    "kids-6-10",
+    "tween-8-12",
+    "teen-13-17",
+    "adult-general",
+    "senior-large-print",
+]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -151,10 +161,11 @@ def build_parser() -> argparse.ArgumentParser:
     s_init.add_argument("--title", required=True)
     s_init.add_argument("--premise", required=True)
     s_init.add_argument("--books-json", required=True, help="JSON array (or file path) of planned volumes: position, working_title, topic, scope, and optional audience/book_type/formats.")
-    s_init.add_argument("--audience", default="adult-general")
+    s_init.add_argument("--audience", default="adult-general", choices=AUDIENCE_BANDS)
     s_init.add_argument("--language", default="en-US")
     s_init.add_argument("--series-id")
-    s_init.add_argument("--book-type")
+    s_init.add_argument("--product-type", choices=PRODUCT_TYPES, dest="product_type", help="Default product family for the set.")
+    s_init.add_argument("--book-type", dest="product_type", choices=PRODUCT_TYPES, help=argparse.SUPPRESS)
     s_init.add_argument("--progression")
     s_init.add_argument("--shared-canon-json")
     s_init.add_argument("--created-by", default="human")
@@ -168,8 +179,9 @@ def build_parser() -> argparse.ArgumentParser:
     s_add.add_argument("--position", type=int, required=True)
     s_add.add_argument("--project-id")
     s_add.add_argument("--formats")
-    s_add.add_argument("--audience")
-    s_add.add_argument("--book-type")
+    s_add.add_argument("--audience", choices=AUDIENCE_BANDS)
+    s_add.add_argument("--product-type", choices=PRODUCT_TYPES, dest="product_type", help="Product family for this volume.")
+    s_add.add_argument("--book-type", dest="product_type", choices=PRODUCT_TYPES, help=argparse.SUPPRESS)
     s_add.add_argument("--created-by", default="human")
     s_link = series_sub.add_parser("link", help="Attach an already-existing project to a planned series slot.")
     s_link.add_argument("series_id")
@@ -181,6 +193,11 @@ def build_parser() -> argparse.ArgumentParser:
     s_milestone = series_sub.add_parser("milestone", help="Report whether every volume in the set has reached a target lifecycle state.")
     s_milestone.add_argument("series_id")
     s_milestone.add_argument("--target-state", default="PUBLISHED")
+    s_recommend = series_sub.add_parser("recommend", help="Read-only: the single next actionable volume for the set (create next, or advance the lowest created volume).")
+    s_recommend.add_argument("series_id")
+    s_recommend.add_argument("--target-state", default="PUBLISHED")
+    s_suggest = series_sub.add_parser("suggest-from-research", help="Read-only: propose series plans from a category's research backlog. Suggests only; creates and promotes nothing.")
+    s_suggest.add_argument("category")
 
     event = sub.add_parser("event", help="Read project event history.")
     event_sub = event.add_subparsers(dest="event_command", required=True)
@@ -317,7 +334,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     catalog = sub.add_parser("catalog", help="Catalogue maintenance.")
     catalog_sub = catalog.add_subparsers(dest="catalog_command", required=True)
-    catalog_sub.add_parser("rebuild")
+    catalog_sub.add_parser("rebuild", help="Regenerate both products.json and series.json.")
+    catalog_sub.add_parser("verify", help="Read-only: assert product<->series cross-links resolve both ways.")
 
     marketing = sub.add_parser("marketing", help="Prepare marketing/listing guidance and assets (offline; no external writes).")
     marketing_sub = marketing.add_subparsers(dest="marketing_command", required=True)
@@ -352,19 +370,23 @@ def _dispatch_project(args: argparse.Namespace, root: Path) -> Any:
 def _dispatch_series(args: argparse.Namespace, root: Path) -> Any:
     if args.series_command == "init":
         books = _load_json_argument(args.books_json, [])
-        return init_series(root, args.title, args.premise, books, args.audience, args.language, args.series_id, args.book_type, args.progression, _load_json_argument(args.shared_canon_json, {}) or None, args.created_by, not args.no_first_book)
+        return init_series(root, args.title, args.premise, books, args.audience, args.language, args.series_id, args.product_type, args.progression, _load_json_argument(args.shared_canon_json, {}) or None, args.created_by, not args.no_first_book)
     if args.series_command == "list":
         return list_series(root)
     if args.series_command == "status":
         return series_status(root, args.series_id)
     if args.series_command == "add-book":
-        return add_book(root, args.series_id, args.position, args.project_id, args.formats, args.audience, args.book_type, args.created_by)
+        return add_book(root, args.series_id, args.position, args.project_id, args.formats, args.audience, args.product_type, args.created_by)
     if args.series_command == "link":
         return link_book(root, args.series_id, args.position, args.project_id, args.created_by)
     if args.series_command == "context":
         return sibling_context(root, args.project_id)
     if args.series_command == "milestone":
         return series_milestone(root, args.series_id, args.target_state)
+    if args.series_command == "recommend":
+        return series_recommend(root, args.series_id, args.target_state)
+    if args.series_command == "suggest-from-research":
+        return suggest_series_from_research(root, args.category)
     raise RuntimeError("Unhandled series command")
 
 
@@ -502,6 +524,8 @@ def dispatch(args: argparse.Namespace, root: Path) -> Any:
     if args.command == "niche":
         return assess_niche(root, args.project_id)
     if args.command == "catalog":
+        if args.catalog_command == "verify":
+            return verify_catalog(root)
         return rebuild_catalog(root)
     if args.command == "marketing":
         if args.marketing_command == "guide":

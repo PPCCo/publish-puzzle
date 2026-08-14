@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Book Series",
+  "title": "Product Series",
+  "description": "A product series/set (e.g. easy -> medium -> hard puzzle set, or a multi-volume coloring library). Groups product projects that ship together. Vocabulary MUST match project.schema.json (product families, product audience bands, product formats). Each volume remains an independent project with its own full gate sequence; the manifest links volumes and records shared plan/canon only.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -15,7 +16,12 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0"
+      "description": "1.1 is the current product-vocabulary schema. 1.0 (novel-framework enums) is accepted only for in-memory migration on read; new manifests are written as 1.1.",
+      "type": "string",
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
     },
     "series_id": {
       "type": "string",
@@ -30,29 +36,53 @@
       "minLength": 1
     },
     "audience": {
-      "description": "The series' primary audience band. Individual books MAY set a different band (e.g. a progression from early-reader to teen).",
+      "description": "The series' primary product audience band (mirrors project.schema.json). Individual volumes MAY set a different band (e.g. a difficulty progression across bands).",
       "type": "string",
       "enum": [
-        "early-reader-6-8",
-        "middle-grade-9-12",
+        "kids-4-8",
+        "kids-6-10",
+        "tween-8-12",
         "teen-13-17",
         "adult-general",
-        "adult-specialist"
+        "senior-large-print"
       ]
     },
     "language": {
       "type": "string",
       "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$"
     },
+    "product_type": {
+      "description": "Default product family for the set (mirrors project.schema.json). Individual volumes MAY override per slot.",
+      "type": "string",
+      "enum": [
+        "puzzle-book",
+        "activity-book",
+        "coloring-book",
+        "guided-journal",
+        "workbook",
+        "planner",
+        "digital-printable"
+      ]
+    },
     "book_type": {
-      "type": "string"
+      "description": "DEPRECATED alias for product_type, retained one release for backward compatibility. When present it MUST use the product-family enum. Prefer product_type.",
+      "type": "string",
+      "enum": [
+        "puzzle-book",
+        "activity-book",
+        "coloring-book",
+        "guided-journal",
+        "workbook",
+        "planner",
+        "digital-printable"
+      ]
     },
     "progression": {
-      "description": "How the set advances across books (e.g. basic to advanced), and what each book may assume readers already covered.",
+      "description": "How the set advances across volumes (e.g. easy to hard), and what each volume may assume readers already covered.",
       "type": "string"
     },
     "shared_canon": {
-      "description": "Continuity intent shared across the set: recurring characters, terminology, visual system, units, and naming that MUST stay consistent between books.",
+      "description": "Continuity intent shared across the set: recurring themes, terminology, visual system, difficulty ladder, and naming that MUST stay consistent between volumes.",
       "type": "object",
       "additionalProperties": true
     },
@@ -91,33 +121,44 @@
             "minLength": 1
           },
           "scope": {
-            "description": "What this book covers, and what it deliberately leaves to earlier or later books in the set.",
+            "description": "What this volume covers, and what it deliberately leaves to earlier or later volumes in the set.",
             "type": "string",
             "minLength": 1
           },
           "audience": {
             "type": "string",
             "enum": [
-              "early-reader-6-8",
-              "middle-grade-9-12",
+              "kids-4-8",
+              "kids-6-10",
+              "tween-8-12",
               "teen-13-17",
               "adult-general",
-              "adult-specialist"
+              "senior-large-print"
+            ]
+          },
+          "product_type": {
+            "type": "string",
+            "enum": [
+              "puzzle-book",
+              "activity-book",
+              "coloring-book",
+              "guided-journal",
+              "workbook",
+              "planner",
+              "digital-printable"
             ]
           },
           "book_type": {
+            "description": "DEPRECATED alias for product_type at the slot level, retained one release. MUST use the product-family enum when present.",
             "type": "string",
             "enum": [
-              "fiction",
-              "illustrated-fiction",
-              "nonfiction",
-              "illustrated-nonfiction",
-              "picture-book",
-              "reference",
-              "encyclopedia",
-              "atlas",
-              "textbook",
-              "activity-book"
+              "puzzle-book",
+              "activity-book",
+              "coloring-book",
+              "guided-journal",
+              "workbook",
+              "planner",
+              "digital-printable"
             ]
           },
           "formats": {
@@ -126,17 +167,14 @@
             "items": {
               "type": "string",
               "enum": [
-                "epub",
-                "fixed-layout-epub",
                 "paperback",
                 "hardcover",
-                "audiobook",
-                "read-along"
+                "digital-pdf"
               ]
             }
           },
           "assumes_prior_positions": {
-            "description": "Positions of earlier books whose material this book may assume the reader already covered.",
+            "description": "Positions of earlier volumes whose material this volume may assume the reader already covered.",
             "type": "array",
             "uniqueItems": true,
             "items": {
@@ -145,7 +183,7 @@
             }
           },
           "project_id": {
-            "description": "Set once the book is created as its own project. Null while the slot is still only planned.",
+            "description": "Set once the volume is created as its own project. Null while the slot is still only planned.",
             "type": [
               "string",
               "null"

@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "products": [
     {
       "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
@@ -7,11 +7,11 @@
       "product_type": "puzzle-book",
       "audience": "senior-large-print",
       "edition": 1,
-      "state": "DISCOVERY",
+      "state": "RELEASE_AUTHORIZATION",
       "formats": [
         "paperback"
       ],
-      "updated_at": "2026-07-31T12:22:33Z"
+      "updated_at": "2026-08-01T01:30:59Z"
     }
   ]
 }

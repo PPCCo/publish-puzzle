@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Products Catalogue",
+  "description": "Denormalised roll-up of every product project under projects/. Built deterministically by sync_catalog; never a source of truth. Products that belong to a series carry a compact back-reference so the router can answer membership from this file alone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "products"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "project_id",
+              "working_title",
+              "state"
+            ]
+          },
+          {
+            "required": [
+              "project_id",
+              "error"
+            ]
+          }
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "working_title": {
+            "type": "string"
+          },
+          "product_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "audience": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "edition": {
+            "type": "integer"
+          },
+          "state": {
+            "type": "string"
+          },
+          "formats": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "series": {
+            "description": "Present only when the product belongs to a series. Compact back-reference read from the product's project.yaml series block.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "series_id",
+              "position",
+              "total_planned"
+            ],
+            "properties": {
+              "series_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "total_planned": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

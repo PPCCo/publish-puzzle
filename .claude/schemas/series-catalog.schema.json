@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Series Catalogue",
+  "description": "Denormalised roll-up of every series manifest under series/. Built deterministically by sync_series_catalog; never a source of truth. Each entry surfaces its member project IDs and a per-slot progress roll-up so the router can render membership and progress without opening every project.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "series"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "1.0",
+        "1.1"
+      ]
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "required": [
+              "series_id",
+              "series_title"
+            ]
+          },
+          {
+            "required": [
+              "series_id",
+              "error"
+            ]
+          }
+        ],
+        "properties": {
+          "series_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "series_title": {
+            "type": "string"
+          },
+          "audience": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "product_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "planned_books": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "created_books": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "created_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "member_project_ids": {
+            "description": "Every created member project's ID, in slot-position order.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "slots": {
+            "description": "Per-slot progress roll-up so the router can render membership + progress without opening each project.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "position"
+              ],
+              "properties": {
+                "position": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "project_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "state": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

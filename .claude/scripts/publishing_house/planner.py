@@ -34,6 +34,74 @@ def load_playbook(root: Path) -> dict[str, Any]:
     return load_json(root / ".claude" / "config" / "state_playbook.json")
 
 
+# Main-path state at/after which a product is "done enough" that advancing the
+# SET (creating the next volume) becomes the natural next step. Off-path states
+# (PAUSED/CANCELLED/ERROR) never trigger it.
+_SERIES_ADVANCE_FROM_STATE = "RELEASE_AUTHORIZATION"
+_OFF_PATH_STATES = frozenset({"PAUSED", "CANCELLED", "ERROR"})
+
+
+def _series_next_advisory(
+    root: Path, paths: ProjectPaths, current: str
+) -> dict[str, Any] | None:
+    """Advisory-only 'create the next volume in the set' hint.
+
+    Returns ``None`` (the common case) unless ALL hold:
+      * the project carries a ``series`` back-reference (it is in a set);
+      * the current main-path state is at/after ``RELEASE_AUTHORIZATION``
+        (off-path states never qualify);
+      * the series manifest has a higher-positioned slot with no project yet.
+
+    It never auto-creates a volume, never bypasses a gate, and never alters the
+    caller's ``all_forward_options`` or ``blockers``. Non-series projects and
+    early-stage projects get ``None`` so they are wholly unaffected.
+    """
+    project = load_yaml(paths.config, default={}) or {}
+    link = project.get("series")
+    if not isinstance(link, dict) or not link.get("series_id"):
+        return None
+
+    order = workflow_config(root).get("states", [])
+    if current in _OFF_PATH_STATES or current not in order:
+        return None
+    if _SERIES_ADVANCE_FROM_STATE not in order:
+        return None
+    if order.index(current) < order.index(_SERIES_ADVANCE_FROM_STATE):
+        return None
+
+    # Lazy import keeps planner free of a load-time dependency on series.py.
+    from .paths import SeriesPaths
+    from .series import _load_manifest
+
+    series_id = link["series_id"]
+    series_paths = SeriesPaths(root, series_id)
+    if not series_paths.manifest.exists():
+        return None
+    manifest = _load_manifest(series_paths.manifest)
+    position = link.get("position")
+    if position is None:
+        return None
+    later_uncreated = sorted(
+        (
+            slot
+            for slot in manifest.get("books", [])
+            if slot.get("position", 0) > position and not slot.get("project_id")
+        ),
+        key=lambda slot: slot["position"],
+    )
+    if not later_uncreated:
+        return None
+    nxt = later_uncreated[0]
+    return {
+        "series_id": series_id,
+        "next_position": nxt["position"],
+        "next_working_title": nxt.get("working_title"),
+        "suggested_command": (
+            f"series add-book {series_id} --position {nxt['position']}"
+        ),
+    }
+
+
 def _project_formats(paths: ProjectPaths) -> list[str]:
     project = load_yaml(paths.config, default={}) or {}
     formats = project.get("formats") or project.get("sales_channels") or []
@@ -116,7 +184,11 @@ def plan_next(root: Path, project_id: str) -> dict[str, Any]:
         "blockers": [],
         "human_gate_command": None,
         "all_forward_options": actions,
+        "series_next": None,
     }
+    # Advisory series hint, attached to every return path. Never affects
+    # all_forward_options, blockers, or the autonomy decision below.
+    result["series_next"] = _series_next_advisory(root, paths, current)
 
     # Terminal / out-of-scope states.
     if not entry or current in set(workflow_config(root).get("terminal_states", [])):

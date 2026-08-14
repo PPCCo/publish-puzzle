@@ -242,7 +242,7 @@ def list_projects(root: Path) -> list[dict[str, Any]]:
         try:
             project = load_yaml(config)
             state = load_json(config.parent / "state.json")
-            output.append({
+            entry: dict[str, Any] = {
                 "project_id": project["project_id"],
                 "working_title": project["working_title"],
                 "product_type": project.get("product_type") or project.get("book_type"),
@@ -251,7 +251,17 @@ def list_projects(root: Path) -> list[dict[str, Any]]:
                 "state": state["current_state"],
                 "formats": project["formats"],
                 "updated_at": state["updated_at"],
-            })
+            }
+            # Cross-link products -> series: surface a compact back-reference so the
+            # router can answer "is this product part of a set?" from one entry.
+            link = project.get("series")
+            if isinstance(link, dict) and link.get("series_id"):
+                entry["series"] = {
+                    "series_id": link["series_id"],
+                    "position": link.get("position"),
+                    "total_planned": link.get("total_planned"),
+                }
+            output.append(entry)
         except Exception as exc:  # noqa: BLE001
             output.append({"project_id": config.parent.name, "state": "ERROR", "error": str(exc)})
     return output
@@ -307,7 +317,7 @@ def project_status(root: Path, project_id: str) -> dict[str, Any]:
                 severity = finding.get("severity", "note")
                 if severity in open_findings:
                     open_findings[severity] += 1
-    return {
+    result: dict[str, Any] = {
         "project": project,
         "state": state,
         "active_artifacts": state.get("active_artifacts", {}),
@@ -318,9 +328,24 @@ def project_status(root: Path, project_id: str) -> dict[str, Any]:
         "next_actions": next_actions(root, project_id)["actions"],
         "validation": validate_project(root, project_id),
     }
+    # Read-only series awareness: when this product belongs to a set, surface a
+    # compact summary so status/router callers see the linkage without opening
+    # the manifest. Non-series projects omit the field. Creates no state.
+    link = project.get("series")
+    if isinstance(link, dict) and link.get("series_id"):
+        result["series"] = {
+            "series_id": link["series_id"],
+            "position": link.get("position"),
+            "total_planned": link.get("total_planned"),
+        }
+    return result
 
 
 def sync_catalog(root: Path) -> dict[str, Any]:
-    catalog = {"schema_version": "1.0", "products": list_projects(root)}
+    catalog = {"schema_version": "1.1", "products": list_projects(root)}
+    errors = validate_file_data(root, catalog, "products-catalog.schema.json")
+    if errors:
+        raise ValidationFailure("Invalid products catalog: " + "; ".join(errors))
+    (root / "catalog").mkdir(parents=True, exist_ok=True)
     atomic_write_json(root / "catalog" / "products.json", catalog)
     return catalog
