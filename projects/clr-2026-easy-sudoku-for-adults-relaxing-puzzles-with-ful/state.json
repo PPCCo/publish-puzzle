@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-  "current_state": "VISUAL_DEVELOPMENT",
-  "previous_state": "INTERIOR_APPROVAL",
+  "current_state": "READY_FOR_SUBMISSION",
+  "previous_state": "RELEASE_AUTHORIZATION",
   "revision_cycle": 0,
   "targeted_repairs": {},
   "active_artifacts": {
@@ -10,7 +10,19 @@
     "product-brief": "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608",
     "content-plan": "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
     "content-sudoku": "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
-    "interior-pdf": "sha256:f52bda82af5325773d0b4cc52649d1e583afd50c37cd6154ca6698ab389e7eee"
+    "interior-pdf": "sha256:717acc5a7820ed4fdc969e8374bddea1f8e18cb4bc9a306f0273cdc821ee0594",
+    "cover-pdf": "sha256:52a84f52595a18752a9faa5a9ba5ca1bef7624680f1468cf410a4bdfa20e104f",
+    "cover-art-direction": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+    "digital-bundle": "sha256:3f84057009b69b15da90a5fbddc57df98faa2fdb4cf10522e7577a67e38c0c31",
+    "accessibility-gate": "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209",
+    "rights-ledger": "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934",
+    "rights-gate": "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
+    "metadata": "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
+    "metadata-validation": "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
+    "listing-kit": "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
+    "platform-package-kdp": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+    "platform-package-etsy": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+    "channel-package": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27"
   },
   "required_reviews": [],
   "completed_reviews": [],
@@ -26,10 +38,15 @@
     },
     "weighted_overall": 4.8
   },
-  "rights_gate": null,
+  "rights_gate": {
+    "decision": "PASS",
+    "evaluated_at": "2026-08-14T11:35:46Z",
+    "unlinked": 0,
+    "blocked": 0
+  },
   "invalidated_approvals": [],
-  "updated_at": "2026-08-14T10:18:10Z",
-  "updated_by": "interior-builder",
+  "updated_at": "2026-08-14T13:42:18Z",
+  "updated_by": "PPC",
   "niche_assessment": {
     "decision": "PASS",
     "opportunity_score": 0.25,
@@ -40,5 +57,10 @@
     "evaluated_at": "2026-08-14T10:11:10Z",
     "item_count": 200,
     "failed_batches": 0
+  },
+  "accessibility_gate": {
+    "decision": "PASS",
+    "evaluated_at": "2026-08-14T11:31:54Z",
+    "issues": 0
   }
 }

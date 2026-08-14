@@ -88,7 +88,14 @@ def _report_summary(path: Path) -> dict[str, Any]:
         data = load_json(path)
     except Exception:  # noqa: BLE001
         return {"present": True, "decision": "INVALID"}
-    decision = str(data.get("decision") or data.get("status") or "").upper() or None
+    # Different deterministic reports name their decision field differently:
+    # proof/gate reports use ``decision``/``status`` (PASS/FAIL/WARNING), while the
+    # channel-package builder records ``preflight_status`` (pass/warning/fail). Read
+    # all three so a correctly-built package is not misreported as missing/None.
+    decision = (
+        str(data.get("decision") or data.get("status") or data.get("preflight_status") or "").upper()
+        or None
+    )
     return {"present": True, "decision": decision}
 
 

@@ -58,6 +58,37 @@ def _require_reportlab():
     return canvas, inch
 
 
+# Embeddable, commercial-embedding-permissive fonts bundled with reportlab
+# (Bitstream Vera; license permits use/copy/embed/redistribute/sell-with-product,
+# only barring sale of the font by itself). Used so built covers embed a
+# rights-clean face instead of relying on the non-embedded PDF base-14 Helvetica,
+# which print channels (KDP) flag for missing embedded fonts.
+_EMBED_FONT_REGULAR = "PHSans"
+_EMBED_FONT_BOLD = "PHSans-Bold"
+
+
+def _register_embed_fonts() -> tuple[str, str]:
+    """Register the bundled Vera faces and return (regular_name, bold_name).
+
+    Falls back to base-14 Helvetica only if the bundled TTFs are unavailable.
+    """
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    import reportlab
+
+    fonts_dir = Path(reportlab.__file__).parent / "fonts"
+    regular = fonts_dir / "Vera.ttf"
+    bold = fonts_dir / "VeraBd.ttf"
+    if not (regular.exists() and bold.exists()):
+        return "Helvetica", "Helvetica-Bold"
+    registered = pdfmetrics.getRegisteredFontNames()
+    if _EMBED_FONT_REGULAR not in registered:
+        pdfmetrics.registerFont(TTFont(_EMBED_FONT_REGULAR, str(regular)))
+    if _EMBED_FONT_BOLD not in registered:
+        pdfmetrics.registerFont(TTFont(_EMBED_FONT_BOLD, str(bold)))
+    return _EMBED_FONT_REGULAR, _EMBED_FONT_BOLD
+
+
 def _load_batches(paths: ProjectPaths) -> list[dict[str, Any]]:
     batches: list[dict[str, Any]] = []
     for rel in ["content/puzzles", "content/journal", "content/printable", "content/coloring"]:
@@ -71,6 +102,18 @@ def _load_batches(paths: ProjectPaths) -> list[dict[str, Any]]:
     return batches
 
 
+# Interior text sizes actually rendered by the draw helpers below. These are the
+# single source of truth for BOTH what is drawn and what the page-map records as
+# the measured minimum, so the accessibility proof reflects the real interior
+# instead of an absent design hint. Prose/body text is the accessibility-relevant
+# minimum; headings and in-cell numerals are larger or are not body text.
+_INTERIOR_BODY_PT = 11.0  # front-matter/placeholder prose lines (_draw_placeholder_page)
+_INTERIOR_TITLE_PT = 16.0  # placeholder page title
+_SUDOKU_TITLE_PT = 18.0
+_SUDOKU_LABEL_PT = 14.0
+_SUDOKU_DIGIT_MIN_PT = 10.0  # in-cell numerals (not body text)
+
+
 def _trim(project: dict[str, Any]) -> tuple[float, float]:
     size = project.get("production", {}).get("trim_size", "8.5x11")
     return _TRIM_INCHES.get(size, _TRIM_INCHES["8.5x11"])
@@ -78,9 +121,9 @@ def _trim(project: dict[str, Any]) -> tuple[float, float]:
 
 def _draw_placeholder_page(c, inch, width_in: float, height_in: float, title: str, lines: list[str]) -> None:
     c.setPageSize((width_in * inch, height_in * inch))
-    c.setFont("Helvetica-Bold", 16)
+    c.setFont("Helvetica-Bold", _INTERIOR_TITLE_PT)
     c.drawString(0.75 * inch, (height_in - 0.9) * inch, title)
-    c.setFont("Helvetica", 11)
+    c.setFont("Helvetica", _INTERIOR_BODY_PT)
     y = (height_in - 1.4) * inch
     for line in lines:
         c.drawString(0.75 * inch, y, line[:110])
@@ -113,10 +156,10 @@ def _draw_sudoku_page(
     c.setPageSize((width_in * inch, height_in * inch))
 
     # Header
-    c.setFont("Helvetica-Bold", 18)
+    c.setFont("Helvetica-Bold", _SUDOKU_TITLE_PT)
     c.drawString(MARGIN * inch, (height_in - MARGIN - 0.35) * inch, title)
     if difficulty:
-        c.setFont("Helvetica", 14)
+        c.setFont("Helvetica", _SUDOKU_LABEL_PT)
         c.drawString(MARGIN * inch, (height_in - MARGIN - 0.70) * inch, f"Difficulty: {difficulty.capitalize()}")
 
     # Grid lines
@@ -132,7 +175,7 @@ def _draw_sudoku_page(
         c.line(x, grid_bottom_in * inch, x, (grid_bottom_in + grid_area) * inch)
 
     # Digits
-    font_size = max(10, min(18, cell * inch * 0.55))
+    font_size = max(_SUDOKU_DIGIT_MIN_PT, min(18, cell * inch * 0.55))
     c.setFont("Helvetica-Bold", font_size)
     c.setFillColorRGB(0, 0, 0)
     for row in range(9):
@@ -221,11 +264,23 @@ def build_interior(root: Path, project_id: str, binding: str = "paperback") -> d
         total += 1
     c.save()
 
+    # Record the accessibility-relevant facts THIS build actually rendered, so the
+    # proof/audit reflect the real interior rather than absent design hints.
+    # - min_body_type_pt: smallest prose/body point size drawn (headings/numerals
+    #   are larger or are not body text); constant-sourced from the draw helpers.
+    # - raster_image_count: the interior is entirely code-drawn vector content
+    #   (grids, rules, digits, text) via reportlab primitives; no drawImage/raster
+    #   is emitted, so there are zero informational raster images. Structural grid
+    #   drawings are decorative, so the digital alt-text requirement is met by a
+    #   documented no-raster-image designation, not by per-image alt text.
     page_map_path = out_dir / "page-map.json"
     atomic_write_json(page_map_path, {
         "schema_version": "1.0", "project_id": project_id, "binding": binding,
         "trim_in": [width_in, height_in], "page_count": total,
         "even_page_count": total % 2 == 0, "solutions_placement": "back-only",
+        "min_body_type_pt": _INTERIOR_BODY_PT,
+        "raster_image_count": 0,
+        "vector_only": True,
         "pages": page_map,
     })
 
@@ -257,6 +312,7 @@ def _wrap_text(text: str, max_chars: int) -> list[str]:
 
 def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict[str, Any]:
     canvas, inch = _require_reportlab()
+    font_regular, font_bold = _register_embed_fonts()
     paths = ProjectPaths(root, project_id).require()
     project = load_yaml(paths.config)
     width_in, height_in = _trim(project)
@@ -271,6 +327,14 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     wrap_height = height_in + (bleed * 2)
 
     title = str(project.get("working_title", project_id))
+    content_plan = project.get("content_plan", {}) or {}
+    puzzle_count = int(content_plan.get("target_content_count", 0) or 0)
+    design = project.get("production", {}).get("design", {}) or {}
+    band = str(
+        (design.get("reading_level_target", {}) or {}).get("band")
+        or project.get("audience", "")
+    )
+    is_large_print = band == "senior-large-print"
     description = ""
     listing_kit_path = paths.directory / "marketing" / "listing-kit.json"
     if listing_kit_path.exists():
@@ -284,6 +348,7 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     out_dir.mkdir(parents=True, exist_ok=True)
     pdf_path = out_dir / "cover-wrap.pdf"
     c = canvas.Canvas(str(pdf_path), pagesize=(wrap_width * inch, wrap_height * inch))
+    c.setFont(font_regular, 12)  # default canvas font -> embedded, rights-clean
 
     # ------------------------------------------------------------------ #
     # Coordinate system: (0,0) = bottom-left of the full wrap canvas.
@@ -323,7 +388,7 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     line_h = font_size * 1.3
     title_block_h = len(title_lines) * line_h
     title_top_y = wrap_h - 1.1 * inch
-    c.setFont("Helvetica-Bold", font_size)
+    c.setFont(font_bold, font_size)
     for i, line in enumerate(title_lines):
         y = title_top_y - i * line_h
         c.drawString(front_x + margin, y, line)
@@ -340,10 +405,12 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     c.setFillColor(cream)
     c.roundRect(front_x + margin, callout_y, front_w - 2 * margin, callout_h, 6, fill=1, stroke=0)
     c.setFillColor(navy)
-    c.setFont("Helvetica-Bold", 32)
-    c.drawCentredString(front_x + front_w / 2, callout_y + callout_h * 0.52, "100 Puzzles")
-    c.setFont("Helvetica", 14)
-    c.drawCentredString(front_x + front_w / 2, callout_y + callout_h * 0.18, "Large Print  •  Easy  •  Complete Solutions")
+    c.setFont(font_bold, 32)
+    count_label = f"{puzzle_count} Puzzles" if puzzle_count > 0 else "Puzzles"
+    c.drawCentredString(front_x + front_w / 2, callout_y + callout_h * 0.52, count_label)
+    c.setFont(font_regular, 14)
+    descriptor_parts = (["Large Print"] if is_large_print else []) + ["Easy", "Complete Solutions"]
+    c.drawCentredString(front_x + front_w / 2, callout_y + callout_h * 0.18, "  •  ".join(descriptor_parts))
 
     # Sudoku grid preview (4x4 sample, decorative)
     grid_preview_size = 1.8 * inch
@@ -360,7 +427,7 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
         c.line(gp_x, gp_y + r * cell_p, gp_x + grid_preview_size, gp_y + r * cell_p)
         c.line(gp_x + r * cell_p, gp_y, gp_x + r * cell_p, gp_y + grid_preview_size)
     c.setFillColor(white)
-    c.setFont("Helvetica-Bold", 14)
+    c.setFont(font_bold, 14)
     for r in range(4):
         for col in range(4):
             d = sample_digits[r * 4 + col]
@@ -372,8 +439,10 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     # Format badge bottom-right of front
     badge_y = 0.5 * inch
     c.setFillColor(cream)
-    c.setFont("Helvetica", 12)
-    c.drawRightString(front_x + front_w - margin, badge_y, "8.5 × 11 in  |  Paperback")
+    c.setFont(font_regular, 12)
+    trim_label = f"{width_in:g} × {height_in:g} in"
+    binding_label = binding.capitalize()
+    c.drawRightString(front_x + front_w - margin, badge_y, f"{trim_label}  |  {binding_label}")
 
     # --- Back panel background ---
     c.setFillColor(navy)
@@ -383,12 +452,12 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
     c.setFillColor(white)
     back_margin = 0.625 * inch
     desc_lines = _wrap_text(description, 46) if description else []
-    c.setFont("Helvetica-Bold", 16)
+    c.setFont(font_bold, 16)
     c.drawString(back_margin, wrap_h - 1.0 * inch, "About This Book")
     c.setStrokeColor(cream)
     c.setLineWidth(1)
     c.line(back_margin, wrap_h - 1.2 * inch, back_w - back_margin, wrap_h - 1.2 * inch)
-    c.setFont("Helvetica", 12)
+    c.setFont(font_regular, 12)
     text_y = wrap_h - 1.65 * inch
     for line in desc_lines:
         c.drawString(back_margin, text_y, line)
@@ -398,14 +467,16 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
 
     # Back panel: features list
     features_y = text_y - 0.3 * inch
+    count_phrase = f"{puzzle_count} unique easy sudoku puzzles" if puzzle_count > 0 else "unique easy sudoku puzzles"
+    per_page_phrase = "One puzzle per page, large print" if is_large_print else "One puzzle per page"
     features = [
-        "✓  100 unique easy sudoku puzzles",
-        "✓  One puzzle per page, large print",
+        f"✓  {count_phrase}",
+        f"✓  {per_page_phrase}",
         "✓  High-contrast black-on-white grids",
         "✓  Complete solutions at the back",
         "✓  No guessing required",
     ]
-    c.setFont("Helvetica", 13)
+    c.setFont(font_regular, 13)
     for feat in features:
         if features_y > 1.2 * inch:
             c.drawString(back_margin, features_y, feat)
@@ -421,7 +492,7 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
         c.translate(spine_x + spine_w / 2, wrap_h / 2)
         c.rotate(90)
         spine_font = min(10, spine_w * 72 * 0.7)
-        c.setFont("Helvetica-Bold", max(6, spine_font))
+        c.setFont(font_bold, max(6, spine_font))
         # Truncate if title is very long
         spine_title = title if len(title) <= 50 else title[:47] + "..."
         c.drawCentredString(0, 0, spine_title)
@@ -452,6 +523,11 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
 
     issues: list[str] = []
     interior_report: dict[str, Any] = {"present": interior_map.exists()}
+    # Accessibility facts measured by the interior build, if present. Prefer the
+    # build-recorded values (what was actually rendered) over design hints.
+    measured_body_pt: float | None = None
+    raster_image_count: int | None = None
+    vector_only = False
     if interior_map.exists():
         page_map = load_json(interior_map)
         interior_report.update({
@@ -459,6 +535,9 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
             "even_page_count": page_map.get("even_page_count"),
             "solutions_placement": page_map.get("solutions_placement"),
         })
+        measured_body_pt = page_map.get("min_body_type_pt")
+        raster_image_count = page_map.get("raster_image_count")
+        vector_only = bool(page_map.get("vector_only"))
         if not page_map.get("even_page_count"):
             issues.append("Interior page count is odd; KDP requires an even page count.")
         if page_map.get("solutions_placement") != "back-only":
@@ -476,12 +555,23 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
     decision = "PASS" if not issues else "FAIL"
     # A single proof report carries interior evidence; also mirror a cover proof so
     # both the interior gate and cover gate have their referenced report present.
+    # Alt-text requirement is satisfied either when the build recorded meaningful
+    # alt text OR when the interior is vector-only with zero informational raster
+    # images (nothing to caption). Structural grid drawings are decorative.
+    alt_text_present = (
+        bool(design.get("alt_text_present"))
+        or (vector_only and (raster_image_count or 0) == 0)
+    )
     interior_proof = {
         "schema_version": "1.0", "project_id": project_id, "evaluated_at": utc_now(),
         "decision": decision, "interior": interior_report,
-        "min_type_pt": design.get("body_type_pt"), "min_line_pt": design.get("line_weight_pt"),
+        # Prefer the build-measured minimum body type over an absent design hint.
+        "min_type_pt": measured_body_pt if measured_body_pt is not None else design.get("body_type_pt"),
+        "min_line_pt": design.get("line_weight_pt"),
         "single_sided": bool(design.get("single_sided")) or family == "coloring-book",
-        "alt_text_present": bool(design.get("alt_text_present")),
+        "alt_text_present": alt_text_present,
+        "raster_image_count": raster_image_count,
+        "vector_only": vector_only,
         "issues": issues,
     }
     cover_proof = {

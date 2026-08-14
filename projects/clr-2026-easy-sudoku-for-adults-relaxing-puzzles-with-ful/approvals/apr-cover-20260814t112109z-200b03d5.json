@@ -1,0 +1,18 @@
+{
+  "approval_id": "apr-cover-20260814t112109z-200b03d5",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "cover",
+  "approver": "PPC",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461"
+  ],
+  "scope": "reviewed and accepted the cover",
+  "exclusions": [],
+  "notes": "Cover art-direction source approved. Front callout derives 200 Puzzles from content_plan; no Large Print claim (adult-general band). Fonts Bitstream Vera embedded FontFile2, cleared rgt-font-vera-roman/bold. Proof PASS, rights gate PASS.",
+  "created_at": "2026-08-14T11:21:09Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

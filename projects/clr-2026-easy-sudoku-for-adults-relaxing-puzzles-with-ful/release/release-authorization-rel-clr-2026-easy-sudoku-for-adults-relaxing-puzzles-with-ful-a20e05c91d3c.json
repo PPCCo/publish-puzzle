@@ -1,0 +1,37 @@
+{
+  "authorization_id": "rel-clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful-a20e05c91d3c",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "edition": 1,
+  "channels": [
+    "kdp",
+    "etsy"
+  ],
+  "product_types": [
+    "puzzle-book"
+  ],
+  "territories": [
+    "US"
+  ],
+  "artifact_hashes": [
+    "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+    "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27"
+  ],
+  "package_manifest_hashes": {
+    "kdp": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+    "etsy": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27"
+  },
+  "pricing_scope": {},
+  "permitted_operations": [
+    "submit",
+    "create-private-draft"
+  ],
+  "maximum_external_spend": 0.0,
+  "currency": "USD",
+  "approvers": [
+    "PPC"
+  ],
+  "nonce": "0ffeef50c8c04ba4909f7c5b41e83026",
+  "created_at": "2026-08-14T13:41:50Z",
+  "expires_at": "2026-08-21T13:41:50Z",
+  "used_at": null
+}

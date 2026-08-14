@@ -1,5 +1,48 @@
 {
   "schema_version": "1.0",
   "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-  "records": []
+  "records": [
+    {
+      "rights_id": "rgt-font-vera-roman",
+      "asset_path": ".venv/lib/python3.14/site-packages/reportlab/fonts/Vera.ttf",
+      "asset_hash": "sha256:c4c45690b345435b2cba52ecabe275f05e49b389b39fe68ad03afbb551288d3d",
+      "asset_type": "font",
+      "creator_or_provider": "Bitstream, Inc. (Bitstream Vera)",
+      "source": "Bundled with reportlab; license at .venv/lib/python3.14/site-packages/reportlab/fonts/bitstream-vera-license.txt",
+      "acquired_at": "2026-08-14T11:10:00Z",
+      "creation_method": "open-license",
+      "model_or_tool": null,
+      "commercial_use": true,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "clearance_status": "cleared",
+      "notes": "Bitstream Vera license grants free use, copy, merge, redistribution, and embedding, and permits bundling and sale within a larger product; only bars selling the font by itself. Copyright and permission notice retained. Embedded in cover as PHSans (regular face)."
+    },
+    {
+      "rights_id": "rgt-font-vera-bold",
+      "asset_path": ".venv/lib/python3.14/site-packages/reportlab/fonts/VeraBd.ttf",
+      "asset_hash": "sha256:cc037385e4d55bfde89b13e03091ee93bf40c0c52ddd391ff031ab276f13b8e9",
+      "asset_type": "font",
+      "creator_or_provider": "Bitstream, Inc. (Bitstream Vera)",
+      "source": "Bundled with reportlab; license at .venv/lib/python3.14/site-packages/reportlab/fonts/bitstream-vera-license.txt",
+      "acquired_at": "2026-08-14T11:10:00Z",
+      "creation_method": "open-license",
+      "model_or_tool": null,
+      "commercial_use": true,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "clearance_status": "cleared",
+      "notes": "Bitstream Vera license (open); embedded in cover as PHSans-Bold face."
+    }
+  ]
 }

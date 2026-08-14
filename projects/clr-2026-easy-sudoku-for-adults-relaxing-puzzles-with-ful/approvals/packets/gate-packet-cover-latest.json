@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0",
+  "kind": "approval-gate-packet",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "cover",
+  "generated_at": "2026-08-14T11:19:19Z",
+  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
+  "current_state": "COVER_APPROVAL",
+  "expected_state": "COVER_APPROVAL",
+  "state_matches_gate": true,
+  "scope": {
+    "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+    "audience": "adult-general",
+    "book_type": "puzzle-book",
+    "formats": [
+      "paperback",
+      "digital-pdf"
+    ],
+    "sales_channels": [
+      "kdp",
+      "etsy"
+    ],
+    "territory": null
+  },
+  "artifacts_under_review": [
+    {
+      "kind": "cover-art-direction",
+      "sha256": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+      "type": "cover-art-direction",
+      "path": "concepts/cover-art-direction.md",
+      "frozen": false,
+      "rights_status": "cleared",
+      "validation_status": "pass",
+      "registered": true
+    }
+  ],
+  "deterministic_evidence": [
+    {
+      "present": true,
+      "decision": "PASS",
+      "report": "outputs/proof/cover-proof-report.json",
+      "is_pass": true
+    }
+  ],
+  "channel_packages": [],
+  "series_context": null,
+  "open_findings": {
+    "counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0,
+      "note": 2
+    },
+    "open_blocker_or_major": []
+  },
+  "existing_approvals": {
+    "required_distinct_approvers": 1,
+    "current_distinct_approvers": [],
+    "current_count": 0,
+    "approvers_still_needed": 1,
+    "invalidated": []
+  },
+  "risks": [],
+  "ready_for_human_review": true,
+  "decision_options": [
+    "APPROVE",
+    "REJECT",
+    "REQUEST_CHANGES"
+  ],
+  "human_action": {
+    "recording_skill": "/product-approve-cover",
+    "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-approve-cover — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
+    "artifact_hashes_to_bind": [
+      "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461"
+    ],
+    "next_command": {
+      "form": "slash",
+      "command": "/product-approve-cover clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "description": "Approve the cover gate, or reject.",
+      "ready": true
+    },
+    "review_files": [
+      "content/content-plan.md",
+      "content/puzzles/sudoku-batch.json",
+      "concepts/cover-art-direction.md",
+      "outputs/cover/cover-wrap.pdf",
+      "notes/intake.md",
+      "outputs/interior/interior.pdf",
+      "notes/product-brief.md",
+      "outputs/proof/cover-proof-report.json",
+      "approvals/packets/gate-packet-cover-latest.json"
+    ]
+  },
+  "audit": {
+    "recent_events": [
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/concepts/cover-art-direction.md",
+          "sha256": "sha256:0351991ea2dcfdbf9718eb7b956f251890451de40566d0da91ff0334df3a4952",
+          "tool": "Edit"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260814T111201Z-1bb9d9d4",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T11:12:01Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/concepts/cover-art-direction.md",
+          "sha256": "sha256:cc0e3e5b06ab0660897df803912f32d3886625d6718f78cf4e3573170df8f9ec",
+          "tool": "Edit"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260814T111213Z-7463b53d",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T11:12:13Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/concepts/cover-art-direction.md",
+          "sha256": "sha256:329f76bb0f80fb994eeef18ebc04e7977802e29dfdaa0bbe7bd62d6e2ca71db6",
+          "tool": "Edit"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260814T111223Z-f22b5b98",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T11:12:23Z"
+      },
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/concepts/cover-art-direction.md",
+          "sha256": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+          "tool": "Edit"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260814T111236Z-6b724c96",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T11:12:36Z"
+      },
+      {
+        "actor": "art-director",
+        "details": {
+          "active": true,
+          "artifact_id": "art-cover-art-direction-9d6093a756d3",
+          "path": "concepts/cover-art-direction.md",
+          "sha256": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+          "type": "cover-art-direction"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T111243Z-3ba20ef1",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T11:12:43Z"
+      }
+    ]
+  },
+  "gate_is_required_transition": true
+}

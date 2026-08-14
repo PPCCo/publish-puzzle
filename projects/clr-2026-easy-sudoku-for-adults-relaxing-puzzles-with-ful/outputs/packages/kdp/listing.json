@@ -1,0 +1,46 @@
+{
+  "title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+  "subtitle": "200 Easy 9x9 Sudoku Puzzles with Complete Back-of-Book Solutions",
+  "contributors": [
+    {
+      "name": "Clarity Press",
+      "role": "publisher"
+    }
+  ],
+  "language": "en-US",
+  "description": "Easy Sudoku for Adults offers 200 relaxing 9x9 sudoku puzzles at a single easy difficulty tier, ideal for unwinding at your own pace. Every puzzle is solvable using straightforward logic with no guessing required, and each is independently verified by code for a single correct solution. Complete answer keys are grouped together at the back of the book, so you can check your work without spoiling the puzzle pages. Whether you are new to sudoku or simply prefer a calm, low-pressure challenge, this collection provides hours of satisfying puzzle play. 200 unique easy puzzles. One easy difficulty tier throughout. Complete back-of-book solutions. 8.5 x 11 format.",
+  "keywords": [
+    "easy sudoku for adults",
+    "sudoku puzzle book",
+    "relaxing sudoku",
+    "sudoku with solutions",
+    "easy sudoku book",
+    "adult puzzle book",
+    "sudoku for beginners"
+  ],
+  "subjects": [
+    "Games & Activities / Puzzles & Games / Sudoku",
+    "Games & Activities / Puzzles & Games"
+  ],
+  "audience": {
+    "band": "adult-general",
+    "age_min": 18,
+    "age_max": null,
+    "description": "Adults seeking a relaxing, forgiving sudoku experience at a single easy difficulty tier"
+  },
+  "edition": 1,
+  "rights_statement": "Original puzzle content generated deterministically by code and independently verified by code. Cover design original. Fonts (Bitstream Vera Sans) licensed for commercial embedding. AI assistance used in content generation and editorial development — disclosed per channel requirements. All rights reserved.",
+  "pricing": {
+    "note": "Prices not set; determined at listing stage by publisher.",
+    "product_type": "puzzle-book",
+    "puzzle_types": [
+      "sudoku-9x9"
+    ],
+    "difficulty_range": "easy",
+    "puzzle_count": 200,
+    "colour_interior": false,
+    "originals_only": true,
+    "ai_assistance_disclosure_required": true
+  },
+  "identifiers": []
+}

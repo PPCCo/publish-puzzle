@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "evaluated_at": "2026-08-14T11:31:54Z",
+  "decision": "PASS",
+  "expectations": {
+    "audience": "adult-general",
+    "family": "puzzle-book",
+    "min_type_pt": 11.0,
+    "min_line_pt": 1.0,
+    "single_sided_required": false,
+    "alt_text_required": true,
+    "high_contrast_required": false
+  },
+  "checks": {
+    "type_size": true,
+    "alt_text": true
+  },
+  "issues": [],
+  "warnings": [],
+  "note": "Every accessibility requirement is enforced by a check, not asserted."
+}

@@ -1,0 +1,192 @@
+{
+  "schema_version": "1.0",
+  "kind": "approval-gate-packet",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "listing",
+  "generated_at": "2026-08-14T13:19:36Z",
+  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
+  "current_state": "LISTING_APPROVAL",
+  "expected_state": "LISTING_APPROVAL",
+  "state_matches_gate": true,
+  "scope": {
+    "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+    "audience": "adult-general",
+    "book_type": "puzzle-book",
+    "formats": [
+      "paperback",
+      "digital-pdf"
+    ],
+    "sales_channels": [
+      "kdp",
+      "etsy"
+    ],
+    "territory": null
+  },
+  "artifacts_under_review": [
+    {
+      "kind": "listing-kit",
+      "sha256": "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
+      "type": "listing-kit",
+      "path": "marketing/listing-kit.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "metadata",
+      "sha256": "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
+      "type": "metadata",
+      "path": "metadata/book.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "metadata-validation",
+      "sha256": "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
+      "type": "metadata-validation",
+      "path": "metadata/validation-report.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    }
+  ],
+  "deterministic_evidence": [
+    {
+      "present": true,
+      "decision": "PASS",
+      "report": "metadata/validation-report.json",
+      "is_pass": true
+    }
+  ],
+  "channel_packages": [],
+  "series_context": null,
+  "open_findings": {
+    "counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0,
+      "note": 2
+    },
+    "open_blocker_or_major": []
+  },
+  "existing_approvals": {
+    "required_distinct_approvers": 1,
+    "current_distinct_approvers": [],
+    "current_count": 0,
+    "approvers_still_needed": 1,
+    "invalidated": []
+  },
+  "risks": [],
+  "ready_for_human_review": true,
+  "decision_options": [
+    "APPROVE",
+    "REJECT",
+    "REQUEST_CHANGES"
+  ],
+  "human_action": {
+    "recording_skill": "/product-approve-listing",
+    "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-approve-listing — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
+    "artifact_hashes_to_bind": [
+      "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
+      "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
+      "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be"
+    ],
+    "next_command": {
+      "form": "slash",
+      "command": "/product-approve-listing clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "description": "Approve the listing gate, or reject.",
+      "ready": true
+    },
+    "review_files": [
+      "accessibility/gate-latest.json",
+      "content/content-plan.md",
+      "content/puzzles/sudoku-batch.json",
+      "concepts/cover-art-direction.md",
+      "outputs/cover/cover-wrap.pdf",
+      "outputs/digital",
+      "notes/intake.md",
+      "outputs/interior/interior.pdf",
+      "marketing/listing-kit.json",
+      "metadata/book.json",
+      "metadata/validation-report.json",
+      "notes/product-brief.md",
+      "rights/gate-latest.json",
+      "rights/ledger.json"
+    ]
+  },
+  "audit": {
+    "recent_events": [
+      {
+        "actor": "claude-code",
+        "details": {
+          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/marketing/channel-copy.md",
+          "sha256": "sha256:e7b43353345e7e7b2c341ed4684ee108cdc8a4788b9b26f08adf54b8dc820ea4",
+          "tool": "Write"
+        },
+        "event": "CLAUDE_TOOL_USED",
+        "event_id": "evt-20260814T131812Z-afe59bdb",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:18:12Z"
+      },
+      {
+        "actor": "commercial-writer",
+        "details": {
+          "active": true,
+          "artifact_id": "art-metadata-43d3e50a97ed",
+          "path": "metadata/book.json",
+          "sha256": "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
+          "type": "metadata"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T131904Z-0eced906",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:19:04Z"
+      },
+      {
+        "actor": "metadata-auditor",
+        "details": {
+          "active": true,
+          "artifact_id": "art-metadata-validation-0d2798a847a0",
+          "path": "metadata/validation-report.json",
+          "sha256": "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
+          "type": "metadata-validation"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T131904Z-1ca26c1f",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:19:04Z"
+      },
+      {
+        "actor": "commercial-writer",
+        "details": {
+          "active": true,
+          "artifact_id": "art-listing-kit-8957143ff301",
+          "path": "marketing/listing-kit.json",
+          "sha256": "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
+          "type": "listing-kit"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T131904Z-f3c6fa98",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:19:04Z"
+      },
+      {
+        "actor": "PPC",
+        "details": {
+          "from": "METADATA_AND_COMMERCIAL_PACKAGE",
+          "reason": "Metadata built and validated PASS (book.json); marketing/listing kit generated; metadata, metadata-validation, and listing-kit artifacts registered. Advancing to the listing human gate.",
+          "to": "LISTING_APPROVAL"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260814T131923Z-d7153788",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:19:23Z"
+      }
+    ]
+  },
+  "gate_is_required_transition": true
+}

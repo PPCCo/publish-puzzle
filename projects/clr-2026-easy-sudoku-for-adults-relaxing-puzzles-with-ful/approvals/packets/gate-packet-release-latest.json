@@ -1,0 +1,357 @@
+{
+  "schema_version": "1.0",
+  "kind": "approval-gate-packet",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "release",
+  "generated_at": "2026-08-14T13:22:58Z",
+  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
+  "current_state": "RELEASE_AUTHORIZATION",
+  "expected_state": "RELEASE_AUTHORIZATION",
+  "state_matches_gate": true,
+  "scope": {
+    "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+    "audience": "adult-general",
+    "book_type": "puzzle-book",
+    "formats": [
+      "paperback",
+      "digital-pdf"
+    ],
+    "sales_channels": [
+      "kdp",
+      "etsy"
+    ],
+    "territory": null
+  },
+  "artifacts_under_review": [
+    {
+      "kind": "accessibility-gate",
+      "sha256": "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209",
+      "type": "accessibility-gate",
+      "path": "accessibility/gate-latest.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "channel-package",
+      "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+      "type": "channel-package",
+      "path": "outputs/packages/etsy/package-manifest.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "content-plan",
+      "sha256": "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+      "type": "content-plan",
+      "path": "content/content-plan.md",
+      "frozen": true,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "content-sudoku",
+      "sha256": "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
+      "type": "content-sudoku",
+      "path": "content/puzzles/sudoku-batch.json",
+      "frozen": true,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "cover-art-direction",
+      "sha256": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+      "type": "cover-art-direction",
+      "path": "concepts/cover-art-direction.md",
+      "frozen": false,
+      "rights_status": "cleared",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "cover-pdf",
+      "sha256": "sha256:52a84f52595a18752a9faa5a9ba5ca1bef7624680f1468cf410a4bdfa20e104f",
+      "type": "cover-pdf",
+      "path": "outputs/cover/cover-wrap.pdf",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "digital-bundle",
+      "sha256": "sha256:3f84057009b69b15da90a5fbddc57df98faa2fdb4cf10522e7577a67e38c0c31",
+      "type": "digital-bundle",
+      "path": "outputs/digital",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "intake-note",
+      "sha256": "sha256:d52d041134cacb71892a2f8cfd193e9b3ab64776494a6cdfde8413608eac644c",
+      "type": "intake-note",
+      "path": "notes/intake.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "interior-pdf",
+      "sha256": "sha256:717acc5a7820ed4fdc969e8374bddea1f8e18cb4bc9a306f0273cdc821ee0594",
+      "type": "interior-pdf",
+      "path": "outputs/interior/interior.pdf",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "listing-kit",
+      "sha256": "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
+      "type": "listing-kit",
+      "path": "marketing/listing-kit.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "metadata",
+      "sha256": "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
+      "type": "metadata",
+      "path": "metadata/book.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "metadata-validation",
+      "sha256": "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
+      "type": "metadata-validation",
+      "path": "metadata/validation-report.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "platform-package-etsy",
+      "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+      "type": "channel-package",
+      "path": "outputs/packages/etsy/package-manifest.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "platform-package-kdp",
+      "sha256": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+      "type": "channel-package",
+      "path": "outputs/packages/kdp/package-manifest.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
+    },
+    {
+      "kind": "product-brief",
+      "sha256": "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608",
+      "type": "product-brief",
+      "path": "notes/product-brief.md",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "rights-gate",
+      "sha256": "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
+      "type": "rights-gate",
+      "path": "rights/gate-latest.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "rights-ledger",
+      "sha256": "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934",
+      "type": "rights-ledger",
+      "path": "rights/ledger.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    }
+  ],
+  "deterministic_evidence": [],
+  "channel_packages": [
+    {
+      "present": true,
+      "decision": "WARNING",
+      "channel": "etsy",
+      "report": "outputs/packages/etsy/package-manifest.json"
+    },
+    {
+      "present": true,
+      "decision": "WARNING",
+      "channel": "kdp",
+      "report": "outputs/packages/kdp/package-manifest.json"
+    }
+  ],
+  "series_context": null,
+  "open_findings": {
+    "counts": {
+      "blocker": 0,
+      "major": 0,
+      "minor": 0,
+      "note": 2
+    },
+    "open_blocker_or_major": []
+  },
+  "existing_approvals": {
+    "required_distinct_approvers": 1,
+    "current_distinct_approvers": [],
+    "current_count": 0,
+    "approvers_still_needed": 1,
+    "invalidated": []
+  },
+  "risks": [],
+  "ready_for_human_review": true,
+  "decision_options": [
+    "APPROVE",
+    "REJECT",
+    "REQUEST_CHANGES"
+  ],
+  "human_action": {
+    "recording_skill": "/product-release-authorize",
+    "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-release-authorize — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
+    "artifact_hashes_to_bind": [
+      "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209",
+      "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+      "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
+      "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
+      "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+      "sha256:52a84f52595a18752a9faa5a9ba5ca1bef7624680f1468cf410a4bdfa20e104f",
+      "sha256:3f84057009b69b15da90a5fbddc57df98faa2fdb4cf10522e7577a67e38c0c31",
+      "sha256:d52d041134cacb71892a2f8cfd193e9b3ab64776494a6cdfde8413608eac644c",
+      "sha256:717acc5a7820ed4fdc969e8374bddea1f8e18cb4bc9a306f0273cdc821ee0594",
+      "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
+      "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
+      "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
+      "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+      "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+      "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608",
+      "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
+      "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934"
+    ],
+    "next_command": {
+      "form": "slash",
+      "command": "/product-release-authorize clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "description": "Authorize release (submission preparation only), or reject.",
+      "ready": true
+    },
+    "review_files": [
+      "accessibility/gate-latest.json",
+      "outputs/packages/etsy/package-manifest.json",
+      "content/content-plan.md",
+      "content/puzzles/sudoku-batch.json",
+      "concepts/cover-art-direction.md",
+      "outputs/cover/cover-wrap.pdf",
+      "outputs/digital",
+      "notes/intake.md",
+      "outputs/interior/interior.pdf",
+      "marketing/listing-kit.json",
+      "metadata/book.json",
+      "metadata/validation-report.json",
+      "outputs/packages/kdp/package-manifest.json",
+      "notes/product-brief.md",
+      "rights/gate-latest.json",
+      "rights/ledger.json",
+      "approvals/packets/gate-packet-release-latest.json"
+    ]
+  },
+  "audit": {
+    "recent_events": [
+      {
+        "actor": "package-kdp",
+        "details": {
+          "active": true,
+          "artifact_id": "art-platform-package-kdp-7cb2c63c7014",
+          "path": "outputs/packages/kdp/package-manifest.json",
+          "sha256": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+          "type": "platform-package-kdp"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T132052Z-348ea142",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:20:52Z"
+      },
+      {
+        "actor": "package-etsy",
+        "details": {
+          "active": true,
+          "artifact_id": "art-platform-package-ets-d2debee27956",
+          "path": "outputs/packages/etsy/package-manifest.json",
+          "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+          "type": "platform-package-etsy"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T132053Z-bae06780",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:20:53Z"
+      },
+      {
+        "actor": "packaging-engineer",
+        "details": {
+          "active": true,
+          "artifact_id": "art-channel-package-7cb2c63c7014",
+          "path": "outputs/packages/kdp/package-manifest.json",
+          "sha256": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+          "type": "channel-package"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T132121Z-1d67fdbb",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:21:21Z"
+      },
+      {
+        "actor": "packaging-engineer",
+        "details": {
+          "active": true,
+          "artifact_id": "art-channel-package-d2debee27956",
+          "path": "outputs/packages/etsy/package-manifest.json",
+          "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+          "type": "channel-package"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260814T132122Z-d9e65137",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:21:22Z"
+      },
+      {
+        "actor": "PPC",
+        "details": {
+          "from": "PLATFORM_PACKAGING",
+          "reason": "Final proof PASS; KDP and Etsy channel packages built offline (external_write_performed=false) and registered. Advancing to the release human gate.",
+          "to": "RELEASE_AUTHORIZATION"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260814T132132Z-a4dec6e9",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-14T13:21:32Z"
+      }
+    ]
+  },
+  "gate_is_required_transition": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "evaluated_at": "2026-08-14T13:20:34Z",
+  "decision": "PASS",
+  "cover": {
+    "present": true,
+    "spine_width_in": 0.9053,
+    "wrap_size_in": [
+      18.1553,
+      11.25
+    ]
+  }
+}

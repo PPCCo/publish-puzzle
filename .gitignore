@@ -16,7 +16,7 @@ htmlcov/
 .claude/logs/
 .publishing/
 secrets/
-projects/*/outputs/
+# projects/*/outputs/
 projects/*/tmp/
 projects/*/.lock
 *.egg-info/

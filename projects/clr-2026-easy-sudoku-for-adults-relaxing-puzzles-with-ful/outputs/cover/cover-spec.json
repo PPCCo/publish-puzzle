@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "binding": "paperback",
+  "paper": "white",
+  "page_count": 402,
+  "spine_width_in": 0.9053,
+  "bleed_in": 0.125,
+  "wrap_size_in": [
+    18.1553,
+    11.25
+  ],
+  "trim_in": [
+    8.5,
+    11.0
+  ]
+}

@@ -1,0 +1,2625 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "binding": "paperback",
+  "trim_in": [
+    8.5,
+    11.0
+  ],
+  "page_count": 402,
+  "even_page_count": true,
+  "solutions_placement": "back-only",
+  "min_body_type_pt": 11.0,
+  "raster_image_count": 0,
+  "vector_only": true,
+  "pages": [
+    {
+      "page": 1,
+      "kind": "front-matter"
+    },
+    {
+      "page": 2,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 0,
+      "difficulty": "easy"
+    },
+    {
+      "page": 3,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 1,
+      "difficulty": "easy"
+    },
+    {
+      "page": 4,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 2,
+      "difficulty": "easy"
+    },
+    {
+      "page": 5,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 3,
+      "difficulty": "easy"
+    },
+    {
+      "page": 6,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 4,
+      "difficulty": "easy"
+    },
+    {
+      "page": 7,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 5,
+      "difficulty": "easy"
+    },
+    {
+      "page": 8,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 6,
+      "difficulty": "easy"
+    },
+    {
+      "page": 9,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 7,
+      "difficulty": "easy"
+    },
+    {
+      "page": 10,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 8,
+      "difficulty": "easy"
+    },
+    {
+      "page": 11,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 9,
+      "difficulty": "easy"
+    },
+    {
+      "page": 12,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 10,
+      "difficulty": "easy"
+    },
+    {
+      "page": 13,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 11,
+      "difficulty": "easy"
+    },
+    {
+      "page": 14,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 12,
+      "difficulty": "easy"
+    },
+    {
+      "page": 15,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 13,
+      "difficulty": "easy"
+    },
+    {
+      "page": 16,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 14,
+      "difficulty": "easy"
+    },
+    {
+      "page": 17,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 15,
+      "difficulty": "easy"
+    },
+    {
+      "page": 18,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 16,
+      "difficulty": "easy"
+    },
+    {
+      "page": 19,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 17,
+      "difficulty": "easy"
+    },
+    {
+      "page": 20,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 18,
+      "difficulty": "easy"
+    },
+    {
+      "page": 21,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 19,
+      "difficulty": "easy"
+    },
+    {
+      "page": 22,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 20,
+      "difficulty": "easy"
+    },
+    {
+      "page": 23,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 21,
+      "difficulty": "easy"
+    },
+    {
+      "page": 24,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 22,
+      "difficulty": "easy"
+    },
+    {
+      "page": 25,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 23,
+      "difficulty": "easy"
+    },
+    {
+      "page": 26,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 24,
+      "difficulty": "easy"
+    },
+    {
+      "page": 27,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 25,
+      "difficulty": "easy"
+    },
+    {
+      "page": 28,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 26,
+      "difficulty": "easy"
+    },
+    {
+      "page": 29,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 27,
+      "difficulty": "easy"
+    },
+    {
+      "page": 30,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 28,
+      "difficulty": "easy"
+    },
+    {
+      "page": 31,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 29,
+      "difficulty": "easy"
+    },
+    {
+      "page": 32,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 30,
+      "difficulty": "easy"
+    },
+    {
+      "page": 33,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 31,
+      "difficulty": "easy"
+    },
+    {
+      "page": 34,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 32,
+      "difficulty": "easy"
+    },
+    {
+      "page": 35,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 33,
+      "difficulty": "easy"
+    },
+    {
+      "page": 36,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 34,
+      "difficulty": "easy"
+    },
+    {
+      "page": 37,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 35,
+      "difficulty": "easy"
+    },
+    {
+      "page": 38,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 36,
+      "difficulty": "easy"
+    },
+    {
+      "page": 39,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 37,
+      "difficulty": "easy"
+    },
+    {
+      "page": 40,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 38,
+      "difficulty": "easy"
+    },
+    {
+      "page": 41,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 39,
+      "difficulty": "easy"
+    },
+    {
+      "page": 42,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 40,
+      "difficulty": "easy"
+    },
+    {
+      "page": 43,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 41,
+      "difficulty": "easy"
+    },
+    {
+      "page": 44,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 42,
+      "difficulty": "easy"
+    },
+    {
+      "page": 45,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 43,
+      "difficulty": "easy"
+    },
+    {
+      "page": 46,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 44,
+      "difficulty": "easy"
+    },
+    {
+      "page": 47,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 45,
+      "difficulty": "easy"
+    },
+    {
+      "page": 48,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 46,
+      "difficulty": "easy"
+    },
+    {
+      "page": 49,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 47,
+      "difficulty": "easy"
+    },
+    {
+      "page": 50,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 48,
+      "difficulty": "easy"
+    },
+    {
+      "page": 51,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 49,
+      "difficulty": "easy"
+    },
+    {
+      "page": 52,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 50,
+      "difficulty": "easy"
+    },
+    {
+      "page": 53,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 51,
+      "difficulty": "easy"
+    },
+    {
+      "page": 54,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 52,
+      "difficulty": "easy"
+    },
+    {
+      "page": 55,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 53,
+      "difficulty": "easy"
+    },
+    {
+      "page": 56,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 54,
+      "difficulty": "easy"
+    },
+    {
+      "page": 57,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 55,
+      "difficulty": "easy"
+    },
+    {
+      "page": 58,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 56,
+      "difficulty": "easy"
+    },
+    {
+      "page": 59,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 57,
+      "difficulty": "easy"
+    },
+    {
+      "page": 60,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 58,
+      "difficulty": "easy"
+    },
+    {
+      "page": 61,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 59,
+      "difficulty": "easy"
+    },
+    {
+      "page": 62,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 60,
+      "difficulty": "easy"
+    },
+    {
+      "page": 63,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 61,
+      "difficulty": "easy"
+    },
+    {
+      "page": 64,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 62,
+      "difficulty": "easy"
+    },
+    {
+      "page": 65,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 63,
+      "difficulty": "easy"
+    },
+    {
+      "page": 66,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 64,
+      "difficulty": "easy"
+    },
+    {
+      "page": 67,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 65,
+      "difficulty": "easy"
+    },
+    {
+      "page": 68,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 66,
+      "difficulty": "easy"
+    },
+    {
+      "page": 69,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 67,
+      "difficulty": "easy"
+    },
+    {
+      "page": 70,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 68,
+      "difficulty": "easy"
+    },
+    {
+      "page": 71,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 69,
+      "difficulty": "easy"
+    },
+    {
+      "page": 72,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 70,
+      "difficulty": "easy"
+    },
+    {
+      "page": 73,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 71,
+      "difficulty": "easy"
+    },
+    {
+      "page": 74,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 72,
+      "difficulty": "easy"
+    },
+    {
+      "page": 75,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 73,
+      "difficulty": "easy"
+    },
+    {
+      "page": 76,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 74,
+      "difficulty": "easy"
+    },
+    {
+      "page": 77,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 75,
+      "difficulty": "easy"
+    },
+    {
+      "page": 78,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 76,
+      "difficulty": "easy"
+    },
+    {
+      "page": 79,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 77,
+      "difficulty": "easy"
+    },
+    {
+      "page": 80,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 78,
+      "difficulty": "easy"
+    },
+    {
+      "page": 81,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 79,
+      "difficulty": "easy"
+    },
+    {
+      "page": 82,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 80,
+      "difficulty": "easy"
+    },
+    {
+      "page": 83,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 81,
+      "difficulty": "easy"
+    },
+    {
+      "page": 84,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 82,
+      "difficulty": "easy"
+    },
+    {
+      "page": 85,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 83,
+      "difficulty": "easy"
+    },
+    {
+      "page": 86,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 84,
+      "difficulty": "easy"
+    },
+    {
+      "page": 87,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 85,
+      "difficulty": "easy"
+    },
+    {
+      "page": 88,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 86,
+      "difficulty": "easy"
+    },
+    {
+      "page": 89,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 87,
+      "difficulty": "easy"
+    },
+    {
+      "page": 90,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 88,
+      "difficulty": "easy"
+    },
+    {
+      "page": 91,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 89,
+      "difficulty": "easy"
+    },
+    {
+      "page": 92,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 90,
+      "difficulty": "easy"
+    },
+    {
+      "page": 93,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 91,
+      "difficulty": "easy"
+    },
+    {
+      "page": 94,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 92,
+      "difficulty": "easy"
+    },
+    {
+      "page": 95,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 93,
+      "difficulty": "easy"
+    },
+    {
+      "page": 96,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 94,
+      "difficulty": "easy"
+    },
+    {
+      "page": 97,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 95,
+      "difficulty": "easy"
+    },
+    {
+      "page": 98,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 96,
+      "difficulty": "easy"
+    },
+    {
+      "page": 99,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 97,
+      "difficulty": "easy"
+    },
+    {
+      "page": 100,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 98,
+      "difficulty": "easy"
+    },
+    {
+      "page": 101,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 99,
+      "difficulty": "easy"
+    },
+    {
+      "page": 102,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 100,
+      "difficulty": "easy"
+    },
+    {
+      "page": 103,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 101,
+      "difficulty": "easy"
+    },
+    {
+      "page": 104,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 102,
+      "difficulty": "easy"
+    },
+    {
+      "page": 105,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 103,
+      "difficulty": "easy"
+    },
+    {
+      "page": 106,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 104,
+      "difficulty": "easy"
+    },
+    {
+      "page": 107,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 105,
+      "difficulty": "easy"
+    },
+    {
+      "page": 108,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 106,
+      "difficulty": "easy"
+    },
+    {
+      "page": 109,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 107,
+      "difficulty": "easy"
+    },
+    {
+      "page": 110,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 108,
+      "difficulty": "easy"
+    },
+    {
+      "page": 111,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 109,
+      "difficulty": "easy"
+    },
+    {
+      "page": 112,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 110,
+      "difficulty": "easy"
+    },
+    {
+      "page": 113,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 111,
+      "difficulty": "easy"
+    },
+    {
+      "page": 114,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 112,
+      "difficulty": "easy"
+    },
+    {
+      "page": 115,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 113,
+      "difficulty": "easy"
+    },
+    {
+      "page": 116,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 114,
+      "difficulty": "easy"
+    },
+    {
+      "page": 117,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 115,
+      "difficulty": "easy"
+    },
+    {
+      "page": 118,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 116,
+      "difficulty": "easy"
+    },
+    {
+      "page": 119,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 117,
+      "difficulty": "easy"
+    },
+    {
+      "page": 120,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 118,
+      "difficulty": "easy"
+    },
+    {
+      "page": 121,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 119,
+      "difficulty": "easy"
+    },
+    {
+      "page": 122,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 120,
+      "difficulty": "easy"
+    },
+    {
+      "page": 123,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 121,
+      "difficulty": "easy"
+    },
+    {
+      "page": 124,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 122,
+      "difficulty": "easy"
+    },
+    {
+      "page": 125,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 123,
+      "difficulty": "easy"
+    },
+    {
+      "page": 126,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 124,
+      "difficulty": "easy"
+    },
+    {
+      "page": 127,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 125,
+      "difficulty": "easy"
+    },
+    {
+      "page": 128,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 126,
+      "difficulty": "easy"
+    },
+    {
+      "page": 129,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 127,
+      "difficulty": "easy"
+    },
+    {
+      "page": 130,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 128,
+      "difficulty": "easy"
+    },
+    {
+      "page": 131,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 129,
+      "difficulty": "easy"
+    },
+    {
+      "page": 132,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 130,
+      "difficulty": "easy"
+    },
+    {
+      "page": 133,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 131,
+      "difficulty": "easy"
+    },
+    {
+      "page": 134,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 132,
+      "difficulty": "easy"
+    },
+    {
+      "page": 135,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 133,
+      "difficulty": "easy"
+    },
+    {
+      "page": 136,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 134,
+      "difficulty": "easy"
+    },
+    {
+      "page": 137,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 135,
+      "difficulty": "easy"
+    },
+    {
+      "page": 138,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 136,
+      "difficulty": "easy"
+    },
+    {
+      "page": 139,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 137,
+      "difficulty": "easy"
+    },
+    {
+      "page": 140,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 138,
+      "difficulty": "easy"
+    },
+    {
+      "page": 141,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 139,
+      "difficulty": "easy"
+    },
+    {
+      "page": 142,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 140,
+      "difficulty": "easy"
+    },
+    {
+      "page": 143,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 141,
+      "difficulty": "easy"
+    },
+    {
+      "page": 144,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 142,
+      "difficulty": "easy"
+    },
+    {
+      "page": 145,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 143,
+      "difficulty": "easy"
+    },
+    {
+      "page": 146,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 144,
+      "difficulty": "easy"
+    },
+    {
+      "page": 147,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 145,
+      "difficulty": "easy"
+    },
+    {
+      "page": 148,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 146,
+      "difficulty": "easy"
+    },
+    {
+      "page": 149,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 147,
+      "difficulty": "easy"
+    },
+    {
+      "page": 150,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 148,
+      "difficulty": "easy"
+    },
+    {
+      "page": 151,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 149,
+      "difficulty": "easy"
+    },
+    {
+      "page": 152,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 150,
+      "difficulty": "easy"
+    },
+    {
+      "page": 153,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 151,
+      "difficulty": "easy"
+    },
+    {
+      "page": 154,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 152,
+      "difficulty": "easy"
+    },
+    {
+      "page": 155,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 153,
+      "difficulty": "easy"
+    },
+    {
+      "page": 156,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 154,
+      "difficulty": "easy"
+    },
+    {
+      "page": 157,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 155,
+      "difficulty": "easy"
+    },
+    {
+      "page": 158,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 156,
+      "difficulty": "easy"
+    },
+    {
+      "page": 159,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 157,
+      "difficulty": "easy"
+    },
+    {
+      "page": 160,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 158,
+      "difficulty": "easy"
+    },
+    {
+      "page": 161,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 159,
+      "difficulty": "easy"
+    },
+    {
+      "page": 162,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 160,
+      "difficulty": "easy"
+    },
+    {
+      "page": 163,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 161,
+      "difficulty": "easy"
+    },
+    {
+      "page": 164,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 162,
+      "difficulty": "easy"
+    },
+    {
+      "page": 165,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 163,
+      "difficulty": "easy"
+    },
+    {
+      "page": 166,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 164,
+      "difficulty": "easy"
+    },
+    {
+      "page": 167,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 165,
+      "difficulty": "easy"
+    },
+    {
+      "page": 168,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 166,
+      "difficulty": "easy"
+    },
+    {
+      "page": 169,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 167,
+      "difficulty": "easy"
+    },
+    {
+      "page": 170,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 168,
+      "difficulty": "easy"
+    },
+    {
+      "page": 171,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 169,
+      "difficulty": "easy"
+    },
+    {
+      "page": 172,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 170,
+      "difficulty": "easy"
+    },
+    {
+      "page": 173,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 171,
+      "difficulty": "easy"
+    },
+    {
+      "page": 174,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 172,
+      "difficulty": "easy"
+    },
+    {
+      "page": 175,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 173,
+      "difficulty": "easy"
+    },
+    {
+      "page": 176,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 174,
+      "difficulty": "easy"
+    },
+    {
+      "page": 177,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 175,
+      "difficulty": "easy"
+    },
+    {
+      "page": 178,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 176,
+      "difficulty": "easy"
+    },
+    {
+      "page": 179,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 177,
+      "difficulty": "easy"
+    },
+    {
+      "page": 180,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 178,
+      "difficulty": "easy"
+    },
+    {
+      "page": 181,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 179,
+      "difficulty": "easy"
+    },
+    {
+      "page": 182,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 180,
+      "difficulty": "easy"
+    },
+    {
+      "page": 183,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 181,
+      "difficulty": "easy"
+    },
+    {
+      "page": 184,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 182,
+      "difficulty": "easy"
+    },
+    {
+      "page": 185,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 183,
+      "difficulty": "easy"
+    },
+    {
+      "page": 186,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 184,
+      "difficulty": "easy"
+    },
+    {
+      "page": 187,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 185,
+      "difficulty": "easy"
+    },
+    {
+      "page": 188,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 186,
+      "difficulty": "easy"
+    },
+    {
+      "page": 189,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 187,
+      "difficulty": "easy"
+    },
+    {
+      "page": 190,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 188,
+      "difficulty": "easy"
+    },
+    {
+      "page": 191,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 189,
+      "difficulty": "easy"
+    },
+    {
+      "page": 192,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 190,
+      "difficulty": "easy"
+    },
+    {
+      "page": 193,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 191,
+      "difficulty": "easy"
+    },
+    {
+      "page": 194,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 192,
+      "difficulty": "easy"
+    },
+    {
+      "page": 195,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 193,
+      "difficulty": "easy"
+    },
+    {
+      "page": 196,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 194,
+      "difficulty": "easy"
+    },
+    {
+      "page": 197,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 195,
+      "difficulty": "easy"
+    },
+    {
+      "page": 198,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 196,
+      "difficulty": "easy"
+    },
+    {
+      "page": 199,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 197,
+      "difficulty": "easy"
+    },
+    {
+      "page": 200,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 198,
+      "difficulty": "easy"
+    },
+    {
+      "page": 201,
+      "kind": "content",
+      "type": "sudoku",
+      "index": 199,
+      "difficulty": "easy"
+    },
+    {
+      "page": 202,
+      "kind": "solutions-divider"
+    },
+    {
+      "page": 203,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 0
+    },
+    {
+      "page": 204,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 1
+    },
+    {
+      "page": 205,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 2
+    },
+    {
+      "page": 206,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 3
+    },
+    {
+      "page": 207,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 4
+    },
+    {
+      "page": 208,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 5
+    },
+    {
+      "page": 209,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 6
+    },
+    {
+      "page": 210,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 7
+    },
+    {
+      "page": 211,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 8
+    },
+    {
+      "page": 212,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 9
+    },
+    {
+      "page": 213,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 10
+    },
+    {
+      "page": 214,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 11
+    },
+    {
+      "page": 215,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 12
+    },
+    {
+      "page": 216,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 13
+    },
+    {
+      "page": 217,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 14
+    },
+    {
+      "page": 218,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 15
+    },
+    {
+      "page": 219,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 16
+    },
+    {
+      "page": 220,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 17
+    },
+    {
+      "page": 221,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 18
+    },
+    {
+      "page": 222,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 19
+    },
+    {
+      "page": 223,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 20
+    },
+    {
+      "page": 224,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 21
+    },
+    {
+      "page": 225,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 22
+    },
+    {
+      "page": 226,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 23
+    },
+    {
+      "page": 227,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 24
+    },
+    {
+      "page": 228,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 25
+    },
+    {
+      "page": 229,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 26
+    },
+    {
+      "page": 230,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 27
+    },
+    {
+      "page": 231,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 28
+    },
+    {
+      "page": 232,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 29
+    },
+    {
+      "page": 233,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 30
+    },
+    {
+      "page": 234,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 31
+    },
+    {
+      "page": 235,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 32
+    },
+    {
+      "page": 236,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 33
+    },
+    {
+      "page": 237,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 34
+    },
+    {
+      "page": 238,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 35
+    },
+    {
+      "page": 239,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 36
+    },
+    {
+      "page": 240,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 37
+    },
+    {
+      "page": 241,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 38
+    },
+    {
+      "page": 242,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 39
+    },
+    {
+      "page": 243,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 40
+    },
+    {
+      "page": 244,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 41
+    },
+    {
+      "page": 245,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 42
+    },
+    {
+      "page": 246,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 43
+    },
+    {
+      "page": 247,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 44
+    },
+    {
+      "page": 248,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 45
+    },
+    {
+      "page": 249,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 46
+    },
+    {
+      "page": 250,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 47
+    },
+    {
+      "page": 251,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 48
+    },
+    {
+      "page": 252,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 49
+    },
+    {
+      "page": 253,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 50
+    },
+    {
+      "page": 254,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 51
+    },
+    {
+      "page": 255,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 52
+    },
+    {
+      "page": 256,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 53
+    },
+    {
+      "page": 257,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 54
+    },
+    {
+      "page": 258,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 55
+    },
+    {
+      "page": 259,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 56
+    },
+    {
+      "page": 260,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 57
+    },
+    {
+      "page": 261,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 58
+    },
+    {
+      "page": 262,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 59
+    },
+    {
+      "page": 263,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 60
+    },
+    {
+      "page": 264,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 61
+    },
+    {
+      "page": 265,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 62
+    },
+    {
+      "page": 266,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 63
+    },
+    {
+      "page": 267,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 64
+    },
+    {
+      "page": 268,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 65
+    },
+    {
+      "page": 269,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 66
+    },
+    {
+      "page": 270,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 67
+    },
+    {
+      "page": 271,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 68
+    },
+    {
+      "page": 272,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 69
+    },
+    {
+      "page": 273,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 70
+    },
+    {
+      "page": 274,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 71
+    },
+    {
+      "page": 275,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 72
+    },
+    {
+      "page": 276,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 73
+    },
+    {
+      "page": 277,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 74
+    },
+    {
+      "page": 278,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 75
+    },
+    {
+      "page": 279,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 76
+    },
+    {
+      "page": 280,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 77
+    },
+    {
+      "page": 281,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 78
+    },
+    {
+      "page": 282,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 79
+    },
+    {
+      "page": 283,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 80
+    },
+    {
+      "page": 284,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 81
+    },
+    {
+      "page": 285,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 82
+    },
+    {
+      "page": 286,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 83
+    },
+    {
+      "page": 287,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 84
+    },
+    {
+      "page": 288,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 85
+    },
+    {
+      "page": 289,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 86
+    },
+    {
+      "page": 290,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 87
+    },
+    {
+      "page": 291,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 88
+    },
+    {
+      "page": 292,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 89
+    },
+    {
+      "page": 293,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 90
+    },
+    {
+      "page": 294,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 91
+    },
+    {
+      "page": 295,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 92
+    },
+    {
+      "page": 296,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 93
+    },
+    {
+      "page": 297,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 94
+    },
+    {
+      "page": 298,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 95
+    },
+    {
+      "page": 299,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 96
+    },
+    {
+      "page": 300,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 97
+    },
+    {
+      "page": 301,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 98
+    },
+    {
+      "page": 302,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 99
+    },
+    {
+      "page": 303,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 100
+    },
+    {
+      "page": 304,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 101
+    },
+    {
+      "page": 305,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 102
+    },
+    {
+      "page": 306,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 103
+    },
+    {
+      "page": 307,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 104
+    },
+    {
+      "page": 308,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 105
+    },
+    {
+      "page": 309,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 106
+    },
+    {
+      "page": 310,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 107
+    },
+    {
+      "page": 311,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 108
+    },
+    {
+      "page": 312,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 109
+    },
+    {
+      "page": 313,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 110
+    },
+    {
+      "page": 314,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 111
+    },
+    {
+      "page": 315,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 112
+    },
+    {
+      "page": 316,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 113
+    },
+    {
+      "page": 317,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 114
+    },
+    {
+      "page": 318,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 115
+    },
+    {
+      "page": 319,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 116
+    },
+    {
+      "page": 320,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 117
+    },
+    {
+      "page": 321,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 118
+    },
+    {
+      "page": 322,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 119
+    },
+    {
+      "page": 323,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 120
+    },
+    {
+      "page": 324,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 121
+    },
+    {
+      "page": 325,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 122
+    },
+    {
+      "page": 326,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 123
+    },
+    {
+      "page": 327,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 124
+    },
+    {
+      "page": 328,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 125
+    },
+    {
+      "page": 329,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 126
+    },
+    {
+      "page": 330,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 127
+    },
+    {
+      "page": 331,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 128
+    },
+    {
+      "page": 332,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 129
+    },
+    {
+      "page": 333,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 130
+    },
+    {
+      "page": 334,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 131
+    },
+    {
+      "page": 335,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 132
+    },
+    {
+      "page": 336,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 133
+    },
+    {
+      "page": 337,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 134
+    },
+    {
+      "page": 338,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 135
+    },
+    {
+      "page": 339,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 136
+    },
+    {
+      "page": 340,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 137
+    },
+    {
+      "page": 341,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 138
+    },
+    {
+      "page": 342,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 139
+    },
+    {
+      "page": 343,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 140
+    },
+    {
+      "page": 344,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 141
+    },
+    {
+      "page": 345,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 142
+    },
+    {
+      "page": 346,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 143
+    },
+    {
+      "page": 347,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 144
+    },
+    {
+      "page": 348,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 145
+    },
+    {
+      "page": 349,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 146
+    },
+    {
+      "page": 350,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 147
+    },
+    {
+      "page": 351,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 148
+    },
+    {
+      "page": 352,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 149
+    },
+    {
+      "page": 353,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 150
+    },
+    {
+      "page": 354,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 151
+    },
+    {
+      "page": 355,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 152
+    },
+    {
+      "page": 356,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 153
+    },
+    {
+      "page": 357,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 154
+    },
+    {
+      "page": 358,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 155
+    },
+    {
+      "page": 359,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 156
+    },
+    {
+      "page": 360,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 157
+    },
+    {
+      "page": 361,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 158
+    },
+    {
+      "page": 362,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 159
+    },
+    {
+      "page": 363,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 160
+    },
+    {
+      "page": 364,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 161
+    },
+    {
+      "page": 365,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 162
+    },
+    {
+      "page": 366,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 163
+    },
+    {
+      "page": 367,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 164
+    },
+    {
+      "page": 368,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 165
+    },
+    {
+      "page": 369,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 166
+    },
+    {
+      "page": 370,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 167
+    },
+    {
+      "page": 371,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 168
+    },
+    {
+      "page": 372,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 169
+    },
+    {
+      "page": 373,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 170
+    },
+    {
+      "page": 374,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 171
+    },
+    {
+      "page": 375,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 172
+    },
+    {
+      "page": 376,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 173
+    },
+    {
+      "page": 377,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 174
+    },
+    {
+      "page": 378,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 175
+    },
+    {
+      "page": 379,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 176
+    },
+    {
+      "page": 380,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 177
+    },
+    {
+      "page": 381,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 178
+    },
+    {
+      "page": 382,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 179
+    },
+    {
+      "page": 383,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 180
+    },
+    {
+      "page": 384,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 181
+    },
+    {
+      "page": 385,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 182
+    },
+    {
+      "page": 386,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 183
+    },
+    {
+      "page": 387,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 184
+    },
+    {
+      "page": 388,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 185
+    },
+    {
+      "page": 389,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 186
+    },
+    {
+      "page": 390,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 187
+    },
+    {
+      "page": 391,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 188
+    },
+    {
+      "page": 392,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 189
+    },
+    {
+      "page": 393,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 190
+    },
+    {
+      "page": 394,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 191
+    },
+    {
+      "page": 395,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 192
+    },
+    {
+      "page": 396,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 193
+    },
+    {
+      "page": 397,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 194
+    },
+    {
+      "page": 398,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 195
+    },
+    {
+      "page": 399,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 196
+    },
+    {
+      "page": 400,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 197
+    },
+    {
+      "page": 401,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 198
+    },
+    {
+      "page": 402,
+      "kind": "solution",
+      "type": "sudoku",
+      "index": 199
+    }
+  ]
+}

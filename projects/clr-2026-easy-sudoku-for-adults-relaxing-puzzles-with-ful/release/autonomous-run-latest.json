@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "kind": "autonomous-run-record",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+  "run_scope": "COMPLIANCE_APPROVAL (approved) -> release authorized (human decision) -> READY_FOR_SUBMISSION",
+  "generated_note": "timestamps omitted (no clock in this tool); see events.ndjson for authoritative times",
+  "started_from_state": "METADATA_AND_COMMERCIAL_PACKAGE",
+  "stopped_at_state": "READY_FOR_SUBMISSION",
+  "stop_reason": "Human authorized the release gate (AskUserQuestion selection 'Authorize release'); release-verify valid; transitioned to READY_FOR_SUBMISSION. Autonomy stops here: the next stage (SUBMISSION) requires a REAL external upload the human performs manually on KDP/Etsy, then evidence recorded via /product-submit. The framework never publishes autonomously (constitution 11). No external write was performed.",
+  "release_authorization": {
+    "authorization_id": "rel-clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful-a20e05c91d3c",
+    "approver": "PPC",
+    "channels": ["kdp", "etsy"],
+    "territory": "US",
+    "bound_package_hashes": {"kdp": "sha256:7cb2c63c7014", "etsy": "sha256:d2debee27956"},
+    "maximum_external_spend": 0.0,
+    "currency": "USD",
+    "expires_at": "2026-08-21T13:41:50Z",
+    "release_verify": "valid",
+    "human_decision": "AskUserQuestion selection 'Authorize release' (explicit human decision)"
+  },
+  "completed_stages": [
+    {
+      "gate_or_stage": "METADATA_AND_COMMERCIAL_PACKAGE",
+      "action": "commercial-writer drafted canonical metadata + per-channel copy from verified facts; audit metadata PASS; deterministic marketing kit built; registered compliance/listing-bound metadata artifacts",
+      "artifacts": [
+        "metadata/book.json (metadata sha256:43d3e50a97ed; 200 easy 9x9 sudoku, 402pp, 8.5x11, both formats, no large-print claim)",
+        "metadata/validation-report.json (metadata-validation sha256:0d2798a847a0, decision PASS; 1 WARNING: no ISBN identifiers)",
+        "marketing/listing-kit.json (listing-kit sha256:8957143ff301)",
+        "marketing/{launch-guide,marketing-kit}.json (advisory)",
+        "marketing/channel-copy.md (KDP + Etsy human-readable copy sheet)"
+      ],
+      "verified_facts": "200 puzzles, all difficulty=easy, 9x9; content-verification decision PASS; 402pp; 11pt body; back-only solutions; accessibility PASS; rights PASS",
+      "transition": "METADATA_AND_COMMERCIAL_PACKAGE -> LISTING_APPROVAL"
+    },
+    {
+      "gate_or_stage": "listing",
+      "action": "APPROVED (auto per auto_approve_gates=silent; safety check clear: ready true, 0 blocker/major, evidence PASS, no rights/child-safety concern)",
+      "approval_id": "apr-listing-20260814t131956z-88896921",
+      "bound_hashes": [
+        "listing-kit sha256:8957143ff301",
+        "metadata sha256:43d3e50a97ed",
+        "metadata-validation sha256:0d2798a847a0"
+      ],
+      "note": "No pricing set and nothing sent to any channel at this stage.",
+      "transition": "LISTING_APPROVAL -> FINAL_PROOF"
+    },
+    {
+      "gate_or_stage": "FINAL_PROOF",
+      "action": "build proof re-run: interior PASS, cover PASS, no FAIL",
+      "artifacts": ["outputs/proof/interior-proof-report.json (PASS)", "outputs/proof/cover-proof-report.json (PASS)"],
+      "transition": "FINAL_PROOF -> PLATFORM_PACKAGING"
+    },
+    {
+      "gate_or_stage": "PLATFORM_PACKAGING",
+      "action": "built offline channel packages for KDP and Etsy (external_write_performed=false); registered both manifests",
+      "artifacts": [
+        "outputs/packages/kdp/ (channel-package sha256:7cb2c63c7014; print interior+cover PDFs, digital printable, listing.json, categories, keywords, upload-checklist, checksums, manifest preflight_status=warning)",
+        "outputs/packages/etsy/ (channel-package sha256:d2debee27956; printable.pdf, etsy-listing.json, listing-checklist, checksums, manifest preflight_status=warning)"
+      ],
+      "transition": "PLATFORM_PACKAGING -> RELEASE_AUTHORIZATION"
+    }
+  ],
+  "code_fixes": [
+    {
+      "file": ".claude/scripts/publishing_house/gate_packet.py",
+      "summary": "Shared release-readiness reader fix: _report_summary now also reads the channel-package builder's own status field (preflight_status: pass/warning/fail), in addition to decision/status. Before the fix the release packet mis-read every correctly-built channel package as decision=None and raised a false 'Channel package missing/failed' risk, forcing ready_for_human_review=false for any product. Purely additive (proof/gate reports carry no preflight_status).",
+      "affects": "every product's release gate readiness"
+    }
+  ],
+  "tests_added": [
+    "tests/test_gate_packet_report_summary.py (7 tests: reads decision/status/preflight_status, warning+pass map correctly, missing/invalid/no-status fail-closed) - all pass"
+  ],
+  "test_suite_note": "Full suite: 5 pre-existing failures in test_framework_structure and test_research_fetch_and_connectivity, unrelated to gate/packet/package code (confirmed no new failures from this change).",
+  "agents_used": ["commercial-writer (bounded metadata + channel-copy draft; wrote only the two named files; no state/approval/registration/pricing/external write)"],
+  "gate_results": {
+    "listing": "APPROVED (auto per policy; human retains override)",
+    "final_proof": "PASS (interior + cover)",
+    "release": "AUTHORIZED (human decision; rel-...-a20e05c91d3c; release-verify valid)"
+  },
+  "open_findings": {
+    "blocker": 0,
+    "major": 0,
+    "minor": 0,
+    "note": 2,
+    "notes_disposition": "Two informational layout carry-forward notes (OQ-1 trim, OQ-2 cell/type-size + density), both addressed at LAYOUT_AND_FORMAT_BUILD. Notes never block a gate. Metadata WARNING (no ISBN) is expected: identifiers are a deferred human decision at manual upload; KDP can auto-assign an ISBN."
+  },
+  "release_packet": {
+    "ready_for_human_review": true,
+    "risks": [],
+    "required_distinct_approvers": 1,
+    "current_approvers": 0,
+    "packet_path": "approvals/packets/gate-packet-release-latest.json"
+  },
+  "next_valid_action": "MANUAL, human-performed: upload the packaged files to KDP and Etsy using the per-channel checklists (outputs/packages/<channel>/), set your own pricing at upload, then record submission evidence with /product-submit clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful --channel kdp|etsy. The framework performs NO external upload, pricing, or account action.",
+  "human_decision_required": "none pending in-framework; the remaining actions are real-world uploads the human performs on the platforms, then records evidence via /product-submit"
+}

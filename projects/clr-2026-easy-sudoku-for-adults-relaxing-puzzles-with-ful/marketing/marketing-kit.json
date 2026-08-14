@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "generated_at": "2026-08-14T13:18:45Z",
+  "launch_guide": {
+    "schema_version": "1.0",
+    "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+    "generated_at": "2026-08-14T13:18:45Z",
+    "external_write_performed": false,
+    "channels": [
+      "kdp",
+      "etsy"
+    ],
+    "per_channel_steps": {
+      "kdp": [
+        "Recheck current KDP format, trim, bleed, and cover specifications.",
+        "Create the title; enter metadata from listing.json; set categories/keywords.",
+        "Upload interior and cover; inspect in the current previewer.",
+        "Order a physical proof before publishing.",
+        "Set territories, pricing, and complete AI-content disclosure.",
+        "Publish only after recording a valid release authorization."
+      ],
+      "etsy": [
+        "Create a digital listing; upload preview images and the print-ready files.",
+        "Enter title, description, and tags from the listing kit.",
+        "Set the digital-download delivery and commercial-use terms.",
+        "Confirm shop policies, pricing, and file formats.",
+        "Publish only after recording a valid release authorization."
+      ]
+    },
+    "note": "Offline guidance only. No external logins or writes are performed by the framework."
+  },
+  "listing_kit": {
+    "schema_version": "1.0",
+    "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+    "generated_at": "2026-08-14T13:18:45Z",
+    "title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+    "subtitle": "200 Easy 9x9 Sudoku Puzzles with Complete Back-of-Book Solutions",
+    "description": "Easy Sudoku for Adults offers 200 relaxing 9x9 sudoku puzzles at a single easy difficulty tier, ideal for unwinding at your own pace. Every puzzle is solvable using straightforward logic with no guessing required, and each is independently verified by code for a single correct solution. Complete answer keys are grouped together at the back of the book, so you can check your work without spoiling the puzzle pages. Whether you are new to sudoku or simply prefer a calm, low-pressure challenge, this collection provides hours of satisfying puzzle play. 200 unique easy puzzles. One easy difficulty tier throughout. Complete back-of-book solutions. 8.5 x 11 format.",
+    "keywords": [
+      "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+      "puzzle book",
+      "adult general",
+      "easy sudoku for adults",
+      "sudoku puzzle book",
+      "relaxing sudoku",
+      "sudoku with solutions"
+    ],
+    "categories": [
+      "Games & Activities / Puzzles & Games / Sudoku",
+      "Games & Activities / Puzzles & Games"
+    ],
+    "claims_are_derived_from_recorded_facts": true,
+    "note": "Every listing claim traces to project config or recorded metadata; verify against live platform limits before upload."
+  },
+  "external_write_performed": false
+}
