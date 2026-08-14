@@ -224,11 +224,6 @@
         "path": "reviews/quality-gate-latest.json",
         "decision_in": ["PASS"],
         "message": "Quality gate must PASS before the interior gate"
-      },
-      {
-        "path": "outputs/proof/interior-proof-report.json",
-        "decision_in": ["PASS"],
-        "message": "Interior proof must PASS before the interior gate"
       }
     ],
     "VISUAL_DEVELOPMENT->COVER_APPROVAL": [
@@ -236,6 +231,13 @@
         "path": "outputs/proof/cover-proof-report.json",
         "decision_in": ["PASS"],
         "message": "Cover proof must PASS before the cover gate"
+      }
+    ],
+    "LAYOUT_AND_FORMAT_BUILD->ACCESSIBILITY_VALIDATION": [
+      {
+        "path": "outputs/proof/interior-proof-report.json",
+        "decision_in": ["PASS"],
+        "message": "Interior proof must PASS after the interior build (built from the frozen approved source)"
       }
     ],
     "RIGHTS_CLEARANCE->COMPLIANCE_APPROVAL": [

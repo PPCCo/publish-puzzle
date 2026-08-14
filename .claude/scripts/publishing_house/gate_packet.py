@@ -29,10 +29,12 @@ GATES = ("niche", "interior", "cover", "compliance", "listing", "release")
 # Which deterministic gate reports are material evidence for each human gate.
 _GATE_EVIDENCE: dict[str, list[str]] = {
     "niche": ["niche/assessment-latest.json"],
+    # Interior gate binds the FROZEN SOURCE only. The interior PDF + proof are
+    # built after this gate freezes the source (LAYOUT_AND_FORMAT_BUILD), so the
+    # proof report is intentionally NOT material evidence here — it does not exist yet.
     "interior": [
         "verification/content-verification-latest.json",
         "reviews/quality-gate-latest.json",
-        "outputs/proof/interior-proof-report.json",
     ],
     "cover": ["outputs/proof/cover-proof-report.json"],
     "compliance": [

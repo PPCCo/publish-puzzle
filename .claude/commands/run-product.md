@@ -1,6 +1,6 @@
 ---
-description: Compatibility alias for bounded autonomous product production between human gates.
-argument-hint: <project-id> [--until human-gate|STATE] [--max-stages N]
+description: Compatibility alias for autonomous product production up to the next human gate.
+argument-hint: <project-id> [--until human-gate|STATE]
 model: inherit
 ---
 

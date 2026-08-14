@@ -161,8 +161,8 @@ def validate_framework(root: Path) -> dict[str, Any]:
                 f"flow: {name}"
             )
 
-    if len(agent_names) < 30:
-        errors.append(f"Expected at least 30 agents, found {len(agent_names)}")
+    if len(agent_names) < 27:
+        errors.append(f"Expected at least 27 agents, found {len(agent_names)}")  # 28 after the discovery/content merges
     if len(skill_names) < 30:
         errors.append(f"Expected at least 30 skills, found {len(skill_names)}")
 

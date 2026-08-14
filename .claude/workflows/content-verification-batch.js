@@ -45,5 +45,5 @@ Return the decision (PASS/FAIL) and per-item results for solvability, uniqueness
   }),
 )
 
-return await agent(`Act as the difficulty-curator and quality-lead. Merge these independent verification results into a deduplicated finding register and repair sequence for project ${projectId}. Rank any unsolvable, non-unique, key-mismatch, or mislabeled-difficulty items as blockers or majors. Preserve exact evidence and required regeneration seeds. Do not grant a gate, freeze artifacts, or declare a pass beyond what the code confirmed.
+return await agent(`Act as the content-verifier and quality-lead. Merge these independent verification results into a deduplicated finding register and repair sequence for project ${projectId}. Rank any unsolvable, non-unique, key-mismatch, or mislabeled-difficulty items as blockers or majors. Preserve exact evidence and required regeneration seeds. Do not grant a gate, freeze artifacts, or declare a pass beyond what the code confirmed.
 ${JSON.stringify(checks)}`, { label: 'verification-synthesis', phase: 'Synthesis', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8', effort: 'high' })

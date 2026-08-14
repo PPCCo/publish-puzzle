@@ -33,7 +33,7 @@ Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID befor
 
 - A valid project ID matching the pattern `clr-YYYY-slug` is supplied.
 - The project exists, validates cleanly, and is not currently blocked or awaiting a human gate.
-- The user has supplied a finite stopping condition (`--until <STATE>`) or accepts the default maximum of three completed stages.
+- The default stopping condition is the **next human gate**: the loop advances through every autonomous stage and halts at the first `STOP_AT_GATE` (or `BLOCKED`). An optional `--until <STATE>` narrows the stop to a specific state. There is no fixed stage-count cap — one invocation is expected to carry a project across many stages up to the next human decision.
 
 ## Specialist delegation
 
@@ -45,18 +45,18 @@ Use these agents only for bounded assignments with exact input hashes, output pa
 
 ## Procedure
 
-1. Parse `$ARGUMENTS`; default to `--until human-gate` with a maximum of three completed stages; cap the requested stage count at five; reject unbounded execution with no stopping condition.
+1. Parse `$ARGUMENTS`; default the stopping condition to the **next human gate** (halt at the first `STOP_AT_GATE`/`BLOCKED`). Honor `--until <STATE>` when given. Do **not** impose a fixed stage-count cap — the loop is expected to cross every autonomous stage up to the next human decision in a single invocation. Apply only a large runaway backstop of 30 loop iterations (far above the ~11 autonomous stages a full pipeline contains); if the backstop is reached, stop and report it as an anomaly rather than a normal completion.
 2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project validate $ARGUMENTS` and `project status $ARGUMENTS`; stop immediately on state divergence, stale artifact hashes, or unresolved blockers.
 3. Begin the autonomous loop:
    a. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project plan $ARGUMENTS` and read `autonomy_action`.
    b. If `autonomy_action` is `STOP_AT_GATE`: assemble and present the gate packet (design policy, product type, audience, formats, all produced artifact paths and hashes, validation results, open findings); render the publishing guide (see below); then follow "Gate decision (at every STOP_AT_GATE)" below. For an auto-approvable craft/quality gate with no safety override, invoke its approval skill (which records per `auto_approve_gates` policy) and continue; for a human-decided gate (compliance, release), a gate whose resolved mode is `false`, or any safety override, halt and let the human decide. Never fabricate a human decision or bypass a safety override.
-   c. If `autonomy_action` is `BLOCKED`: report each blocker with its type and resolution; halt.
+   c. If `autonomy_action` is `BLOCKED`: report each blocker with its type and resolution, listing the **relative path** of every file the human must open or fix (missing artifact path, failing report path, stale-hash artifact path). Then present the recovery choice via **`AskUserQuestion`** (Recommended option first) — e.g. "Attempt the recommended fix now" vs "Just show the blockers" vs "Not now" — rather than only stating a command. Halt after recording the choice; never fabricate resolution of a blocker.
    d. If `autonomy_action` is `PROCEED`: delegate the recommended skill or agent with exact input hashes, output paths, acceptance criteria, and independence requirements. After completion, register produced artifacts with their hashes.
 4. After each **transition**, run `project validate $ARGUMENTS` once (not after every intra-stage action). Do **not** re-run the full quality gate (`project next`) here if the stage's own skill already ran it — trust the recorded `reviews/quality-gate-latest.json` decision and reconcile from it. Only run `project next` yourself when no current quality-gate record exists for the stage. Reconcile any new findings before the next transition. (Safety rule unchanged: never treat a `not-run` required check as `pass` — if a required gate is genuinely `not-run`, run it.)
 5. Transition state only through `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project transition $ARGUMENTS --to <STATE>` after every blocker is cleared and every required check passes.
 6. Re-read `state.json` and artifact hashes after every transition; never cache state across loop iterations.
 7. You MAY invoke a craft/quality gate's approval skill (niche, interior, cover, listing) when its resolved `auto_approve_gates` mode auto-approves and no safety override applies — the approval skill records per policy and you continue. Never auto-decide the compliance or release gates, and never invoke freeze, release-authorization, listing-submission, or distribution skills autonomously; those halt for a human. Never fabricate a human decision or override a safety stop.
-8. Stop when the requested state or human-gate limit is reached, the stage cap is exhausted, a blocker cannot be resolved autonomously, or any required check is `not-run` and release policy requires it.
+8. Stop when the next human gate is reached (or the `--until <STATE>` target, if given), a blocker cannot be resolved autonomously, any required check is `not-run` and release policy requires it, or the 30-iteration runaway backstop trips. Reaching a human gate is the normal, expected stop.
 9. Write `projects/<id>/release/autonomous-run-latest.json` with completed stages, agents used, artifacts and hashes, validation decisions, stop reason, and next valid human action.
 
 ## Publishing guide (render at every STOP_AT_GATE)
@@ -129,7 +129,7 @@ After the gate packet and publishing guide, read the packet's `human_action.revi
 
 - Bounded autonomous-run report (`autonomous-run-latest.json`) with completed stages, produced artifacts, and hashes.
 - Validated state transitions for each completed stage.
-- Explicit stop reason (gate reached, stage cap, blocker, or requested state reached).
+- Explicit stop reason (human gate reached, blocker, requested `--until` state reached, or runaway backstop).
 - Gate packet presented at each human gate (niche, interior, cover, compliance, listing, or release).
 - Next human decision or safe continuation command.
 

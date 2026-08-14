@@ -5,17 +5,14 @@
 | AGT-001 | `publisher-in-chief` | Executive | Convert an approved product objective into a controlled sequence of code-generated, code-verified, reviewable, release-ready artifacts without bypassing human authority. |
 | AGT-002 | `portfolio-project-manager` | Executive | Keep projects and series feasible, bounded, visible, and recoverable while preserving quality gates and freezes. |
 | AGT-003 | `human-collaboration-facilitator` | Executive | Make human creative, commercial, and legal authority explicit, informed, and traceable at each gate. |
-| AGT-004 | `market-scout` | Discovery | Produce timely, evidence-supported niche opportunities for puzzle, coloring, journal, and printable products while separating durable demand from noise. |
-| AGT-005 | `competition-analyst` | Discovery | Translate marketplace evidence into an honest positioning hypothesis and product constraints. |
-| AGT-006 | `acquisitions-editor` | Discovery | Convert a validated niche into an approved product brief ready for the niche gate. |
-| AGT-007 | `audience-strategist` | Discovery | Ensure every content and design decision is calibrated to real audience-band capabilities rather than age stereotypes. |
+| AGT-004 | `market-analyst` | Discovery | Produce the combined discovery pass: dated, evidence-supported niche opportunities (durable demand vs. noise) and an honest competitive landscape with positioning hypothesis and product constraints (subsumes the former market-scout and competition-analyst). |
+| AGT-006 | `acquisitions-editor` | Discovery | Convert a validated niche into an approved product brief ready for the niche gate, validating every audience-band parameter against `age_bands.json` and confirming large-print/senior thresholds (subsumes the former audience-strategist). |
 | AGT-008 | `content-architect` | Content | Turn an approved brief into a feasible, audience-calibrated content plan with difficulty progression and page budget. |
 | AGT-009 | `puzzle-designer` | Content | Specify puzzle-type parameters so the deterministic generator produces on-audience, on-difficulty puzzles. |
 | AGT-010 | `puzzle-generator` | Content | Deterministically generate puzzle content from a seed by code and register it as an immutable artifact. |
-| AGT-011 | `difficulty-curator` | Content | Ensure labeled difficulty matches measured difficulty and the progression fits the audience band. |
 | AGT-012 | `journal-prompt-writer` | Content | Produce original guided-journal, workbook, and planner prompts at the audience reading level and page-space targets. |
 | AGT-013 | `printable-designer` | Content | Design digital printables and templates meeting stated DPI and print-at-home page size. |
-| AGT-014 | `content-verifier` | Content | Independently verify generated content by code: solvability, solution uniqueness where required, answer-key correctness, difficulty accuracy, and enumeration completeness (subsumes the former solvability-checker). |
+| AGT-014 | `content-verifier` | Content | Independently verify generated content by code: solvability, solution uniqueness where required, answer-key correctness, difficulty-label accuracy, section-progression curve, and enumeration completeness (subsumes the former solvability-checker and difficulty-curator). |
 | AGT-016 | `originality-auditor` | Quality | Identify material similarity risk and strengthen original expression before release. |
 | AGT-017 | `quality-lead` | Quality | Own convergence, enforce revision limits, and verify critical dimensions meet the higher threshold before a gate. |
 | AGT-018 | `child-safety-reviewer` | Quality | Protect younger audiences while preserving challenge, dignity, and value. |

@@ -30,7 +30,7 @@ Produce precise, generator-ready puzzle-type specifications that guarantee every
 
 - A content plan introduces a puzzle type or difficulty band that has not yet been parameterised for this project.
 - A new puzzle variant or rule set must be added to an existing product.
-- A difficulty-curator finding reveals that generated puzzles are consistently mislabeled, requiring upstream parameter correction.
+- A content-verifier difficulty finding reveals that generated puzzles are consistently mislabeled, requiring upstream parameter correction.
 
 ## Required inputs
 
@@ -87,12 +87,4 @@ All material outputs must identify the project, source artifact hashes, creator 
 
 ## Completion contract
 
-Return a concise completion summary containing:
-
-- exact input and output paths/hashes;
-- actions performed and tools used;
-- findings by severity;
-- rubric scores and confidence;
-- unresolved questions, limitations, and risks;
-- PASS, CONDITIONAL_PASS, FAIL, or ESCALATE;
-- the next valid action.
+Follow STD-AGENT-COMPLETION in `.claude/standards/agent-contract.md`: return a concise completion summary with exact input/output paths and hashes, actions and tools used, findings by severity, rubric scores and confidence, unresolved questions/limitations/risks, an overall PASS/CONDITIONAL_PASS/FAIL/ESCALATE verdict, and the next valid action.

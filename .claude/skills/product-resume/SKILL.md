@@ -1,7 +1,7 @@
 ---
 name: product-resume
 description: >-
-  Reconstruct working context for an existing project and recommend the next valid action without repeating completed stages.
+  Reconstruct working context for an existing project and recommend the next valid action without repeating completed stages (read-only). Thin alias for /product-inspect --mode resume.
 argument-hint: "<project-id>"
 user-invocable: true
 effort: medium
@@ -11,49 +11,23 @@ allowed-tools:
   - Grep
   - Glob
   - Bash
+  - AskUserQuestion
+  - Skill
   - "Bash(${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py *)"
 ---
 
 # /product-resume
 
-## Goal
-
-Reconstruct working context for an existing project and recommend the next valid action without repeating completed stages.
-
-## Arguments
-
-Use the invocation arguments exactly as `$ARGUMENTS`. Resolve a project ID before changing project files. Do not invent human approvals, credentials, prices, legal conclusions, or completed external actions.
-
-## Entry criteria
-
-- A valid project ID matching the pattern `clr-YYYY-slug` is supplied.
-- The project directory `projects/<id>/` exists.
+Alias for the **resume** lens. All logic lives once in the parameterized
+**`product-inspect`** skill (mode=resume reconstructs context from status + plan +
+project.yaml + state.json + findings/approvals + event tail, detects hash
+divergence before recommending work, and offers the next step via
+`AskUserQuestion`).
 
 ## Procedure
 
-1. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project status $ARGUMENTS` to get the authoritative lifecycle state.
-2. Run `${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py project plan $ARGUMENTS` to get the deterministic next-action recommendation.
-3. Read `projects/<id>/project.yaml` for product type, audience, formats, channels, and engine-derived design policy (trim size, colour policy, visual density, pedagogy).
-4. Read `projects/<id>/state.json` for current state, completed transitions, and recorded artifact hashes.
-5. Glob `projects/<id>/findings/` and `projects/<id>/approvals/` to identify open findings and recorded human gate approvals.
-6. Read the most recent entries in the event log (`${CLAUDE_PROJECT_DIR}/.venv/bin/python3 .claude/scripts/ph_cli.py event tail $ARGUMENTS`) to understand what was last executed.
-7. Detect repository/state divergence: verify on-disk artifact hashes against recorded hashes; flag any mismatch before recommending work.
-8. Summarize: what is complete and authoritative, what gate approvals are recorded, what open findings remain, and what the next bounded action is.
-9. Do not replay completed stages unless they are explicitly invalidated by a hash mismatch or the human requests a redo.
-
-## Required outputs
-
-- Recovery summary: completed stages, recorded approvals, open findings.
-- Validated current lifecycle state and product design policy (product type, audience, formats, channels).
-- Next bounded action with exact CLI command or skill invocation.
-- Human gate notice if the project is at a gate boundary (niche, interior, cover, compliance, listing, or release).
-- List of any hash mismatches or state divergences detected.
-
-## Stop conditions
-
-- Stop on invalid project state, stale artifact hashes, missing required approval, unresolved blocker, rights ambiguity, unsafe content, or tool failure that prevents a required check.
-- Report partial work and the exact recovery action. Never silently skip a gate or treat `not-run` as `pass`.
-
-## Completion report
-
-State the project, current stage, agents used, files and hashes created, validation/gate results, unresolved findings, and next valid action.
+Run the **`product-inspect`** skill with arguments `--mode resume $ARGUMENTS`,
+then follow its procedure exactly. Do not duplicate or diverge from that logic
+here. Strictly read-only: never replay completed stages unless a hash mismatch
+invalidates them or the human requests a redo; never transition or approve; never
+treat `not-run` as `pass`.

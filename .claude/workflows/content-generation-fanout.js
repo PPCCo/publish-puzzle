@@ -67,6 +67,6 @@ Report, per item: solvability, uniqueness of solution where applicable, answer-k
 )
 
 // FAN-IN: synthesize a batch-level report. No approval, no freeze.
-return await agent(`Act as the difficulty-curator and quality-lead. Merge the independent verification results into a single content report for project ${projectId}. Confirm every batch has a current PASS from code before recommending progress; treat any FAIL, stale hash, or not-run as a blocker. Summarize solvability, uniqueness, answer-key correctness, and difficulty-label accuracy across all batches; list every failing item with its evidence and the required regeneration/repair. Do not grant the interior gate, do not freeze artifacts, and do not declare the interior approved.
+return await agent(`Act as the content-verifier and quality-lead. Merge the independent verification results into a single content report for project ${projectId}. Confirm every batch has a current PASS from code before recommending progress; treat any FAIL, stale hash, or not-run as a blocker. Summarize solvability, uniqueness, answer-key correctness, and difficulty-label accuracy across all batches; list every failing item with its evidence and the required regeneration/repair. Do not grant the interior gate, do not freeze artifacts, and do not declare the interior approved.
 GENERATED=${JSON.stringify(generated)}
 VERIFIED=${JSON.stringify(verified)}`, { label: 'content-verification-synthesis', phase: 'Synthesis', model: '@bedrock-eus2/us.anthropic.claude-opus-4-8', effort: 'high' })

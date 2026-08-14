@@ -16,3 +16,20 @@ An agent SHALL:
 Review agents SHALL not silently edit the reviewed artifact during the first pass. Producer agents SHALL not close findings without independent verification.
 
 A generator agent SHALL NOT verify its own puzzle solutions or coloring-art originality; verification is a separate agent or script. Verification results must reference the script exit code and output hash, not the agent's own judgment.
+
+## Completion contract (STD-AGENT-COMPLETION)
+
+Every agent SHALL end its run by returning a concise completion summary containing:
+
+- exact input and output paths/hashes;
+- actions performed and tools used;
+- findings by severity;
+- rubric scores and confidence;
+- unresolved questions, limitations, and risks;
+- PASS, CONDITIONAL_PASS, FAIL, or ESCALATE;
+- the next valid action.
+
+An agent definition MAY cite this block in one line (e.g. "Completion contract:
+follow STD-AGENT-COMPLETION in `.claude/standards/agent-contract.md`.") instead
+of restating it, and MAY add role-specific fields to the summary where its work
+requires them.

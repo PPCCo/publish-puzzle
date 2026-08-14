@@ -12,7 +12,7 @@
   "states": {
     "DISCOVERY": {
       "forward_target": "NICHE_ASSESSMENT",
-      "recommended_agents": ["market-scout", "acquisitions-editor"],
+      "recommended_agents": ["market-analyst", "acquisitions-editor"],
       "recommended_skills": ["product-brief"],
       "recommended_workflows": [],
       "entry_criteria": "A topic and audience have been proposed.",
@@ -20,7 +20,7 @@
     },
     "NICHE_ASSESSMENT": {
       "forward_target": "NICHE_APPROVAL",
-      "recommended_agents": ["market-scout", "competition-analyst", "commercial-writer"],
+      "recommended_agents": ["market-analyst", "commercial-writer"],
       "recommended_skills": ["product-niche-assess"],
       "recommended_workflows": [],
       "entry_criteria": "Product brief recorded.",
@@ -39,7 +39,7 @@
     },
     "PLANNING": {
       "forward_target": "CONTENT_GENERATION",
-      "recommended_agents": ["content-architect", "puzzle-designer", "difficulty-curator"],
+      "recommended_agents": ["content-architect", "puzzle-designer"],
       "recommended_skills": ["product-plan"],
       "entry_criteria": "Niche approved.",
       "acceptance": "content_plan populated with puzzle types, counts, and difficulty progression."
@@ -58,7 +58,7 @@
       "recommended_skills": ["product-verify", "product-quality-gate"],
       "recommended_workflows": ["verify_content"],
       "entry_criteria": "Content generated.",
-      "acceptance": "verification/content-verification-latest.json = PASS; quality gate PASS; interior proof PASS.",
+      "acceptance": "verification/content-verification-latest.json = PASS; quality gate PASS. (Interior proof is NOT required here — the interior PDF is built after the interior gate freezes the source, in LAYOUT_AND_FORMAT_BUILD.)",
       "gate_report_path": "verification/content-verification-latest.json"
     },
     "INTERIOR_APPROVAL": {
@@ -67,7 +67,7 @@
       "gate": "interior",
       "human_only_skill": "product-approve-interior",
       "recommended_skills": ["product-gate-packet"],
-      "entry_criteria": "Content verified and interior proof passes.",
+      "entry_criteria": "Content verified (verification + quality gate PASS). The interior PDF is built after this gate freezes the source, not before.",
       "acceptance": "A human records the interior approval; content batches are frozen.",
       "gate_report_path": "approvals/packets/gate-packet-interior-latest.json"
     },
@@ -97,7 +97,7 @@
       "recommended_skills": ["product-build-interior", "product-build-digital"],
       "recommended_workflows": ["build_layout"],
       "entry_criteria": "Interior and cover approved.",
-      "acceptance": "Print-ready interior/cover PDFs and digital bundle built; proof PASS."
+      "acceptance": "Print-ready interior/cover PDFs and digital bundle built from the frozen approved source; interior proof PASS (this stage owns the first interior PDF build + proof, gated on LAYOUT_AND_FORMAT_BUILD->ACCESSIBILITY_VALIDATION)."
     },
     "ACCESSIBILITY_VALIDATION": {
       "forward_target": "RIGHTS_CLEARANCE",
