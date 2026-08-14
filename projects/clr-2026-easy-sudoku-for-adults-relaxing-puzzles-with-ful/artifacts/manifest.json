@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "artifacts": [
+    {
+      "artifact_id": "art-intake-note-d52d041134ca",
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "type": "intake-note",
+      "stage": "DISCOVERY",
+      "version": 1,
+      "path": "notes/intake.md",
+      "sha256": "sha256:d52d041134cacb71892a2f8cfd193e9b3ab64776494a6cdfde8413608eac644c",
+      "size_bytes": 4079,
+      "created_at": "2026-08-14T07:02:44Z",
+      "created_by": "human",
+      "source_artifact_ids": [],
+      "provenance": {},
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "supersedes": null,
+      "frozen": false
+    }
+  ]
+}

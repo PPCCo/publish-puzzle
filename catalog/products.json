@@ -2,6 +2,19 @@
   "schema_version": "1.1",
   "products": [
     {
+      "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+      "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
+      "product_type": "puzzle-book",
+      "audience": "adult-general",
+      "edition": 1,
+      "state": "DISCOVERY",
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "updated_at": "2026-08-14T07:02:03Z"
+    },
+    {
       "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
       "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
       "product_type": "puzzle-book",
@@ -11,7 +24,7 @@
       "formats": [
         "paperback"
       ],
-      "updated_at": "2026-08-01T01:30:59Z"
+      "updated_at": "2026-08-14T06:54:05Z"
     }
   ]
 }

@@ -1,0 +1,159 @@
+schema_version: '1.0'
+project_id: clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful
+working_title: 'Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions'
+topic: 'Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions'
+book_type: puzzle-book
+product_type: puzzle-book
+genre: ''
+audience: adult-general
+language: en-US
+formats:
+- paperback
+- digital-pdf
+sales_channels:
+- kdp
+- etsy
+edition: 1
+created_at: '2026-08-14T07:02:03Z'
+created_by: human
+objectives: []
+constraints: []
+content_plan:
+  puzzle_types: []
+  target_content_count: null
+  difficulty_progression: progressive
+  solutions_placement: back-only
+production:
+  trim_size: 8.5x11
+  bleed: false
+  colour_interior: false
+  colour_policy: &id001
+    colour_interior_default: false
+    digital:
+      text: colour
+      images: colour
+    print_interior:
+      text: black-and-white
+      images: black-and-white
+    image_colour_rule: Interior colour is used only when it carries meaning or the
+      product family requires it (young coloring, colour-by-number). Puzzle grids,
+      solutions, and journal pages default to black-and-white to control print cost.
+    global_page_rule: Whenever a print page carries a colour image, the entire page
+      is a colour page for costing; keep colour pages contiguous to avoid per-signature
+      colour surcharges.
+    notes: 'adult-general: black-and-white interior is standard for puzzle/journal
+      products; colour only where a product family requires it.'
+  design:
+    schema_version: '1.0'
+    resolved: true
+    inputs:
+      audience: adult-general
+      book_type: puzzle-book
+      formats:
+      - paperback
+      - digital-pdf
+    trim_size: 8.5x11
+    trim_size_candidates:
+    - 8.5x11
+    - 6x9
+    - 7x10
+    colour_interior: false
+    colour_policy: *id001
+    tone_register: neutral
+    reading_level_target:
+      band: adult-general
+      resolved: true
+      age_min: 18
+      age_max: null
+      default_words:
+      - 0
+      - 5000
+      sentence_words_target:
+      - 8
+      - 26
+      paragraph_sentences_target:
+      - 1
+      - 6
+      technical_terms_per_1000_words_max: 40
+      visuals_per_spread_target:
+      - 0
+      - 3
+      guidance:
+      - Full-difficulty grids; clear difficulty labels
+      - Solutions grouped back-only
+      - 'Journals: open, reflective prompts with generous writing space'
+    visual_density: medium
+    emotional_intensity_ceiling: moderate
+    pedagogy_approach: progressive
+    binding_hint: paperback
+    paper_hint: white
+    rationale:
+      audience_default: 'General adult puzzle/journal: black-and-white interior standard;
+        colour only where the product family requires it.'
+      book_type_override: Puzzle books lead with grids and solvability; difficulty
+        progresses front-to-back, solutions grouped back-only.
+      colour: 'adult-general: black-and-white interior is standard for puzzle/journal
+        products; colour only where a product family requires it.'
+    provenance:
+      engine: publishing_house.design_policy.derive_design
+      config: .claude/config/design_policy.json
+      age_bands: .claude/config/age_bands.json
+      colour_source: publishing_house.project.default_colour_policy
+      field_source:
+        binding_hint: audience:adult-general
+        colour_interior: audience:adult-general
+        emotional_intensity_ceiling: audience:adult-general
+        paper_hint: audience:adult-general
+        pedagogy_approach: book_type:puzzle-book
+        tone_register: audience:adult-general
+        trim_size_candidates: audience:adult-general
+        trim_size_recommended: audience:adult-general
+        visual_density: book_type:puzzle-book
+      audience_profile_resolved: true
+      book_type_override_applied: true
+  print:
+    paper: white
+    binding: paperback
+    spine_width_in: null
+  legal_defaults:
+    ai_disclosure: This book's puzzles and layout were generated and verified by software;
+      cover and interior art are original works. No AI-generated text is presented
+      as human authorship.
+    rights_posture:
+      line_art: original-only
+      fonts: licensed-for-commercial-embedding
+      puzzle_word_lists: original-or-public-domain
+      default_asset_rights_status: unknown-blocks-release
+    originality_attestation_template: Original work created via deterministic code
+      generation and original illustration; no protected reference was traced or closely
+      derived; no living artist imitated by name or style.
+    release_scope_defaults:
+      territories:
+      - US
+      channels:
+      - kdp
+      - etsy
+      permitted_operations:
+      - prepare-package
+      - dry-run
+      maximum_external_spend: 0.0
+      currency: USD
+    child_safety_policy:
+      kids-4-8: friendly/familiar imagery only; no scary/dark/ambiguous-threat; large
+        cells+type; forgiving difficulty
+      kids-6-10: positive imagery; modest progression; no violence/sexualisation/disturbing
+        themes
+      tween-8-12: no horror/graphic-violence/age-inappropriate social themes; school/family
+        safe
+commercial:
+  currency: USD
+  ebook_price: null
+  paperback_price: null
+  hardcover_price: null
+  digital_price: null
+rights:
+  territories:
+  - WORLD
+  ai_assistance_disclosure_required: unknown
+  originals_only: true
+status_notes: ''

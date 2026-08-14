@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "category": "sudoku-puzzles",
-  "generated_at": "2026-07-31T12:26:05Z",
+  "generated_at": "2026-08-14T07:02:33Z",
   "evidence_mode": "mixed",
   "category_overview": {
     "trending_types": [
@@ -89,7 +89,7 @@
   "products": {
     "adult-easy": {
       "product_id": "adult-easy",
-      "status": "candidate",
+      "status": "promoted",
       "priority": 1,
       "confidence": "high",
       "working_title": "Easy Sudoku for Adults: Relaxing Puzzles with Full Solutions",
@@ -135,7 +135,8 @@
       ],
       "open_questions": [
         "Confirm live BSR/price via manual Amazon tier before committing price band."
-      ]
+      ],
+      "promoted_project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful"
     },
     "senior-large-print-easy": {
       "product_id": "senior-large-print-easy",
