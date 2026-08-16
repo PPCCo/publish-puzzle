@@ -50,8 +50,9 @@ review to one coloring brief; default is all ingested coloring assets.
      was skipped or the source had anti-aliasing).
    - `printability_at_trim_dpi` — asset pixels vs the brief's `dimensions` (else **major**).
    - `even_background` — dominant white coverage plausibility (else **major**).
-   - `min_line_weight` — thinnest sustained black run vs `min_line_weight_pt × dpi / 72`
-     (heuristic proxy; **major** if under — a human confirms legibility).
+   - `min_line_weight` — minimum stroke *width* (perpendicular thickness, measured with a
+     distance-transform medial axis, orientation-independent and speck-robust) vs
+     `min_line_weight_pt × dpi / 72` (**major** if under — a human confirms legibility).
    Report the decision and open blocker/major counts. A code PASS is evidence, not approval.
 2. **Layer agent judgment** (the code cannot decide these):
    - **Originality (rule 07).** Read each `visuals/briefs/<brief_id>.attestation.json` sidecar and

@@ -10,6 +10,16 @@
         "PUBLISHING_REPO_ROOT": "${CLAUDE_PROJECT_DIR:-.}",
         "PUBLISHING_EXTERNAL_WRITES": "disabled"
       }
+    },
+    "comfyui-mcp": {
+      "type": "stdio",
+      "command": "/Users/qaiser.abbas/Dev/my-repos/pub/image-tools/ComfyUI/.venv-comfy/bin/python3",
+      "args": ["/Users/qaiser.abbas/Dev/my-repos/pub/image-tools/ComfyUI/comfyui_mcp_bridge.py"],
+      "env": {
+        "COMFYUI_URL": "http://127.0.0.1:8188",
+        "IMAGE_GEN_LIVE_ENABLED": "1",
+        "FLUX_WEIGHT_DTYPE": "default"
+      }
     }
   }
 }

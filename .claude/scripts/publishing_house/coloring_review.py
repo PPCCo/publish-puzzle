@@ -20,9 +20,33 @@ Checks per asset (all deterministic):
 * ``even_background`` — the dominant luminance must be white (255) covering a
   sane majority of the page; a mostly-black page is not a colorable line drawing:
   **major** if white coverage is implausibly low.
-* ``min_line_weight`` (proxy) — the thinnest sustained black horizontal run vs
-  the brief's ``min_line_weight_pt × dpi / 72``. A heuristic lower bound; under
-  target is a **major** worth a human look, never an approval.
+* ``min_line_weight`` — the minimum stroke *width* (perpendicular thickness) of
+  the ink, measured with a chamfer distance transform sampled on the stroke
+  medial axis, vs the brief's ``min_line_weight_pt × dpi / 72``. Under target is a
+  **major** worth a human look, never an approval.
+
+Minimum stroke-width measurement (deterministic, offline, Pillow-only)
+----------------------------------------------------------------------
+
+The naive proxy — thinnest sustained black *horizontal* run — is wrong for two
+reasons: a horizontal stroke's thickness is invisible to a horizontal scan (it
+reads the stroke's full length, not its height), and a diagonal/curved stroke
+crossed horizontally reads *wider* than its true perpendicular thickness (the
+secant effect). It is also destroyed by a single 1px speck.
+
+Instead we measure true stroke thickness with a distance transform:
+
+1. Build the ink mask (black pixels, value 0).
+2. Run a two-pass **chamfer 3–4 distance transform**: every ink pixel gets its
+   integer distance (×3 scale, orthogonal step 3, diagonal step 4) to the nearest
+   background pixel. This is an O(width·height) exact-integer approximation of the
+   Euclidean distance-to-edge — i.e. half the local stroke thickness.
+3. Find **medial-axis (ridge) pixels**: ink pixels whose scaled distance is ≥ all
+   eight neighbours. The distance at a ridge pixel is the stroke's local half-width.
+4. The minimum stroke width is ``2 × min(ridge distance)`` in true pixels
+   (``scaled / 3``), taken only over ridges backed by a connected run of at least
+   ``_MIN_RIDGE_RUN`` ridge pixels so a lone speck or anti-alias pixel cannot drive
+   the result. This is orientation-independent and robust.
 """
 from __future__ import annotations
 
@@ -37,6 +61,17 @@ _COLORING_PURPOSE = "coloring interior page"
 
 # White-coverage floor below which a "line drawing" is implausible (mostly ink).
 _MIN_WHITE_FRACTION = 0.55
+
+# A ridge (medial-axis) segment must span at least this many connected pixels
+# before its thickness counts, so a single speck / anti-alias pixel cannot drive
+# the minimum stroke-width down. In true pixels along the stroke.
+_MIN_RIDGE_RUN = 4
+
+# Chamfer 3-4 distance-transform scale: orthogonal step = 3, diagonal step = 4.
+# True distance ≈ scaled / _CHAMFER_SCALE.
+_CHAMFER_ORTHO = 3
+_CHAMFER_DIAG = 4
+_CHAMFER_SCALE = 3
 
 
 def _brief_index(paths: ProjectPaths) -> dict[str, dict[str, Any]]:
@@ -106,6 +141,126 @@ def _finding(
     }
 
 
+def _min_stroke_width_px(
+    pixels: bytes, width: int, height: int
+) -> int | None:
+    """Minimum stroke *width* (perpendicular thickness) of the ink, in pixels.
+
+    Deterministic, offline, pure-Python. Uses a two-pass chamfer 3-4 distance
+    transform of the ink mask (see module docstring) sampled on medial-axis
+    ridges, so it measures true stroke thickness independent of orientation and
+    is not fooled by long horizontal strokes, diagonals, or single specks.
+
+    Returns ``None`` when there is no ink at all.
+    """
+    n = width * height
+    INF = 1 << 29
+    # Scaled distance-to-background for every pixel. Background pixels stay 0; ink
+    # pixels start at INF and are relaxed toward the nearest background.
+    dist = [0 if pixels[i] != 0 else INF for i in range(n)]
+    if all(d == 0 for d in dist):
+        return None
+
+    o, d = _CHAMFER_ORTHO, _CHAMFER_DIAG
+
+    # Forward pass: top-left → bottom-right (checks up-left neighbourhood).
+    for y in range(height):
+        base = y * width
+        up = base - width
+        for x in range(width):
+            i = base + x
+            v = dist[i]
+            if v == 0:
+                continue
+            if x > 0 and dist[i - 1] + o < v:
+                v = dist[i - 1] + o
+            if y > 0:
+                if dist[up + x] + o < v:
+                    v = dist[up + x] + o
+                if x > 0 and dist[up + x - 1] + d < v:
+                    v = dist[up + x - 1] + d
+                if x + 1 < width and dist[up + x + 1] + d < v:
+                    v = dist[up + x + 1] + d
+            dist[i] = v
+
+    # Backward pass: bottom-right → top-left (checks down-right neighbourhood).
+    for y in range(height - 1, -1, -1):
+        base = y * width
+        down = base + width
+        for x in range(width - 1, -1, -1):
+            i = base + x
+            v = dist[i]
+            if v == 0:
+                continue
+            if x + 1 < width and dist[i + 1] + o < v:
+                v = dist[i + 1] + o
+            if y + 1 < height:
+                if dist[down + x] + o < v:
+                    v = dist[down + x] + o
+                if x + 1 < width and dist[down + x + 1] + d < v:
+                    v = dist[down + x + 1] + d
+                if x > 0 and dist[down + x - 1] + d < v:
+                    v = dist[down + x - 1] + d
+            dist[i] = v
+
+    # Medial-axis ridge pixels: ink pixels whose distance is a local maximum
+    # (≥ all 8 neighbours). Their distance is the local stroke half-width.
+    # We keep only ridge distances backed by a connected horizontal run of at
+    # least _MIN_RIDGE_RUN ridge pixels, so an isolated speck cannot win.
+    best_scaled: int | None = None
+    for y in range(height):
+        base = y * width
+        up = base - width
+        down = base + width
+        run_min: int | None = None  # smallest ridge distance in the current run
+        run_len = 0
+        for x in range(width):
+            i = base + x
+            v = dist[i]
+            is_ridge = False
+            if v > 0:
+                is_ridge = True
+                # Compare against the 8-neighbourhood; a boundary neighbour is
+                # treated as background (0), which never exceeds v.
+                if x > 0 and dist[i - 1] > v:
+                    is_ridge = False
+                elif x + 1 < width and dist[i + 1] > v:
+                    is_ridge = False
+                elif y > 0 and dist[up + x] > v:
+                    is_ridge = False
+                elif y > 0 and x > 0 and dist[up + x - 1] > v:
+                    is_ridge = False
+                elif y > 0 and x + 1 < width and dist[up + x + 1] > v:
+                    is_ridge = False
+                elif y + 1 < height and dist[down + x] > v:
+                    is_ridge = False
+                elif y + 1 < height and x > 0 and dist[down + x - 1] > v:
+                    is_ridge = False
+                elif y + 1 < height and x + 1 < width and dist[down + x + 1] > v:
+                    is_ridge = False
+            if is_ridge:
+                run_len += 1
+                run_min = v if run_min is None else min(run_min, v)
+            else:
+                if run_len >= _MIN_RIDGE_RUN and run_min is not None:
+                    best_scaled = run_min if best_scaled is None else min(best_scaled, run_min)
+                run_min = None
+                run_len = 0
+        if run_len >= _MIN_RIDGE_RUN and run_min is not None:
+            best_scaled = run_min if best_scaled is None else min(best_scaled, run_min)
+
+    # Fallback: no ridge run met the length floor (very short strokes / dots).
+    # Use the single largest distance so we still report a thickness rather than
+    # None — the even_background / pure_bw checks cover degenerate images.
+    if best_scaled is None:
+        best_scaled = max(dist)
+        if best_scaled >= INF or best_scaled == 0:
+            return None
+
+    # scaled half-width → true full width: 2 × (scaled / scale), rounded.
+    return max(1, round(2.0 * best_scaled / _CHAMFER_SCALE))
+
+
 def _measure(path: Path) -> dict[str, Any]:
     """Deterministic pixel measurements for one asset (Pillow lazy)."""
     from PIL import Image
@@ -124,26 +279,14 @@ def _measure(path: Path) -> dict[str, Any]:
     values = sorted(histogram)
     white = histogram.get(255, 0)
 
-    # Thinnest sustained black horizontal run across all rows (line-weight proxy).
-    min_black_run: int | None = None
-    for row in range(height):
-        base = row * width
-        run = 0
-        for col in range(width):
-            if pixels[base + col] == 0:
-                run += 1
-            elif run:
-                min_black_run = run if min_black_run is None else min(min_black_run, run)
-                run = 0
-        if run:
-            min_black_run = run if min_black_run is None else min(min_black_run, run)
+    min_stroke_width = _min_stroke_width_px(pixels, width, height)
 
     return {
         "width_px": width,
         "height_px": height,
         "luminance_values": values,
         "white_fraction": round(white / total, 4),
-        "min_black_run_px": min_black_run,
+        "min_stroke_width_px": min_stroke_width,
     }
 
 
@@ -215,22 +358,23 @@ def coloring_review(root: Path, project_id: str, brief_id: str | None = None) ->
                 )
             )
 
-        # min_line_weight proxy — major if under target.
+        # min_line_weight — major if the measured minimum stroke width is under target.
         min_line_pt = None
         attestation_path = paths.directory / "visuals" / "briefs" / f"{bid}.attestation.json"
         if attestation_path.is_file():
             min_line_pt = load_json(attestation_path, {}).get("min_line_weight_pt")
         dpi = dims.get("dpi") or 300
-        if min_line_pt and m["min_black_run_px"] is not None:
+        if min_line_pt and m["min_stroke_width_px"] is not None:
             target_px = float(min_line_pt) * float(dpi) / 72.0
-            if m["min_black_run_px"] < target_px:
+            if m["min_stroke_width_px"] < target_px:
                 asset_findings.append(
                     _finding(
                         "major", "min_line_weight", rel,
-                        f"thinnest black run ≈ {m['min_black_run_px']}px; target ≈ "
-                        f"{target_px:.0f}px ({min_line_pt}pt @ {dpi}dpi). Proxy heuristic.",
+                        f"minimum stroke width ≈ {m['min_stroke_width_px']}px (measured via "
+                        f"distance-transform medial axis); target ≈ {target_px:.0f}px "
+                        f"({min_line_pt}pt @ {dpi}dpi).",
                         "Increase minimum stroke weight so the thinnest line meets the brief.",
-                        f"Thinnest sustained black run ≥ ~{target_px:.0f}px (human confirms legibility).",
+                        f"Minimum stroke width ≥ ~{target_px:.0f}px (human confirms legibility).",
                     )
                 )
 

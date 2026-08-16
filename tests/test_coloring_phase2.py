@@ -141,6 +141,34 @@ class ColoringPhase2Tests(unittest.TestCase):
         self.assertTrue(proof["interior"]["alt_text_present"])
         self.assertFalse(proof["interior"]["vector_only"])
 
+    # --- min stroke width is orientation-independent and speck-robust ----------
+    def test_min_stroke_width_measures_true_thickness(self) -> None:
+        """The distance-transform measurement reports true stroke *thickness*,
+        not a horizontal run — fixing the old proxy's blind spots."""
+        from PIL import Image, ImageDraw
+
+        def measure(draw_fn, w=400, h=400):
+            img = Image.new("L", (w, h), 255)
+            draw_fn(ImageDraw.Draw(img))
+            return coloring_review._min_stroke_width_px(img.tobytes(), w, h)
+
+        # A long, thin HORIZONTAL bar: 6px tall, 300px long. The old horizontal-run
+        # proxy read its length (~300); the real measurement reads its thickness.
+        h_bar = measure(lambda d: d.rectangle([50, 100, 350, 105], fill=0))
+        self.assertLessEqual(h_bar, 8, f"h-bar thickness should be ~6px, got {h_bar}")
+
+        # A vertical bar of the same thickness measures the same (orientation-free).
+        v_bar = measure(lambda d: d.rectangle([100, 50, 105, 350], fill=0))
+        self.assertLessEqual(v_bar, 8, f"v-bar thickness should be ~6px, got {v_bar}")
+
+        # A large ink blob with a single 1px speck must NOT collapse to 1px: the
+        # ridge-run floor rejects the isolated speck.
+        def blob_speck(d):
+            d.ellipse([100, 100, 300, 300], fill=0)
+            d.point((390, 10), fill=0)
+
+        self.assertGreater(measure(blob_speck), 10)
+
     # --- 9. puzzle-only project stays byte-identical (fallback preserved) ------
     def test_puzzle_only_interior_stays_vector_only(self) -> None:
         pid, pdir = self.fx.project(

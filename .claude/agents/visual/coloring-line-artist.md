@@ -75,9 +75,12 @@ offline image-generation path — never hand-place assets or assert clearance:
    positive prompt and an `.attestation.json` sidecar preserving the originality attestation
    (the shared `illustration-brief.schema.json` is `additionalProperties:false`, so the
    attestation lives in the sidecar, not the brief).
-2. **Produce** each page from the manual generation guide. Live ComfyUI generation is **deferred**
-   until a human adds `comfyui-mcp` to `.mcp.json` (security rule 17); do not attempt a live call
-   while it is absent.
+2. **Produce** each page. Two paths converge on the same finishing steps: the **automated**
+   local-ComfyUI connector (`comfyui-mcp`) when the human has enabled it, or the **manual**
+   generation guide otherwise. Automated generation is possible only when a human has added
+   `comfyui-mcp` to `.mcp.json` (a HUMAN step — security rule 17), set `IMAGE_GEN_LIVE_ENABLED=1`,
+   and has a local ComfyUI running; until then the connector is absent or refuses, so fall through
+   to the manual guide. Never claim a live render happened when it did not.
 3. **Enforce pure B&W** with `image-gen threshold` — grayscale hard-thresholded to exactly two
    luminance values `{0, 255}`. Coloring interiors are `colour_interior = false` (rule 22): no
    shading, no grey fills, no gradients. Always threshold **before** ingest so the hashed asset
