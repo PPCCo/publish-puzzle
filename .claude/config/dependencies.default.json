@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "notes": "Offline registry of license-checked dependencies (fonts first) shared across projects. Mirrors image_generation.providers in tools.default.json: each entry records its license_reference + an embedding_allowed / commercial_use_verified pair, and clearance is an offline, evidence-recorded act (never a live network license check). The `dependency select` CLI verb clears a chosen dependency AT SELECTION TIME (design/pre-production), shifting the license check left of the artifact that embeds it. A font is `cleared` only when embedding_allowed AND commercial_use_verified are both true; otherwise it yields a `pending`/`restricted` rights record that BLOCKS the rights gate, exactly like an unverified image provider. Font family names referenced by .claude/config/design_policy.json MUST exist here (analogous to trim keys existing in print_pdf.TRIM_SIZES). Overridable by an optional .claude/config/dependencies.local.json (deep-merged). font_file_path values point at .ttf files bundled under .claude/config/fonts/ and were confirmed to report the recorded `family` via Pillow ImageFont.truetype(...).getname(). Variable [wght] files load in Pillow with the Regular default instance, which is what the compositor draws captions with.",
+  "fonts": [
+    {
+      "family": "Andika",
+      "role_tags": ["body", "label", "display"],
+      "source": "SIL Global — https://software.sil.org/andika/ (via https://fonts.google.com/specimen/Andika)",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/Andika-Regular.ttf",
+      "notes": "SIL Andika is a sans-serif face purpose-designed for literacy and beginning readers: clear, rounded, unambiguous letterforms (single-storey a, distinct I/l/1). Fits the early-reader-6-8 'clear, rounded, high-legibility' brief. Fully embeddable + commercial under OFL 1.1. RFN 'Andika, SIL' — restricts only modified derivatives, not unmodified embedding. Static Regular/Bold/Italic/BoldItalic bundled. Pillow getname() -> ('Andika','Regular')."
+    },
+    {
+      "family": "Atkinson Hyperlegible",
+      "role_tags": ["body", "label"],
+      "source": "Braille Institute of America — https://www.brailleinstitute.org/freefont/ (via https://fonts.google.com/specimen/Atkinson+Hyperlegible)",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/AtkinsonHyperlegible-Regular.ttf",
+      "notes": "High-legibility face engineered to disambiguate similar characters for low-vision readers. No Reserved Font Name. True static (non-variable) TTFs bundled — Regular/Bold/Italic/BoldItalic. Embeddable + commercial under OFL 1.1. Pillow getname() -> ('Atkinson Hyperlegible','Regular')."
+    },
+    {
+      "family": "Atkinson Hyperlegible Next",
+      "role_tags": ["body", "label"],
+      "source": "Braille Institute of America — https://www.brailleinstitute.org/freefont/ (via https://fonts.google.com/specimen/Atkinson+Hyperlegible+Next)",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/AtkinsonHyperlegibleNext[wght].ttf",
+      "notes": "2025 successor to Atkinson Hyperlegible: 7 weights, 150+ languages. No Reserved Font Name. Bundled as a single [wght] variable file whose default instance is Regular — loads directly in Pillow for single-weight caption rendering. Embeddable + commercial under OFL 1.1. Pillow getname() -> ('Atkinson Hyperlegible Next','Regular')."
+    },
+    {
+      "family": "Charis",
+      "role_tags": ["body"],
+      "source": "SIL Global — https://software.sil.org/charis/ (v7.000 release, renamed from 'Charis SIL')",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/Charis-Regular.ttf",
+      "notes": "Bitstream-Charter-derived serif workhorse for long reading passages; SIL v7.000 (family renamed 'Charis' from 'Charis SIL'). Full static Regular/Bold/Italic/BoldItalic. RFN 'Charis, SIL' — restricts only modified derivatives. Embeddable + commercial under OFL 1.1. Pillow getname() -> ('Charis','Regular')."
+    },
+    {
+      "family": "Gentium Plus",
+      "role_tags": ["body"],
+      "source": "SIL Global — https://software.sil.org/gentium/ (via https://fonts.google.com/specimen/Gentium+Plus)",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/GentiumPlus-Regular.ttf",
+      "notes": "Warmer, more calligraphic old-style serif alternative to Charis; good for diacritic-heavy multilingual text. Full static weight set. RFN 'Gentium, SIL' — restricts only modified derivatives. Embeddable + commercial under OFL 1.1. Pillow getname() -> ('Gentium Plus','Regular')."
+    },
+    {
+      "family": "Literata",
+      "role_tags": ["body"],
+      "source": "Google Fonts / Storm Type Foundry — https://github.com/googlefonts/literata",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/Literata/static/Literata-Regular.ttf",
+      "notes": "Purpose-built ebook/long-form serif (commissioned for Google Play Books); warmer, contemporary trade-book feel for adult nonfiction. Pre-built static instances bundled (use plain 'Literata-Regular.ttf'; the Literata_18pt/24pt/... optical-size statics report suffixed family names). RFN 'Literata'. Pillow getname() -> ('Literata','Regular')."
+    },
+    {
+      "family": "Lexend",
+      "role_tags": ["body", "label"],
+      "source": "Bonnie Shaver-Troup / Thomas Jockin — https://github.com/googlefonts/lexend",
+      "license_reference": "OFL-1.1",
+      "license_text_path": ".claude/config/licenses/OFL-1.1.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/Lexend/static/Lexend-Regular.ttf",
+      "notes": "Reading-fluency face designed from reading-speed research (a research-backed general-fluency peer to Atkinson's glyph-disambiguation approach for accessibility). No Reserved Font Name. Full static weight range 100-900. Embeddable + commercial under OFL 1.1. Pillow getname() -> ('Lexend','Regular')."
+    },
+    {
+      "family": "Archivo",
+      "role_tags": ["display", "label"],
+      "source": "Omnibus-Type — https://github.com/Omnibus-Type/Archivo",
+      "license_reference": "Apache-2.0",
+      "license_text_path": ".claude/config/licenses/Apache-2.0.md",
+      "embedding_allowed": true,
+      "commercial_use_verified": true,
+      "territories": ["WORLD"],
+      "font_file_path": ".claude/config/fonts/Archivo/static/Archivo-Black.ttf",
+      "notes": "Grotesque display face; the bundled file is the Black weight (font_file_path -> Archivo-Black.ttf) for chapter headers / running heads — a plainer, less-juvenile alternative to a rounded display face for adult titles. Apache-2.0: no Reserved Font Name mechanism, simplest license to reason about, with an explicit patent grant. NOTE: Pillow getname() reports family 'Archivo' with style 'Black' (the family field records the shared family; the Black weight is the bundled style)."
+    }
+  ]
+}

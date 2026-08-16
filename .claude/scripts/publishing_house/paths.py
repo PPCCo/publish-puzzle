@@ -26,6 +26,8 @@ PROJECT_DIRS = [
     "line-art/originals",
     "line-art/briefs",
     "line-art/provenance",
+    "visuals/assets",
+    "visuals/briefs",
     "verification",
     "reviews",
     "layout",

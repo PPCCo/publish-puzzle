@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "notes": "Optional production-tool configuration. The image_generation block is the data-driven provider registry read by publishing_house.image_gen (offline core). commercial_rights_verified drives rights clearance at ingest: a verified provider yields a `cleared` rights record; an unverified one yields `pending` and blocks the rights gate until a human reviews the provider's terms. mode `manual-only` ships by default; auto requires the gitignored tools.local.json override AND IMAGE_GEN_LIVE_ENABLED=1 AND a reachable comfyui-mcp bridge. This file itself performs no network access.",
+  "image_generation": {
+    "mode": "manual-only",
+    "default_provider": "local-flux-schnell",
+    "live_enabled_env": "IMAGE_GEN_LIVE_ENABLED",
+    "providers": [
+      {
+        "name": "local-sdxl",
+        "kind": "local",
+        "mcp_server": "comfyui-mcp",
+        "model": "sdxl-1.0-base",
+        "license_reference": "CreativeML Open RAIL-M",
+        "commercial_rights_verified": true,
+        "credential_env": null,
+        "notes": "No revenue ceiling. QUALITY FALLBACK provider: use SDXL when flux prompt-adherence is insufficient (better at some compositions). Runs offline once weights are downloaded; treated as a local tool, not network egress."
+      },
+      {
+        "name": "local-flux-schnell",
+        "kind": "local",
+        "mcp_server": "comfyui-mcp",
+        "model": "flux.1-schnell",
+        "license_reference": "Apache-2.0",
+        "commercial_rights_verified": true,
+        "credential_env": null,
+        "notes": "Fully open (Apache 2.0), fastest local option. FRAMEWORK DEFAULT provider: zero-cost, zero-ambiguity. Weaker prompt adherence than dev-tier FLUX; when it is insufficient, fall back to local-sdxl. Negatives are inert at flux-schnell CFG~1 / ~4 steps — put every constraint in the positive prompt (esp. the B&W coloring line-art constraint)."
+      },
+      {
+        "name": "ideogram",
+        "kind": "hosted",
+        "mcp_server": "ideogram-mcp",
+        "model": null,
+        "license_reference": "Ideogram commercial API terms (paid tiers)",
+        "commercial_rights_verified": false,
+        "credential_env": "IDEOGRAM_API_KEY",
+        "notes": "Strong at in-image text/typography. Not used for covers here (covers reserve white space and Claude composites cleared fonts). Set commercial_rights_verified true only after confirming current paid-tier commercial terms."
+      },
+      {
+        "name": "adobe-firefly",
+        "kind": "hosted",
+        "mcp_server": "firefly-mcp",
+        "model": null,
+        "license_reference": "Adobe Firefly commercial terms (verify API-specific indemnification before relying on it)",
+        "commercial_rights_verified": false,
+        "credential_env": "FIREFLY_API_KEY",
+        "notes": "Strongest legal-safety profile if the API-specific indemnification is confirmed. Set true only after you personally verify current API terms (app-based indemnification may not extend to API use)."
+      },
+      {
+        "name": "flux-dev-local",
+        "kind": "local",
+        "mcp_server": "comfyui-mcp",
+        "model": "flux.1-dev",
+        "license_reference": "FLUX.1 [dev] Non-Commercial License",
+        "commercial_rights_verified": false,
+        "credential_env": null,
+        "notes": "NOT licensed for resale. The default weight in most ComfyUI tutorials — excluded from auto-selection. Override requires explicit human confirmation each time."
+      }
+    ]
+  }
+}

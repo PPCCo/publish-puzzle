@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Illustration Brief",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "brief_id",
+    "project_id",
+    "location",
+    "purpose",
+    "scene_or_subject",
+    "required_elements",
+    "composition",
+    "dimensions",
+    "alt_text_draft",
+    "rights_constraints"
+  ],
+  "properties": {
+    "brief_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "location": {
+      "type": "string",
+      "minLength": 1
+    },
+    "page_number": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Machine-usable page/spread number, distinct from the free-text location label. Used by image-gen guide/ingest to order and label assets."
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scene_or_subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "required_elements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prohibited_elements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "composition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "camera_or_view": {
+      "type": "string"
+    },
+    "colour_and_lighting": {
+      "type": "string"
+    },
+    "continuity_references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "factual_accuracy_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "required": [
+        "width_px",
+        "height_px"
+      ],
+      "properties": {
+        "width_px": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height_px": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "dpi": {
+          "type": "integer",
+          "minimum": 72
+        }
+      },
+      "additionalProperties": false
+    },
+    "alt_text_draft": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rights_constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generation_prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Prompt payload for automated or manual image generation. Required within the object is `positive` whenever any generation (automated or guided-manual) is intended for this brief.",
+      "required": [
+        "positive"
+      ],
+      "properties": {
+        "positive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "negative": {
+          "type": "string"
+        },
+        "style_references": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "description": "e.g. \"4:5\", \"1:1\", \"16:9\"."
+        },
+        "seed": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "description": "Null before generation; set after generation for reproducibility."
+        }
+      }
+    },
+    "image_complexity": {
+      "type": "string",
+      "enum": [
+        "simple",
+        "composite",
+        "complex"
+      ],
+      "description": "Complexity class per rules/08-visuals.md. Absent is treated as \"simple\". `simple` = one primary subject (background/scenery allowed). `composite` = separately-produced single subjects assembled at layout by the deterministic compositor. `complex` = a single generation asked for >1 co-equal subject, exact relative scale, N-on-a-baseline, a faceless silhouette, or a montage — discouraged."
+    },
+    "complexity_justification": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Required by `audit visuals` (not by the schema) whenever image_complexity is not \"simple\". Records why a non-simple image is needed and which cheaper alternative was considered first.",
+      "properties": {
+        "required_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cheaper_alternative_considered": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "preferred_provider": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional pre-suggested image_generation provider name (from tools config); advisory, never forced."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "approved",
+        "produced",
+        "reviewed"
+      ]
+    }
+  }
+}

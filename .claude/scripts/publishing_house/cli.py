@@ -367,6 +367,65 @@ def build_parser() -> argparse.ArgumentParser:
     mt_prune.add_argument("--memory-dir", help="Machine-local memory directory. Defaults to the local path.")
     maintenance_sub.add_parser("rotate-hooks", help="Archive .claude/logs/hooks.ndjson to a timestamped .bak and truncate it (never events.ndjson).")
 
+    image_gen = sub.add_parser(
+        "image-gen",
+        help="Image-generation orchestration (offline core; provider config, manual guide, ingest). No network.",
+    )
+    image_gen_sub = image_gen.add_subparsers(dest="image_gen_command", required=True)
+    ig_status = image_gen_sub.add_parser(
+        "status",
+        help="List configured providers, their commercial_rights_verified flag/license, mode, and prompt-ready briefs (offline; no network probe).",
+    )
+    ig_status.add_argument("project_id")
+    ig_guide = image_gen_sub.add_parser(
+        "guide",
+        help="Deterministically (re)generate the manual generation guide (.md + .json) from approved image briefs.",
+    )
+    ig_guide.add_argument("project_id")
+    ig_guide.add_argument("--brief-id", dest="brief_id", default=None)
+    ig_ingest = image_gen_sub.add_parser(
+        "ingest",
+        help="Register an already-produced image and write its rights record, driven by the named provider's verified flag.",
+    )
+    ig_ingest.add_argument("project_id")
+    ig_ingest.add_argument("--brief-id", dest="brief_id", required=True)
+    ig_ingest.add_argument("--file", required=True, help="Path (inside the project) to the produced image.")
+    ig_ingest.add_argument("--provider", required=True, help="A provider name from image_generation.providers.")
+    ig_ingest.add_argument("--seed", type=int, default=None)
+    ig_ingest.add_argument("--license-note", dest="license_note", default=None)
+    ig_ingest.add_argument("--actor", default="image-gen-ingest")
+
+    dependency = sub.add_parser(
+        "dependency",
+        help="License-checked dependency registry (fonts): clear a dependency at selection time (shift-left). Offline.",
+    )
+    dependency_sub = dependency.add_subparsers(dest="dependency_command", required=True)
+    dep_list = dependency_sub.add_parser("list", help="List registered font families with their license/embedding/commercial flags (offline).")
+    dep_list.add_argument("project_id", nargs="?", default=None)
+    dep_select = dependency_sub.add_parser("select", help="Clear a font family at selection time and write its rights record (cleared iff embeddable AND commercial-verified).")
+    dep_select.add_argument("project_id")
+    dep_select.add_argument("--family", required=True, help="A font family from dependencies.default.json.")
+    dep_select.add_argument("--role", default="body", choices=["body", "label", "display"])
+    dep_select.add_argument("--actor", default="dependency-select")
+
+    composite = sub.add_parser(
+        "composite",
+        help="Deterministic Pillow caption compositor (art + cleared embeddable fonts). Hard font gate; offline.",
+    )
+    composite_sub = composite.add_subparsers(dest="composite_command", required=True)
+    co_build = composite_sub.add_parser("build", help="Compose captions onto art from a composite spec into a PNG (no ingest).")
+    co_build.add_argument("project_id")
+    co_build.add_argument("--brief-id", dest="brief_id", default=None)
+    co_build.add_argument("--spec", dest="spec_path", default=None, help="Path (inside the project) to a composite-spec JSON.")
+    co_build.add_argument("--output", dest="output_path", default=None, help="Output PNG path (inside the project).")
+    co_build.add_argument("--font-family", dest="font_family", default=None, help="A cleared font family; defaults to the project's cleared font.")
+    co_ingest = composite_sub.add_parser("ingest", help="Register a composited PNG and write its rights record (derivative of cleared components + cleared font).")
+    co_ingest.add_argument("project_id")
+    co_ingest.add_argument("--brief-id", dest="brief_id", required=True)
+    co_ingest.add_argument("--file", required=True, help="Path (inside the project) to the composited PNG.")
+    co_ingest.add_argument("--spec", dest="spec_path", default=None)
+    co_ingest.add_argument("--actor", default="composite-ingest")
+
     return parser
 
 
@@ -507,6 +566,45 @@ def _dispatch_maintenance(args: argparse.Namespace, root: Path) -> Any:
     raise RuntimeError("Unhandled maintenance command")
 
 
+def _dispatch_image_gen(args: argparse.Namespace, root: Path) -> Any:
+    from . import image_gen as _image_gen  # offline core; no network
+
+    if args.image_gen_command == "status":
+        return _image_gen.image_gen_status(root, args.project_id)
+    if args.image_gen_command == "guide":
+        return _image_gen.build_guide(root, args.project_id, args.brief_id)
+    if args.image_gen_command == "ingest":
+        return _image_gen.ingest(
+            root, args.project_id, args.brief_id, args.file, args.provider,
+            args.seed, args.license_note, args.actor,
+        )
+    raise RuntimeError("Unhandled image-gen command")
+
+
+def _dispatch_dependency(args: argparse.Namespace, root: Path) -> Any:
+    from . import dependencies as _dependencies  # offline; license registry
+
+    if args.dependency_command == "list":
+        return _dependencies.font_registry(root)
+    if args.dependency_command == "select":
+        return _dependencies.select_font(root, args.project_id, args.family, args.role, args.actor)
+    raise RuntimeError("Unhandled dependency command")
+
+
+def _dispatch_composite(args: argparse.Namespace, root: Path) -> Any:
+    from . import compositor as _compositor  # offline; Pillow imported lazily inside
+
+    if args.composite_command == "build":
+        return _compositor.build(
+            root, args.project_id, args.brief_id, args.spec_path, args.output_path, args.font_family,
+        )
+    if args.composite_command == "ingest":
+        return _compositor.composite_ingest(
+            root, args.project_id, args.brief_id, args.file, spec_path=args.spec_path, actor=args.actor,
+        )
+    raise RuntimeError("Unhandled composite command")
+
+
 def dispatch(args: argparse.Namespace, root: Path) -> Any:
     if args.command == "doctor":
         if getattr(args, "probe_plan", False):
@@ -577,6 +675,12 @@ def dispatch(args: argparse.Namespace, root: Path) -> Any:
             return build_listing_kit(root, args.project_id)
         if args.marketing_command == "kit":
             return build_marketing_kit(root, args.project_id)
+    if args.command == "image-gen":
+        return _dispatch_image_gen(args, root)
+    if args.command == "dependency":
+        return _dispatch_dependency(args, root)
+    if args.command == "composite":
+        return _dispatch_composite(args, root)
     raise RuntimeError("Unhandled command")
 
 

@@ -43,7 +43,10 @@ class FrameworkStructureTests(unittest.TestCase):
             for p in (SOURCE_ROOT / ".claude" / "agents").rglob("*.md")
             if p.name not in {"README.md", "CATALOG.md"}
         ]
-        self.assertGreaterEqual(len(agents), 34)
+        # The agent roster was consolidated (see "merge agents/skills" on the
+        # framework-optim branch): overlapping specialists were merged into 28
+        # broader agents. The floor tracks that consolidated set.
+        self.assertGreaterEqual(len(agents), 28)
         for path in agents:
             text = path.read_text(encoding="utf-8")
             self.assertIsNotNone(FRONTMATTER.match(text), path.as_posix())
@@ -70,12 +73,17 @@ class FrameworkStructureTests(unittest.TestCase):
     def test_bounded_autonomous_run_skill_exists(self) -> None:
         text = (SOURCE_ROOT / ".claude" / "skills" / "product-run" / "SKILL.md").read_text(encoding="utf-8")
         self.assertIn("--until", text)
-        self.assertIn("Never invoke human-only", text)
+        # The "uncap product-run" change rephrased the human-gate guarantee. The
+        # invariant is unchanged: the autonomous loop never decides the
+        # human-only gates (compliance, release) on its own.
+        self.assertIn("Never auto-decide the compliance or release gates", text)
         self.assertNotIn("disable-model-invocation: true", text)
 
     def test_dynamic_workflows_have_meta_and_agent_calls(self) -> None:
         workflows = list((SOURCE_ROOT / ".claude" / "workflows").glob("*.js"))
-        self.assertGreaterEqual(len(workflows), 12)
+        # Consolidated on the framework-optim branch (overlapping fan-out
+        # workflows were merged); the floor tracks the current set.
+        self.assertGreaterEqual(len(workflows), 11)
         for path in workflows:
             text = path.read_text(encoding="utf-8")
             self.assertIn("export const meta", text, path.as_posix())

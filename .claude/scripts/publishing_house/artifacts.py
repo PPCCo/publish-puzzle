@@ -27,6 +27,16 @@ _DOWNSTREAM_BUILD_TYPES = {
 }
 
 
+def active_hashes(state: dict[str, Any]) -> set[str]:
+    """Flat set of every currently-active artifact hash across all types.
+
+    Reads ``state["active_artifacts"]`` (a ``type -> sha256`` map). Used by the
+    offline image-generation core to scope AI-content disclosure to active
+    artifacts only. Pure; takes the already-loaded state dict.
+    """
+    return {digest for digest in (state.get("active_artifacts") or {}).values() if digest}
+
+
 def list_artifacts(root: Path, project_id: str) -> list[dict[str, Any]]:
     paths = ProjectPaths(root, project_id).require()
     return load_json(paths.artifact_manifest, {"artifacts": []}).get("artifacts", [])

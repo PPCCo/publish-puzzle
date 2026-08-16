@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Composite Panel Layout Spec",
+  "description": "Deterministic layout spec consumed by publishing_house.compositor.compose to assemble ONE indivisible composited PNG per composite brief. Absolute integer geometry only; no clock, no RNG. The composite is a single figure: component boxes are fixed relative positions inside it (prototype scale-integrity rule R1). Captions are REAL text set in a rights-cleared, embeddable repo font (Plan A) — never flux-fabricated.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "brief_id", "canvas", "components", "captions"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "brief_id": { "type": "string", "minLength": 1 },
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height", "background"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "background": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "asset_path", "box"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "source_brief_id": { "type": ["string", "null"] },
+          "source_artifact_id": { "type": ["string", "null"] },
+          "asset_path": { "type": "string", "minLength": 1 },
+          "box": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "integer" }
+          },
+          "fit": { "type": "string", "enum": ["contain", "cover", "stretch"] },
+          "matte_white": {
+            "type": "boolean",
+            "description": "When true, flood-fill the component's near-white BACKGROUND (reachable from its edges) to the canvas colour before placing it, so a white-ground component does not paste as a white tile on a coloured canvas. Interior whites enclosed by the object are preserved. Deterministic."
+          },
+          "matte_threshold": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255,
+            "description": "Per-channel minimum for a pixel to count as near-white background under matte_white (default 235). Higher = only pixels closer to pure white are matted."
+          }
+        }
+      }
+    },
+    "captions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text", "box"],
+        "properties": {
+          "text": { "type": "string" },
+          "box": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": { "type": "integer" }
+          },
+          "align": { "type": "string", "enum": ["left", "center", "right"] },
+          "valign": { "type": "string", "enum": ["top", "middle", "bottom"] },
+          "font_role": { "type": "string", "enum": ["body", "label", "display"] },
+          "max_pt": { "type": "integer", "minimum": 1 },
+          "min_pt": { "type": "integer", "minimum": 1 },
+          "colour": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+        }
+      }
+    },
+    "font_family": { "type": ["string", "null"] },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

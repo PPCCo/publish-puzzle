@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dependency Registry Configuration",
+  "description": "Offline registry of license-checked dependencies (fonts first) validating .claude/config/dependencies.default.json. Mirrors the image_generation.providers pattern: each entry carries its own license_reference + embedding/commercial flags so a dependency clears at selection time against recorded evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "fonts"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "notes": { "type": "string" },
+    "fonts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fontEntry" }
+    }
+  },
+  "$defs": {
+    "fontEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family",
+        "role_tags",
+        "source",
+        "license_reference",
+        "license_text_path",
+        "embedding_allowed",
+        "commercial_use_verified",
+        "territories",
+        "font_file_path"
+      ],
+      "properties": {
+        "family": { "type": "string", "minLength": 1 },
+        "role_tags": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "enum": ["body", "label", "display"] }
+        },
+        "source": { "type": "string", "minLength": 1 },
+        "license_reference": { "type": "string", "minLength": 1 },
+        "license_text_path": { "type": "string", "minLength": 1 },
+        "embedding_allowed": { "type": "boolean" },
+        "commercial_use_verified": { "type": "boolean" },
+        "territories": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "font_file_path": { "type": ["string", "null"] },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
