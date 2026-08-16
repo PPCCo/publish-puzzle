@@ -1,0 +1,18 @@
+{
+  "approval_id": "apr-cover-20260816t170819z-d0bcd3e1",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "cover",
+  "approver": "Qaiser Abbas",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:8c2127b472135240a241c200169efb7e54a9e74609c8074a253cf59dd2e6610a"
+  ],
+  "scope": "Cover gate: adopt AI-art cover direction revision 2 (concepts/cover-art-direction-ai-r2.md) describing outputs/cover/cover-wrap-art.pdf. Departs from revision-1 navy-grid direction. Human decision recorded in-session 2026-08-17.",
+  "exclusions": [],
+  "notes": "AI art: local-sdxl seed 1940807268, CreativeML Open RAIL-M, commercial rights verified; fonts Archivo + Atkinson Hyperlegible cleared for embedding. Cover proof PASS (sha256:a63f92629754...). AI-disclosure to be handled at compliance.",
+  "created_at": "2026-08-16T17:08:19Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

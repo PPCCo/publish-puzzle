@@ -15,6 +15,6 @@
   "notes": "Rights gate PASS, accessibility gate PASS, 0 blocker/major. Legal posture confirmed per production.legal_defaults. This gate authorizes no external action.",
   "created_at": "2026-08-14T13:11:22Z",
   "expires_at": null,
-  "invalidated_at": null,
-  "invalidation_reason": null
+  "invalidated_at": "2026-08-16T17:10:35Z",
+  "invalidation_reason": "Superseded by sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189"
 }

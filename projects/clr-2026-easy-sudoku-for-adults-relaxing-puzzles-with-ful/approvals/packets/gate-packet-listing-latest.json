@@ -3,7 +3,7 @@
   "kind": "approval-gate-packet",
   "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
   "gate": "listing",
-  "generated_at": "2026-08-14T13:19:36Z",
+  "generated_at": "2026-08-16T17:29:04Z",
   "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
   "current_state": "LISTING_APPROVAL",
   "expected_state": "LISTING_APPROVAL",
@@ -60,6 +60,12 @@
       "decision": "PASS",
       "report": "metadata/validation-report.json",
       "is_pass": true
+    },
+    {
+      "present": true,
+      "decision": "PASS",
+      "report": "metadata/claims-report.json",
+      "is_pass": true
     }
   ],
   "channel_packages": [],
@@ -75,9 +81,11 @@
   },
   "existing_approvals": {
     "required_distinct_approvers": 1,
-    "current_distinct_approvers": [],
-    "current_count": 0,
-    "approvers_still_needed": 1,
+    "current_distinct_approvers": [
+      "PPC"
+    ],
+    "current_count": 1,
+    "approvers_still_needed": 0,
     "invalidated": []
   },
   "risks": [],
@@ -103,88 +111,94 @@
     },
     "review_files": [
       "accessibility/gate-latest.json",
+      "outputs/packages/etsy/package-manifest.json",
       "content/content-plan.md",
       "content/puzzles/sudoku-batch.json",
-      "concepts/cover-art-direction.md",
-      "outputs/cover/cover-wrap.pdf",
+      "concepts/cover-art-direction-ai-r2.md",
+      "outputs/cover/cover-wrap-art.pdf",
+      "outputs/proof/cover-proof-report.json",
       "outputs/digital",
+      "visuals/assets/clr-cover-art-front.png",
       "notes/intake.md",
       "outputs/interior/interior.pdf",
       "marketing/listing-kit.json",
       "metadata/book.json",
       "metadata/validation-report.json",
+      "outputs/packages/kdp/package-manifest.json",
       "notes/product-brief.md",
       "rights/gate-latest.json",
-      "rights/ledger.json"
+      "rights/ledger.json",
+      "metadata/claims-report.json",
+      "approvals/packets/gate-packet-listing-latest.json"
     ]
   },
   "audit": {
     "recent_events": [
       {
-        "actor": "claude-code",
+        "actor": "cover-art-revision",
         "details": {
-          "path": "/Users/qaiser.abbas/Dev/my-repos/pub/pub-clr/projects/clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful/marketing/channel-copy.md",
-          "sha256": "sha256:e7b43353345e7e7b2c341ed4684ee108cdc8a4788b9b26f08adf54b8dc820ea4",
-          "tool": "Write"
+          "from": "RIGHTS_CLEARANCE",
+          "reason": "Rights gate PASS (cover-art + fonts cleared) after AI-art cover adoption; advancing to compliance human gate.",
+          "to": "COMPLIANCE_APPROVAL"
         },
-        "event": "CLAUDE_TOOL_USED",
-        "event_id": "evt-20260814T131812Z-afe59bdb",
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260816T171054Z-e48fc6c6",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:18:12Z"
+        "time": "2026-08-16T17:10:54Z"
       },
       {
-        "actor": "commercial-writer",
+        "actor": "Qaiser Abbas",
+        "details": {
+          "approval_id": "apr-compliance-20260816t172250z-7ded8c5a",
+          "artifact_hashes": [
+            "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209"
+          ],
+          "decision": "APPROVED",
+          "gate": "compliance",
+          "scope": "Compliance gate APPROVED for AI-art revision-2 cover product. Bound hashes: accessibility-gate sha256:a92bb08cf17777b7 (PASS), rights-gate sha256:2a60719d63daf880 (PASS), rights-ledger sha256:8b3c384455ea4e3b. AI-generated cover (SDXL seed 842635561) will be disclosed at channel submission per KDP AI-content policy. Cover-art decorative designation carried as documented note (accessibility gate PASS regardless). Human decision recorded in-session 2026-08-17."
+        },
+        "event": "APPROVAL_RECORDED",
+        "event_id": "evt-20260816T172250Z-56f6d24d",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:22:50Z"
+      },
+      {
+        "actor": "Qaiser Abbas",
+        "details": {
+          "from": "COMPLIANCE_APPROVAL",
+          "reason": "Compliance gate APPROVED in-session by human (Qaiser Abbas), bound to accessibility+rights+ledger hashes; AI-disclosure acknowledged for channel submission.",
+          "to": "METADATA_AND_COMMERCIAL_PACKAGE"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260816T172308Z-42076990",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:23:08Z"
+      },
+      {
+        "actor": "package-kdp",
         "details": {
           "active": true,
-          "artifact_id": "art-metadata-43d3e50a97ed",
-          "path": "metadata/book.json",
-          "sha256": "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
-          "type": "metadata"
+          "artifact_id": "art-platform-package-kdp-258a2195858b",
+          "path": "outputs/packages/kdp/package-manifest.json",
+          "sha256": "sha256:258a2195858b7f5b1ace5d7e26eb796fdf876476b14ecb4f0669a7225952074b",
+          "type": "platform-package-kdp"
         },
         "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T131904Z-0eced906",
+        "event_id": "evt-20260816T172711Z-d8586803",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:19:04Z"
+        "time": "2026-08-16T17:27:11Z"
       },
       {
-        "actor": "metadata-auditor",
-        "details": {
-          "active": true,
-          "artifact_id": "art-metadata-validation-0d2798a847a0",
-          "path": "metadata/validation-report.json",
-          "sha256": "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
-          "type": "metadata-validation"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T131904Z-1ca26c1f",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:19:04Z"
-      },
-      {
-        "actor": "commercial-writer",
-        "details": {
-          "active": true,
-          "artifact_id": "art-listing-kit-8957143ff301",
-          "path": "marketing/listing-kit.json",
-          "sha256": "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
-          "type": "listing-kit"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T131904Z-f3c6fa98",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:19:04Z"
-      },
-      {
-        "actor": "PPC",
+        "actor": "Qaiser Abbas",
         "details": {
           "from": "METADATA_AND_COMMERCIAL_PACKAGE",
-          "reason": "Metadata built and validated PASS (book.json); marketing/listing kit generated; metadata, metadata-validation, and listing-kit artifacts registered. Advancing to the listing human gate.",
+          "reason": "Metadata + commercial package current: KDP paperback package rebuilt to bundle approved AI cover cover-wrap-art.pdf (verified hash match); digital package unaffected (no cover reference).",
           "to": "LISTING_APPROVAL"
         },
         "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260814T131923Z-d7153788",
+        "event_id": "evt-20260816T172737Z-8834b02a",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:19:23Z"
+        "time": "2026-08-16T17:27:37Z"
       }
     ]
   },

@@ -1,0 +1,18 @@
+{
+  "approval_id": "apr-compliance-20260816t172250z-fa919464",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "gate": "compliance",
+  "approver": "Qaiser Abbas",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0"
+  ],
+  "scope": "Compliance gate APPROVED for AI-art revision-2 cover product. Bound hashes: accessibility-gate sha256:4ece5668b5fbf177 (PASS), rights-gate sha256:eb02e9d3671c60e7 (PASS), rights-ledger sha256:47b9aa5db3086da9. AI-generated cover (SDXL seed 1940807268) will be disclosed at channel submission per KDP AI-content policy. Cover-art decorative designation carried as documented note (accessibility gate PASS regardless). Human decision recorded in-session 2026-08-17.",
+  "exclusions": [],
+  "notes": "1 minor finding open (difficulty-label documentation: flat 'easy' tier intentional for senior-large-print; code verification is binding evidence for solvability/uniqueness). 5 notes, all no-action verifier confirmations. Decorative alt-text follow-up open by choice (Approve as-is).",
+  "created_at": "2026-08-16T17:22:50Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

@@ -15,6 +15,6 @@
   "notes": "Re-approval after cover fix: single title string replaced with full-bleed design (front panel, spine, back panel).",
   "created_at": "2026-08-01T02:13:46Z",
   "expires_at": null,
-  "invalidated_at": null,
-  "invalidation_reason": null
+  "invalidated_at": "2026-08-16T16:54:53Z",
+  "invalidation_reason": "Superseded by sha256:8c2127b472135240a241c200169efb7e54a9e74609c8074a253cf59dd2e6610a"
 }

@@ -3,7 +3,7 @@
   "kind": "approval-gate-packet",
   "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
   "gate": "release",
-  "generated_at": "2026-08-14T13:22:58Z",
+  "generated_at": "2026-08-16T17:30:58Z",
   "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
   "current_state": "RELEASE_AUTHORIZATION",
   "expected_state": "RELEASE_AUTHORIZATION",
@@ -65,19 +65,29 @@
     },
     {
       "kind": "cover-art-direction",
-      "sha256": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
+      "sha256": "sha256:249231c25a2546013afa50643579ac2b9ae9ee00c81d794d9f11866044be62d0",
       "type": "cover-art-direction",
-      "path": "concepts/cover-art-direction.md",
+      "path": "concepts/cover-art-direction-ai-r2.md",
       "frozen": false,
-      "rights_status": "cleared",
-      "validation_status": "pass",
+      "rights_status": "pending",
+      "validation_status": "not-run",
       "registered": true
     },
     {
       "kind": "cover-pdf",
-      "sha256": "sha256:52a84f52595a18752a9faa5a9ba5ca1bef7624680f1468cf410a4bdfa20e104f",
+      "sha256": "sha256:a5fd8ff70c689879a313f047a9152c26c9fb7d4fda952676744e0810022d1317",
       "type": "cover-pdf",
-      "path": "outputs/cover/cover-wrap.pdf",
+      "path": "outputs/cover/cover-wrap-art.pdf",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "cover-proof",
+      "sha256": "sha256:8e004d7d0303ccba578f1949c3fe0b7ca8d66d1488144cad8eede2d669465b58",
+      "type": "cover-proof",
+      "path": "outputs/proof/cover-proof-report.json",
       "frozen": false,
       "rights_status": "pending",
       "validation_status": "not-run",
@@ -90,6 +100,16 @@
       "path": "outputs/digital",
       "frozen": false,
       "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "illustration",
+      "sha256": "sha256:51207767b5b5ddc816822111a8014208de956b6809513ddbb7cb1c9a304cd161",
+      "type": "illustration",
+      "path": "visuals/assets/clr-cover-art-front.png",
+      "frozen": false,
+      "rights_status": "cleared",
       "validation_status": "not-run",
       "registered": true
     },
@@ -110,6 +130,16 @@
       "path": "outputs/interior/interior.pdf",
       "frozen": false,
       "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
+    },
+    {
+      "kind": "interior-proof",
+      "sha256": "sha256:e4741c0e325ea3f77c25e534317f9748d8aaec88826198bf999691c8388e39e4",
+      "type": "interior-proof",
+      "path": "outputs/proof/interior-proof-report.json",
+      "frozen": false,
+      "rights_status": "pending",
       "validation_status": "not-run",
       "registered": true
     },
@@ -145,22 +175,22 @@
     },
     {
       "kind": "platform-package-etsy",
-      "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
-      "type": "channel-package",
+      "sha256": "sha256:1b07119010f7e182abafb13a20856ec67ea0c48a590b08b3ace1e27ad1d5daae",
+      "type": "platform-package-etsy",
       "path": "outputs/packages/etsy/package-manifest.json",
       "frozen": false,
       "rights_status": "not-applicable",
-      "validation_status": "pass",
+      "validation_status": "warning",
       "registered": true
     },
     {
       "kind": "platform-package-kdp",
-      "sha256": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
-      "type": "channel-package",
+      "sha256": "sha256:6868d95d946b1e61db7724f4adc9c647a982e2a13a32e25928932a8ad24287e7",
+      "type": "platform-package-kdp",
       "path": "outputs/packages/kdp/package-manifest.json",
       "frozen": false,
       "rights_status": "not-applicable",
-      "validation_status": "pass",
+      "validation_status": "warning",
       "registered": true
     },
     {
@@ -175,21 +205,21 @@
     },
     {
       "kind": "rights-gate",
-      "sha256": "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
+      "sha256": "sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189",
       "type": "rights-gate",
       "path": "rights/gate-latest.json",
       "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
       "registered": true
     },
     {
       "kind": "rights-ledger",
-      "sha256": "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934",
+      "sha256": "sha256:8b3c384455ea4e3b877bbe0d81b29b0c82fa07e07c231e27197d3b17cc6156f1",
       "type": "rights-ledger",
       "path": "rights/ledger.json",
       "frozen": false,
-      "rights_status": "pending",
+      "rights_status": "not-applicable",
       "validation_status": "not-run",
       "registered": true
     }
@@ -241,19 +271,22 @@
       "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
       "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
       "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
-      "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
-      "sha256:52a84f52595a18752a9faa5a9ba5ca1bef7624680f1468cf410a4bdfa20e104f",
+      "sha256:249231c25a2546013afa50643579ac2b9ae9ee00c81d794d9f11866044be62d0",
+      "sha256:a5fd8ff70c689879a313f047a9152c26c9fb7d4fda952676744e0810022d1317",
+      "sha256:8e004d7d0303ccba578f1949c3fe0b7ca8d66d1488144cad8eede2d669465b58",
       "sha256:3f84057009b69b15da90a5fbddc57df98faa2fdb4cf10522e7577a67e38c0c31",
+      "sha256:51207767b5b5ddc816822111a8014208de956b6809513ddbb7cb1c9a304cd161",
       "sha256:d52d041134cacb71892a2f8cfd193e9b3ab64776494a6cdfde8413608eac644c",
       "sha256:717acc5a7820ed4fdc969e8374bddea1f8e18cb4bc9a306f0273cdc821ee0594",
+      "sha256:e4741c0e325ea3f77c25e534317f9748d8aaec88826198bf999691c8388e39e4",
       "sha256:8957143ff301e6191c77cac87828c452bebd2b97371eb6bfe48cbdeca328b3cf",
       "sha256:43d3e50a97ed3ca94ec11158852e8f4307ae546445f7886b4a2a7680ebc9249c",
       "sha256:0d2798a847a0abffbd921b80bbfe686a5bdd54b13033ebf18b7068223121f8be",
-      "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
-      "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+      "sha256:1b07119010f7e182abafb13a20856ec67ea0c48a590b08b3ace1e27ad1d5daae",
+      "sha256:6868d95d946b1e61db7724f4adc9c647a982e2a13a32e25928932a8ad24287e7",
       "sha256:503b2bcdee75f6c8196efd09b7734a6e1eb22ec83e53d3fef8d9d3a624e4e608",
-      "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
-      "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934"
+      "sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189",
+      "sha256:8b3c384455ea4e3b877bbe0d81b29b0c82fa07e07c231e27197d3b17cc6156f1"
     ],
     "next_command": {
       "form": "slash",
@@ -266,11 +299,14 @@
       "outputs/packages/etsy/package-manifest.json",
       "content/content-plan.md",
       "content/puzzles/sudoku-batch.json",
-      "concepts/cover-art-direction.md",
-      "outputs/cover/cover-wrap.pdf",
+      "concepts/cover-art-direction-ai-r2.md",
+      "outputs/cover/cover-wrap-art.pdf",
+      "outputs/proof/cover-proof-report.json",
       "outputs/digital",
+      "visuals/assets/clr-cover-art-front.png",
       "notes/intake.md",
       "outputs/interior/interior.pdf",
+      "outputs/proof/interior-proof-report.json",
       "marketing/listing-kit.json",
       "metadata/book.json",
       "metadata/validation-report.json",
@@ -284,72 +320,70 @@
   "audit": {
     "recent_events": [
       {
+        "actor": "Qaiser Abbas",
+        "details": {
+          "active": true,
+          "artifact_id": "art-interior-proof-e4741c0e325e",
+          "path": "outputs/proof/interior-proof-report.json",
+          "sha256": "sha256:e4741c0e325ea3f77c25e534317f9748d8aaec88826198bf999691c8388e39e4",
+          "type": "interior-proof"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260816T173007Z-2ca32d38",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:30:07Z"
+      },
+      {
+        "actor": "Qaiser Abbas",
+        "details": {
+          "from": "FINAL_PROOF",
+          "reason": "Final proof PASS on art cover (style=art, correct wrap/spine dims) and interior; proofs registered.",
+          "to": "PLATFORM_PACKAGING"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260816T173014Z-fc2400fa",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:30:14Z"
+      },
+      {
         "actor": "package-kdp",
         "details": {
           "active": true,
-          "artifact_id": "art-platform-package-kdp-7cb2c63c7014",
+          "artifact_id": "art-platform-package-kdp-6868d95d946b",
           "path": "outputs/packages/kdp/package-manifest.json",
-          "sha256": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
+          "sha256": "sha256:6868d95d946b1e61db7724f4adc9c647a982e2a13a32e25928932a8ad24287e7",
           "type": "platform-package-kdp"
         },
         "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T132052Z-348ea142",
+        "event_id": "evt-20260816T173028Z-47a4cc30",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:20:52Z"
+        "time": "2026-08-16T17:30:28Z"
       },
       {
         "actor": "package-etsy",
         "details": {
           "active": true,
-          "artifact_id": "art-platform-package-ets-d2debee27956",
+          "artifact_id": "art-platform-package-ets-1b07119010f7",
           "path": "outputs/packages/etsy/package-manifest.json",
-          "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
+          "sha256": "sha256:1b07119010f7e182abafb13a20856ec67ea0c48a590b08b3ace1e27ad1d5daae",
           "type": "platform-package-etsy"
         },
         "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T132053Z-bae06780",
+        "event_id": "evt-20260816T173028Z-95ce0123",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:20:53Z"
+        "time": "2026-08-16T17:30:28Z"
       },
       {
-        "actor": "packaging-engineer",
-        "details": {
-          "active": true,
-          "artifact_id": "art-channel-package-7cb2c63c7014",
-          "path": "outputs/packages/kdp/package-manifest.json",
-          "sha256": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
-          "type": "channel-package"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T132121Z-1d67fdbb",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:21:21Z"
-      },
-      {
-        "actor": "packaging-engineer",
-        "details": {
-          "active": true,
-          "artifact_id": "art-channel-package-d2debee27956",
-          "path": "outputs/packages/etsy/package-manifest.json",
-          "sha256": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
-          "type": "channel-package"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T132122Z-d9e65137",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:21:22Z"
-      },
-      {
-        "actor": "PPC",
+        "actor": "Qaiser Abbas",
         "details": {
           "from": "PLATFORM_PACKAGING",
-          "reason": "Final proof PASS; KDP and Etsy channel packages built offline (external_write_performed=false) and registered. Advancing to the release human gate.",
+          "reason": "Channel packages built and current, bundling approved AI cover cover-wrap-art.pdf (verified). Proceeding to release-authorization human gate.",
           "to": "RELEASE_AUTHORIZATION"
         },
         "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260814T132132Z-a4dec6e9",
+        "event_id": "evt-20260816T173043Z-c713737e",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T13:21:32Z"
+        "time": "2026-08-16T17:30:43Z"
       }
     ]
   },

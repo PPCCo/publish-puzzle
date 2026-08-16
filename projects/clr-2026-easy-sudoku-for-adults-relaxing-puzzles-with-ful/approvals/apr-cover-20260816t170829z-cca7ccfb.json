@@ -1,0 +1,18 @@
+{
+  "approval_id": "apr-cover-20260816t170829z-cca7ccfb",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "cover",
+  "approver": "Qaiser Abbas",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:249231c25a2546013afa50643579ac2b9ae9ee00c81d794d9f11866044be62d0"
+  ],
+  "scope": "Cover gate: adopt AI-art cover direction revision 2 (concepts/cover-art-direction-ai-r2.md) describing outputs/cover/cover-wrap-art.pdf. Departs from revision-1 procedural navy direction. Human decision recorded in-session 2026-08-17.",
+  "exclusions": [],
+  "notes": "AI art: local-sdxl seed 842635561, CreativeML Open RAIL-M, commercial rights verified; fonts Archivo + Atkinson Hyperlegible cleared for embedding. Cover proof PASS (sha256:26dbfe073b09...). AI-disclosure to be handled at compliance.",
+  "created_at": "2026-08-16T17:08:29Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

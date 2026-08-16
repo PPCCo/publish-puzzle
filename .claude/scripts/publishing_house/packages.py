@@ -16,6 +16,20 @@ def _find_latest(project_dir: Path, patterns: list[str]) -> Path | None:
     return max(matches, key=lambda path: path.stat().st_mtime) if matches else None
 
 
+def _cover_pdf(project_dir: Path) -> Path | None:
+    """The print cover wrap to package.
+
+    Deterministically prefer the AI-art cover wrap (``cover-wrap-art.pdf``) when
+    it exists, falling back to the procedural ``cover-wrap.pdf``. Preference is by
+    identity, NOT mtime, so re-rendering the procedural wrap can never silently
+    displace an approved art cover in a channel package.
+    """
+    art = project_dir / "outputs" / "cover" / "cover-wrap-art.pdf"
+    if art.is_file():
+        return art
+    return _find_latest(project_dir, ["outputs/cover/cover-wrap.pdf"])
+
+
 def _copy(source: Path | None, target: Path, issues: list[str], label: str, required: bool = True) -> str | None:
     if source is None or not source.exists():
         if required:
@@ -66,7 +80,7 @@ def package_kdp(paths: ProjectPaths, metadata: dict[str, Any], package_dir: Path
     issues: list[str] = []
     warnings: list[str] = ["Recheck current KDP requirements and upload manually; the base framework performs no KDP login or publication"]
     interior = _find_latest(paths.directory, ["outputs/interior/interior.pdf"])
-    cover = _find_latest(paths.directory, ["outputs/cover/cover-wrap.pdf"])
+    cover = _cover_pdf(paths.directory)
     project = load_yaml(paths.config)
     formats = set(project.get("formats", []))
     if {"paperback", "hardcover"} & formats:
@@ -170,7 +184,7 @@ def package_generic(paths: ProjectPaths, metadata: dict[str, Any], package_dir: 
     atomic_write_json(package_dir / "metadata.json", metadata)
     candidates = [
         _find_latest(paths.directory, ["outputs/interior/interior.pdf"]),
-        _find_latest(paths.directory, ["outputs/cover/cover-wrap.pdf"]),
+        _cover_pdf(paths.directory),
         _find_latest(paths.directory, ["outputs/digital/printable.pdf"]),
     ]
     for source in [x for x in candidates if x]:

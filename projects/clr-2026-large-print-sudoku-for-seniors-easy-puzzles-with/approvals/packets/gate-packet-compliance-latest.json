@@ -1,99 +1,74 @@
 {
   "schema_version": "1.0",
   "kind": "approval-gate-packet",
-  "gate": "compliance",
   "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-  "prepared_at": "2026-08-01T02:12:00Z",
-  "prepared_by": "human-collaboration-facilitator (deterministic assembly over ph_cli approval packet output; grants nothing)",
-  "creator_role": "human-collaboration-facilitator",
-  "status": "AWAITING_HUMAN_DECISION",
-  "intended_schema": "approval-gate-packet/1.0",
-  "source_gate_report": {
-    "tool": "ph_cli.py approval packet --gate compliance",
-    "generated_at": "2026-08-01T02:09:27Z",
-    "current_state": "RELEASE_AUTHORIZATION",
-    "expected_state": "COMPLIANCE_APPROVAL",
-    "state_matches_gate": false,
-    "gate_is_required_transition": false
+  "gate": "compliance",
+  "generated_at": "2026-08-16T17:22:09Z",
+  "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
+  "current_state": "COMPLIANCE_APPROVAL",
+  "expected_state": "COMPLIANCE_APPROVAL",
+  "state_matches_gate": true,
+  "scope": {
+    "working_title": "Large Print Sudoku for Seniors: Easy Puzzles with Solutions",
+    "audience": "senior-large-print",
+    "book_type": "puzzle-book",
+    "formats": [
+      "paperback"
+    ],
+    "sales_channels": [
+      "kdp",
+      "etsy"
+    ],
+    "territory": null
   },
-  "scope": "Re-approve compliance gate against updated interior-pdf and cover-pdf artifacts. AI disclosure, accessibility, and rights evidence unchanged.",
-  "artifacts": [
-    {
-      "kind": "interior-pdf",
-      "path": "outputs/interior/interior.pdf",
-      "sha256": "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
-      "registered": true,
-      "changed_since_prior_approval": true
-    },
-    {
-      "kind": "cover-pdf",
-      "path": "outputs/cover/cover-wrap.pdf",
-      "sha256": "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
-      "registered": true,
-      "changed_since_prior_approval": true
-    },
+  "artifacts_under_review": [
     {
       "kind": "accessibility-gate",
-      "path": "accessibility/gate-latest.json",
       "sha256": "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
-      "registered": true,
-      "changed_since_prior_approval": false
-    },
-    {
-      "kind": "rights-ledger",
-      "path": "rights/ledger.json",
-      "sha256": "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
-      "registered": true,
-      "changed_since_prior_approval": false
+      "type": "accessibility-gate",
+      "path": "accessibility/gate-latest.json",
+      "frozen": false,
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "registered": true
     },
     {
       "kind": "rights-gate",
+      "sha256": "sha256:eb02e9d3671c60e797c925b13534f2196f1eddc962a809de00ed65fa23724049",
+      "type": "rights-gate",
       "path": "rights/gate-latest.json",
-      "sha256": "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
-      "registered": true,
-      "changed_since_prior_approval": false
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "registered": true
     },
     {
-      "kind": "metadata",
-      "path": "metadata/book.json",
-      "sha256": "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7",
-      "registered": true,
-      "changed_since_prior_approval": false
+      "kind": "rights-ledger",
+      "sha256": "sha256:47b9aa5db3086da94a00d844f1158535bb4b135ed42bd6ed4608c82f3a7e6c5d",
+      "type": "rights-ledger",
+      "path": "rights/ledger.json",
+      "frozen": false,
+      "rights_status": "not-applicable",
+      "validation_status": "not-run",
+      "registered": true
     }
   ],
-  "gate_reports": [
+  "deterministic_evidence": [
     {
-      "report": "accessibility-gate",
-      "path": "accessibility/gate-latest.json",
+      "present": true,
       "decision": "PASS",
-      "evaluated_at": "2026-07-31T13:26:00Z",
-      "evidence": "senior-large-print puzzle-book; type_size check true, high_contrast check true; 0 issues, 0 warnings. Confirmed by ph_cli deterministic_evidence (is_pass true)."
+      "report": "rights/gate-latest.json",
+      "is_pass": true
     },
     {
-      "report": "rights-gate",
-      "path": "rights/gate-latest.json",
+      "present": true,
       "decision": "PASS",
-      "evaluated_at": "2026-07-31T13:28:50Z",
-      "evidence": "No unlinked, blocked, restricted, expired, or escalated artifacts; 0 warnings. Confirmed by ph_cli deterministic_evidence (is_pass true)."
-    },
-    {
-      "report": "interior-proof",
-      "path": "outputs/proof/interior-proof-report.json",
-      "decision": "PASS",
-      "evaluated_at": "2026-08-01T02:07:29Z",
-      "evidence": "Interior present; page_count 202; even_page_count true; solutions back-only; min_type_pt 18.0; 0 issues. Matches PROOF_BUILT event (interior_decision PASS)."
+      "report": "accessibility/gate-latest.json",
+      "is_pass": true
     }
   ],
-  "review_checklist": {
-    "gate": "compliance",
-    "items": [
-      "Accessibility audit result is PASS or WARNING with documented exceptions (current: PASS).",
-      "Rights ledger complete; no unlinked, restricted, expired, or escalated assets (current: PASS).",
-      "AI-disclosure evidence present and truthful (unchanged since prior approval).",
-      "No unresolved trademark or child-safety issues.",
-      "Channel-specific content policy compliance for declared channels (kdp, etsy)."
-    ]
-  },
+  "channel_packages": [],
+  "series_context": null,
   "open_findings": {
     "counts": {
       "blocker": 0,
@@ -101,42 +76,146 @@
       "minor": 1,
       "note": 5
     },
-    "open_blocker_or_major": [],
-    "summary": "Quality-gate PASS: 0 blockers, 0 majors. Nothing blocking at the compliance gate. (ph_cli reports 1 minor + 5 notes open project-wide; none block this gate.)"
+    "open_blocker_or_major": []
   },
-  "invalidated_approvals": [
-    {
-      "approval_id": "apr-compliance-20260731t133613z-47cb93c4",
-      "gate": "compliance",
-      "approver": "PPC",
-      "reason": "Superseded by interior-pdf hash change. Interior and cover artifacts changed after this approval (blank pages fixed in interior; cover design added). The prior approval no longer binds the current active hashes and must be re-recorded.",
-      "invalidated_by_hash_change": [
-        "interior-pdf -> sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
-        "cover-pdf -> sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1"
-      ]
-    }
-  ],
-  "required_approvers": 1,
+  "existing_approvals": {
+    "required_distinct_approvers": 1,
+    "current_distinct_approvers": [],
+    "current_count": 0,
+    "approvers_still_needed": 1,
+    "invalidated": [
+      {
+        "approval_id": "apr-compliance-20260731t133613z-47cb93c4",
+        "approver": "PPC",
+        "reason": "Superseded by sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae"
+      },
+      {
+        "approval_id": "apr-compliance-20260801t021401z-d9f77861",
+        "approver": "Qaiser Abbas",
+        "reason": "Superseded by sha256:eb02e9d3671c60e797c925b13534f2196f1eddc962a809de00ed65fa23724049"
+      }
+    ]
+  },
+  "risks": [],
+  "ready_for_human_review": true,
   "decision_options": [
     "APPROVE",
     "REJECT",
     "REQUEST_CHANGES"
   ],
-  "commitment_statement": "By approving the compliance gate, you confirm that for the senior-large-print puzzle-book at interior-pdf hash sha256:b5e76422... and cover-pdf hash sha256:e87c241a..., the accessibility gate PASSES, the rights ledger is complete and clear, AI disclosure is truthful, and no unresolved trademark or child-safety issue exists.",
-  "risks": [
-    "STATE/GATE MISMATCH: ph_cli reports current_state = RELEASE_AUTHORIZATION while the compliance gate's expected_state = COMPLIANCE_APPROVAL. state_matches_gate = false and gate_is_required_transition = false. The project advanced past compliance, yet the compliance approval on the CURRENT interior/cover hashes was invalidated. The Publisher-in-Chief must reconcile this before any release authorization proceeds; a re-recorded compliance approval on the current hashes is required to restore gate integrity."
-  ],
-  "notice": "This packet grants no approval. A human approver must invoke /product-approve-compliance to record a decision.",
   "human_action": {
     "recording_skill": "/product-approve-compliance",
-    "note": "This packet is read-only input to a human decision process. It records nothing and transitions no state. A human must bind the decision to the exact active artifact hashes listed below. Autonomy must STOP here.",
+    "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-approve-compliance — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
     "artifact_hashes_to_bind": [
-      "sha256:b5e76422633756f5505c5186f3a96e257699319ba40160d1314902b77d99b0ae",
-      "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
       "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
-      "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
-      "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
-      "sha256:5b0cdfdf87454d1f0fbd5a24f75d2529c33f627709801e8a234f1545b591fec7"
+      "sha256:eb02e9d3671c60e797c925b13534f2196f1eddc962a809de00ed65fa23724049",
+      "sha256:47b9aa5db3086da94a00d844f1158535bb4b135ed42bd6ed4608c82f3a7e6c5d"
+    ],
+    "next_command": {
+      "form": "slash",
+      "command": "/product-approve-compliance clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+      "description": "Approve the compliance gate, or reject.",
+      "ready": true
+    },
+    "review_files": [
+      "accessibility/gate-latest.json",
+      "content/content-plan.md",
+      "content/puzzles/sudoku-batch.json",
+      "verification/content-verification-latest.json",
+      "concepts/cover-art-direction-ai-r2.md",
+      "outputs/cover/cover-wrap-art.pdf",
+      "outputs/proof/cover-proof-report.json",
+      "visuals/assets/clr-cover-art-front.png",
+      "notes/intake.md",
+      "outputs/interior/interior.pdf",
+      "outputs/proof/interior-proof-report.json",
+      "marketing/launch-guide.json",
+      "marketing/listing-kit.json",
+      "metadata/book.json",
+      "metadata/validation-report.json",
+      "niche/assessment-latest.json",
+      "outputs/packages/etsy/package-manifest.json",
+      "outputs/packages/kdp/package-manifest.json",
+      "brief/product-brief.md",
+      "project.yaml",
+      "reviews/quality-gate-latest.json",
+      "reviews/review-solvability.json",
+      "rights/gate-latest.json",
+      "rights/ledger.json",
+      "approvals/packets/gate-packet-compliance-latest.json"
     ]
-  }
+  },
+  "audit": {
+    "recent_events": [
+      {
+        "actor": "cover-art-revision",
+        "details": {
+          "from": "ACCESSIBILITY_VALIDATION",
+          "reason": "Accessibility re-validated PASS after AI-art cover adoption; advancing.",
+          "to": "RIGHTS_CLEARANCE"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260816T171019Z-36f585f0",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T17:10:19Z"
+      },
+      {
+        "actor": "rights-gate",
+        "details": {
+          "active": true,
+          "artifact_id": "art-rights-gate-eb02e9d3671c",
+          "path": "rights/gate-latest.json",
+          "sha256": "sha256:eb02e9d3671c60e797c925b13534f2196f1eddc962a809de00ed65fa23724049",
+          "type": "rights-gate"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260816T171035Z-0ea7e4c8",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T17:10:35Z"
+      },
+      {
+        "actor": "rights-gate",
+        "details": {
+          "approval_ids": [
+            "apr-compliance-20260801t021401z-d9f77861"
+          ],
+          "hashes": [
+            "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230"
+          ],
+          "reason": "Superseded by sha256:eb02e9d3671c60e797c925b13534f2196f1eddc962a809de00ed65fa23724049"
+        },
+        "event": "APPROVALS_INVALIDATED",
+        "event_id": "evt-20260816T171035Z-564850a0",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T17:10:35Z"
+      },
+      {
+        "actor": "rights-manager",
+        "details": {
+          "active": true,
+          "artifact_id": "art-rights-ledger-47b9aa5db308",
+          "path": "rights/ledger.json",
+          "sha256": "sha256:47b9aa5db3086da94a00d844f1158535bb4b135ed42bd6ed4608c82f3a7e6c5d",
+          "type": "rights-ledger"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260816T171035Z-d313733f",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T17:10:35Z"
+      },
+      {
+        "actor": "cover-art-revision",
+        "details": {
+          "from": "RIGHTS_CLEARANCE",
+          "reason": "Rights gate PASS (cover-art + fonts cleared) after AI-art cover adoption; advancing to compliance human gate.",
+          "to": "COMPLIANCE_APPROVAL"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260816T171054Z-1d59a479",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T17:10:54Z"
+      }
+    ]
+  },
+  "gate_is_required_transition": true
 }

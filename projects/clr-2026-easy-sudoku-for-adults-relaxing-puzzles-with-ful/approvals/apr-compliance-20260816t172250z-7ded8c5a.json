@@ -1,0 +1,18 @@
+{
+  "approval_id": "apr-compliance-20260816t172250z-7ded8c5a",
+  "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+  "gate": "compliance",
+  "approver": "Qaiser Abbas",
+  "approver_role": "publisher",
+  "decision": "APPROVED",
+  "artifact_hashes": [
+    "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209"
+  ],
+  "scope": "Compliance gate APPROVED for AI-art revision-2 cover product. Bound hashes: accessibility-gate sha256:a92bb08cf17777b7 (PASS), rights-gate sha256:2a60719d63daf880 (PASS), rights-ledger sha256:8b3c384455ea4e3b. AI-generated cover (SDXL seed 842635561) will be disclosed at channel submission per KDP AI-content policy. Cover-art decorative designation carried as documented note (accessibility gate PASS regardless). Human decision recorded in-session 2026-08-17.",
+  "exclusions": [],
+  "notes": "0 minor findings, 2 notes (no-action). Decorative alt-text follow-up open by choice (Approve as-is).",
+  "created_at": "2026-08-16T17:22:50Z",
+  "expires_at": null,
+  "invalidated_at": null,
+  "invalidation_reason": null
+}

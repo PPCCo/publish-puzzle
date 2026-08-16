@@ -1,9 +1,11 @@
 {
   "schema_version": "1.0",
   "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-  "evaluated_at": "2026-07-31T13:28:50Z",
+  "evaluated_at": "2026-08-16T17:10:35Z",
   "decision": "PASS",
-  "cleared_artifact_ids": [],
+  "cleared_artifact_ids": [
+    "art-illustration-724b96a1e003"
+  ],
   "unlinked_artifacts": [],
   "blocked_artifacts": [],
   "warnings": []

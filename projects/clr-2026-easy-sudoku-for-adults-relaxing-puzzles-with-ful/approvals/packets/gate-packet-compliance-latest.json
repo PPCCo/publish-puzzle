@@ -3,7 +3,7 @@
   "kind": "approval-gate-packet",
   "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
   "gate": "compliance",
-  "generated_at": "2026-08-14T11:38:32Z",
+  "generated_at": "2026-08-16T17:22:10Z",
   "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
   "current_state": "COMPLIANCE_APPROVAL",
   "expected_state": "COMPLIANCE_APPROVAL",
@@ -35,21 +35,21 @@
     },
     {
       "kind": "rights-gate",
-      "sha256": "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
+      "sha256": "sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189",
       "type": "rights-gate",
       "path": "rights/gate-latest.json",
       "frozen": false,
-      "rights_status": "pending",
-      "validation_status": "not-run",
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
       "registered": true
     },
     {
       "kind": "rights-ledger",
-      "sha256": "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934",
+      "sha256": "sha256:8b3c384455ea4e3b877bbe0d81b29b0c82fa07e07c231e27197d3b17cc6156f1",
       "type": "rights-ledger",
       "path": "rights/ledger.json",
       "frozen": false,
-      "rights_status": "pending",
+      "rights_status": "not-applicable",
       "validation_status": "not-run",
       "registered": true
     }
@@ -84,7 +84,13 @@
     "current_distinct_approvers": [],
     "current_count": 0,
     "approvers_still_needed": 1,
-    "invalidated": []
+    "invalidated": [
+      {
+        "approval_id": "apr-compliance-20260814t131122z-a30330b1",
+        "approver": "PPC",
+        "reason": "Superseded by sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189"
+      }
+    ]
   },
   "risks": [],
   "ready_for_human_review": true,
@@ -98,8 +104,8 @@
     "note": "This packet grants nothing. A human must DECIDE this gate — either interactively in-session (the assistant presents the options and records the choice) or by invoking /product-approve-compliance — bound to the exact artifact hashes listed above. Autonomy must STOP here until the human decides.",
     "artifact_hashes_to_bind": [
       "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209",
-      "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
-      "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934"
+      "sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189",
+      "sha256:8b3c384455ea4e3b877bbe0d81b29b0c82fa07e07c231e27197d3b17cc6156f1"
     ],
     "next_command": {
       "form": "slash",
@@ -109,13 +115,20 @@
     },
     "review_files": [
       "accessibility/gate-latest.json",
+      "outputs/packages/etsy/package-manifest.json",
       "content/content-plan.md",
       "content/puzzles/sudoku-batch.json",
-      "concepts/cover-art-direction.md",
-      "outputs/cover/cover-wrap.pdf",
+      "concepts/cover-art-direction-ai-r2.md",
+      "outputs/cover/cover-wrap-art.pdf",
+      "outputs/proof/cover-proof-report.json",
       "outputs/digital",
+      "visuals/assets/clr-cover-art-front.png",
       "notes/intake.md",
       "outputs/interior/interior.pdf",
+      "marketing/listing-kit.json",
+      "metadata/book.json",
+      "metadata/validation-report.json",
+      "outputs/packages/kdp/package-manifest.json",
       "notes/product-brief.md",
       "rights/gate-latest.json",
       "rights/ledger.json",
@@ -125,70 +138,72 @@
   "audit": {
     "recent_events": [
       {
-        "actor": "product-run",
+        "actor": "cover-art-revision",
         "details": {
           "from": "ACCESSIBILITY_VALIDATION",
-          "reason": "Accessibility gate PASS: interior min body type 11pt (adult-general min met), vector-only zero raster images (alt-text satisfied); proof builder now records measured facts",
+          "reason": "Accessibility re-validated PASS after AI-art cover adoption; advancing.",
           "to": "RIGHTS_CLEARANCE"
         },
         "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260814T113523Z-c6106969",
+        "event_id": "evt-20260816T171020Z-f4e71d5a",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T11:35:23Z"
+        "time": "2026-08-16T17:10:20Z"
       },
       {
-        "actor": "product-run",
-        "details": {
-          "from": "RIGHTS_CLEARANCE",
-          "reason": "Rights gate PASS (fonts cleared, code-generated outputs not-applicable, no blocked/unlinked); accessibility PASS. Ready for compliance human gate.",
-          "to": "COMPLIANCE_APPROVAL"
-        },
-        "event": "STATE_TRANSITIONED",
-        "event_id": "evt-20260814T113628Z-5d64af20",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T11:36:28Z"
-      },
-      {
-        "actor": "accessibility-auditor",
+        "actor": "rights-gate",
         "details": {
           "active": true,
-          "artifact_id": "art-accessibility-gate-a92bb08cf177",
-          "path": "accessibility/gate-latest.json",
-          "sha256": "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209",
-          "type": "accessibility-gate"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T113803Z-06ada550",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T11:38:03Z"
-      },
-      {
-        "actor": "rights-manager",
-        "details": {
-          "active": true,
-          "artifact_id": "art-rights-ledger-b171b1664c1b",
-          "path": "rights/ledger.json",
-          "sha256": "sha256:b171b1664c1bc69cc9577e8518056a154a160c4aeb1af3791ab4e1151f2f1934",
-          "type": "rights-ledger"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T113811Z-df1355a5",
-        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T11:38:11Z"
-      },
-      {
-        "actor": "rights-manager",
-        "details": {
-          "active": true,
-          "artifact_id": "art-rights-gate-a15543cfd7c3",
+          "artifact_id": "art-rights-gate-2a60719d63da",
           "path": "rights/gate-latest.json",
-          "sha256": "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39",
+          "sha256": "sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189",
           "type": "rights-gate"
         },
         "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260814T113812Z-e419cd0a",
+        "event_id": "evt-20260816T171035Z-abb729f1",
         "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
-        "time": "2026-08-14T11:38:12Z"
+        "time": "2026-08-16T17:10:35Z"
+      },
+      {
+        "actor": "rights-gate",
+        "details": {
+          "approval_ids": [
+            "apr-compliance-20260814t131122z-a30330b1"
+          ],
+          "hashes": [
+            "sha256:a15543cfd7c3cf555565065fd8ca61b33f3449dcd7919691302157b0ad1c0a39"
+          ],
+          "reason": "Superseded by sha256:2a60719d63daf8804366be364823793fc1bf8cdbdcbd1e20b0143e499c7d3189"
+        },
+        "event": "APPROVALS_INVALIDATED",
+        "event_id": "evt-20260816T171035Z-ca7c332f",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:10:35Z"
+      },
+      {
+        "actor": "rights-manager",
+        "details": {
+          "active": true,
+          "artifact_id": "art-rights-ledger-8b3c384455ea",
+          "path": "rights/ledger.json",
+          "sha256": "sha256:8b3c384455ea4e3b877bbe0d81b29b0c82fa07e07c231e27197d3b17cc6156f1",
+          "type": "rights-ledger"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260816T171035Z-22a71c4b",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:10:35Z"
+      },
+      {
+        "actor": "cover-art-revision",
+        "details": {
+          "from": "RIGHTS_CLEARANCE",
+          "reason": "Rights gate PASS (cover-art + fonts cleared) after AI-art cover adoption; advancing to compliance human gate.",
+          "to": "COMPLIANCE_APPROVAL"
+        },
+        "event": "STATE_TRANSITIONED",
+        "event_id": "evt-20260816T171054Z-e48fc6c6",
+        "project_id": "clr-2026-easy-sudoku-for-adults-relaxing-puzzles-with-ful",
+        "time": "2026-08-16T17:10:54Z"
       }
     ]
   },
