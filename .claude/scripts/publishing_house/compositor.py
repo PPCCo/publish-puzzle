@@ -462,19 +462,23 @@ def _draw_wrapped_caption(
     colour: tuple[int, int, int],
     align: str = "center",
     scrim_min_contrast: float = 4.5,
-) -> None:
+) -> int:
     """Draw ``text`` word-wrapped to fit ``box``, adding an auto scrim only if the
     text/background contrast falls below ``scrim_min_contrast`` (WCAG AA body).
 
     Deterministic: fixed point-size descent, fixed word-wrap, fixed scrim alpha.
     The scrim is a semi-opaque rounded panel behind the text — drawn ONLY when the
     contrast check fails, so clean reserved white space stays untouched.
+
+    Returns the y-coordinate of the bottom of the drawn block (text bottom, or the
+    scrim bottom when a scrim was added), so a caller can place the next element
+    below it without overlap. Returns ``box`` top when there is nothing to draw.
     """
     from PIL import ImageFont
 
     bx, by, bw, bh = box
     if not text:
-        return
+        return by
 
     # Deterministic descent: find the largest point size whose greedy word-wrap
     # fits inside the box (both width and total height).
@@ -517,8 +521,20 @@ def _draw_wrapped_caption(
         lines, _widest, _total_h = _wrap_at(font)
         chosen_font = font
 
+    # Measure the wrapped block up-front so the scrim hugs the ACTUAL text
+    # extent (centred in the box) rather than the full box — a tall box with a
+    # short block otherwise paints an oversized scrim that collides with
+    # neighbours. Also lets us report an accurate block bottom.
+    line_gap = max(2, int(chosen_font.size * 0.25))
+    heights = [draw.textbbox((0, 0), ln, font=chosen_font) for ln in lines]
+    total_h = sum((tb[3] - tb[1]) + line_gap for tb in heights) - line_gap
+    y0 = by + max(0, (bh - total_h) // 2)
+    block_bottom = min(by + bh, y0 + total_h)
+
     # Contrast check against the mean of the reserved region; add a scrim if poor.
     bg = _region_mean_rgb(image, box)
+    scrimmed = False
+    pad = max(8, int(chosen_font.size * 0.4))
     if _contrast_ratio(colour, bg) < scrim_min_contrast:
         from PIL import Image, ImageDraw
 
@@ -526,21 +542,18 @@ def _draw_wrapped_caption(
         scrim_base = _WHITE if _relative_luminance(colour) < 0.5 else _NEAR_BLACK
         overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
         odraw = ImageDraw.Draw(overlay)
-        pad = max(8, int(chosen_font.size * 0.4))
         odraw.rounded_rectangle(
-            [bx - pad, by - pad, bx + bw + pad, by + bh + pad],
+            [bx - pad, y0 - pad, bx + bw + pad, block_bottom + pad],
             radius=pad,
             fill=(scrim_base[0], scrim_base[1], scrim_base[2], 165),
         )
         image.alpha_composite(overlay) if image.mode == "RGBA" else image.paste(
             Image.alpha_composite(image.convert("RGBA"), overlay).convert("RGB"), (0, 0)
         )
+        scrimmed = True
 
     # Draw the wrapped lines, vertically centred in the box.
-    line_gap = max(2, int(chosen_font.size * 0.25))
-    heights = [draw.textbbox((0, 0), ln, font=chosen_font) for ln in lines]
-    total_h = sum((tb[3] - tb[1]) + line_gap for tb in heights) - line_gap
-    y = by + max(0, (bh - total_h) // 2)
+    y = y0
     for ln, tb in zip(lines, heights):
         line_w = tb[2] - tb[0]
         if align == "left":
@@ -551,6 +564,8 @@ def _draw_wrapped_caption(
             x = bx + (bw - line_w) // 2 - tb[0]
         draw.text((x, y - tb[1]), ln, font=chosen_font, fill=colour)
         y += (tb[3] - tb[1]) + line_gap
+
+    return (block_bottom + pad) if scrimmed else block_bottom
 
 
 def compose_cover_wrap(
@@ -624,21 +639,29 @@ def compose_cover_wrap(
     def _pt_to_px(pt: float) -> int:
         return max(1, int(round(pt * dpi / 72.0)))
 
-    # Title in the reserved upper band of the front panel.
+    # Title in the reserved upper band of the front panel. The box is generous
+    # (a long adult title can wrap to 4 lines); _draw_wrapped_caption centres the
+    # block within it and reports the true bottom of the drawn text (or scrim) so
+    # the callout can sit BELOW the title regardless of how many lines it took.
     margin = int(0.625 * dpi)
-    title_box = (fx + margin, fy + margin, fw - 2 * margin, int(fh * 0.28))
-    _draw_wrapped_caption(
+    title_top = fy + margin
+    title_box = (fx + margin, title_top, fw - 2 * margin, int(fh * 0.34))
+    title_bottom = _draw_wrapped_caption(
         draw, image, str(spec.get("title", "")), title_box, display_font_path,
         max_pt=_pt_to_px(44), min_pt=_pt_to_px(20), colour=ink, align="center",
     )
 
-    # Cream count callout below the title band.
+    # Cream count callout, positioned dynamically below the title's actual bottom
+    # so a tall multi-line title never collides with it. Clamped to keep the
+    # callout inside the front panel's upper half.
     count_label = str(spec.get("count_label", "")).strip()
     if count_label:
         cw = fw - 2 * margin
         ch = int(fh * 0.14)
         cx = fx + margin
-        cy = fy + int(fh * 0.30)
+        gap = int(0.18 * dpi)
+        cy = min(title_bottom + gap, fy + int(fh * 0.62) - ch)
+        cy = max(cy, title_top + gap)
         draw.rounded_rectangle([cx, cy, cx + cw, cy + ch], radius=int(0.08 * dpi), fill=cream)
         _draw_wrapped_caption(
             draw, image, count_label, (cx, cy, cw, int(ch * 0.6)), display_font_path,

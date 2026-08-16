@@ -1,0 +1,13 @@
+{
+  "brief_id": "clr-cover-art-front",
+  "provider": "local-sdxl",
+  "provider_kind": "local",
+  "model_or_tool": "sdxl-1.0-base",
+  "creation_method": "ai-generated",
+  "positive_prompt": "professional book cover background illustration, an original, abstract, tasteful background motif evoking quiet puzzle-solving (soft geometric grid textures, gentle light, no readable numbers or letters), calm, warm, reassuring, high-contrast, uncluttered, generous negative space, soft even lighting, dignified and inviting, easy on the eyes, high contrast, bold, legible, medium visual density, portrait orientation, full-bleed composition, leave a clean uncluttered upper band with calm empty space for a title, leave a calm lower band with empty space for author and series text, generous quiet margins, simple focal composition, absolutely no text, no words, no letters, no numbers, no lettering, no typography, no captions, no watermark, no signature, no logo, no frame, original artwork, not derivative of any existing book cover or protected work, commercial print quality, 300 dpi, crisp, clean",
+  "negative_prompt": "text, words, letters, numbers, typography, caption, watermark, signature, logo, frame, border, cluttered, busy, low contrast, blurry, distorted, deformed, copyrighted character, trademarked logo, real person, celebrity likeness",
+  "seed": 1940807268,
+  "license_reference": "CreativeML Open RAIL-M",
+  "commercial_rights_verified": true,
+  "ingested_at": "2026-08-16T14:02:29Z"
+}

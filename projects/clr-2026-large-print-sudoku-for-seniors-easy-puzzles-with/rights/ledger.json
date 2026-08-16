@@ -153,6 +153,38 @@
       ],
       "clearance_status": "cleared",
       "notes": "clearance driven by embedding_allowed=True AND commercial_use_verified=True. License cleared at selection (shift-left); the concrete embedded font file is hashed and registered as its own artifact at build time. An unverified family yields a `pending` record that blocks the rights gate."
+    },
+    {
+      "rights_id": "rgt-img-clr-cover-art-front-724b96a1",
+      "asset_path": "visuals/assets/clr-cover-art-front.png",
+      "asset_hash": "sha256:724b96a1e003814d30abda995a2a3a796a5d0fae718ea8795945a3ae733299ad",
+      "asset_type": "illustration",
+      "creator_or_provider": "local-sdxl",
+      "source": "AI generation via local-sdxl (local)",
+      "acquired_at": "2026-08-16T14:02:29Z",
+      "creation_method": "ai-generated",
+      "model_or_tool": "sdxl-1.0-base",
+      "human_contribution": "Prompt authored from an approved illustration brief; asset produced under the named provider's terms.",
+      "license_or_contract": "CreativeML Open RAIL-M; Local SDXL (sd_xl_base_1.0) via comfyui-mcp; commercial_rights_verified=true in provider registry. Original AI-generated abstract grid motif; no protected reference traced or derived; no in-image text. flux-schnell first attempt (seed 1291362424) rejected for washed-out low adherence; SDXL selected.",
+      "commercial_use": true,
+      "modification_allowed": null,
+      "attribution": null,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback"
+      ],
+      "term_end": null,
+      "consent_evidence": null,
+      "disclosure_obligations": [
+        "Disclose AI-generated images per current channel policy (e.g. KDP AI-content question)."
+      ],
+      "evidence_paths": [
+        "visuals/assets/clr-cover-art-front.provenance.json"
+      ],
+      "clearance_status": "cleared",
+      "notes": "clearance driven by provider commercial_rights_verified=True. An unverified provider yields a `pending` record that blocks the rights gate until a human reviews the provider's terms."
     }
   ]
 }

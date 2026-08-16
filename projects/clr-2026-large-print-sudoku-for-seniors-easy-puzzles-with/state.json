@@ -18,7 +18,7 @@
     "quality-review": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
     "quality-gate": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
     "cover-art-direction": "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
-    "cover-pdf": "sha256:e87c241a1e81815809b4014e249bbe2de48be146f88fe9cc0c381d219e7bddf1",
+    "cover-pdf": "sha256:4c4c5c21398b93d29422bdc5e69acc8313b38394d24eb8215691e8235dad90bb",
     "cover-proof": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
     "accessibility-gate": "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
     "rights-ledger": "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
@@ -28,7 +28,8 @@
     "listing-kit": "sha256:9f4218d3da7dc09583b9e9f076ccb45efbfd1eb16581c7dc288b4e5532be7ae0",
     "launch-guide": "sha256:378caf1d70eb12ee6698efce9e21a8423b1e1cf965a71436fa5c213d81b45c89",
     "platform-package-kdp": "sha256:577670bf1c3bd52e75272dd70a756fbb773c18465275f87dbb30e918d35f2ef9",
-    "platform-package-etsy": "sha256:b4fc4307a015498307778a0f0fc07b8ffdeddb6f876c5a157752bf34890293e6"
+    "platform-package-etsy": "sha256:b4fc4307a015498307778a0f0fc07b8ffdeddb6f876c5a157752bf34890293e6",
+    "illustration": "sha256:724b96a1e003814d30abda995a2a3a796a5d0fae718ea8795945a3ae733299ad"
   },
   "required_reviews": [],
   "completed_reviews": [],
@@ -55,8 +56,8 @@
     "apr-cover-20260731t131846z-4844a6de",
     "apr-compliance-20260731t133613z-47cb93c4"
   ],
-  "updated_at": "2026-08-14T06:54:05Z",
-  "updated_by": "content-verifier",
+  "updated_at": "2026-08-16T14:02:39Z",
+  "updated_by": "cover-builder",
   "niche_assessment": {
     "decision": "PASS",
     "opportunity_score": 0.4,

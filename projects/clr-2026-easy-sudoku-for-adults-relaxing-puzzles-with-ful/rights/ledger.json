@@ -43,6 +43,101 @@
       ],
       "clearance_status": "cleared",
       "notes": "Bitstream Vera license (open); embedded in cover as PHSans-Bold face."
+    },
+    {
+      "rights_id": "rgt-font-display-archivo",
+      "asset_path": "[selected dependency] font:Archivo (display)",
+      "asset_hash": "sha256:8903947b2c20480011edba95b42e150c333919ec615aaa37e1cd53388fede181",
+      "asset_type": "font",
+      "creator_or_provider": "Omnibus-Type — https://github.com/Omnibus-Type/Archivo",
+      "source": "Open-licensed font family selected from the dependency registry (Apache-2.0).",
+      "acquired_at": "2026-08-16T14:05:23Z",
+      "creation_method": "open-license",
+      "model_or_tool": null,
+      "human_contribution": "Font family selected at design/pre-production from the offline license-checked dependency registry.",
+      "license_or_contract": "Apache-2.0",
+      "commercial_use": true,
+      "modification_allowed": null,
+      "attribution": null,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "term_end": null,
+      "consent_evidence": null,
+      "disclosure_obligations": [],
+      "evidence_paths": [
+        ".claude/config/licenses/Apache-2.0.md"
+      ],
+      "clearance_status": "cleared",
+      "notes": "clearance driven by embedding_allowed=True AND commercial_use_verified=True. License cleared at selection (shift-left); the concrete embedded font file is hashed and registered as its own artifact at build time. An unverified family yields a `pending` record that blocks the rights gate."
+    },
+    {
+      "rights_id": "rgt-font-body-atkinson-hyperlegible",
+      "asset_path": "[selected dependency] font:Atkinson Hyperlegible (body)",
+      "asset_hash": "sha256:a399f7bba42cfdf3a7498569866c1da4441132cd35eb40f17c7288f2a39c5259",
+      "asset_type": "font",
+      "creator_or_provider": "Braille Institute of America — https://www.brailleinstitute.org/freefont/ (via https://fonts.google.com/specimen/Atkinson+Hyperlegible)",
+      "source": "Open-licensed font family selected from the dependency registry (OFL-1.1).",
+      "acquired_at": "2026-08-16T14:05:23Z",
+      "creation_method": "open-license",
+      "model_or_tool": null,
+      "human_contribution": "Font family selected at design/pre-production from the offline license-checked dependency registry.",
+      "license_or_contract": "OFL-1.1",
+      "commercial_use": true,
+      "modification_allowed": true,
+      "attribution": null,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "term_end": null,
+      "consent_evidence": null,
+      "disclosure_obligations": [],
+      "evidence_paths": [
+        ".claude/config/licenses/OFL-1.1.md"
+      ],
+      "clearance_status": "cleared",
+      "notes": "clearance driven by embedding_allowed=True AND commercial_use_verified=True. License cleared at selection (shift-left); the concrete embedded font file is hashed and registered as its own artifact at build time. An unverified family yields a `pending` record that blocks the rights gate."
+    },
+    {
+      "rights_id": "rgt-img-clr-cover-art-front-51207767",
+      "asset_path": "visuals/assets/clr-cover-art-front.png",
+      "asset_hash": "sha256:51207767b5b5ddc816822111a8014208de956b6809513ddbb7cb1c9a304cd161",
+      "asset_type": "illustration",
+      "creator_or_provider": "local-sdxl",
+      "source": "AI generation via local-sdxl (local)",
+      "acquired_at": "2026-08-16T14:07:33Z",
+      "creation_method": "ai-generated",
+      "model_or_tool": "sdxl-1.0-base",
+      "human_contribution": "Prompt authored from an approved illustration brief; asset produced under the named provider's terms.",
+      "license_or_contract": "CreativeML Open RAIL-M; Local SDXL (sd_xl_base_1.0) via comfyui-mcp; commercial_rights_verified=true. Original AI-generated abstract geometric motif; no protected reference traced/derived; no in-image text. SDXL selected (flux-schnell adherence poor).",
+      "commercial_use": true,
+      "modification_allowed": null,
+      "attribution": null,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback",
+        "digital-pdf"
+      ],
+      "term_end": null,
+      "consent_evidence": null,
+      "disclosure_obligations": [
+        "Disclose AI-generated images per current channel policy (e.g. KDP AI-content question)."
+      ],
+      "evidence_paths": [
+        "visuals/assets/clr-cover-art-front.provenance.json"
+      ],
+      "clearance_status": "cleared",
+      "notes": "clearance driven by provider commercial_rights_verified=True. An unverified provider yields a `pending` record that blocks the rights gate until a human reviews the provider's terms."
     }
   ]
 }

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "binding": "paperback",
+  "paper": "white",
+  "page_count": 202,
+  "spine_width_in": 0.4549,
+  "bleed_in": 0.125,
+  "wrap_size_in": [
+    17.7049,
+    11.25
+  ],
+  "trim_in": [
+    8.5,
+    11.0
+  ],
+  "style": "art",
+  "dpi": 300,
+  "art_asset": "visuals/assets/clr-cover-art-front.png",
+  "wrap_png": "outputs/cover/cover-wrap-art.png",
+  "font_display": "Archivo",
+  "font_body": "Atkinson Hyperlegible"
+}

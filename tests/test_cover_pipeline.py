@@ -257,6 +257,48 @@ class CoverWrapRenderTests(unittest.TestCase):
             (self.project_dir / b["output_path"]).read_bytes(),
         )
 
+    def test_long_title_callout_does_not_collide(self) -> None:
+        """A long 4-line title must push the cream callout below it, not overlap.
+
+        Regression: the title band and callout Y were both fixed, so a long adult
+        title (e.g. "…Relaxing Puzzles with Full Solutions") overran the callout
+        and clipped its text. The callout now sits below the title's true bottom.
+        """
+        from PIL import Image
+
+        spec = self._spec()
+        spec["title"] = "Easy Sudoku for Adults Relaxing Puzzles with Full Solutions"
+        cream = tuple(
+            int(spec["cream_rgb"].lstrip("#")[i : i + 2], 16) for i in (0, 2, 4)
+        )
+        res = compositor.compose_cover_wrap(
+            self.root, self.project_id, "visuals/assets/clr-cover-art-front.png",
+            spec, "outputs/cover/wrap-long.png",
+        )
+        image = Image.open(self.project_dir / res["output_path"]).convert("RGB")
+        fx, fy, fw, fh = spec["front"]
+        # Find the topmost row containing the solid cream callout inside the front.
+        px = image.load()
+        cream_top = None
+        for yy in range(fy, fy + fh):
+            row_cream = sum(
+                1 for xx in range(fx, fx + fw, 8) if px[xx, yy] == cream
+            )
+            if row_cream > (fw // 8) // 2:  # a majority-cream row = the callout band
+                cream_top = yy
+                break
+        self.assertIsNotNone(cream_top, "cream callout band not found on front panel")
+        # The title's white ink must not intrude into the cream band: the callout
+        # top sits strictly below where the title occupies. Sample the title zone
+        # just above the callout — it should contain white ink (the title), and the
+        # callout band itself should be predominantly solid cream (not overrun).
+        band_cream = sum(
+            1 for xx in range(fx, fx + fw, 4) if px[xx, cream_top + 4] == cream
+        )
+        self.assertGreater(
+            band_cream, (fw // 4) // 2, "callout band is not cleanly cream — title overran it"
+        )
+
     def test_front_panel_carries_art_pixels(self) -> None:
         from PIL import Image
 

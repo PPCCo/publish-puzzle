@@ -930,6 +930,62 @@
       "validation_status": "warning",
       "supersedes": "art-platform-package-ets-b37d24a352fa",
       "frozen": false
+    },
+    {
+      "artifact_id": "art-illustration-724b96a1e003",
+      "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+      "type": "illustration",
+      "stage": "VISUAL_DEVELOPMENT",
+      "version": 1,
+      "path": "visuals/assets/clr-cover-art-front.png",
+      "sha256": "sha256:724b96a1e003814d30abda995a2a3a796a5d0fae718ea8795945a3ae733299ad",
+      "size_bytes": 942197,
+      "created_at": "2026-08-16T14:02:29Z",
+      "created_by": "cover-art-producer",
+      "source_artifact_ids": [],
+      "provenance": {
+        "brief_id": "clr-cover-art-front",
+        "provider": "local-sdxl",
+        "provider_kind": "local",
+        "model_or_tool": "sdxl-1.0-base",
+        "creation_method": "ai-generated",
+        "positive_prompt": "professional book cover background illustration, an original, abstract, tasteful background motif evoking quiet puzzle-solving (soft geometric grid textures, gentle light, no readable numbers or letters), calm, warm, reassuring, high-contrast, uncluttered, generous negative space, soft even lighting, dignified and inviting, easy on the eyes, high contrast, bold, legible, medium visual density, portrait orientation, full-bleed composition, leave a clean uncluttered upper band with calm empty space for a title, leave a calm lower band with empty space for author and series text, generous quiet margins, simple focal composition, absolutely no text, no words, no letters, no numbers, no lettering, no typography, no captions, no watermark, no signature, no logo, no frame, original artwork, not derivative of any existing book cover or protected work, commercial print quality, 300 dpi, crisp, clean",
+        "negative_prompt": "text, words, letters, numbers, typography, caption, watermark, signature, logo, frame, border, cluttered, busy, low contrast, blurry, distorted, deformed, copyrighted character, trademarked logo, real person, celebrity likeness",
+        "seed": 1940807268,
+        "license_reference": "CreativeML Open RAIL-M",
+        "commercial_rights_verified": true,
+        "ingested_at": "2026-08-16T14:02:29Z"
+      },
+      "rights_status": "cleared",
+      "validation_status": "not-run",
+      "supersedes": null,
+      "frozen": false
+    },
+    {
+      "artifact_id": "art-cover-pdf-4c4c5c21398b",
+      "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+      "type": "cover-pdf",
+      "stage": "VISUAL_DEVELOPMENT",
+      "version": 3,
+      "path": "outputs/cover/cover-wrap-art.pdf",
+      "sha256": "sha256:4c4c5c21398b93d29422bdc5e69acc8313b38394d24eb8215691e8235dad90bb",
+      "size_bytes": 7075661,
+      "created_at": "2026-08-16T14:02:39Z",
+      "created_by": "cover-builder",
+      "source_artifact_ids": [],
+      "provenance": {
+        "spine_width_in": 0.4549,
+        "page_count": 202,
+        "style": "art",
+        "art_asset": "visuals/assets/clr-cover-art-front.png",
+        "wrap_png": "outputs/cover/cover-wrap-art.png",
+        "font_display": "Archivo",
+        "font_body": "Atkinson Hyperlegible"
+      },
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "supersedes": "art-cover-pdf-e87c241a1e81",
+      "frozen": false
     }
   ]
 }
