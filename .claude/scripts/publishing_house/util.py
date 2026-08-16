@@ -97,6 +97,29 @@ def atomic_write_yaml(path: Path | str, data: Any) -> None:
     atomic_write_text(path, yaml.safe_dump(data, sort_keys=False, allow_unicode=True))
 
 
+def preserve_report_timestamp(path: Path | str, result: dict[str, Any], *, field: str = "evaluated_at") -> dict[str, Any]:
+    """Keep a re-generated report byte-stable when only its timestamp would change.
+
+    Compares ``result`` against the report already on disk at ``path``, ignoring
+    ``field`` (the volatile timestamp). If every other value is identical, the
+    prior timestamp is copied into ``result`` in place so the serialized bytes —
+    and therefore the SHA-256 — are unchanged. This lets a hash-keyed dedup guard
+    (e.g. ``register_artifact``) treat an unchanged re-run as a no-op instead of
+    appending a fresh artifact revision and superseding the prior active hash.
+    Mutates and returns ``result``.
+    """
+    if not Path(path).exists():
+        return result
+    previous = load_json(path)
+    if not isinstance(previous, dict) or field not in previous:
+        return result
+    if hash_json({k: v for k, v in previous.items() if k != field}) == hash_json(
+        {k: v for k, v in result.items() if k != field}
+    ):
+        result[field] = previous[field]
+    return result
+
+
 def sha256_file(path: Path | str) -> str:
     digest = hashlib.sha256()
     with Path(path).open("rb") as handle:

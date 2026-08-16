@@ -5,7 +5,7 @@ from typing import Any
 
 from .artifacts import list_artifacts, register_artifact
 from .paths import ProjectPaths
-from .util import atomic_write_json, load_json, utc_now
+from .util import atomic_write_json, load_json, preserve_report_timestamp, utc_now
 from .validation import validate_data
 
 RIGHTS_REQUIRED_TYPES = {
@@ -65,7 +65,14 @@ def check_rights(root: Path, project_id: str) -> dict[str, Any]:
         "blocked_artifacts": blocked,
         "warnings": warnings,
     }
-    atomic_write_json(paths.directory / "rights" / "gate-latest.json", result)
+    # Keep the report hash-stable across re-runs: if only the timestamp would
+    # change, reuse the prior evaluated_at so the bytes (and SHA-256) are
+    # unchanged and register_artifact's dedup guard fires. Without this every
+    # re-run would append a manifest entry and supersede the prior active hash
+    # (invalidating any approval bound to it).
+    gate_path = paths.directory / "rights" / "gate-latest.json"
+    preserve_report_timestamp(gate_path, result)
+    atomic_write_json(gate_path, result)
 
     # Auto-register the compliance-bound artifacts so the compliance packet has
     # the exact TYPES gate_packet._GATE_ARTIFACT_TYPES["compliance"] binds, with no

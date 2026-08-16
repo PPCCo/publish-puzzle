@@ -15,7 +15,7 @@ from typing import Any
 
 from .events import append_event
 from .paths import ProjectPaths
-from .util import atomic_write_json, load_json, load_yaml, utc_now
+from .util import atomic_write_json, load_json, load_yaml, preserve_report_timestamp, utc_now
 
 # Minimum body type size (pt) per audience for print interiors.
 _MIN_TYPE_PT = {
@@ -125,7 +125,11 @@ def audit_accessibility(root: Path, project_id: str) -> dict[str, Any]:
         "warnings": warnings,
         "note": "Every accessibility requirement is enforced by a check, not asserted.",
     }
+    # Keep the report hash-stable across re-runs: reuse the prior evaluated_at
+    # when nothing else changed, so register_artifact's dedup guard fires and a
+    # re-run does not append a manifest revision / supersede the active hash.
     out = paths.directory / "accessibility" / "gate-latest.json"
+    preserve_report_timestamp(out, result)
     atomic_write_json(out, result)
 
     # Auto-register the accessibility-gate artifact (a compliance-bound TYPE) so the
