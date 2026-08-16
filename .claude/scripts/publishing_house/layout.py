@@ -414,7 +414,167 @@ def _wrap_text(text: str, max_chars: int) -> list[str]:
     return lines
 
 
-def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict[str, Any]:
+# Cover-art typography defaults: cleared registry families (embed+commercial
+# verified in dependencies.default.json). Archivo Black is a strong display face;
+# Atkinson Hyperlegible is the high-legibility body/label face. Both must be
+# `dependency select`'d for the project first (the compositor gate enforces it).
+_COVER_ART_FONT_DISPLAY = "Archivo"
+_COVER_ART_FONT_BODY = "Atkinson Hyperlegible"
+
+
+def _find_cover_art(paths: ProjectPaths) -> Path | None:
+    """Locate the ingested cover-art PNG deterministically.
+
+    Prefers the canonical cover brief id, else the first ``clr-cover-*`` asset,
+    else any single asset whose provenance/brief marks it a cover. Returns None
+    when no cover art has been generated + ingested yet.
+    """
+    assets = paths.directory / "visuals" / "assets"
+    if not assets.is_dir():
+        return None
+    canonical = assets / "clr-cover-art-front.png"
+    if canonical.is_file():
+        return canonical
+    for candidate in sorted(assets.glob("clr-cover*.png")):
+        return candidate
+    return None
+
+
+def _build_cover_art(
+    root: Path, project_id: str, paths: "ProjectPaths", project: dict[str, Any],
+    binding: str, inch: float, canvas: Any, out_dir: Path, *,
+    width_in: float, height_in: float, spine: float, bleed: float,
+    wrap_width: float, wrap_height: float, page_count: int, paper: str,
+    title: str, puzzle_count: int, is_large_print: bool, description: str,
+) -> dict[str, Any]:
+    """Assemble the art-backed cover wrap (PNG via compositor → PDF). See build_cover."""
+    from . import compositor
+
+    art_path = _find_cover_art(paths)
+    if art_path is None:
+        raise BuildError(
+            "No ingested cover art found under visuals/assets/. Generate it first: "
+            "`image-gen cover-brief <id>` → render via comfyui-mcp → "
+            "`image-gen ingest <id> --brief-id clr-cover-art-front --file "
+            "visuals/assets/clr-cover-art-front.png --provider <provider>`. "
+            "Then re-run `build cover --style art`. (Fallback: `--style procedural`.)"
+        )
+
+    dpi = int(((project.get("production") or {}).get("print") or {}).get("dpi") or 300)
+
+    def _px(inches: float) -> int:
+        return int(round(inches * dpi))
+
+    wrap_w_px, wrap_h_px = _px(wrap_width), _px(wrap_height)
+    bleed_px = _px(bleed)
+    back_w_px = _px(width_in)                 # back panel width (trim), left of bleed
+    spine_w_px = _px(spine)
+    front_w_px = _px(width_in)
+    # Layout left→right: [bleed | back trim | spine | front trim | bleed], full height.
+    back_box = (bleed_px, bleed_px, back_w_px, _px(height_in))
+    spine_box = (bleed_px + back_w_px, bleed_px, spine_w_px, _px(height_in))
+    front_box = (bleed_px + back_w_px + spine_w_px, bleed_px, front_w_px, _px(height_in))
+
+    count_label = f"{puzzle_count} Puzzles" if puzzle_count > 0 else "Puzzles"
+    descriptor = "  •  ".join(
+        (["Large Print"] if is_large_print else []) + ["Easy", "Complete Solutions"]
+    )
+    count_phrase = (
+        f"{puzzle_count} unique easy sudoku puzzles" if puzzle_count > 0
+        else "unique easy sudoku puzzles"
+    )
+    features = [
+        count_phrase,
+        "One puzzle per page, large print" if is_large_print else "One puzzle per page",
+        "High-contrast black-on-white grids",
+        "Complete solutions at the back",
+    ]
+    back_lines = _wrap_text(description, 60) if description else []
+
+    spec = {
+        "dpi": dpi,
+        "wrap_px": [wrap_w_px, wrap_h_px],
+        "bleed_px": bleed_px,
+        "front": list(front_box),
+        "spine": list(spine_box),
+        "back": list(back_box),
+        "solid_rgb": "#1a3a5c",
+        "cream_rgb": "#fdf6e3",
+        "ink_rgb": "#ffffff",
+        "title": title,
+        "count_label": count_label,
+        "descriptor": descriptor,
+        "spine_title": title if len(title) <= 50 else title[:47] + "...",
+        "back_heading": "About This Book",
+        "back_lines": back_lines,
+        "features": features,
+        "trim_label": f"{width_in:g} × {height_in:g} in",
+        "font_display": _COVER_ART_FONT_DISPLAY,
+        "font_body": _COVER_ART_FONT_BODY,
+    }
+
+    art_rel = art_path.resolve().relative_to(paths.directory.resolve()).as_posix()
+    png_rel = "outputs/cover/cover-wrap-art.png"
+    compose_result = compositor.compose_cover_wrap(
+        root, project_id, art_rel, spec, png_rel,
+    )
+    png_abs = paths.resolve_inside(png_rel)
+
+    # Embed the composited wrap PNG in a NEW-REVISION single-page PDF at exact
+    # trim+bleed. Never overwrite the approved procedural cover-wrap.pdf.
+    pdf_path = out_dir / "cover-wrap-art.pdf"
+    c = canvas.Canvas(str(pdf_path), pagesize=(wrap_width * inch, wrap_height * inch))
+    c.drawImage(
+        str(png_abs), 0, 0, width=wrap_width * inch, height=wrap_height * inch,
+        preserveAspectRatio=False, mask=None,
+    )
+    c.showPage()
+    c.save()
+
+    atomic_write_json(out_dir / "cover-spec-art.json", {
+        "schema_version": "1.0", "project_id": project_id, "binding": binding,
+        "paper": paper, "page_count": page_count, "spine_width_in": spine,
+        "bleed_in": bleed, "wrap_size_in": [round(wrap_width, 4), round(wrap_height, 4)],
+        "trim_in": [width_in, height_in], "style": "art", "dpi": dpi,
+        "art_asset": art_rel, "wrap_png": png_rel,
+        "font_display": compose_result.get("font_display"),
+        "font_body": compose_result.get("font_body"),
+    })
+
+    from .artifacts import register_artifact
+    artifact = register_artifact(
+        root, project_id, pdf_path, "cover-pdf", "VISUAL_DEVELOPMENT", "cover-builder",
+        rights_status="pending", validation_status="not-run",
+        provenance={
+            "spine_width_in": spine, "page_count": page_count, "style": "art",
+            "art_asset": art_rel, "wrap_png": png_rel,
+            "font_display": compose_result.get("font_display"),
+            "font_body": compose_result.get("font_body"),
+        },
+    )
+    append_event(
+        paths.events, project_id, "COVER_BUILT", "cover-builder",
+        {"spine_width_in": spine, "artifact_id": artifact["artifact_id"], "style": "art"},
+    )
+    return {
+        "project_id": project_id, "style": "art", "spine_width_in": spine,
+        "wrap_size_in": [round(wrap_width, 4), round(wrap_height, 4)],
+        "path": pdf_path.relative_to(paths.directory).as_posix(),
+        "wrap_png": png_rel, "art_asset": art_rel,
+        "artifact_id": artifact["artifact_id"], "sha256": artifact["sha256"],
+        "font_display": compose_result.get("font_display"),
+        "font_body": compose_result.get("font_body"),
+    }
+
+
+def build_cover(
+    root: Path,
+    project_id: str,
+    binding: str = "paperback",
+    style: str = "procedural",
+) -> dict[str, Any]:
+    if style not in {"procedural", "art"}:
+        raise BuildError(f"Unknown cover style {style!r}; expected 'procedural' or 'art'.")
     canvas, inch = _require_reportlab()
     font_regular, font_bold = _register_embed_fonts()
     paths = ProjectPaths(root, project_id).require()
@@ -450,6 +610,23 @@ def build_cover(root: Path, project_id: str, binding: str = "paperback") -> dict
 
     out_dir = paths.directory / "outputs" / "cover"
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # ------------------------------------------------------------------ #
+    # style="art": composite AI front-cover art + real typography into a  #
+    # full-wrap PNG, then embed it in a NEW-REVISION single-page PDF at    #
+    # exact trim+bleed. The approved procedural cover-wrap.pdf is never    #
+    # overwritten (constitution §5). Downstream PDF is a distinct artifact #
+    # (rule 03); the cover gate binds the art-direction SOURCE hash.       #
+    # ------------------------------------------------------------------ #
+    if style == "art":
+        return _build_cover_art(
+            root, project_id, paths, project, binding, inch, canvas, out_dir,
+            width_in=width_in, height_in=height_in, spine=spine, bleed=bleed,
+            wrap_width=wrap_width, wrap_height=wrap_height, page_count=page_count,
+            paper=paper, title=title, puzzle_count=puzzle_count,
+            is_large_print=is_large_print, description=description,
+        )
+
     pdf_path = out_dir / "cover-wrap.pdf"
     c = canvas.Canvas(str(pdf_path), pagesize=(wrap_width * inch, wrap_height * inch))
     c.setFont(font_regular, 12)  # default canvas font -> embedded, rights-clean

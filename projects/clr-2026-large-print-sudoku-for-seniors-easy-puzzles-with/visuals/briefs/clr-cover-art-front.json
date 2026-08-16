@@ -1,0 +1,47 @@
+{
+  "brief_id": "clr-cover-art-front",
+  "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+  "location": "cover front panel background (full-bleed)",
+  "purpose": "cover front art",
+  "scene_or_subject": "an original, abstract, tasteful background motif evoking quiet puzzle-solving (soft geometric grid textures, gentle light, no readable numbers or letters)",
+  "required_elements": [
+    "original full-bleed background illustration",
+    "clean uncluttered upper band reserved for the title",
+    "calm lower band reserved for author/series text",
+    "generous quiet margins"
+  ],
+  "prohibited_elements": [
+    "in-image text",
+    "lettering",
+    "numbers",
+    "watermark",
+    "signature",
+    "logo",
+    "frame",
+    "protected character or trademarked design",
+    "identifiable real person's likeness"
+  ],
+  "composition": "portrait full-bleed background; single calm focal motif; upper third and lower band left visually quiet so real typography can be composited into them",
+  "colour_and_lighting": "full colour cover art (covers MAY be colour even when the interior is greyscale, rule 22); soft even lighting; palette derived from the audience band and tone register",
+  "dimensions": {
+    "width_px": 2588,
+    "height_px": 3375,
+    "dpi": 300
+  },
+  "alt_text_draft": "Original calm illustrative background art for the cover of “Large Print Sudoku for Seniors: Easy Puzzles with Solutions”, with clean reserved space for the title and author typography; no in-image text.",
+  "rights_constraints": [
+    "Original AI-generated cover art only; not a trace, copy, or close derivative of any existing book cover, photograph, artwork, character, or logo.",
+    "No imitation of a living artist by name or recognisable style.",
+    "No trademarked logo, protected character, trade dress, or identifiable real person's likeness.",
+    "In-image text is prohibited; the title/author/series typography is composited separately in a rights-cleared embeddable font.",
+    "Must clear the rights gate (provider commercial_rights_verified) before advancing past cover."
+  ],
+  "generation_prompt": {
+    "positive": "professional book cover background illustration, an original, abstract, tasteful background motif evoking quiet puzzle-solving (soft geometric grid textures, gentle light, no readable numbers or letters), calm, warm, reassuring, high-contrast, uncluttered, generous negative space, soft even lighting, dignified and inviting, easy on the eyes, high contrast, bold, legible, medium visual density, portrait orientation, full-bleed composition, leave a clean uncluttered upper band with calm empty space for a title, leave a calm lower band with empty space for author and series text, generous quiet margins, simple focal composition, absolutely no text, no words, no letters, no numbers, no lettering, no typography, no captions, no watermark, no signature, no logo, no frame, original artwork, not derivative of any existing book cover or protected work, commercial print quality, 300 dpi, crisp, clean",
+    "negative": "text, words, letters, numbers, typography, caption, watermark, signature, logo, frame, border, cluttered, busy, low contrast, blurry, distorted, deformed, copyrighted character, trademarked logo, real person, celebrity likeness",
+    "seed": null
+  },
+  "image_complexity": "complex",
+  "preferred_provider": "local-flux-schnell",
+  "status": "draft"
+}

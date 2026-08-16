@@ -93,6 +93,66 @@
       ],
       "clearance_status": "cleared",
       "notes": "Cover-art originality attestation. Cover wrap is original output of ph_cli.py framework build, directed by approved art direction (navy+white+gold, sudoku grid motif, large clear title). No third-party image traced, no protected expression reproduced, no living artist named. Creator: publishing_house framework. Cover-gate exclusion 2 resolved per rule 07."
+    },
+    {
+      "rights_id": "rgt-font-display-archivo",
+      "asset_path": "[selected dependency] font:Archivo (display)",
+      "asset_hash": "sha256:8903947b2c20480011edba95b42e150c333919ec615aaa37e1cd53388fede181",
+      "asset_type": "font",
+      "creator_or_provider": "Omnibus-Type — https://github.com/Omnibus-Type/Archivo",
+      "source": "Open-licensed font family selected from the dependency registry (Apache-2.0).",
+      "acquired_at": "2026-08-16T13:55:35Z",
+      "creation_method": "open-license",
+      "model_or_tool": null,
+      "human_contribution": "Font family selected at design/pre-production from the offline license-checked dependency registry.",
+      "license_or_contract": "Apache-2.0",
+      "commercial_use": true,
+      "modification_allowed": null,
+      "attribution": null,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback"
+      ],
+      "term_end": null,
+      "consent_evidence": null,
+      "disclosure_obligations": [],
+      "evidence_paths": [
+        ".claude/config/licenses/Apache-2.0.md"
+      ],
+      "clearance_status": "cleared",
+      "notes": "clearance driven by embedding_allowed=True AND commercial_use_verified=True. License cleared at selection (shift-left); the concrete embedded font file is hashed and registered as its own artifact at build time. An unverified family yields a `pending` record that blocks the rights gate."
+    },
+    {
+      "rights_id": "rgt-font-body-atkinson-hyperlegible",
+      "asset_path": "[selected dependency] font:Atkinson Hyperlegible (body)",
+      "asset_hash": "sha256:a399f7bba42cfdf3a7498569866c1da4441132cd35eb40f17c7288f2a39c5259",
+      "asset_type": "font",
+      "creator_or_provider": "Braille Institute of America — https://www.brailleinstitute.org/freefont/ (via https://fonts.google.com/specimen/Atkinson+Hyperlegible)",
+      "source": "Open-licensed font family selected from the dependency registry (OFL-1.1).",
+      "acquired_at": "2026-08-16T13:55:42Z",
+      "creation_method": "open-license",
+      "model_or_tool": null,
+      "human_contribution": "Font family selected at design/pre-production from the offline license-checked dependency registry.",
+      "license_or_contract": "OFL-1.1",
+      "commercial_use": true,
+      "modification_allowed": true,
+      "attribution": null,
+      "territories": [
+        "WORLD"
+      ],
+      "formats": [
+        "paperback"
+      ],
+      "term_end": null,
+      "consent_evidence": null,
+      "disclosure_obligations": [],
+      "evidence_paths": [
+        ".claude/config/licenses/OFL-1.1.md"
+      ],
+      "clearance_status": "cleared",
+      "notes": "clearance driven by embedding_allowed=True AND commercial_use_verified=True. License cleared at selection (shift-left); the concrete embedded font file is hashed and registered as its own artifact at build time. An unverified family yields a `pending` record that blocks the rights gate."
     }
   ]
 }

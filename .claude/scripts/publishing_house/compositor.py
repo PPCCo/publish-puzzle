@@ -403,6 +403,318 @@ def build(
     return compose(root, project_id, spec, out, font_family)
 
 
+# --------------------------------------------------------------------------- #
+# Cover-wrap compositor (Phase 3): assemble a full print-ready cover wrap PNG   #
+# (back | spine | front + bleed) from ONE AI-generated front-cover art image    #
+# plus REAL typography set in a rights-cleared embeddable repo font. The wrap    #
+# PNG is then embedded in a single-page PDF at exact trim+bleed by the layout    #
+# builder. Deterministic + offline; the Plan-A font gate is enforced before any  #
+# caption is drawn (no system-font fallback).                                    #
+# --------------------------------------------------------------------------- #
+
+_WHITE = (255, 255, 255)
+_NEAR_BLACK = (26, 26, 26)
+
+
+def _relative_luminance(rgb: tuple[int, int, int]) -> float:
+    """WCAG relative luminance in 0..1 for a linearised sRGB colour."""
+    def _lin(channel: int) -> float:
+        c = channel / 255.0
+        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+
+    r, g, b = rgb
+    return 0.2126 * _lin(r) + 0.7152 * _lin(g) + 0.0722 * _lin(b)
+
+
+def _contrast_ratio(a: tuple[int, int, int], b: tuple[int, int, int]) -> float:
+    la, lb = _relative_luminance(a), _relative_luminance(b)
+    hi, lo = max(la, lb), min(la, lb)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+def _region_mean_rgb(image: "Any", box: tuple[int, int, int, int]) -> tuple[int, int, int]:
+    """Deterministic mean RGB of an image region (used for the contrast check)."""
+    bx, by, bw, bh = box
+    w, h = image.size
+    x0, y0 = max(0, bx), max(0, by)
+    x1, y1 = min(w, bx + bw), min(h, by + bh)
+    if x1 <= x0 or y1 <= y0:
+        return _WHITE
+    crop = image.crop((x0, y0, x1, y1))
+    # Pillow's resize-to-1px is a stable average; avoids importing statistics libs.
+    from PIL import Image  # noqa: PLC0415
+
+    px = crop.resize((1, 1), Image.BOX).getpixel((0, 0))
+    if isinstance(px, int):  # grayscale safety
+        return (px, px, px)
+    return (int(px[0]), int(px[1]), int(px[2]))
+
+
+def _draw_wrapped_caption(
+    draw: "Any",
+    image: "Any",
+    text: str,
+    box: tuple[int, int, int, int],
+    font_path: Path,
+    *,
+    max_pt: int,
+    min_pt: int,
+    colour: tuple[int, int, int],
+    align: str = "center",
+    scrim_min_contrast: float = 4.5,
+) -> None:
+    """Draw ``text`` word-wrapped to fit ``box``, adding an auto scrim only if the
+    text/background contrast falls below ``scrim_min_contrast`` (WCAG AA body).
+
+    Deterministic: fixed point-size descent, fixed word-wrap, fixed scrim alpha.
+    The scrim is a semi-opaque rounded panel behind the text — drawn ONLY when the
+    contrast check fails, so clean reserved white space stays untouched.
+    """
+    from PIL import ImageFont
+
+    bx, by, bw, bh = box
+    if not text:
+        return
+
+    # Deterministic descent: find the largest point size whose greedy word-wrap
+    # fits inside the box (both width and total height).
+    def _wrap_at(font: "Any") -> tuple[list[str], int, int]:
+        words = text.split()
+        lines: list[str] = []
+        current = ""
+        for word in words:
+            trial = f"{current} {word}".strip()
+            tb = draw.textbbox((0, 0), trial, font=font)
+            if current and (tb[2] - tb[0]) > bw:
+                lines.append(current)
+                current = word
+            else:
+                current = trial
+        if current:
+            lines.append(current)
+        widest = 0
+        total_h = 0
+        line_gap = max(2, int(font.size * 0.25))
+        for ln in lines:
+            tb = draw.textbbox((0, 0), ln, font=font)
+            widest = max(widest, tb[2] - tb[0])
+            total_h += (tb[3] - tb[1]) + line_gap
+        return lines, widest, total_h
+
+    pt = max(min_pt, max_pt)
+    chosen_font = ImageFont.truetype(str(font_path), min_pt)
+    lines = [text]
+    while pt >= min_pt:
+        font = ImageFont.truetype(str(font_path), pt)
+        wrapped, widest, total_h = _wrap_at(font)
+        if widest <= bw and total_h <= bh:
+            chosen_font = font
+            lines = wrapped
+            break
+        pt -= _PT_STEP
+    else:
+        font = ImageFont.truetype(str(font_path), min_pt)
+        lines, _widest, _total_h = _wrap_at(font)
+        chosen_font = font
+
+    # Contrast check against the mean of the reserved region; add a scrim if poor.
+    bg = _region_mean_rgb(image, box)
+    if _contrast_ratio(colour, bg) < scrim_min_contrast:
+        from PIL import Image, ImageDraw
+
+        # Scrim colour is whichever of white/near-black best contrasts the text.
+        scrim_base = _WHITE if _relative_luminance(colour) < 0.5 else _NEAR_BLACK
+        overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+        odraw = ImageDraw.Draw(overlay)
+        pad = max(8, int(chosen_font.size * 0.4))
+        odraw.rounded_rectangle(
+            [bx - pad, by - pad, bx + bw + pad, by + bh + pad],
+            radius=pad,
+            fill=(scrim_base[0], scrim_base[1], scrim_base[2], 165),
+        )
+        image.alpha_composite(overlay) if image.mode == "RGBA" else image.paste(
+            Image.alpha_composite(image.convert("RGBA"), overlay).convert("RGB"), (0, 0)
+        )
+
+    # Draw the wrapped lines, vertically centred in the box.
+    line_gap = max(2, int(chosen_font.size * 0.25))
+    heights = [draw.textbbox((0, 0), ln, font=chosen_font) for ln in lines]
+    total_h = sum((tb[3] - tb[1]) + line_gap for tb in heights) - line_gap
+    y = by + max(0, (bh - total_h) // 2)
+    for ln, tb in zip(lines, heights):
+        line_w = tb[2] - tb[0]
+        if align == "left":
+            x = bx - tb[0]
+        elif align == "right":
+            x = bx + bw - line_w - tb[0]
+        else:
+            x = bx + (bw - line_w) // 2 - tb[0]
+        draw.text((x, y - tb[1]), ln, font=chosen_font, fill=colour)
+        y += (tb[3] - tb[1]) + line_gap
+
+
+def compose_cover_wrap(
+    root: Path,
+    project_id: str,
+    art_path: str | Path,
+    spec: dict[str, Any],
+    output_path: str | Path,
+    font_family: str | None = None,
+) -> dict[str, Any]:
+    """Assemble a full cover-wrap PNG from AI front-cover art + real typography.
+
+    ``spec`` (built by the layout module, single-sourcing the trim + spine math)
+    provides pixel geometry and the text to set:
+
+        {
+          "dpi": 300,
+          "wrap_px": [W, H], "bleed_px": B,
+          "front": [x, y, w, h], "spine": [x, y, w, h], "back": [x, y, w, h],
+          "solid_rgb": "#1a3a5c", "cream_rgb": "#fdf6e3", "ink_rgb": "#ffffff",
+          "title": "...", "count_label": "...", "descriptor": "...",
+          "spine_title": "...", "back_heading": "...", "back_lines": [...],
+          "features": [...], "trim_label": "8.5 x 11 in",
+          "font_display": "Archivo", "font_body": "Atkinson Hyperlegible"
+        }
+
+    The front panel gets the art full-bleed (``fit="cover"``); the reserved upper
+    band gets the real title; a cream callout carries the puzzle count; the spine
+    and back are solid-derived with rotated spine title + back copy. All captions
+    use a cleared embeddable font (hard gate). Deterministic 300-DPI PNG out.
+    """
+    from PIL import Image, ImageDraw
+
+    paths = ProjectPaths(root, project_id).require()
+
+    # Font gate — resolve BEFORE drawing anything (no system-font fallback).
+    display_family = font_family or spec.get("font_display")
+    resolved_display_family, display_font_path = resolve_cleared_font(
+        root, project_id, display_family
+    )
+    body_family = spec.get("font_body")
+    try:
+        resolved_body_family, body_font_path = resolve_cleared_font(
+            root, project_id, body_family
+        )
+    except FontNotClearedError:
+        # Body falls back to the (already cleared) display face rather than a
+        # system font — the gate is never bypassed.
+        resolved_body_family, body_font_path = resolved_display_family, display_font_path
+
+    wrap_w, wrap_h = int(spec["wrap_px"][0]), int(spec["wrap_px"][1])
+    solid = _hex_to_rgb(spec.get("solid_rgb", "#1a3a5c"))
+    cream = _hex_to_rgb(spec.get("cream_rgb", "#fdf6e3"))
+    ink = _hex_to_rgb(spec.get("ink_rgb", "#ffffff"))
+
+    image = Image.new("RGB", (wrap_w, wrap_h), solid)
+
+    # Front-panel art, full-bleed (cover fit → centre-crop to the panel).
+    art_abs = paths.resolve_inside(art_path)
+    if not art_abs.is_file():
+        raise FileNotFoundError(f"Cover art not found inside project: {art_path}")
+    fx, fy, fw, fh = (int(v) for v in spec["front"])
+    with Image.open(art_abs) as raw:
+        art = raw.convert("RGB")
+        fitted = _fit_component(art, fw, fh, "cover")
+        image.paste(fitted, (fx, fy))
+
+    draw = ImageDraw.Draw(image)
+    dpi = int(spec.get("dpi", 300))
+
+    def _pt_to_px(pt: float) -> int:
+        return max(1, int(round(pt * dpi / 72.0)))
+
+    # Title in the reserved upper band of the front panel.
+    margin = int(0.625 * dpi)
+    title_box = (fx + margin, fy + margin, fw - 2 * margin, int(fh * 0.28))
+    _draw_wrapped_caption(
+        draw, image, str(spec.get("title", "")), title_box, display_font_path,
+        max_pt=_pt_to_px(44), min_pt=_pt_to_px(20), colour=ink, align="center",
+    )
+
+    # Cream count callout below the title band.
+    count_label = str(spec.get("count_label", "")).strip()
+    if count_label:
+        cw = fw - 2 * margin
+        ch = int(fh * 0.14)
+        cx = fx + margin
+        cy = fy + int(fh * 0.30)
+        draw.rounded_rectangle([cx, cy, cx + cw, cy + ch], radius=int(0.08 * dpi), fill=cream)
+        _draw_wrapped_caption(
+            draw, image, count_label, (cx, cy, cw, int(ch * 0.6)), display_font_path,
+            max_pt=_pt_to_px(32), min_pt=_pt_to_px(16), colour=solid, align="center",
+            scrim_min_contrast=1.0,  # on a solid cream panel; no scrim needed
+        )
+        descriptor = str(spec.get("descriptor", "")).strip()
+        if descriptor:
+            _draw_wrapped_caption(
+                draw, image, descriptor, (cx, cy + int(ch * 0.6), cw, int(ch * 0.35)),
+                body_font_path, max_pt=_pt_to_px(14), min_pt=_pt_to_px(9),
+                colour=solid, align="center", scrim_min_contrast=1.0,
+            )
+
+    # Spine: rotated title, only when wide enough (mirrors the procedural rule).
+    sx, sy, sw, sh = (int(v) for v in spec["spine"])
+    spine_title = str(spec.get("spine_title", "")).strip()
+    if sw >= int(0.25 * dpi) and spine_title:
+        spine_pt = min(_pt_to_px(12), int(sw * 0.55))
+        from PIL import ImageFont
+
+        sfont = ImageFont.truetype(str(display_font_path), max(_pt_to_px(6), spine_pt))
+        tb = draw.textbbox((0, 0), spine_title, font=sfont)
+        t_w, t_h = tb[2] - tb[0], tb[3] - tb[1]
+        strip = Image.new("RGBA", (max(1, t_w), max(1, t_h)), (0, 0, 0, 0))
+        ImageDraw.Draw(strip).text((-tb[0], -tb[1]), spine_title, font=sfont, fill=ink)
+        rotated = strip.rotate(90, expand=True)
+        rx = sx + max(0, (sw - rotated.width) // 2)
+        ry = sy + max(0, (sh - rotated.height) // 2)
+        image.paste(rotated, (rx, ry), rotated)
+
+    # Back panel: heading + description + features, solid ground.
+    bx, by, bw, bh = (int(v) for v in spec["back"])
+    back_margin = int(0.625 * dpi)
+    y_cursor = by + back_margin
+    heading = str(spec.get("back_heading", "About This Book")).strip()
+    if heading:
+        _draw_wrapped_caption(
+            draw, image, heading, (bx + back_margin, y_cursor, bw - 2 * back_margin, int(0.5 * dpi)),
+            display_font_path, max_pt=_pt_to_px(20), min_pt=_pt_to_px(12), colour=ink,
+            align="left", scrim_min_contrast=1.0,
+        )
+        y_cursor += int(0.7 * dpi)
+    back_lines = [str(s) for s in (spec.get("back_lines") or []) if str(s).strip()]
+    if back_lines:
+        _draw_wrapped_caption(
+            draw, image, " ".join(back_lines),
+            (bx + back_margin, y_cursor, bw - 2 * back_margin, int(2.0 * dpi)),
+            body_font_path, max_pt=_pt_to_px(13), min_pt=_pt_to_px(9), colour=ink,
+            align="left", scrim_min_contrast=1.0,
+        )
+        y_cursor += int(2.2 * dpi)
+    for feat in [str(f) for f in (spec.get("features") or []) if str(f).strip()]:
+        _draw_wrapped_caption(
+            draw, image, feat, (bx + back_margin, y_cursor, bw - 2 * back_margin, int(0.3 * dpi)),
+            body_font_path, max_pt=_pt_to_px(12), min_pt=_pt_to_px(9), colour=ink,
+            align="left", scrim_min_contrast=1.0,
+        )
+        y_cursor += int(0.34 * dpi)
+
+    out_abs = paths.resolve_inside(output_path)
+    out_abs.parent.mkdir(parents=True, exist_ok=True)
+    image.save(out_abs, format="PNG", optimize=False, dpi=(dpi, dpi))
+
+    return {
+        "status": "pass",
+        "project_id": project_id,
+        "output_path": out_abs.resolve().relative_to(paths.directory.resolve()).as_posix(),
+        "wrap_px": [wrap_w, wrap_h],
+        "dpi": dpi,
+        "font_display": resolved_display_family,
+        "font_body": resolved_body_family,
+        "art_path": art_abs.resolve().relative_to(paths.directory.resolve()).as_posix(),
+    }
+
+
 def composite_ingest(
     root: Path,
     project_id: str,

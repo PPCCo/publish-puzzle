@@ -312,6 +312,11 @@ def build_parser() -> argparse.ArgumentParser:
     b_cover = build_sub.add_parser("cover", help="Build the print cover wrap (spine width from page count and paper).")
     b_cover.add_argument("project_id")
     b_cover.add_argument("--binding", choices=["paperback", "hardcover"], default="paperback")
+    b_cover.add_argument(
+        "--style", choices=["procedural", "art"], default="procedural",
+        help="'procedural' (default) draws the flat vector cover; 'art' composites an "
+        "ingested AI cover-art asset with real cleared-font typography (new revision).",
+    )
     b_digital = build_sub.add_parser("digital", help="Assemble a digital printable bundle (PDF + linked pages).")
     b_digital.add_argument("project_id")
     b_proof = build_sub.add_parser("proof", help="Produce a pre-flight proof report for the built interior/cover.")
@@ -414,6 +419,15 @@ def build_parser() -> argparse.ArgumentParser:
     ig_from_coloring.add_argument("project_id")
     ig_from_coloring.add_argument("--provider", default=None, help="Preferred provider name; defaults to the configured default_provider.")
     ig_from_coloring.add_argument("--actor", default="coloring-bridge")
+
+    ig_cover_brief = image_gen_sub.add_parser(
+        "cover-brief",
+        help="Bridge the approved design into ONE cover-art image brief under visuals/briefs "
+        "(reserved white space, no in-image text; offline; deterministic).",
+    )
+    ig_cover_brief.add_argument("project_id")
+    ig_cover_brief.add_argument("--provider", default=None, help="Preferred provider name; defaults to the configured default_provider.")
+    ig_cover_brief.add_argument("--actor", default="cover-bridge")
 
     dependency = sub.add_parser(
         "dependency",
@@ -522,7 +536,7 @@ def _dispatch_build(args: argparse.Namespace, root: Path) -> Any:
     if args.build_command == "interior":
         return build_interior(root, args.project_id, args.binding)
     if args.build_command == "cover":
-        return build_cover(root, args.project_id, args.binding)
+        return build_cover(root, args.project_id, args.binding, args.style)
     if args.build_command == "digital":
         return link_digital_bundle(root, args.project_id)
     if args.build_command == "proof":
@@ -603,6 +617,9 @@ def _dispatch_image_gen(args: argparse.Namespace, root: Path) -> Any:
     if args.image_gen_command == "from-coloring":
         from . import coloring_bridge as _coloring_bridge  # offline; deterministic
         return _coloring_bridge.briefs_from_coloring(root, args.project_id, args.provider, args.actor)
+    if args.image_gen_command == "cover-brief":
+        from . import cover_bridge as _cover_bridge  # offline; deterministic
+        return _cover_bridge.brief_from_cover_art(root, args.project_id, args.provider, args.actor)
     raise RuntimeError("Unhandled image-gen command")
 
 
