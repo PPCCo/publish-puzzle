@@ -11,7 +11,7 @@
     "content-plan": "sha256:45a916125273741c755fa1609b2205d2c0337ddde876cc8ec25a880bb4287466",
     "content-sudoku": "sha256:4b8e51f4ce2e243b0d6dcce6aa66fa775226d758f4d7ca3c0469d6ea693a28bf",
     "interior-pdf": "sha256:717acc5a7820ed4fdc969e8374bddea1f8e18cb4bc9a306f0273cdc821ee0594",
-    "cover-pdf": "sha256:65d7b94ea0f970486275d8522b98c2a06846e2429942245fe7feb2daac0597c5",
+    "cover-pdf": "sha256:a5fd8ff70c689879a313f047a9152c26c9fb7d4fda952676744e0810022d1317",
     "cover-art-direction": "sha256:9d6093a756d3a3b7092f73dd9c6686f5887ef848061d2d4a3fb331ca1cf44461",
     "digital-bundle": "sha256:3f84057009b69b15da90a5fbddc57df98faa2fdb4cf10522e7577a67e38c0c31",
     "accessibility-gate": "sha256:a92bb08cf17777b7ac631e10703f20830265eb03a2041db548361ce6773a3209",
@@ -23,7 +23,8 @@
     "platform-package-kdp": "sha256:7cb2c63c7014583e76e737e86c42b0587103a7218885603a9b4c53b0a8c65521",
     "platform-package-etsy": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
     "channel-package": "sha256:d2debee2795614378bd8dc0f33e4960ca910325eb45b686438b28651fb253b27",
-    "illustration": "sha256:51207767b5b5ddc816822111a8014208de956b6809513ddbb7cb1c9a304cd161"
+    "illustration": "sha256:51207767b5b5ddc816822111a8014208de956b6809513ddbb7cb1c9a304cd161",
+    "cover-proof": "sha256:26dbfe073b09b692e1e62b415b26d4d9f26f090c4399fd628eb2f0f48854c1ec"
   },
   "required_reviews": [],
   "completed_reviews": [],
@@ -46,8 +47,8 @@
     "blocked": 0
   },
   "invalidated_approvals": [],
-  "updated_at": "2026-08-16T14:07:35Z",
-  "updated_by": "cover-builder",
+  "updated_at": "2026-08-16T14:20:23Z",
+  "updated_by": "prepress-specialist",
   "niche_assessment": {
     "decision": "PASS",
     "opportunity_score": 0.25,

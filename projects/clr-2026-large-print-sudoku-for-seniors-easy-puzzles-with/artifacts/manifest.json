@@ -986,6 +986,53 @@
       "validation_status": "not-run",
       "supersedes": "art-cover-pdf-e87c241a1e81",
       "frozen": false
+    },
+    {
+      "artifact_id": "art-cover-pdf-3a6f2d7df162",
+      "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+      "type": "cover-pdf",
+      "stage": "VISUAL_DEVELOPMENT",
+      "version": 4,
+      "path": "outputs/cover/cover-wrap-art.pdf",
+      "sha256": "sha256:3a6f2d7df1624a0bf0c0dab4243bdebe0b4c2d4edd30f6f2e02d7a8c5c55ec98",
+      "size_bytes": 7386414,
+      "created_at": "2026-08-16T14:13:14Z",
+      "created_by": "cover-builder",
+      "source_artifact_ids": [],
+      "provenance": {
+        "spine_width_in": 0.4549,
+        "page_count": 202,
+        "style": "art",
+        "art_asset": "visuals/assets/clr-cover-art-front.png",
+        "wrap_png": "outputs/cover/cover-wrap-art.png",
+        "font_display": "Archivo",
+        "font_body": "Atkinson Hyperlegible"
+      },
+      "rights_status": "pending",
+      "validation_status": "not-run",
+      "supersedes": "art-cover-pdf-4c4c5c21398b",
+      "frozen": false
+    },
+    {
+      "artifact_id": "art-cover-proof-a63f92629754",
+      "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+      "type": "cover-proof",
+      "stage": "FINAL_PROOF",
+      "version": 3,
+      "path": "outputs/proof/cover-proof-report.json",
+      "sha256": "sha256:a63f92629754d5b23c270813425929962a6556cfc8401b34ba8c6826b66690b8",
+      "size_bytes": 315,
+      "created_at": "2026-08-16T14:20:23Z",
+      "created_by": "prepress-specialist",
+      "source_artifact_ids": [],
+      "provenance": {
+        "style": "art",
+        "proof_of": "cover-wrap-art.pdf"
+      },
+      "rights_status": "not-applicable",
+      "validation_status": "pass",
+      "supersedes": null,
+      "frozen": false
     }
   ]
 }

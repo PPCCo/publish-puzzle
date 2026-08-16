@@ -3,7 +3,7 @@
   "kind": "approval-gate-packet",
   "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
   "gate": "cover",
-  "generated_at": "2026-08-16T14:04:30Z",
+  "generated_at": "2026-08-16T14:16:31Z",
   "prepared_by": "publishing_house.gate_packet (deterministic; grants nothing)",
   "current_state": "RELEASE_AUTHORIZATION",
   "expected_state": "COVER_APPROVAL",
@@ -119,31 +119,6 @@
   "audit": {
     "recent_events": [
       {
-        "actor": "content-verifier",
-        "details": {
-          "decision": "PASS",
-          "item_count": 100
-        },
-        "event": "CONTENT_VERIFIED",
-        "event_id": "evt-20260814T065405Z-2f5c6353",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-08-14T06:54:05Z"
-      },
-      {
-        "actor": "cover-art-producer",
-        "details": {
-          "active": true,
-          "artifact_id": "art-illustration-724b96a1e003",
-          "path": "visuals/assets/clr-cover-art-front.png",
-          "sha256": "sha256:724b96a1e003814d30abda995a2a3a796a5d0fae718ea8795945a3ae733299ad",
-          "type": "illustration"
-        },
-        "event": "ARTIFACT_REGISTERED",
-        "event_id": "evt-20260816T140229Z-7367a034",
-        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
-        "time": "2026-08-16T14:02:29Z"
-      },
-      {
         "actor": "cover-builder",
         "details": {
           "active": true,
@@ -179,6 +154,32 @@
         "event_id": "evt-20260816T140310Z-19a3a8b1",
         "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
         "time": "2026-08-16T14:03:10Z"
+      },
+      {
+        "actor": "cover-builder",
+        "details": {
+          "active": true,
+          "artifact_id": "art-cover-pdf-3a6f2d7df162",
+          "path": "outputs/cover/cover-wrap-art.pdf",
+          "sha256": "sha256:3a6f2d7df1624a0bf0c0dab4243bdebe0b4c2d4edd30f6f2e02d7a8c5c55ec98",
+          "type": "cover-pdf"
+        },
+        "event": "ARTIFACT_REGISTERED",
+        "event_id": "evt-20260816T141314Z-808a2876",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T14:13:14Z"
+      },
+      {
+        "actor": "cover-builder",
+        "details": {
+          "artifact_id": "art-cover-pdf-3a6f2d7df162",
+          "spine_width_in": 0.4549,
+          "style": "art"
+        },
+        "event": "COVER_BUILT",
+        "event_id": "evt-20260816T141314Z-77244314",
+        "project_id": "clr-2026-large-print-sudoku-for-seniors-easy-puzzles-with",
+        "time": "2026-08-16T14:13:14Z"
       }
     ]
   },

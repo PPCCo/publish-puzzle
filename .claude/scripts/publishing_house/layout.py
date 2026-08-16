@@ -800,7 +800,12 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
     family = project.get("book_type") or project.get("product_type") or "puzzle-book"
 
     interior_map = paths.directory / "outputs" / "interior" / "page-map.json"
-    cover_spec = paths.directory / "outputs" / "cover" / "cover-spec.json"
+    # Proof the ACTIVE cover: an art-style build writes cover-spec-art.json and
+    # leaves the procedural cover-spec.json untouched (new-revision discipline).
+    # Prefer the art spec when present so the proof reflects the shipping wrap.
+    cover_spec_art = paths.directory / "outputs" / "cover" / "cover-spec-art.json"
+    cover_spec_proc = paths.directory / "outputs" / "cover" / "cover-spec.json"
+    cover_spec = cover_spec_art if cover_spec_art.exists() else cover_spec_proc
 
     issues: list[str] = []
     interior_report: dict[str, Any] = {"present": interior_map.exists()}
@@ -831,7 +836,11 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
     cover_report: dict[str, Any] = {"present": cover_spec.exists()}
     if cover_spec.exists():
         spec = load_json(cover_spec)
-        cover_report.update({"spine_width_in": spec.get("spine_width_in"), "wrap_size_in": spec.get("wrap_size_in")})
+        cover_report.update({
+            "spine_width_in": spec.get("spine_width_in"),
+            "wrap_size_in": spec.get("wrap_size_in"),
+            "style": spec.get("style", "procedural"),
+        })
         if not spec.get("spine_width_in"):
             issues.append("Cover spine width not computed.")
 

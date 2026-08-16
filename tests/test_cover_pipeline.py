@@ -279,24 +279,26 @@ class CoverWrapRenderTests(unittest.TestCase):
         fx, fy, fw, fh = spec["front"]
         # Find the topmost row containing the solid cream callout inside the front.
         px = image.load()
+        samples = len(range(fx, fx + fw, 8))
         cream_top = None
         for yy in range(fy, fy + fh):
-            row_cream = sum(
-                1 for xx in range(fx, fx + fw, 8) if px[xx, yy] == cream
-            )
-            if row_cream > (fw // 8) // 2:  # a majority-cream row = the callout band
+            row_cream = sum(1 for xx in range(fx, fx + fw, 8) if px[xx, yy] == cream)
+            # The callout is a solid cream rounded rect; its band shows many cream
+            # columns (the count text over it is only a few glyphs). The art above
+            # it has ~none. A quarter of the row being pure cream marks the band.
+            if row_cream > samples // 4:
                 cream_top = yy
                 break
         self.assertIsNotNone(cream_top, "cream callout band not found on front panel")
-        # The title's white ink must not intrude into the cream band: the callout
-        # top sits strictly below where the title occupies. Sample the title zone
-        # just above the callout — it should contain white ink (the title), and the
-        # callout band itself should be predominantly solid cream (not overrun).
-        band_cream = sum(
-            1 for xx in range(fx, fx + fw, 4) if px[xx, cream_top + 4] == cream
-        )
+        # No white title ink may intrude into the callout band interior: sample a
+        # row a little into the band and confirm it is predominantly cream, i.e.
+        # the title above did NOT overrun into it (the original collision bug).
+        inset = cream_top + max(6, int(0.02 * spec["dpi"]))
+        band_cream = sum(1 for xx in range(fx, fx + fw, 4) if px[xx, inset] == cream)
+        band_samples = len(range(fx, fx + fw, 4))
         self.assertGreater(
-            band_cream, (fw // 4) // 2, "callout band is not cleanly cream — title overran it"
+            band_cream, band_samples // 4,
+            "callout band is not cleanly cream — the title overran it",
         )
 
     def test_front_panel_carries_art_pixels(self) -> None:

@@ -18,8 +18,8 @@
     "quality-review": "sha256:944eccade8a3139c433b0752beebd7b9f2b1370df4339cc09cfd7d6d3d81ff87",
     "quality-gate": "sha256:72eb2bb696f6385c341126b7de882f6a1fd04af8e7f3987e588dfb263b130318",
     "cover-art-direction": "sha256:412608ca1b24d68647cb6eec3a5da3bea53aa3140e37d544b5ecd2805e444f0f",
-    "cover-pdf": "sha256:4c4c5c21398b93d29422bdc5e69acc8313b38394d24eb8215691e8235dad90bb",
-    "cover-proof": "sha256:298f1fd15f836edcba945659775834b00d96821c8fcfa89e65bfea409c8d8136",
+    "cover-pdf": "sha256:3a6f2d7df1624a0bf0c0dab4243bdebe0b4c2d4edd30f6f2e02d7a8c5c55ec98",
+    "cover-proof": "sha256:a63f92629754d5b23c270813425929962a6556cfc8401b34ba8c6826b66690b8",
     "accessibility-gate": "sha256:4ece5668b5fbf17773998778c337df4fb424d270b99ada7c8ca1550d9ef692b0",
     "rights-ledger": "sha256:d73af64fc9bf4eb996fc876c5f92a303391821dbdc3e9cc727f3562c77381e90",
     "rights-gate": "sha256:da3a6b7093b9ed1f12e38f7d9551a1d537d1c5bece631e1c19d3cebe2a2a7230",
@@ -56,8 +56,8 @@
     "apr-cover-20260731t131846z-4844a6de",
     "apr-compliance-20260731t133613z-47cb93c4"
   ],
-  "updated_at": "2026-08-16T14:02:39Z",
-  "updated_by": "cover-builder",
+  "updated_at": "2026-08-16T14:20:23Z",
+  "updated_by": "prepress-specialist",
   "niche_assessment": {
     "decision": "PASS",
     "opportunity_score": 0.4,
