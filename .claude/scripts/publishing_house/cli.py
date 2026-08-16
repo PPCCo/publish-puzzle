@@ -297,6 +297,12 @@ def build_parser() -> argparse.ArgumentParser:
     for name in ("metadata", "accessibility", "claims"):
         item = audit_sub.add_parser(name)
         item.add_argument("project_id")
+    a_coloring = audit_sub.add_parser(
+        "coloring-review",
+        help="Deterministic code checks on ingested coloring pages (pure-B&W, printability, background, line-weight proxy).",
+    )
+    a_coloring.add_argument("project_id")
+    a_coloring.add_argument("--brief-id", dest="brief_id", default=None, help="Restrict to one coloring brief; default all.")
 
     build = sub.add_parser("build", help="Build print-ready and digital deliverables.")
     build_sub = build.add_subparsers(dest="build_command", required=True)
@@ -394,6 +400,20 @@ def build_parser() -> argparse.ArgumentParser:
     ig_ingest.add_argument("--seed", type=int, default=None)
     ig_ingest.add_argument("--license-note", dest="license_note", default=None)
     ig_ingest.add_argument("--actor", default="image-gen-ingest")
+    ig_threshold = image_gen_sub.add_parser(
+        "threshold",
+        help="Hard-threshold a coloring PNG to pure black/white in place (offline). Explicit pre-ingest step.",
+    )
+    ig_threshold.add_argument("project_id")
+    ig_threshold.add_argument("--file", required=True, help="Path (inside the project) to the image to threshold.")
+    ig_threshold.add_argument("--threshold", type=int, default=128, help="Luminance cut 1..255 (default 128).")
+    ig_from_coloring = image_gen_sub.add_parser(
+        "from-coloring",
+        help="Bridge committed coloring line-art briefs into B&W image briefs under visuals/briefs (offline; deterministic).",
+    )
+    ig_from_coloring.add_argument("project_id")
+    ig_from_coloring.add_argument("--provider", default=None, help="Preferred provider name; defaults to the configured default_provider.")
+    ig_from_coloring.add_argument("--actor", default="coloring-bridge")
 
     dependency = sub.add_parser(
         "dependency",
@@ -578,6 +598,11 @@ def _dispatch_image_gen(args: argparse.Namespace, root: Path) -> Any:
             root, args.project_id, args.brief_id, args.file, args.provider,
             args.seed, args.license_note, args.actor,
         )
+    if args.image_gen_command == "threshold":
+        return _image_gen.enforce_bw(root, args.project_id, args.file, args.threshold)
+    if args.image_gen_command == "from-coloring":
+        from . import coloring_bridge as _coloring_bridge  # offline; deterministic
+        return _coloring_bridge.briefs_from_coloring(root, args.project_id, args.provider, args.actor)
     raise RuntimeError("Unhandled image-gen command")
 
 
@@ -652,6 +677,9 @@ def dispatch(args: argparse.Namespace, root: Path) -> Any:
         if args.audit_command == "claims":
             from .claims import audit_claims
             return audit_claims(root, args.project_id)
+        if args.audit_command == "coloring-review":
+            from .coloring_review import coloring_review
+            return coloring_review(root, args.project_id, args.brief_id)
     if args.command == "maintenance":
         return _dispatch_maintenance(args, root)
     if args.command == "build":

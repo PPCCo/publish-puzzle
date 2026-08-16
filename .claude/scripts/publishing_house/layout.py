@@ -212,6 +212,95 @@ def _content_pages(batches: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
     return content, solutions
 
 
+_COLORING_PURPOSE = "coloring interior page"
+
+
+def _coloring_assets(root: Path, project_id: str, paths: ProjectPaths) -> dict[int, dict[str, Any]]:
+    """Map interior page number → placeable coloring asset.
+
+    Selects ACTIVE ``illustration`` artifacts (manifest ∩ ``state.active_artifacts``)
+    whose rights record is CLEARED and whose path maps to a coloring brief
+    (``visuals/assets/<brief_id>.png`` with ``purpose == 'coloring interior page'``).
+    Independent of the later human interior gate — placement of a cleared, active,
+    rendered asset is a build decision; the gate still approves the whole product.
+
+    Returns ``{page_number: {path, brief_id, alt_text, decorative}}``. Empty when no
+    such asset exists, so the puzzle path stays byte-identical.
+    """
+    from .artifacts import active_hashes, list_artifacts
+
+    state = load_json(paths.state, {})
+    current = active_hashes(state)
+
+    # Cleared/excluded asset hashes from the rights ledger.
+    ledger = load_json(paths.rights_ledger, {"records": []})
+    cleared_hashes = {
+        r.get("asset_hash")
+        for r in ledger.get("records", [])
+        if r.get("clearance_status") in {"cleared", "excluded"}
+    }
+
+    # brief path → brief (coloring interior pages only).
+    briefs_dir = paths.directory / "visuals" / "briefs"
+    brief_by_path: dict[str, dict[str, Any]] = {}
+    if briefs_dir.is_dir():
+        for path in sorted(briefs_dir.glob("*.json")):
+            if path.name.endswith(".attestation.json"):
+                continue
+            data = load_json(path, {})
+            if isinstance(data, dict) and data.get("purpose") == _COLORING_PURPOSE and data.get("brief_id"):
+                brief_by_path[f"visuals/assets/{data['brief_id']}.png"] = data
+
+    assets: dict[int, dict[str, Any]] = {}
+    for artifact in list_artifacts(root, project_id):
+        if artifact.get("type") != "illustration":
+            continue
+        digest = artifact.get("sha256")
+        if current and digest not in current:
+            continue
+        if digest not in cleared_hashes:
+            continue
+        rel = artifact.get("path")
+        brief = brief_by_path.get(rel)
+        if brief is None:
+            continue
+        page_number = brief.get("page_number")
+        if not isinstance(page_number, int):
+            continue
+        absolute = paths.directory / rel
+        if not absolute.is_file():
+            continue
+        alt_text = str(brief.get("alt_text_draft", "")).strip()
+        assets[page_number] = {
+            "path": absolute,
+            "brief_id": brief.get("brief_id"),
+            "alt_text": alt_text,
+            "decorative": not alt_text,
+        }
+    return assets
+
+
+def _draw_image_page(c, inch, width_in: float, height_in: float, image_path: Path) -> None:
+    """Place a single coloring image centred at trim with margins, no caption."""
+    from reportlab.lib.utils import ImageReader
+
+    MARGIN = 0.5
+    c.setPageSize((width_in * inch, height_in * inch))
+    avail_w = (width_in - 2 * MARGIN) * inch
+    avail_h = (height_in - 2 * MARGIN) * inch
+    c.drawImage(
+        ImageReader(str(image_path)),
+        MARGIN * inch,
+        MARGIN * inch,
+        width=avail_w,
+        height=avail_h,
+        preserveAspectRatio=True,
+        anchor="c",
+        mask="auto",
+    )
+    c.showPage()
+
+
 def build_interior(root: Path, project_id: str, binding: str = "paperback") -> dict[str, Any]:
     canvas, inch = _require_reportlab()
     paths = ProjectPaths(root, project_id).require()
@@ -221,6 +310,7 @@ def build_interior(root: Path, project_id: str, binding: str = "paperback") -> d
     if not batches:
         raise BuildError("No generated content batches found to build an interior.")
     content_pages, solution_pages = _content_pages(batches)
+    coloring_assets = _coloring_assets(root, project_id, paths)
 
     out_dir = paths.directory / "outputs" / "interior"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -234,13 +324,27 @@ def build_interior(root: Path, project_id: str, binding: str = "paperback") -> d
     page_map.append({"page": page_no, "kind": "front-matter"})
     page_no += 1
     # Content pages.
+    placed = 0
     for page in content_pages:
         num = (page["index"] or 0) + 1
-        if page.get("type") == "sudoku" and page.get("payload") and page["payload"].get("grid"):
+        asset = coloring_assets.get(num) if page.get("type") == "line-art-brief" else None
+        if asset is not None:
+            _draw_image_page(c, inch, width_in, height_in, asset["path"])
+            entry = {"page": page_no, "kind": "content", "type": page.get("type"), "index": page.get("index"),
+                     "raster": True, "brief_id": asset["brief_id"]}
+            if asset["decorative"]:
+                entry["decorative"] = True
+                entry["decorative_designation"] = "Decorative coloring line-art; no informational alt text required."
+            else:
+                entry["alt_text"] = asset["alt_text"]
+            page_map.append(entry)
+            placed += 1
+        elif page.get("type") == "sudoku" and page.get("payload") and page["payload"].get("grid"):
             _draw_sudoku_page(c, inch, width_in, height_in, f"Sudoku #{num}", page.get("difficulty", ""), page["payload"]["grid"])
+            page_map.append({"page": page_no, "kind": "content", **{k: v for k, v in page.items() if k not in ("payload", "solution")}})
         else:
             _draw_placeholder_page(c, inch, width_in, height_in, f"{page['type'].title()} #{num}", [f"Difficulty: {page.get('difficulty')}"])
-        page_map.append({"page": page_no, "kind": "content", **{k: v for k, v in page.items() if k not in ("payload", "solution")}})
+            page_map.append({"page": page_no, "kind": "content", **{k: v for k, v in page.items() if k not in ("payload", "solution")}})
         page_no += 1
     # BACK-ONLY solutions section.
     if solution_pages:
@@ -279,8 +383,8 @@ def build_interior(root: Path, project_id: str, binding: str = "paperback") -> d
         "trim_in": [width_in, height_in], "page_count": total,
         "even_page_count": total % 2 == 0, "solutions_placement": "back-only",
         "min_body_type_pt": _INTERIOR_BODY_PT,
-        "raster_image_count": 0,
-        "vector_only": True,
+        "raster_image_count": placed,
+        "vector_only": placed == 0,
         "pages": page_map,
     })
 
@@ -528,6 +632,7 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
     measured_body_pt: float | None = None
     raster_image_count: int | None = None
     vector_only = False
+    raster_pages: list[dict[str, Any]] = []
     if interior_map.exists():
         page_map = load_json(interior_map)
         interior_report.update({
@@ -538,6 +643,7 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
         measured_body_pt = page_map.get("min_body_type_pt")
         raster_image_count = page_map.get("raster_image_count")
         vector_only = bool(page_map.get("vector_only"))
+        raster_pages = [p for p in page_map.get("pages", []) if p.get("raster")]
         if not page_map.get("even_page_count"):
             issues.append("Interior page count is odd; KDP requires an even page count.")
         if page_map.get("solutions_placement") != "back-only":
@@ -558,10 +664,19 @@ def build_proof(root: Path, project_id: str) -> dict[str, Any]:
     # Alt-text requirement is satisfied either when the build recorded meaningful
     # alt text OR when the interior is vector-only with zero informational raster
     # images (nothing to caption). Structural grid drawings are decorative.
-    alt_text_present = (
-        bool(design.get("alt_text_present"))
-        or (vector_only and (raster_image_count or 0) == 0)
-    )
+    # When the interior contains raster images, alt text is real per-page evidence:
+    # every raster page MUST carry non-empty alt_text OR a decorative designation.
+    # With no rasters, keep the vector-only shortcut (structural grid drawings are
+    # decorative; nothing informational to caption).
+    if raster_pages:
+        alt_text_present = all(
+            bool(p.get("alt_text")) or p.get("decorative") is True for p in raster_pages
+        )
+    else:
+        alt_text_present = (
+            bool(design.get("alt_text_present"))
+            or (vector_only and (raster_image_count or 0) == 0)
+        )
     interior_proof = {
         "schema_version": "1.0", "project_id": project_id, "evaluated_at": utc_now(),
         "decision": decision, "interior": interior_report,

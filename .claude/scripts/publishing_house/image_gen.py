@@ -345,6 +345,15 @@ def ingest(
         "commercial_rights_verified": provider_entry["commercial_rights_verified"],
         "ingested_at": utc_now(),
     }
+    # Backward-compatible: if a coloring-bridge attestation sidecar exists for this
+    # brief, carry its originality attestation into the provenance record so the
+    # rights + coloring-review path have the machine-readable original-line-art
+    # attestation. Absent sidecar → provenance is unchanged.
+    attestation_path = paths.directory / "visuals" / "briefs" / f"{brief_id}.attestation.json"
+    if attestation_path.is_file():
+        sidecar = load_json(attestation_path, {})
+        if isinstance(sidecar, dict) and sidecar.get("originality_attestation"):
+            provenance["originality_attestation"] = sidecar["originality_attestation"]
     provenance_rel = f"{ASSET_SUBDIR}/{brief_id}.provenance.json"
     atomic_write_json(paths.resolve_inside(provenance_rel), provenance)
 
@@ -409,6 +418,45 @@ def ingest(
         "clearance_status": rights_record["clearance_status"],
         "provenance_path": provenance_rel,
         "next_action": "Queue /book-visual-review for the ingested asset; do not treat ingestion as review-complete.",
+    }
+
+
+def enforce_bw(root: Path, project_id: str, file: str, threshold: int = 128) -> dict[str, Any]:
+    """Convert a coloring PNG to pure 1-bit black/white IN PLACE (offline).
+
+    Grayscale then hard-threshold to exactly two luminance values ``{0, 255}``
+    in mode ``L`` (kept as ``L`` — not ``1`` — so ReportLab ``drawImage`` places
+    it cleanly and a "2 luminance values" check reads trivially). Deterministic;
+    Pillow is imported lazily so importing this module never requires it.
+
+    This is an EXPLICIT pre-ingest step, never run inside :func:`ingest`, so the
+    hash bound at ingest matches the pixels the provenance describes. Rule 22:
+    coloring interiors are ``colour_interior=false`` — pure B&W is the strictest
+    correct realisation.
+    """
+    from PIL import Image  # lazy, like the compositor
+
+    if not 0 < threshold < 256:
+        raise ValueError(f"threshold must be in 1..255, got {threshold}")
+    paths = ProjectPaths(root, project_id).require()
+    absolute = paths.resolve_inside(file)  # enforces inside-project path
+    if not absolute.exists():
+        raise FileNotFoundError(f"Image file not found: {file}")
+
+    with Image.open(absolute) as source:
+        dpi = source.info.get("dpi", (300, 300))
+        grey = source.convert("L")
+    bw = grey.point(lambda p: 255 if p >= threshold else 0, mode="L")
+    values = sorted({value for _count, value in (bw.getcolors() or [])})
+    bw.save(absolute, format="PNG", dpi=dpi)
+
+    return {
+        "status": "pass",
+        "project_id": project_id,
+        "file": relative_asset_path(paths, absolute),
+        "threshold": threshold,
+        "luminance_values": values,
+        "pure_bw": set(values).issubset({0, 255}),
     }
 
 

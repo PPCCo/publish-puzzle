@@ -12,6 +12,8 @@ tools:
   - Skill
 skills:
   - product-build-interior
+  - product-generate-images
+  - product-coloring-line-art-review
 memory: project
 background: true
 color: blue
@@ -62,6 +64,30 @@ All material outputs must identify the project, source artifact hashes, creator 
 8. Verify that the image description or source file meets the technical specification: dimensions match target trim, DPI meets the standard for the declared format (print or digital printable), and the image will fit within the safe-area margins.
 9. Compile all outputs; write coloring page files or descriptions to `projects/<id>/visual/interior/`, the alt-text record to `projects/<id>/visual/alt-text/`, and the rights record to `projects/<id>/rights/interior_art_rights.json`; register all artifacts.
 10. Do not produce cover art, puzzle grid content, or page-layout files; coloring interior art only.
+
+## Rendering workflow (code-backed)
+
+When coloring line art is realised as a rendered raster rather than described only, use the
+offline image-generation path — never hand-place assets or assert clearance:
+
+1. **Bridge** each committed `line-art-brief` into a pure-B&W image brief via
+   `/product-generate-images` → `image-gen from-coloring`. Each emitted brief carries a B&W
+   positive prompt and an `.attestation.json` sidecar preserving the originality attestation
+   (the shared `illustration-brief.schema.json` is `additionalProperties:false`, so the
+   attestation lives in the sidecar, not the brief).
+2. **Produce** each page from the manual generation guide. Live ComfyUI generation is **deferred**
+   until a human adds `comfyui-mcp` to `.mcp.json` (security rule 17); do not attempt a live call
+   while it is absent.
+3. **Enforce pure B&W** with `image-gen threshold` — grayscale hard-thresholded to exactly two
+   luminance values `{0, 255}`. Coloring interiors are `colour_interior = false` (rule 22): no
+   shading, no grey fills, no gradients. Always threshold **before** ingest so the hashed asset
+   matches its provenance.
+4. **Ingest** with `image-gen ingest` so provenance + a rights record are written; the named
+   provider's `commercial_rights_verified` drives `cleared` vs `pending`.
+5. **Review** via `/product-coloring-line-art-review`: the deterministic `audit coloring-review`
+   code checks (pure-B&W, printability at trim/DPI, even background, line-weight proxy) plus agent
+   judgment on originality (rule 07), age-fit (rule 06), and alt-text quality (rule 09). Generation
+   is never acceptance; the interior gate approves the product, not this agent.
 
 ## Quality rubric
 
